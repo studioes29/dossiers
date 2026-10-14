@@ -1,0 +1,52 @@
+{
+  "nom": "L'Azimut",
+  "secteur": "Restaurant",
+  "ville": "Laz",
+  "date": "2026-10-15",
+  "accroche": "Vos clients parlent souvent de la vue depuis votre terrasse. En ligne, elle est difficile à voir, et vous êtes même difficile à trouver. Voici ce que j'ai remarqué, et ce que je vous proposerais.",
+  "constats": [
+    {"titre": "Vos avis", "etat": "bien", "texte": "Près de 400 avis Google et une note de 4,6 sur 5. Les mots qui reviennent : la vue, les assiettes généreuses, l'accueil."},
+    {"titre": "Votre nom sur Google", "etat": "moyen", "texte": "En tapant « L'Azimut », on tombe d'abord sur des restaurants du même nom à La Trinité-sur-Mer ou à Courchevel. Il faut ajouter « Laz » pour arriver jusqu'à vous."},
+    {"titre": "Votre site", "etat": "absent", "texte": "Je n'ai pas trouvé de site à votre nom. Les informations pratiques passent uniquement par votre fiche Google."},
+    {"titre": "La vue, votre premier argument", "etat": "moyen", "texte": "C'est ce qui fait choisir votre table. Des photos de la terrasse, de la salle et des assiettes la montreraient avant même la réservation."}
+  ],
+  "maquette": {
+    "type": "site",
+    "accroche": "Ce que ça pourrait donner",
+    "explication": "Une page d'accueil simple, pensée pour le téléphone : la vue en grand, la carte, les horaires et la réservation à portée de pouce. Couleurs et typographie restent à choisir avec vous.",
+    "titre": "L'Azimut",
+    "logoTexte": "L'Azimut",
+    "sousTitre": "Restaurant à Laz. Cuisine maison et vue dégagée depuis la terrasse.",
+    "bouton": "Réserver une table",
+    "menu": ["La carte du moment", "Horaires", "Nous trouver"],
+    "pied": "1 lotissement Menez Du, 29520 Laz · 06 26 99 36 92",
+    "imageTexte": "Ici, une photo de votre terrasse en fin de journée.",
+    "couleurs": {"fond": "#F3EEE4", "texte": "#1F2A2E", "accent": "#2F4A4F"},
+    "police": "Fraunces",
+    "legende": "Une première piste, faite sans vous. Elle se discute et se corrige."
+  },
+  "pistes": [
+    {"palier": "Prise de vue", "titre": "Une demi-journée de photos", "texte": "La terrasse en fin de journée, la salle, quelques assiettes, l'équipe au travail. Sur le vif, sans mise en scène."},
+    {"palier": "Tirage", "titre": "Un site d'une page", "texte": "La carte, les horaires, l'accès et la réservation, rédigés pour qu'on vous trouve en cherchant « restaurant Laz »."},
+    {"palier": "Exposition", "titre": "Des images toute l'année", "texte": "Quelques photos de saison chaque mois pour votre fiche Google et vos réseaux, pour que la vue reste visible."}
+  ],
+  "configurateur": {
+    "etapes": [
+      {"q": "Des photos de votre restaurant ?", "options": [
+        {"l": "Une demi-journée", "d": "Terrasse, salle, assiettes, équipe.", "min": 290, "max": 350},
+        {"l": "Une journée", "d": "Du service du midi à la lumière du soir.", "min": 550, "max": 700},
+        {"l": "Pas pour l'instant", "min": 0}
+      ]},
+      {"q": "Un site internet ?", "options": [
+        {"l": "Un site d'une page", "d": "Carte, horaires, accès, réservation.", "devis": true},
+        {"l": "Pas pour l'instant", "min": 0}
+      ]},
+      {"q": "Et pour la suite ?", "multi": true, "options": [
+        {"l": "Un kit réseaux prêt à poster", "d": "Vos photos déclinées aux bons formats.", "min": 120, "max": 150},
+        {"l": "Des visuels chaque mois", "d": "4 à 6 visuels pour vos réseaux et votre fiche Google.", "min": 180, "max": 250, "mois": true},
+        {"l": "Rien de plus", "min": 0}
+      ]}
+    ]
+  },
+  "contact": {"rdv": "https://cal.eu/studioes/30min", "mail": "contact@studioes.fr"}
+}
