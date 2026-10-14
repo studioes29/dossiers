@@ -29,17 +29,17 @@
   "maquette": {
     "type": "site",
     "accroche": "Ce que ça pourrait donner",
-    "explication": "Une page d'accueil simple, pensée pour le téléphone : la vue en grand, la carte, les horaires et la réservation à portée de pouce. Couleurs et typographie restent à choisir avec vous.",
+    "explication": "Une page d'accueil sobre, la vue en grand, et les informations qu'on cherche avant de réserver : horaires, accès, téléphone. Couleurs et typographie restent à choisir avec vous.",
     "titre": "L'Azimut",
     "logoTexte": "L'Azimut",
-    "sousTitre": "Restaurant à Laz. Cuisine maison et vue dégagée depuis la terrasse.",
+    "sousTitre": "Cuisine maison et vue dégagée depuis la terrasse. Le midi en semaine, le soir en fin de semaine.",
     "bouton": "Réserver une table",
     "menu": [
-      "La carte du moment",
+      "La carte",
       "Horaires",
       "Nous trouver"
     ],
-    "pied": "1 lotissement Menez Du, 29520 Laz · 06 26 99 36 92",
+    "pied": "L'Azimut, Laz",
     "imageTexte": "Ici, une photo de votre terrasse en fin de journée.",
     "couleurs": {
       "fond": "#F3EEE4",
@@ -47,7 +47,32 @@
       "accent": "#2F4A4F"
     },
     "police": "Fraunces",
-    "legende": "Une première piste, faite sans vous. Elle se discute et se corrige."
+    "legende": "Une première piste, faite sans vous. Elle se discute et se corrige.",
+    "surtitre": "Restaurant à Laz",
+    "infos": [
+      {
+        "t": "Horaires",
+        "l": [
+          "Lundi, mardi, jeudi, dimanche : midi",
+          "Vendredi et samedi : midi et soir",
+          "Fermé le mercredi"
+        ]
+      },
+      {
+        "t": "Nous trouver",
+        "l": [
+          "1 lotissement Menez Du",
+          "29520 Laz"
+        ]
+      },
+      {
+        "t": "Réserver",
+        "l": [
+          "06 26 99 36 92",
+          "Par téléphone ou en ligne"
+        ]
+      }
+    ]
   },
   "pistes": [
     {

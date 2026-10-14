@@ -26,15 +26,25 @@
       var av = url(m.avatar);
       return '<div class="ecran insta" style="' + style + '"><div class="prof"><div class="av"' + (av ? ' style="background-image:url(' + av + ')"' : "") + '></div><b>' + esc(m.compte || m.titre) + '</b><span>' + esc(m.statsTexte || "") + '</span></div><p class="bio">' + esc(m.bio || m.sousTitre || "") + '</p><div class="grille">' + html + '</div></div>';
     }
-    var image = url(m.image);
-    return '<div class="ecran" style="' + style + '"><div class="nav"><b>' + esc(m.logoTexte || m.titre) + '</b><i></i></div><div class="hero"' + (image ? ' style="background-image:url(' + image + ')"' : "") + '>' + (!image && m.imageTexte ? '<p class="ph">' + esc(m.imageTexte) + '</p>' : "") + '<h4>' + esc(m.titre) + '</h4>' + (m.sousTitre ? '<p>' + esc(m.sousTitre) + '</p>' : "") + (m.bouton ? '<span class="cta">' + esc(m.bouton) + '</span>' : "") + '</div><div class="blocs">' + (m.menu || []).slice(0, 4).map(function(x){ return '<div>' + esc(x) + '</div>'; }).join("") + '</div><p class="pied">' + esc(m.pied || "") + '</p></div>';
+    var image = url(m.image), menu = (m.menu || []).slice(0, 4), infos = (m.infos || []).slice(0, 3);
+    var visu = image ? '<div class="vis" style="background-image:url(' + image + ')"></div>' : '<div class="vis ill">' + paysage() + (m.imageTexte ? '<p class="ph">' + esc(m.imageTexte) + '</p>' : '') + '</div>';
+    var inf = infos.map(function(x){ return '<div class="inf"><b>' + esc(x.t) + '</b>' + (x.l || []).map(function(l){ return '<span>' + esc(l) + '</span>'; }).join("") + '</div>'; }).join("");
+    var tel = '<div class="ecran" style="' + style + '"><div class="nav"><b>' + esc(m.logoTexte || m.titre) + '</b><i></i></div>' + visu +
+      '<div class="txt"><h4>' + esc(m.titre) + '</h4>' + (m.sousTitre ? '<p>' + esc(m.sousTitre) + '</p>' : '') + (m.bouton ? '<span class="cta">' + esc(m.bouton) + '</span>' : '') + '</div>' +
+      (inf ? '<div class="infs">' + inf + '</div>' : '<div class="blocs">' + menu.map(function(x){ return '<div>' + esc(x) + '</div>'; }).join("") + '</div>') + (m.pied ? '<p class="pied">' + esc(m.pied) + '</p>' : '') + '</div>';
+    var pc = '<div class="pc"><div class="chrome"><i></i><i></i><i></i><span>' + esc(m.domaine || "votre-site.fr") + '</span></div><div class="site" style="' + style + '">' +
+      '<div class="snav"><b>' + esc(m.logoTexte || m.titre) + '</b><span>' + menu.map(esc).join('</span><span>') + '</span>' + (m.bouton ? '<em>' + esc(m.bouton) + '</em>' : '') + '</div>' +
+      '<div class="shero"><div class="stxt"><small>' + esc(m.surtitre || "") + '</small><h4>' + esc(m.titre) + '</h4>' + (m.sousTitre ? '<p>' + esc(m.sousTitre) + '</p>' : '') + (m.bouton ? '<span class="cta">' + esc(m.bouton) + '</span>' : '') + '</div>' + visu + '</div>' +
+      (inf ? '<div class="sinf">' + inf + '</div>' : '') + (m.pied ? '<p class="spied">' + esc(m.pied) + '</p>' : '') + '</div></div>';
+    return {tel:tel, pc:pc};
   }
+  function paysage(){ return '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="300" fill="var(--m-accent)"/><circle cx="292" cy="96" r="34" fill="var(--m-fond)" opacity=".28"/><path d="M0 170 Q80 128 160 150 T300 138 T400 150 V300 H0Z" fill="var(--m-fond)" opacity=".16"/><path d="M0 205 Q100 165 200 190 T400 178 V300 H0Z" fill="var(--m-texte)" opacity=".22"/><path d="M0 240 Q120 214 230 236 T400 228 V300 H0Z" fill="var(--m-texte)" opacity=".38"/><path d="M0 268 H400 V300 H0Z" fill="var(--m-texte)" opacity=".5"/><path d="M40 268 h120 M210 268 h150" stroke="var(--m-fond)" stroke-opacity=".35" stroke-width="1.5"/></svg>'; }
 
   function rendre(d){
-    document.title = "Pour " + (d.nom || "vous") + " | Studio ES";
+    document.title = (d.nom || "Dossier") + " | Studio ES";
     var o = [];
     o.push('<section class="pl cover"><div class="in"><a class="sig" href="https://studioes.fr">' + LOGO + '<span><b>Studio ES</b><span>Studio ES, photographe et graphiste</span></span></a>' +
-      '<h1 class="rv">Pour<span>' + esc(d.nom) + '</span></h1>' +
+      '<h1 class="rv">' + esc(d.nom) + '</h1>' +
       (d.accroche ? '<p class="lede rv">' + esc(d.accroche) + '</p>' : '') +
       '<p class="meta rv">' + [d.secteur, d.ville, d.date ? "Préparé le " + dateFr(d.date) : ""].filter(Boolean).map(esc).join(" · ") + '</p></div></section>');
 
@@ -46,7 +56,8 @@
     }
 
     if(d.maquette){
-      o.push(planche("", 1, '<div class="mq"><div class="tx"><h2 class="rv">' + esc(d.maquette.accroche || "Ce que ça pourrait donner") + '</h2><p class="lede rv">' + esc(d.maquette.explication || "") + '</p></div><div class="rv"><div class="vf"><i></i><i></i><i></i><i></i><div class="dv">' + maquette(d.maquette) + '</div></div><p class="cap">' + esc(d.maquette.legende || "Une première piste, faite à partir de ce qui existe déjà. Elle se discute.") + '</p></div></div>'));
+      var mq = maquette(d.maquette), mtel = typeof mq === "string" ? mq : mq.tel, mpc = typeof mq === "string" ? "" : mq.pc;
+      o.push(planche("", 1, '<div class="mq' + (mpc ? " a-pc" : "") + '"><div class="tx"><h2 class="rv">' + esc(d.maquette.accroche || "Ce que ça pourrait donner") + '</h2><p class="lede rv">' + esc(d.maquette.explication || "") + '</p></div><div class="rv vue"><div class="vf"><i></i><i></i><i></i><i></i><div class="dv">' + mtel + '</div>' + mpc + '</div><p class="cap">' + esc(d.maquette.legende || "Une première piste, faite à partir de ce qui existe déjà. Elle se discute.") + '</p></div></div>'));
     }
 
     if((d.pistes || []).length){
@@ -61,7 +72,6 @@
 
     var ct = d.contact || {}, rdv = url(ct.rdv) || "https://cal.eu/studioes/30min", mail = /^[^@\s]+@[^@\s]+$/.test(ct.mail || "") ? ct.mail : "contact@studioes.fr";
     o.push(planche("sapin fin", 1, '<h2 class="rv">' + esc(d.titreFin || "On en parle ?") + '</h2><p class="lede rv">' + esc(d.texteFin || "Trente minutes au téléphone suffisent pour voir si ça vous correspond. Sans engagement.") + '</p><div class="row rv"><a class="btn" href="' + rdv + '" target="_blank" rel="noopener">Choisir un créneau</a><a class="btn line" href="mailto:' + esc(mail) + '?subject=' + encodeURIComponent("Dossier " + (d.nom || "")) + '">Écrire</a></div><p class="sm rv">Ewen Soupault, Studio ES · <a href="https://studioes.fr">studioes.fr</a></p>'));
-    o.push('<p class="pied">Ce dossier a été préparé pour ' + esc(d.nom) + ' uniquement.</p>');
     document.getElementById("app").innerHTML = o.join("");
     if(d.configurateur) configurateur(d.configurateur, d);
     apparition();

@@ -157,3 +157,48 @@ strong{font-weight:500}
 .accord{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;font-size:15px;line-height:1.45;cursor:pointer}
 .accord input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--ochre)}
 .engage .btn{justify-self:start}
+
+/* maquette v2 : téléphone et ordinateur */
+.cover h1{color:var(--cream)}
+.ecran .nav{position:static;color:var(--m-texte);text-shadow:none;padding:40px 20px 14px}
+.ecran .vis{position:relative;height:250px;margin:0 14px;border-radius:18px;overflow:hidden;background:var(--m-accent) center/cover no-repeat}
+.ecran .vis svg,.site .vis svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ecran .vis .ph,.site .vis .ph{position:absolute;left:12px;right:12px;bottom:12px;top:auto;margin:0;padding:8px 10px;border:0;border-radius:10px;background:rgba(0,0,0,.28);color:#fff;font-family:var(--body);font-size:11.5px;line-height:1.35;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ecran .txt{padding:20px 20px 6px}
+.ecran .txt h4{font-family:var(--m-police);font-weight:700;font-size:34px;line-height:.98;letter-spacing:-.02em;color:var(--m-texte)}
+.ecran .txt p{font-family:var(--body);font-size:14px;line-height:1.45;margin-top:10px;opacity:.82}
+.ecran .infs{display:grid;gap:0;margin:14px 20px 0;border-top:1px solid color-mix(in srgb,var(--m-texte) 18%,transparent)}
+.ecran .inf,.site .inf{display:grid;gap:2px;padding:12px 0;border-bottom:1px solid color-mix(in srgb,var(--m-texte) 18%,transparent);font-family:var(--body)}
+.ecran .inf b,.site .inf b{font-family:var(--m-police);font-weight:700;font-size:16px}
+.ecran .inf span{font-size:12.5px;opacity:.78}
+.mq .vue{display:grid;justify-items:center;min-width:0;width:100%}
+.mq .pc{display:none}
+@media(min-width:900px){
+  .mq.a-pc{grid-template-columns:1fr;justify-items:stretch}
+  .mq.a-pc .tx{max-width:40em}
+  .mq.a-pc .dv{display:none}
+  .mq.a-pc .pc{display:block}
+  .mq.a-pc .vf{width:100%}
+  .mq.a-pc .cap{max-width:none}
+}
+.pc{width:100%;border-radius:14px;overflow:hidden;background:#0c0c0c;border:1px solid rgba(255,255,255,.22);box-shadow:0 40px 80px rgba(0,0,0,.45);container-type:inline-size}
+.pc .chrome{display:flex;align-items:center;gap:7px;padding:11px 14px;background:#1f1e1d}
+.pc .chrome i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.22)}
+.pc .chrome span{margin-left:14px;flex:1;max-width:340px;padding:5px 12px;border-radius:7px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-size:12px}
+.site{background:var(--m-fond);color:var(--m-texte);font-family:var(--body)}
+.site .snav{display:flex;align-items:center;gap:2.6cqw;padding:2.2cqw 4cqw;font-size:1.25cqw}
+.site .snav b{font-family:var(--m-police);font-weight:700;font-size:2cqw;margin-right:auto;letter-spacing:-.01em}
+.site .snav span{opacity:.75}
+.site .snav em{font-style:normal;padding:.8cqw 1.6cqw;border-radius:var(--m-rayon);background:var(--m-accent);color:var(--m-sur-accent);font-weight:500}
+.site .shero{display:grid;grid-template-columns:1fr 1.25fr;gap:3.5cqw;align-items:center;padding:1.5cqw 4cqw 4cqw}
+.site .stxt small{display:block;font-size:1.15cqw;letter-spacing:.02em;opacity:.7;margin-bottom:1.2cqw}
+.site .stxt h4{font-family:var(--m-police);font-weight:700;font-size:6cqw;line-height:.92;letter-spacing:-.03em;color:var(--m-texte)}
+.site .stxt p{font-size:1.45cqw;line-height:1.5;margin-top:1.6cqw;opacity:.82;max-width:30em}
+.site .cta{display:inline-block;margin-top:2.2cqw;padding:1.1cqw 2.2cqw;border-radius:var(--m-rayon);background:var(--m-accent);color:var(--m-sur-accent);font-size:1.3cqw;font-weight:500}
+.site .vis{position:relative;aspect-ratio:4/3;border-radius:1.4cqw;overflow:hidden;background:var(--m-accent) center/cover no-repeat}
+.site .vis .ph{font-size:1.15cqw;padding:1cqw 1.3cqw;left:1.6cqw;right:1.6cqw;bottom:1.6cqw;border-radius:1cqw}
+.site .sinf{display:grid;grid-template-columns:repeat(3,1fr);gap:3cqw;margin:0 4cqw;border-top:1px solid color-mix(in srgb,var(--m-texte) 18%,transparent)}
+.site .inf{border:0;padding:2cqw 0}
+.site .inf b{font-size:1.7cqw}
+.site .inf span{font-size:1.2cqw;opacity:.78;line-height:1.5}
+.site .spied{padding:2cqw 4cqw 2.6cqw;font-size:1.1cqw;opacity:.6}
