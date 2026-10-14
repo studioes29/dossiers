@@ -141,3 +141,19 @@ strong{font-weight:500}
 .js .rv{opacity:.15;transform:translateY(24px);transition:opacity .8s var(--soft),transform .8s var(--soft)}
 .js .rv.on{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+/* devis et acompte */
+.btn[disabled]{opacity:.4;pointer-events:none}
+.total .plus{font-family:var(--display);font-weight:800;font-size:clamp(20px,4vw,26px);letter-spacing:-.03em;color:var(--hd)}
+.total b small{font-size:.45em;letter-spacing:0}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.form{grid-template-columns:1fr}}
+.form label{display:grid;gap:6px;font-size:13.5px;color:var(--fg2)}
+.form input{font:inherit;font-size:16px;color:var(--fg);background:var(--card);border:1.5px solid transparent;border-radius:14px;padding:12px 14px;min-width:0}
+.form input:focus{outline:none;border-color:var(--hd)}
+.form input[aria-invalid="true"]{border-color:#F09A88}
+.err{color:#F09A88;font-size:14px;min-height:1em}
+.engage{display:grid;gap:14px;border-top:1.5px solid var(--hd);padding-top:20px;margin-top:6px}
+.accord{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;font-size:15px;line-height:1.45;cursor:pointer}
+.accord input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--ochre)}
+.engage .btn{justify-self:start}
