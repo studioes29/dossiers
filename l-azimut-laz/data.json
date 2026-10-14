@@ -1,273 +1,274 @@
 {
-  "nom": "L'Azimut",
-  "secteur": "Restaurant",
-  "ville": "Laz",
-  "date": "2026-10-15",
-  "accroche": "Vos clients parlent souvent de la vue depuis votre terrasse. En ligne, elle est difficile à voir, et vous êtes même difficile à trouver. Voici ce que j'ai remarqué, et ce que je vous proposerais.",
-  "constats": [
-    {
-      "titre": "Vos avis",
-      "etat": "bien",
-      "texte": "Près de 400 avis Google et une note de 4,6 sur 5. Les mots qui reviennent : la vue, les assiettes généreuses, l'accueil."
-    },
-    {
-      "titre": "Votre nom sur Google",
-      "etat": "moyen",
-      "texte": "En tapant « L'Azimut », on tombe d'abord sur des restaurants du même nom à La Trinité-sur-Mer ou à Courchevel. Il faut ajouter « Laz » pour arriver jusqu'à vous."
-    },
-    {
-      "titre": "Votre site",
-      "etat": "absent",
-      "texte": "Je n'ai pas trouvé de site à votre nom. Les informations pratiques passent uniquement par votre fiche Google."
-    },
-    {
-      "titre": "La vue, votre premier argument",
-      "etat": "moyen",
-      "texte": "C'est ce qui fait choisir votre table. Des photos de la terrasse, de la salle et des assiettes la montreraient avant même la réservation."
-    }
-  ],
-  "maquette": {
-    "type": "site",
-    "accroche": "Ce que ça pourrait donner",
-    "explication": "Une page d'accueil sobre, la vue en grand, et les informations qu'on cherche avant de réserver : horaires, accès, téléphone. Couleurs et typographie restent à choisir avec vous.",
-    "titre": "L'Azimut",
-    "logoTexte": "L'Azimut",
-    "sousTitre": "Cuisine maison et vue dégagée depuis la terrasse. Le midi en semaine, le soir en fin de semaine.",
-    "bouton": "Réserver une table",
-    "menu": [
-      "La carte",
-      "Horaires",
-      "Nous trouver"
-    ],
-    "pied": "L'Azimut, Laz",
-    "imageTexte": "Ici, une photo de votre terrasse en fin de journée.",
-    "couleurs": {
-      "fond": "#F3EEE4",
-      "texte": "#1F2A2E",
-      "accent": "#2F4A4F"
-    },
-    "police": "Fraunces",
-    "legende": "Une première piste, faite sans vous. Elle se discute et se corrige.",
-    "surtitre": "Restaurant à Laz",
-    "infos": [
-      {
-        "t": "Horaires",
-        "l": [
-          "Lundi, mardi, jeudi, dimanche : midi",
-          "Vendredi et samedi : midi et soir",
-          "Fermé le mercredi"
-        ]
-      },
-      {
-        "t": "Nous trouver",
-        "l": [
-          "1 lotissement Menez Du",
-          "29520 Laz"
-        ]
-      },
-      {
-        "t": "Réserver",
-        "l": [
-          "06 26 99 36 92",
-          "Par téléphone ou en ligne"
-        ]
-      }
-    ]
+ "nom": "L'Azimut",
+ "secteur": "Restaurant",
+ "ville": "Laz",
+ "date": "2026-10-15",
+ "accroche": "Vos clients parlent souvent de la vue depuis votre terrasse. En ligne, elle est difficile à voir, et vous êtes même difficile à trouver. Voici ce que j'ai remarqué, et ce que je vous proposerais.",
+ "constats": [
+  {
+   "titre": "Vos avis",
+   "etat": "bien",
+   "texte": "Près de 400 avis Google et une note de 4,6 sur 5. Les mots qui reviennent : la vue, les assiettes généreuses, l'accueil."
   },
-  "pistes": [
-    {
-      "palier": "Prise de vue",
-      "titre": "Une demi-journée de photos",
-      "texte": "La terrasse en fin de journée, la salle, quelques assiettes, l'équipe au travail. Sur le vif, sans mise en scène."
-    },
-    {
-      "palier": "Tirage",
-      "titre": "Un site d'une page",
-      "texte": "La carte, les horaires, l'accès et la réservation, rédigés pour qu'on vous trouve en cherchant « restaurant Laz »."
-    },
-    {
-      "palier": "Exposition",
-      "titre": "Des images toute l'année",
-      "texte": "Quelques photos de saison chaque mois pour votre fiche Google et vos réseaux, pour que la vue reste visible."
-    }
-  ],
-  "configurateur": {
-    "objet": "Photographie, site internet et suivi de la communication en ligne de L'Azimut",
-    "etapes": [
-      {
-        "q": "Des photos de votre restaurant ?",
-        "options": [
-          {
-            "l": "Une demi-journée",
-            "d": "Environ 4 h : la terrasse en fin de journée, la salle, quelques assiettes, l'équipe au travail.",
-            "p": 290,
-            "titreDevis": "Reportage photo, une demi-journée",
-            "lignes": [
-              "Environ 4 heures sur place, à une date convenue ensemble",
-              "Terrasse, salle, assiettes et équipe, sur le vif, sans mise en scène",
-              "Sélection retouchée livrée en haute définition et au format web, sous 7 jours"
-            ]
-          },
-          {
-            "l": "Une journée",
-            "d": "Environ 8 h, du service du midi à la lumière du soir.",
-            "p": 550,
-            "titreDevis": "Reportage photo, une journée",
-            "lignes": [
-              "Environ 8 heures sur place, du service du midi à la lumière du soir",
-              "Terrasse, salle, cuisine, assiettes et équipe, sur le vif",
-              "Sélection retouchée livrée en haute définition et au format web, sous 7 jours"
-            ]
-          },
-          {
-            "l": "Pas pour l'instant",
-            "aucun": true
-          }
-        ]
-      },
-      {
-        "q": "Un site internet ?",
-        "options": [
-          {
-            "l": "Un site d'une page",
-            "d": "Accueil, carte du moment, horaires, accès, réservation. Textes rédigés, référencement local, mise en ligne comprise.",
-            "p": 990,
-            "titreDevis": "Site internet d'une page",
-            "lignes": [
-              "Une page pensée d'abord pour le téléphone : accueil, carte du moment, horaires, accès, bouton de réservation",
-              "Rédaction des textes à partir de notre échange, référencement local (Google, « restaurant Laz »)",
-              "Conception sur mesure, mise en ligne et réglage du nom de domaine (nom de domaine à votre nom, environ 15 € par an, non compris)",
-              "Deux allers-retours de corrections, puis une prise en main de 30 minutes"
-            ]
-          },
-          {
-            "l": "Un site de 3 à 5 pages",
-            "d": "La même base, avec des pages dédiées : carte, groupes et événements, galerie, contact.",
-            "p": 1890,
-            "titreDevis": "Site internet de 3 à 5 pages",
-            "lignes": [
-              "Accueil et jusqu'à 4 pages dédiées (carte, groupes et événements, galerie, contact)",
-              "Rédaction des textes, référencement local, conception sur mesure pensée pour le téléphone",
-              "Mise en ligne et réglage du nom de domaine (nom de domaine à votre nom, environ 15 € par an, non compris)",
-              "Deux allers-retours de corrections, puis une prise en main de 30 minutes"
-            ]
-          },
-          {
-            "l": "Pas pour l'instant",
-            "aucun": true
-          }
-        ]
-      },
-      {
-        "q": "Avec les photos, pour vos réseaux ?",
-        "aide": "Un complément à la séance photo.",
-        "options": [
-          {
-            "l": "Un kit réseaux prêt à poster",
-            "d": "Vos photos recadrées et déclinées aux formats Instagram, Facebook et fiche Google.",
-            "p": 120,
-            "si": [
-              0,
-              [
-                0,
-                1
-              ]
-            ],
-            "titreDevis": "Kit réseaux prêt à poster",
-            "lignes": [
-              "Les photos du reportage recadrées et déclinées aux formats Instagram, Facebook et fiche Google"
-            ]
-          },
-          {
-            "l": "Non merci",
-            "aucun": true,
-            "si": [
-              0,
-              [
-                0,
-                1
-              ]
-            ]
-          }
-        ]
-      },
-      {
-        "q": "Et ensuite, chaque mois ?",
-        "multi": true,
-        "aide": "Rien n'est payé maintenant : on fixe la date de démarrage ensemble.",
-        "options": [
-          {
-            "l": "Des visuels pour vos réseaux",
-            "d": "4 à 6 visuels par mois à partir de vos photos, avec leurs textes, prêts à publier.",
-            "p": 180,
-            "mois": true,
-            "min": 3,
-            "titreDevis": "Visuels pour les réseaux sociaux",
-            "lignes": [
-              "4 à 6 visuels par mois, avec leurs textes, prêts à publier",
-              "À partir des photos du reportage et de vos actualités"
-            ]
-          },
-          {
-            "l": "Hébergement et maintenance du site",
-            "d": "Le site reste en ligne et à jour, et vos petites modifications sont faites.",
-            "p": 25,
-            "mois": true,
-            "min": 12,
-            "si": [
-              1,
-              [
-                0,
-                1
-              ]
-            ],
-            "titreDevis": "Hébergement et maintenance du site",
-            "lignes": [
-              "Hébergement, sécurité et sauvegardes du site",
-              "Jusqu'à 30 minutes de modifications par mois (carte, horaires, fermetures)"
-            ]
-          },
-          {
-            "l": "Une séance photo chaque mois",
-            "d": "Une demi-journée par mois pour suivre les saisons et la carte.",
-            "p": 220,
-            "mois": true,
-            "min": 6,
-            "titreDevis": "Suivi photo mensuel",
-            "lignes": [
-              "Une demi-journée de reportage par mois, à une date convenue ensemble",
-              "Sélection retouchée livrée sous 7 jours"
-            ]
-          },
-          {
-            "l": "Rien de mensuel",
-            "aucun": true
-          }
-        ]
-      }
-    ],
-    "regles": [
-      "Les contenus de base (carte, horaires, informations pratiques) sont fournis par le client. Les photographies du site sont celles du reportage lorsqu'il est commandé."
-    ],
-    "acompte": {
-      "290": "https://buy.stripe.com/4gM9ATdDYcPGgrl1mObQY02",
-      "410": "https://buy.stripe.com/cNi4gzgQa02U4IDfdEbQY03",
-      "550": "https://buy.stripe.com/3cIeVd0Rc5ne0snghIbQY04",
-      "670": "https://buy.stripe.com/6oU4gzeI29DuejdfdEbQY05",
-      "990": "https://buy.stripe.com/fZubJ1bvQ9Du8YT3uWbQY06",
-      "1280": "https://buy.stripe.com/9B63cveI24jafnh4z0bQY07",
-      "1400": "https://buy.stripe.com/6oU00j43o2b21wre9AbQY08",
-      "1540": "https://buy.stripe.com/7sY14neI25negrld5wbQY09",
-      "1660": "https://buy.stripe.com/fZu4gzbvQ5ne7UP6H8bQY0a",
-      "1890": "https://buy.stripe.com/6oUfZhfM64jagrl9TkbQY0b",
-      "2180": "https://buy.stripe.com/aFabJ1eI2bLC2Ave9AbQY0c",
-      "2300": "https://buy.stripe.com/4gM7sL7fAdTK1wr7LcbQY0d",
-      "2440": "https://buy.stripe.com/bJeeVd9nI3f62AvfdEbQY0e",
-      "2560": "https://buy.stripe.com/6oU4gz9nI3f65MH2qSbQY0f"
-    }
+  {
+   "titre": "Votre nom sur Google",
+   "etat": "moyen",
+   "texte": "En tapant « L'Azimut », on tombe d'abord sur des restaurants du même nom à La Trinité-sur-Mer ou à Courchevel. Il faut ajouter « Laz » pour arriver jusqu'à vous."
   },
-  "contact": {
-    "rdv": "https://cal.eu/studioes/30min",
-    "mail": "contact@studioes.fr"
+  {
+   "titre": "Votre site",
+   "etat": "absent",
+   "texte": "Je n'ai pas trouvé de site à votre nom. Les informations pratiques passent uniquement par votre fiche Google."
+  },
+  {
+   "titre": "La vue, votre premier argument",
+   "etat": "moyen",
+   "texte": "C'est ce qui fait choisir votre table. Des photos de la terrasse, de la salle et des assiettes la montreraient avant même la réservation."
   }
+ ],
+ "maquette": {
+  "type": "site",
+  "accroche": "Ce que ça pourrait donner",
+  "explication": "Une page d'accueil sobre, la vue en grand, et les informations qu'on cherche avant de réserver : horaires, accès, téléphone. Couleurs et typographie restent à choisir avec vous.",
+  "titre": "L'Azimut",
+  "logoTexte": "L'Azimut",
+  "sousTitre": "Cuisine maison et vue dégagée depuis la terrasse. Le midi en semaine, le soir en fin de semaine.",
+  "bouton": "Réserver une table",
+  "menu": [
+   "La carte",
+   "Horaires",
+   "Nous trouver"
+  ],
+  "pied": "L'Azimut, Laz",
+  "imageTexte": "Ici, une photo de votre terrasse en fin de journée.",
+  "couleurs": {
+   "fond": "#F3EEE4",
+   "texte": "#1F2A2E",
+   "accent": "#2F4A4F"
+  },
+  "police": "Fraunces",
+  "legende": "Une première piste, faite sans vous. Elle se discute et se corrige.",
+  "surtitre": "Restaurant à Laz",
+  "infos": [
+   {
+    "t": "Horaires",
+    "l": [
+     "Lundi, mardi, jeudi, dimanche : midi",
+     "Vendredi et samedi : midi et soir",
+     "Fermé le mercredi"
+    ]
+   },
+   {
+    "t": "Nous trouver",
+    "l": [
+     "1 lotissement Menez Du",
+     "29520 Laz"
+    ]
+   },
+   {
+    "t": "Réserver",
+    "l": [
+     "06 26 99 36 92",
+     "Par téléphone ou en ligne"
+    ]
+   }
+  ]
+ },
+ "pistes": [
+  {
+   "palier": "Prise de vue",
+   "titre": "Une demi-journée de photos",
+   "texte": "La terrasse en fin de journée, la salle, quelques assiettes, l'équipe au travail. Sur le vif, sans mise en scène."
+  },
+  {
+   "palier": "Tirage",
+   "titre": "Un site d'une page",
+   "texte": "La carte, les horaires, l'accès et la réservation, rédigés pour qu'on vous trouve en cherchant « restaurant Laz »."
+  },
+  {
+   "palier": "Exposition",
+   "titre": "Des images toute l'année",
+   "texte": "Quelques photos de saison chaque mois pour votre fiche Google et vos réseaux, pour que la vue reste visible."
+  }
+ ],
+ "configurateur": {
+  "objet": "Photographie, site internet et suivi de la communication en ligne de L'Azimut",
+  "etapes": [
+   {
+    "q": "Des photos de votre restaurant ?",
+    "options": [
+     {
+      "l": "Une demi-journée",
+      "d": "Environ 4 h : la terrasse en fin de journée, la salle, quelques assiettes, l'équipe au travail.",
+      "p": 290,
+      "titreDevis": "Reportage photo, une demi-journée",
+      "lignes": [
+       "Environ 4 heures sur place, à une date convenue ensemble",
+       "Terrasse, salle, assiettes et équipe, sur le vif, sans mise en scène",
+       "Sélection retouchée livrée en haute définition et au format web, sous 7 jours"
+      ]
+     },
+     {
+      "l": "Une journée",
+      "d": "Environ 8 h, du service du midi à la lumière du soir.",
+      "p": 550,
+      "titreDevis": "Reportage photo, une journée",
+      "lignes": [
+       "Environ 8 heures sur place, du service du midi à la lumière du soir",
+       "Terrasse, salle, cuisine, assiettes et équipe, sur le vif",
+       "Sélection retouchée livrée en haute définition et au format web, sous 7 jours"
+      ]
+     },
+     {
+      "l": "Pas pour l'instant",
+      "aucun": true
+     }
+    ]
+   },
+   {
+    "q": "Un site internet ?",
+    "options": [
+     {
+      "l": "Un site d'une page",
+      "d": "Accueil, carte du moment, horaires, accès, réservation. Textes rédigés, référencement local, mise en ligne comprise.",
+      "p": 990,
+      "titreDevis": "Site internet d'une page",
+      "lignes": [
+       "Une page pensée d'abord pour le téléphone : accueil, carte du moment, horaires, accès, bouton de réservation",
+       "Rédaction des textes à partir de notre échange, référencement local (Google, « restaurant Laz »)",
+       "Conception sur mesure, mise en ligne et réglage du nom de domaine (nom de domaine à votre nom, environ 15 € par an, non compris)",
+       "Deux allers-retours de corrections, puis une prise en main de 30 minutes"
+      ]
+     },
+     {
+      "l": "Un site de 3 à 5 pages",
+      "d": "La même base, avec des pages dédiées : carte, groupes et événements, galerie, contact.",
+      "p": 1890,
+      "titreDevis": "Site internet de 3 à 5 pages",
+      "lignes": [
+       "Accueil et jusqu'à 4 pages dédiées (carte, groupes et événements, galerie, contact)",
+       "Rédaction des textes, référencement local, conception sur mesure pensée pour le téléphone",
+       "Mise en ligne et réglage du nom de domaine (nom de domaine à votre nom, environ 15 € par an, non compris)",
+       "Deux allers-retours de corrections, puis une prise en main de 30 minutes"
+      ]
+     },
+     {
+      "l": "Pas pour l'instant",
+      "aucun": true
+     }
+    ]
+   },
+   {
+    "q": "Avec les photos, pour vos réseaux ?",
+    "aide": "Un complément à la séance photo.",
+    "options": [
+     {
+      "l": "Un kit réseaux prêt à poster",
+      "d": "Vos photos recadrées et déclinées aux formats Instagram, Facebook et fiche Google.",
+      "p": 120,
+      "si": [
+       0,
+       [
+        0,
+        1
+       ]
+      ],
+      "titreDevis": "Kit réseaux prêt à poster",
+      "lignes": [
+       "Les photos du reportage recadrées et déclinées aux formats Instagram, Facebook et fiche Google"
+      ]
+     },
+     {
+      "l": "Non merci",
+      "aucun": true,
+      "si": [
+       0,
+       [
+        0,
+        1
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "q": "Et ensuite, chaque mois ?",
+    "multi": true,
+    "aide": "Rien n'est payé maintenant : on fixe la date de démarrage ensemble.",
+    "options": [
+     {
+      "l": "Des contenus pour vos réseaux",
+      "d": "6 contenus par mois à partir de vos photos, avec leurs textes, prêts à publier.",
+      "p": 240,
+      "mois": true,
+      "min": 6,
+      "titreDevis": "Contenus réseaux mensuels (6 par mois)",
+      "lignes": [
+       "6 contenus par mois, visuels et textes, aux formats Instagram et Facebook",
+       "Livrés prêts à publier, à partir des photos du restaurant",
+       "Engagement de 6 mois minimum"
+      ]
+     },
+     {
+      "l": "Hébergement et maintenance du site",
+      "d": "Le site reste en ligne et à jour, et vos petites modifications sont faites.",
+      "p": 35,
+      "mois": true,
+      "min": 12,
+      "si": [
+       1,
+       [
+        0,
+        1
+       ]
+      ],
+      "titreDevis": "Hébergement et maintenance du site",
+      "lignes": [
+       "Hébergement, sécurité et sauvegardes du site",
+       "Jusqu'à 30 minutes de modifications par mois (carte, horaires, fermetures)"
+      ]
+     },
+     {
+      "l": "Une séance photo chaque mois",
+      "d": "Une demi-journée par mois pour suivre les saisons et la carte.",
+      "p": 220,
+      "mois": true,
+      "min": 6,
+      "titreDevis": "Suivi photo mensuel",
+      "lignes": [
+       "Une demi-journée de reportage par mois, à une date convenue ensemble",
+       "Sélection retouchée livrée sous 7 jours"
+      ]
+     },
+     {
+      "l": "Rien de mensuel",
+      "aucun": true
+     }
+    ]
+   }
+  ],
+  "regles": [
+   "Les contenus de base (carte, horaires, informations pratiques) sont fournis par le client. Les photographies du site sont celles du reportage lorsqu'il est commandé."
+  ],
+  "acompte": {
+   "290": "https://buy.stripe.com/4gM9ATdDYcPGgrl1mObQY02",
+   "410": "https://buy.stripe.com/cNi4gzgQa02U4IDfdEbQY03",
+   "550": "https://buy.stripe.com/3cIeVd0Rc5ne0snghIbQY04",
+   "670": "https://buy.stripe.com/6oU4gzeI29DuejdfdEbQY05",
+   "990": "https://buy.stripe.com/fZubJ1bvQ9Du8YT3uWbQY06",
+   "1280": "https://buy.stripe.com/9B63cveI24jafnh4z0bQY07",
+   "1400": "https://buy.stripe.com/6oU00j43o2b21wre9AbQY08",
+   "1540": "https://buy.stripe.com/7sY14neI25negrld5wbQY09",
+   "1660": "https://buy.stripe.com/fZu4gzbvQ5ne7UP6H8bQY0a",
+   "1890": "https://buy.stripe.com/6oUfZhfM64jagrl9TkbQY0b",
+   "2180": "https://buy.stripe.com/aFabJ1eI2bLC2Ave9AbQY0c",
+   "2300": "https://buy.stripe.com/4gM7sL7fAdTK1wr7LcbQY0d",
+   "2440": "https://buy.stripe.com/bJeeVd9nI3f62AvfdEbQY0e",
+   "2560": "https://buy.stripe.com/6oU4gz9nI3f65MH2qSbQY0f"
+  }
+ },
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ }
 }
