@@ -95,7 +95,8 @@ h3{font-size:1.2rem;font-weight:600;line-height:1.25;letter-spacing:-.01em}
 .bar button{border:0;background:var(--ink);color:var(--pink);font-family:var(--f-num);font-weight:700;font-size:.85rem;letter-spacing:.04em;padding:2px 9px;border-radius:999px;flex:none}
 
 /* ---------- En-tête (non collant) ---------- */
-.nav{position:relative;z-index:20}
+.nav{position:absolute;left:0;right:0;top:auto;z-index:20}
+.bar+.nav{}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--pink)}
 .brand svg{width:50px;height:auto;transition:transform .6s var(--ease)}
@@ -108,7 +109,7 @@ h3{font-size:1.2rem;font-weight:600;line-height:1.25;letter-spacing:-.01em}
 @media (max-width:960px){.nav ul,.nav .nav-cta{display:none}.nav .nav-burger{display:inline-flex}}
 
 /* bouton de menu flottant + menu plein écran */
-.fab{position:fixed;right:calc(var(--gr) + 12px);bottom:calc(26px + env(safe-area-inset-bottom,0px));z-index:70;width:60px;height:60px;border-radius:50%;border:0;background:var(--pink);color:var(--ink);display:grid;place-items:center;box-shadow:0 12px 30px -10px rgba(0,0,0,.6);transform:translateY(120px) scale(.6);opacity:0;transition:transform .5s var(--ease),opacity .3s,background .3s}
+.fab{position:fixed;right:calc(var(--gr) + 4px);bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:70;width:56px;height:56px;border-radius:50%;border:0;background:var(--pink);color:var(--ink);display:grid;place-items:center;box-shadow:0 12px 30px -10px rgba(0,0,0,.6);transform:translateY(120px) scale(.6);opacity:0;transition:transform .5s var(--ease),opacity .3s,background .3s}
 .fab.on,.menu-open .fab{transform:none;opacity:1}
 .fab i{position:absolute;width:22px;height:2px;background:currentColor;border-radius:2px;transition:transform .35s var(--ease),opacity .2s}
 .fab i:nth-of-type(1){transform:translateY(-6px)}.fab i:nth-of-type(3){transform:translateY(6px)}
@@ -140,8 +141,13 @@ html.menu-open,html.menu-open body{overflow:hidden}
 /* ---------- Hero ---------- */
 .hero{position:relative;overflow:hidden;isolation:isolate}
 .hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
-.hero::before{content:"";position:absolute;width:min(900px,120vw);aspect-ratio:1;right:-25%;top:-30%;background:radial-gradient(closest-side,color-mix(in oklab,var(--plum-2) 80%,transparent),transparent);z-index:-2}
-.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,5vw,64px);align-items:center;padding-block:clamp(36px,7vw,100px) clamp(48px,8vw,110px)}
+.hero .ph{position:absolute;inset:0;z-index:-3;overflow:hidden}
+.hero .ph img{width:100%;height:115%;object-fit:cover;object-position:50% 40%;filter:grayscale(.35) contrast(1.05);transform:scale(1.04);animation:heroIn 2.4s var(--ease) both;will-change:transform}
+@keyframes heroIn{from{transform:scale(1.14);opacity:0}to{transform:scale(1.04);opacity:1}}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(100deg,rgba(28,15,31,.94) 0%,rgba(28,15,31,.78) 45%,rgba(53,29,58,.55) 100%),linear-gradient(0deg,var(--ink) 0%,rgba(28,15,31,.6) 18%,transparent 45%)}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,5vw,64px);align-items:center;padding-block:clamp(48px,9vw,130px) clamp(64px,10vw,140px)}
+.hero .cta{margin-top:36px!important}
+.hero .wrap{padding-top:clamp(120px,13vw,180px)}
 .hero h1{font-weight:700;letter-spacing:-.045em;line-height:.92;font-size:clamp(3.2rem,9.4vw,8rem)}
 .hero h1 .l{display:block;overflow:hidden;padding-bottom:.06em}
 .hero h1 .l>span{display:inline-block;animation:up 1s var(--ease) both}
@@ -151,12 +157,13 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .hero .sub{margin-top:24px;color:var(--muted);font-size:1.08rem;max-width:40ch;animation:fade 1s .35s both}
 .hero .cta{margin-top:32px;animation:fade 1s .45s both}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.hero-logo{color:var(--pink);display:grid;place-items:center;position:relative}
+.hero-logo{color:var(--text);display:grid;place-items:center;position:relative}
 .hero-logo svg.lg{width:min(100%,480px);height:auto;animation:fade 1.2s .2s both;will-change:transform}
-@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;padding-top:10px}.hero-logo{order:-1;justify-items:start}.hero-logo svg.lg{width:min(54%,220px)}}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;padding-top:24px}.hero-logo{order:-1;justify-items:start}.hero-logo svg.lg{width:min(58%,230px)}.hero .wrap{padding-top:96px}.hero::before{background:linear-gradient(180deg,rgba(28,15,31,.7) 0%,rgba(28,15,31,.82) 55%,rgba(28,15,31,.96) 100%)}}
 
 /* bande défilante */
-.ribbon{background:var(--pink);color:var(--ink);overflow:hidden;white-space:nowrap;contain:paint;transform:rotate(-1.2deg);margin:0 -10px;position:relative;z-index:2}
+.ribbon-wrap{position:relative;z-index:2;overflow:hidden;background:linear-gradient(180deg,var(--ink) 50%,var(--skin) 50%);padding-block:18px;margin-block:-18px}
+.ribbon{background:var(--pink);color:var(--ink);overflow:hidden;white-space:nowrap;transform:rotate(-1.2deg);width:110%;margin-left:-5%}
 .ribbon .track{display:inline-flex;gap:28px;padding-block:12px;animation:slide 36s linear infinite;font-size:clamp(1.3rem,2.6vw,1.9rem);font-weight:700;letter-spacing:-.02em;line-height:1.1}
 .ribbon .track span:nth-child(4n+3){font-family:var(--f-serif);font-style:italic;font-weight:400}
 .ribbon .track i{font-style:normal;font-size:.6em;align-self:center}
@@ -518,7 +525,6 @@ dialog .close{justify-self:end;border:0;background:none;font-size:.95rem;text-de
 </header>
 
 <button class="fab" id="fab" type="button" data-menu aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">
-  <svg class="ring" viewBox="0 0 88 88" aria-hidden="true"><defs><path id="circ" d="M44 44 m-38 0 a38 38 0 1 1 76 0 a38 38 0 1 1 -76 0"/></defs><text><textPath href="#circ">PIERCEVAL TATTOO · SINCE 1995 · </textPath></text></svg>
   <i></i><i></i><i></i>
 </button>
 
@@ -531,23 +537,23 @@ dialog .close{justify-self:end;border:0;background:none;font-size:.95rem;text-de
     <li><a href="#faq">Questions</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="m-foot"><a class="btn btn-pink" href="#rdv"><span>Prendre rendez-vous</span> <span class="arr">→</span></a><a href="tel:+33298594533">02 98 59 45 33</a><span>67 rue Jean-Jaurès, Scaër</span></div>
+  <div class="m-foot"><a class="btn btn-pink" href="#rdv"><span>Prendre rendez-vous</span> <span class="arr">→</span></a></div>
 </nav>
 
 <main id="top">
 <section class="hero" aria-label="Accueil">
+  <div class="ph" aria-hidden="true"><img id="heroPh" src="img/atelier.jpg" alt=""></div>
   <canvas id="ink" aria-hidden="true"></canvas>
   <div class="wrap">
     <div>
       <h1><span class="l"><span>Tatouage</span></span><span class="l"><span>&amp; piercing</span></span><span class="l"><span><em>depuis 1995</em></span></span></h1>
-      <p class="sub">Des pièces dessinées pour vous et des piercings posés avec soin, au cœur de Scaër.</p>
       <div class="cta"><a class="btn btn-pink" href="#rdv"><span>Prendre rendez-vous</span> <span class="arr">→</span></a></div>
     </div>
     <div class="hero-logo" aria-hidden="true"><svg class="lg" id="heroLogo" viewBox="0 0 1310 1148"><use href="#logo"/></svg></div>
   </div>
 </section>
 
-<div class="ribbon" aria-hidden="true"><div class="track" id="track"></div></div>
+<div class="ribbon-wrap" aria-hidden="true"><div class="ribbon"><div class="track" id="track"></div></div></div>
 
 <!-- ===================== DEUX MÉTIERS ===================== -->
 <section class="band skin" aria-labelledby="t-metiers">
@@ -752,7 +758,7 @@ dialog .close{justify-self:end;border:0;background:none;font-size:.95rem;text-de
           <div class="v-amount" id="vAmount">50 €</div>
           <p class="v-names" id="vNames"></p>
           <p class="v-msg" id="vMsg" hidden></p>
-          <div class="v-code"><span>Numéro attribué au paiement</span><b id="vCode">PT-·······</b></div>
+          <div class="v-code"><span>Numéro attribué au paiement</span><b id="vCode">PT-····-····</b></div>
         </div>
         <ol class="gift-how">
           <li><b>1</b><span>Composez la carte et réglez-la en ligne.</span></li>
@@ -941,7 +947,7 @@ $$('#menu a').forEach(a=>a.addEventListener('click',()=>menu(false)));
 addEventListener('keydown',e=>{if(e.key==='Escape'){menu(false);closeLb()}});
 const hero=$('.hero');
 addEventListener('scroll',()=>{$('#fab').classList.toggle('on',scrollY>hero.offsetHeight*.6);
-  if(!reduce){const y=scrollY;if(y<innerHeight)$('#heroLogo').style.transform=`translateY(${y*.18}px) rotate(${y*.02}deg)`;
+  if(!reduce){const y=scrollY;if(y<innerHeight){$('#heroLogo').style.transform=`translateY(${y*.18}px) rotate(${y*.02}deg)`;$('#heroPh').style.transform=`translateY(${y*.25}px) scale(1.04)`}
     const f=$('#parallax');if(f){const r=f.parentElement.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)f.style.transform=`translateY(${(r.top-innerHeight/2)*-.08}px)`}}},{passive:true});
 
 /* ---------- Fenêtres légales ---------- */
@@ -1082,7 +1088,7 @@ go('type',false);
     const m=$('#gMsg').value.trim();$('#vMsg').hidden=!m;$('#vMsg').textContent=m?'« '+m+' »':''}
   $$('#amounts button').forEach(b=>b.onclick=()=>{amount=b.dataset.a==='libre'?'libre':+b.dataset.a;sync();$('#freeField').hidden=amount!=='libre';if(amount==='libre')$('#amountFree').focus();upd()});
   ['gDe','gPour','gMsg','amountFree'].forEach(id=>$('#'+id).addEventListener('input',upd));upd();
-  const newCode=()=>{const A='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let s='';for(const x of crypto.getRandomValues(new Uint32Array(5)))s+=A[x%A.length];return 'PT-'+String(NOW.getFullYear()).slice(2)+s};
+  const newCode=()=>{const A='ABCDEFGHJKMNPQRSTUVWXYZ23456789';let s='';for(const x of crypto.getRandomValues(new Uint32Array(8)))s+=A[x%A.length];return 'PT-'+s.slice(0,4)+'-'+s.slice(4)};
 
   $('#giftForm').onsubmit=async e=>{e.preventDefault();
     const a=val();if(!a||a<20){toast('Choisissez un montant, à partir de 20 €');return}
@@ -1109,7 +1115,7 @@ go('type',false);
     ok.innerHTML=`<h3>Merci, la carte <em>est prête</em></h3><p class="lead">Carte n° <b>${g.code}</b>, valable jusqu'au ${g.until}.${demo?' <small>(Aperçu : en ligne, cette étape passe d\'abord par le paiement Stripe.)</small>':''}</p><canvas id="giftCv" width="1600" height="1000" aria-label="Aperçu de la carte cadeau"></canvas><div class="row"><button type="button" class="btn btn-ink" id="pdfBtn"><span>Télécharger la carte (PDF)</span> <span class="arr">↓</span></button><button type="button" class="btn btn-line" id="giftAgain" style="color:var(--on-skin)"><span>Offrir une autre carte</span></button></div>`;
     drawCard(g).then(()=>{if(!demo)makePdf(g)});
     $('#pdfBtn').onclick=()=>makePdf(g);
-    $('#giftAgain').onclick=()=>{ok.hidden=true;$('#giftForm').hidden=false;$('#voucher').hidden=false;$('#vCode').textContent='PT-·······';upd()}}
+    $('#giftAgain').onclick=()=>{ok.hidden=true;$('#giftForm').hidden=false;$('#voucher').hidden=false;$('#vCode').textContent='PT-····-····';upd()}}
 
   function logoImg(color){return new Promise(res=>{const inner=$('#logo').innerHTML;const s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1310 1148" width="1310" height="1148" style="color:${color}">${inner}</svg>`;const i=new Image();i.onload=()=>res(i);i.onerror=()=>res(null);i.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s)})}
   async function drawCard(g){const cv=$('#giftCv'),c=cv.getContext('2d'),W=1600,H=1000;
@@ -1127,7 +1133,7 @@ go('type',false);
     c.strokeStyle='rgba(230,141,202,.6)';c.lineWidth=3;c.setLineDash([2,10]);c.beginPath();c.moveTo(100,830);c.lineTo(W-100,830);c.stroke();c.setLineDash([]);
     c.fillStyle='#b9a5bb';c.font='400 30px Rubik, sans-serif';c.fillText('Numéro',100,885);c.fillText('Valable jusqu\'au',620,885);
     c.fillStyle='#f5eef1';c.font='700 50px Antonio, sans-serif';c.fillText(g.code,100,940);c.fillText(g.until,620,940);
-    c.fillStyle='#b9a5bb';c.font='400 26px Rubik, sans-serif';c.textAlign='right';c.fillText('Tatouage ou piercing au studio Pierceval Tattoo',W-100,890);c.fillText('67 rue Jean-Jaurès, 29390 Scaër · 02 98 59 45 33',W-100,930);c.fillText('Nominative, non remboursable',W-100,965);c.textAlign='left'}
+    c.fillStyle='#b9a5bb';c.font='400 26px Rubik, sans-serif';c.textAlign='right';c.fillText('Tatouage ou piercing au studio Pierceval Tattoo',W-100,890);c.fillText('67 rue Jean-Jaurès, 29390 Scaër · 02 98 59 45 33',W-100,930);c.fillText('Nominative, non remboursable. Numéro vérifié au studio.',W-100,965);c.textAlign='left'}
   function makePdf(g){const J=window.jspdf&&window.jspdf.jsPDF;if(!J){toast('Le PDF n\'a pas pu être créé. Contactez le studio.');return}
     const doc=new J({orientation:'landscape',unit:'mm',format:[160,100]});doc.addImage($('#giftCv').toDataURL('image/jpeg',.92),'JPEG',0,0,160,100);
     doc.setProperties({title:'Carte cadeau Pierceval Tattoo '+g.code});doc.save('carte-cadeau-pierceval-'+g.code+'.pdf')}
