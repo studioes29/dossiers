@@ -8,6 +8,7 @@
 <title>Studio ES : photographe d'événement et graphiste en Finistère</title>
 <meta name="description" content="Ewen Soupault, photographe de reportage et graphiste en Finistère : photos d'événements, de concerts et de mariages, identités visuelles, affiches, brochures, sites internet et réseaux sociaux, pour les collectivités, la culture, les entreprises et les associations.">
 <link rel="canonical" href="https://studioes.fr/">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Studio ES">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -26,8 +27,8 @@
 <meta property="og:image:alt" content="Concert photographié par Studio ES">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="geo.region" content="FR-29">
-<link rel="preload" href="/f/bricolage.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/f/jost.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="f/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="f/jost.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" imagesrcset="/h/festival-800.webp 800w, /h/festival-1600.webp 1600w" imagesizes="max(100vw, 175vh)" fetchpriority="high">
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "ProfessionalService", "@id": "https://studioes.fr/#studio", "name": "Studio ES", "description": "Ewen Soupault, photographe de reportage et graphiste en Finistère : photos d'événements, de concerts et de mariages, identités visuelles, affiches, brochures, sites internet et réseaux sociaux, pour les collectivités, la culture, les entreprises et les associations.", "url": "https://studioes.fr/", "logo": "https://studioes.fr/icon-512.png", "image": "https://studioes.fr/og.jpg", "email": "contact@studioes.fr", "telephone": "+33651222107", "address": {"@type": "PostalAddress", "addressRegion": "Bretagne", "addressCountry": "FR"}, "areaServed": [{"@type": "AdministrativeArea", "name": "Finistère"}, {"@type": "AdministrativeArea", "name": "Morbihan"}, {"@type": "AdministrativeArea", "name": "Bretagne"}], "founder": {"@type": "Person", "name": "Ewen Soupault", "jobTitle": "Photographe et graphiste"}, "knowsAbout": ["Photographie d'événement", "Reportage photo", "Photographie de concert", "Photographie de mariage", "Photographie corporate", "Graphisme", "Identité visuelle", "Affiche", "Brochure", "Création de site internet", "Gestion des réseaux sociaux", "Communication des collectivités"], "sameAs": ["https://www.instagram.com/ewen.studioes"]}, {"@type": "WebSite", "@id": "https://studioes.fr/#site", "url": "https://studioes.fr/", "name": "Studio ES", "inLanguage": "fr-FR", "publisher": {"@id": "https://studioes.fr/#studio"}}]}</script>
 <script>window.SITE_LIVE = true;</script>
@@ -800,8 +801,69 @@ body.has-sel .svc{display:none}
 /* ordre : brut avant Déclic, pour que les fonds alternent */
 #brut{order:3!important}#declic{order:4!important}
 
+
+/* ===== v8 : finitions ===== */
+/* En-tête photographique, une image par public */
+.badge-h{display:none!important}
+html body .hero{min-height:max(640px,100svh)!important;display:flex!important;flex-direction:column;justify-content:flex-end;padding-top:0!important;background:#191919!important}
+html body .hero .hero-ph{display:block!important}
+html body .hero .hero-in{padding-bottom:clamp(44px,6vw,92px)!important}
+html body .hero .catch{font-size:clamp(44px,7vw,112px)!important;text-shadow:0 2px 30px rgba(0,0,0,.25)}
+html body .hero .who{color:rgba(225,219,196,.62)!important}
+html body .hero .who.on,html body .hero .who:hover{color:var(--wc,var(--cream))!important}
+@media (max-width:820px){
+  html body .hero{min-height:0!important;display:block!important;padding-top:calc(env(safe-area-inset-top,0px) + 70px + clamp(250px,calc(100svh - 405px - env(safe-area-inset-top,0px)),560px) - 44px)!important}
+  html body .hero .catch{font-size:clamp(36px,10vw,52px)!important}
+}
+/* Lisibilité : coupures équilibrées, pas de mot court en fin de ligne */
+h1,h2,h3,.lede,.pl-lead,.svc-c h3{text-wrap:balance}
+p,li,small,em,.me p{text-wrap:pretty}
+/* Métiers : deux par ligne sur mobile, compacts */
+@media (max-width:560px){
+  .svc-g{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+  .svc-c{padding:16px 14px 14px!important;border-radius:18px!important}
+  .svc-c h3{font-size:clamp(17px,4.8vw,20px)!important;letter-spacing:-.03em!important;overflow-wrap:normal!important;hyphens:auto}
+  .svc-c p{font-size:13px!important;line-height:1.38!important;margin-top:8px!important}
+  .svc-c .go{font-size:13px!important;padding-top:12px!important;gap:.35em!important}
+  .svc h2{font-size:clamp(34px,10vw,44px)!important}
+}
+/* Filtres du portfolio : un seul repère, la pastille */
+#pfTabs .tab,#pfTabs .tab.glass{background:transparent!important;background-image:none!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border:0!important}
+#pfTabs .tab::before,#pfTabs .tab::after{content:none!important;display:none!important}
+#pfTabs .tab.snap{animation:none!important}
+/* Plan large : de l'air entre le titre et les images, boutons sur une ligne */
+.sup-g{gap:clamp(40px,6vw,100px)!important}
+#offre .row-btns{display:flex!important;flex-wrap:nowrap!important;gap:10px!important;margin-top:clamp(20px,2.6vw,32px)!important}
+#offre .row-btns .btn{white-space:nowrap}
+@media (max-width:820px){
+  #offre .stage{margin-bottom:44px!important}
+  #offre .sup-g{gap:0!important}
+}
+@media (max-width:420px){#offre .row-btns .btn{font-size:15px!important;padding:.72em 1.05em!important;gap:.45em!important}}
+/* Déclic : la carte ocre seule, posée entre deux sections */
+#declic{--bg:var(--ink)!important;padding-block:clamp(8px,2vw,24px)!important}
+#declic>.wrap{margin-inline:auto}
+#declic .btn{--fg:#191919!important;--bg:var(--ochre)!important;color:var(--cream)!important;background-color:#191919!important}
+@media (max-width:820px){#declic>.wrap{margin-inline:12px;padding:28px 22px!important;border-radius:24px}}
+/* Brut / retouché : une image plus généreuse sur grand écran */
+@media (min-width:821px){.ba{width:calc(min(72svh,640px) * var(--ar))!important}}
+/* Contact */
+.me b{display:block;margin-bottom:2px}
+/* Pied de page */
+.foot{padding-top:clamp(56px,7vw,96px)}
+.ft{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:40px clamp(24px,4vw,64px)}
+@media (max-width:900px){.ft{grid-template-columns:repeat(3,minmax(0,1fr))}.ft-id{grid-column:1/-1}}
+@media (max-width:520px){.ft{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 20px}.ft-col:last-child{grid-column:auto}}
+.ft-id{display:grid;gap:18px;justify-items:start;align-content:start}
+.ft-id p{font-size:16px;line-height:1.5;color:rgba(225,219,196,.66);max-width:24em}
+.ft-cta{--fg:var(--cream);--bg:var(--ink)}
+.ft-col h3{font-family:var(--text);font-weight:500;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(225,219,196,.45);margin-bottom:14px}
+.ft-col ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ft-col a{font-size:16px;text-decoration:none;color:var(--cream);background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;padding-bottom:2px;transition:background-size .45s var(--ease),opacity .3s}
+.ft-col a:hover{background-size:100% 1px}
+.ft-mark{margin:clamp(48px,7vw,96px) 0 0;font-family:var(--display);font-weight:800;letter-spacing:-.06em;line-height:.78;font-size:clamp(84px,21vw,330px);color:rgba(225,219,196,.07);white-space:nowrap;user-select:none;margin-left:-.04em}
+.foot-row{margin-top:0!important;border-top:1px solid rgba(225,219,196,.14)!important}
 </style>
-<link rel="preload" href="v/banniere.jpg" as="image">
 </head>
 <body>
 
@@ -833,7 +895,6 @@ body.has-sel .svc{display:none}
 
 <div id="top"></div>
 
-<section class="badge-h" aria-label="Studio ES, photographe et graphiste"><video id="badgeV" autoplay muted loop playsinline preload="auto" poster="v/banniere.jpg" aria-hidden="true"><source src="v/banniere.mp4" type="video/mp4"></video></section>
 <section class="hero" id="accueil" aria-label="Accueil">
   <div class="hero-ph" id="heroPh"></div>
   <div class="wrap hero-in">
@@ -933,7 +994,7 @@ body.has-sel .svc{display:none}
   <div class="wrap ct">
     <div class="ct-l">
       <h2>Parlons de votre projet.</h2>
-      <div class="me"><img src="https://studioes.fr/a/ewen-nb.webp" alt="Portrait d'Ewen, photographe et graphiste à Studio ES" loading="lazy"><p data-nosnippet><b>Ewen Soupault, Studio ES.</b> Un interlocuteur unique, du premier échange à la livraison, dans le Finistère et partout en Bretagne.</p></div>
+      <div class="me"><img src="https://studioes.fr/a/ewen-nb.webp" alt="Portrait d'Ewen, photographe et graphiste à Studio ES" loading="lazy"><p data-nosnippet><b>Ewen Soupault, Studio ES.</b><br>Un interlocuteur unique, du premier échange à la livraison, dans le Finistère et partout en Bretagne.</p></div>
       <div class="ways" data-nosnippet>
         <a class="way" href="mailto:contact@studioes.fr"><svg><use href="#mail"/></svg>contact@studioes.fr<svg class="go"><use href="#arr"/></svg></a>
         <a class="way" href="tel:+33651222107"><svg><use href="#tel"/></svg>06 51 22 21 07<svg class="go"><use href="#arr"/></svg></a>
@@ -941,7 +1002,7 @@ body.has-sel .svc{display:none}
         <a class="way" href="https://www.instagram.com/ewen.studioes" target="_blank" rel="noopener" aria-label="Instagram : @ewen.studioes"><svg><use href="#ig"/></svg>@ewen.studioes<svg class="go"><use href="#arr"/></svg></a>
       </div>
     </div>
-    <form class="form" id="form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="contact"><p hidden><label>Ne pas remplir <input name="bot-field"></label></p>
+    <form class="form" id="form" name="contact" method="POST"><input type="hidden" name="form-name" value="contact"><p hidden><label>Ne pas remplir <input name="bot-field"></label></p>
       <p class="recap" id="recap" hidden></p>
       <input type="hidden" name="profil" id="f-profil"><input type="hidden" name="besoin" id="f-besoin"><input type="hidden" name="estimation" id="f-est"><input type="hidden" name="date" id="f-date"><input type="hidden" name="lieu" id="f-lieu">
       <div class="f"><label for="f-nom">Nom et prénom</label><input id="f-nom" name="nom" autocomplete="name" required></div>
@@ -959,14 +1020,26 @@ body.has-sel .svc{display:none}
 
 <footer class="foot" id="foot">
   <div class="wrap">
-    <div class="foot-g">
-      <a class="foot-id" href="#top" id="home3"><svg viewBox="0 0 98 186" aria-hidden="true"><use href="#logo"/></svg><span><b>Studio ES</b><small>Photographie, design graphique et web. Finistère, Bretagne.</small></span></a>
-      <div class="foot-ct">
-        <a href="mailto:contact@studioes.fr"><svg><use href="#mail"/></svg>contact@studioes.fr</a>
-        <a href="tel:+33651222107"><svg><use href="#tel"/></svg>06 51 22 21 07</a>
-        <a href="https://www.instagram.com/ewen.studioes" target="_blank" rel="noopener"><svg><use href="#ig"/></svg>@ewen.studioes</a>
+    <div class="ft">
+      <div class="ft-id">
+        <a class="foot-id" href="#top" id="home3" aria-label="Studio ES, haut de page"><svg viewBox="0 0 98 186" aria-hidden="true"><use href="#logo"/></svg><span><b>Studio ES</b></span></a>
+        <p>Photographie, design graphique, sites et communication. Basé à Leuhan, en Finistère, pour toute la Bretagne.</p>
+        <a class="btn ft-cta" href="#contact">Parler d'un projet <svg aria-hidden="true"><use href="#arr"/></svg></a>
       </div>
+      <div class="ft-col"><h3>Métiers</h3><ul>
+        <li><a href="#portfolio" data-ft="photo">Photographie</a></li>
+        <li><a href="#portfolio" data-ft="graph">Graphisme</a></li>
+        <li><a href="#est" data-ft="web">Sites et outils</a></li>
+        <li><a href="#plan-large" data-op>Communication</a></li></ul></div>
+      <div class="ft-col"><h3>Contact</h3><ul>
+        <li><a href="mailto:contact@studioes.fr">contact@studioes.fr</a></li>
+        <li><a href="tel:+33651222107">06 51 22 21 07</a></li>
+        <li><a href="https://cal.eu/studioes/30min" target="_blank" rel="noopener">Réserver un appel</a></li></ul></div>
+      <div class="ft-col"><h3>Suivre</h3><ul>
+        <li><a href="https://www.instagram.com/ewen.studioes" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://declic.studioes.fr" target="_blank" rel="noopener">Déclic, le jeu</a></li></ul></div>
     </div>
+    <p class="ft-mark" aria-hidden="true">Studio ES</p>
     <div class="foot-row">
       <span>© 2026 Studio ES, Ewen Soupault</span>
       <nav aria-label="Pied de page"><a href="#plan-large" data-op>L'offre Plan large</a><button id="mlBtn">Mentions légales</button><a href="#top" id="home2">Haut de page</a></nav>
@@ -1117,11 +1190,11 @@ body.has-sel .svc{display:none}
     <h3>Éditeur</h3>
     <p>Studio ES, Ewen Soupault, entrepreneur individuel. Contact : contact@studioes.fr, 06 51 22 21 07. Directeur de la publication : Ewen Soupault.</p>
     <h3>Hébergement</h3>
-    <p>Netlify, Inc., 101 2nd Street, Suite 575, San Francisco, CA 94105, États-Unis.</p>
+    <p>GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
     <h3>Propriété intellectuelle</h3>
     <p>Les photographies et créations graphiques présentées sur ce site sont la propriété d'Ewen Soupault, sauf mention contraire. Toute reproduction ou réutilisation, totale ou partielle, sans autorisation écrite est interdite. Les marques et logos des clients restent la propriété de leurs titulaires.</p>
     <h3>Données personnelles</h3>
-    <p>Les informations envoyées par le formulaire de contact servent uniquement à répondre à votre demande. Elles ne sont ni cédées ni revendues. Vous pouvez demander leur consultation, leur rectification ou leur suppression en écrivant à contact@studioes.fr.</p>
+    <p>Les informations envoyées par le formulaire de contact sont transmises par courriel au moyen du service FormSubmit et servent uniquement à répondre à votre demande. Elles ne sont ni cédées ni revendues. Vous pouvez demander leur consultation, leur rectification ou leur suppression en écrivant à contact@studioes.fr.</p>
     <h3>Cookies</h3>
     <p>Ce site n'utilise pas de cookies de mesure d'audience ni de publicité. Il retient seulement, dans votre navigateur, le profil que vous avez choisi pour vous le proposer à votre prochaine visite.</p>
   </div>
@@ -1238,8 +1311,8 @@ function colors(k) { const p = P[k], b = document.body.style; b.setProperty('--p
 /* ---------- Accueil : une photo et un mot par public ---------- */
 const DUR_MS = 4200;
 { const HAR = {"h/collectivite.jpg": 1.389, "h/festival.jpg": 1.754, "h/entreprise.jpg": 0.75, "h/club.jpg": 1.777, "h/mariage.jpg": 0.75};
-  const hs = h => { const b = h.replace(/\.jpg$/, ''); return `${b}-800.webp 800w, ${b}-1600.webp 1600w`; };
-  $('#heroPh').innerHTML = '';
+  const hs = h => { const b = 'https://studioes.fr/' + h.replace(/\.jpg$/, ''); return `${b}-800.webp 800w, ${b}-1600.webp 1600w`; };
+  $('#heroPh').innerHTML = KEYS.map((k, i) => `<img ${i ? 'data-srcset' : 'srcset'}="${hs(P[k].hero)}" sizes="${HAR[P[k].hero] > 1 ? `max(100vw, ${Math.round(HAR[P[k].hero] * 100)}vh)` : '100vw'}" src="${i ? '' : 'https://studioes.fr/' + P[k].hero.replace(/\.jpg$/, '-1600.webp')}" alt="" style="--pos:${P[k].pos};--mpos:${P[k].mpos || P[k].pos}"${i ? '' : ' fetchpriority="high"'}>`).join('').replace(/ src=""/g, '');
   const more = () => $$('#heroPh img[data-srcset]').forEach(im => { im.srcset = im.dataset.srcset; im.removeAttribute('data-srcset'); });
   if (document.readyState === 'complete') setTimeout(more, 600); else addEventListener('load', () => setTimeout(more, 600)); }
 $('#whos').innerHTML = KEYS.map((k, i) => `<button class="who" data-p="${k}" style="--i:${i + 3};--wc:${P[k].tt}"><span class="bar"></span>${P[k].t}${ARR}</button>`).join('');
@@ -1382,12 +1455,17 @@ function fillContact(force) {
   if (force || !m.value || m.value === autoMsg) m.value = txt; autoMsg = txt;
 }
 $$('[data-msg]').forEach(a => a.addEventListener('click', () => { const m = $('#f-msg'); if (!m.value || m.value === autoMsg) { m.value = a.dataset.msg; autoMsg = m.value; } }));
+const ENVOI = 'https://formsubmit.co/ajax/contact@studioes.fr';
+const envoyer = obj => { const o = Object.assign({}, obj); delete o['form-name']; delete o['bot-field'];
+  o._subject = 'Studio ES : nouvelle demande' + (o.nom ? ' de ' + o.nom : ''); o._template = 'table'; o._captcha = 'false'; if (o.email) o._replyto = o.email;
+  return fetch(ENVOI, {method: 'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}, body: JSON.stringify(o)})
+    .then(r => r.json()).then(j => { if (!j || String(j.success) !== 'true') throw 0; }); };
 const form = $('#form'), msg = $('#formMsg');
 form.addEventListener('submit', e => { e.preventDefault(); msg.hidden = false;
   if (!LIVE) { msg.textContent = 'Maquette : le formulaire sera branché à la mise en ligne.'; return; }
   msg.textContent = 'Envoi en cours.';
-  fetch('/', {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(form)).toString()})
-    .then(r => { if (!r.ok) throw 0; form.reset(); autoMsg = ''; msg.textContent = 'Message reçu. Réponse sous 48 h.'; })
+  (form.querySelector('[name="bot-field"]') && form.querySelector('[name="bot-field"]').value ? Promise.resolve() : envoyer(Object.fromEntries(new FormData(form))))
+    .then(() => { form.reset(); autoMsg = ''; msg.textContent = 'Message reçu. Réponse sous 48 h.'; })
     .catch(() => { msg.textContent = 'L\'envoi n\'a pas abouti. Écrivez à contact@studioes.fr.'; }); });
 
 /* ---------- Portfolio : par artiste, par public, par type de création ---------- */
@@ -1579,8 +1657,8 @@ $('#shotF').addEventListener('submit', e => {
   const develop = () => { if (!RM) { const f = $('#flash'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go'); } $('#print').classList.add('dev'); $('#prOk').hidden = false; shot.classList.add('sent'); $('#shotBack').focus({preventScroll: true}); };
   if (!LIVE) { develop(); $('#doneP').textContent = 'Maquette : la demande sera réellement envoyée une fois le site en ligne. Réponse sous 48 h.'; return; }
   m.hidden = false; m.textContent = 'Envoi en cours.';
-  fetch('/', {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: new URLSearchParams(data).toString()})
-    .then(r => { if (!r.ok) throw 0; m.hidden = true; develop(); })
+  envoyer(data)
+    .then(() => { m.hidden = true; develop(); })
     .catch(() => { m.textContent = 'L\'envoi n\'a pas abouti. Écrivez à contact@studioes.fr.'; });
 });
 
@@ -1617,5 +1695,19 @@ reveal();
 <script>(function(){document.addEventListener("click",function(e){var a=e.target.closest(".svc-c");if(!a)return;var k=a.dataset.svc;
 if(k==="web"){e.preventDefault();var t=document.getElementById("toEst");if(t)t.click();return;}
 if(k==="graph"||k==="photo"){setTimeout(function(){var re=k==="graph"?/graphique/i:/artistes/i;var t=[].slice.call(document.querySelectorAll("#pfTabs .tab,#pfTabs button")).filter(function(b){return re.test(b.textContent)})[0];if(t)t.click();},380);}});})();</script>
+<script>(function(){
+/* espaces insécables après les mots courts, pour éviter « ou » ou « à » en bout de ligne */
+var RE=/(^|[\s(«])(à|a|au|aux|de|des|du|d’|l’|le|la|les|un|une|et|ou|en|sur|par|pour|avec|sans|son|sa|ses|vos|votre|nos|notre|ce|cet|cette|se|ne|y|il|on|qui|que|dans|chez|vers|tout|très|plus|est) /gi;
+var SKIP={SCRIPT:1,STYLE:1,TEXTAREA:1,INPUT:1,OPTION:1,SVG:1,CODE:1};
+function fix(root){var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentNode;while(p&&p!==document.body){if(SKIP[p.nodeName&&p.nodeName.toUpperCase()])return 2;p=p.parentNode;}return /\s/.test(n.nodeValue)?1:2;}});var n,l=[];while(n=w.nextNode())l.push(n);
+ l.forEach(function(t){var v=t.nodeValue,o=v.replace(/'/g,"’").length===v.length?v:v; var r=v.replace(RE,function(m,a,b){return a+b+"\u00a0";}).replace(/ ([?!:;»])/g,"\u00a0$1"); if(r!==v)t.nodeValue=r;});}
+function run(){fix(document.body);}
+if(document.readyState!=="loading")run();else document.addEventListener("DOMContentLoaded",run);
+var t=0;new MutationObserver(function(m){if(t)return;t=setTimeout(function(){t=0;m.length&&run();},60);}).observe(document.body,{childList:true,subtree:true});
+/* liens du pied de page vers les rubriques du portfolio et l'estimation */
+document.addEventListener("click",function(e){var a=e.target.closest("[data-ft]");if(!a)return;var k=a.dataset.ft;
+ if(k==="web"){e.preventDefault();var b=document.getElementById("toEst");if(b)b.click();return;}
+ setTimeout(function(){var re=k==="graph"?/graphique/i:/artistes/i;var t=[].slice.call(document.querySelectorAll("#pfTabs .tab")).filter(function(b){return re.test(b.textContent)})[0];if(t)t.click();},380);});
+})();</script>
 </body>
 </html>
