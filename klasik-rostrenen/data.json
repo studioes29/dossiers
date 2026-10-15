@@ -1,0 +1,96 @@
+{
+ "nom": "Klasik",
+ "secteur": "Festival de musique",
+ "ville": "Rostrenen",
+ "date": "2026-10-15",
+ "accroche": "Votre 13e édition est en cours, une dizaine de rendez-vous éparpillés dans le Kreiz Breizh jusqu'à fin novembre. C'est exactement le genre de festival que j'aime photographier, et je me suis demandé ce qu'il en restera en images.",
+ "constats": [
+  {
+   "titre": "Un festival qui dure",
+   "etat": "bien",
+   "texte": "Treize éditions depuis 2012, des concerts, des résidences, des balades chantées et des séances jeune public, de la musique ancienne à la création."
+  },
+  {
+   "titre": "Des lieux dispersés",
+   "etat": "moyen",
+   "texte": "Rostrenen, Bon-Repos, Kergrist-Moëlou, Lanrivain, Saint-Connan, Saint-Nicolas-du-Pélem : une richesse, mais difficile à rendre visible sans images de chaque rendez-vous."
+  },
+  {
+   "titre": "Votre site dans les recherches",
+   "etat": "moyen",
+   "texte": "En cherchant « Festival Klasik », ce sont surtout des agendas qui sortent. Votre site klasik.fr arrive derrière eux."
+  },
+  {
+   "titre": "Vos réseaux",
+   "etat": "moyen",
+   "texte": "Je n'ai trouvé que votre page Facebook, pas de compte Instagram à votre nom.",
+   "lien": "https://www.facebook.com/festivalklasik"
+  }
+ ],
+ "maquette": {
+  "type": "insta",
+  "accroche": "Ce que ça pourrait donner",
+  "compte": "festivalklasik",
+  "titre": "Klasik",
+  "statsTexte": "Kreiz Breizh · octobre et novembre",
+  "bio": "Musiques classiques et contemporaines en Centre-Bretagne, chaque automne depuis 2012.",
+  "cases": [
+   {
+    "texte": "Ce soir à Lanrivain"
+   },
+   {
+    "texte": "Les mains du pianiste"
+   },
+   {
+    "texte": "Balade chantée"
+   },
+   {
+    "texte": "En résidence"
+   },
+   {
+    "texte": "La chapelle avant le concert"
+   },
+   {
+    "texte": "Jeune public"
+   },
+   {
+    "texte": "Les musiciens"
+   },
+   {
+    "texte": "Le public de Bon-Repos"
+   },
+   {
+    "texte": "Prochain rendez-vous"
+   }
+  ],
+  "couleurs": {
+   "fond": "#F4F1EC",
+   "texte": "#1D1F2A",
+   "accent": "#3C4A7A"
+  },
+  "police": "Libre Baskerville",
+  "explication": "Une grille sobre qui suit le festival lieu par lieu et annonce chaque rendez-vous avec une vraie photo plutôt qu'une affiche seule.",
+  "legende": "Une première piste, faite sans vous. Elle se discute et se corrige."
+ },
+ "pistes": [
+  {
+   "palier": "Prise de vue",
+   "titre": "Les concerts de l'édition",
+   "texte": "Une série de rendez-vous photographiés sur le vif, sans flash, avec une sélection livrée sous 72 heures."
+  },
+  {
+   "palier": "Tirage",
+   "titre": "Le programme de l'an prochain",
+   "texte": "Les images de cette édition au service de la brochure et de l'affiche de la 14e."
+  },
+  {
+   "palier": "Exposition",
+   "titre": "La saison suivie d'année en année",
+   "texte": "Un suivi photo et des contenus réguliers, pour que les partenaires et le public voient le festival vivre."
+  }
+ ],
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ }
+}

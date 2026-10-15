@@ -1,0 +1,98 @@
+{
+ "nom": "Printemps de Châteauneuf",
+ "secteur": "Fête bretonne",
+ "ville": "Châteauneuf-du-Faou",
+ "date": "2026-10-15",
+ "accroche": "Une fête née en 1976, une centaine d'artistes et 2 000 personnes à Ar Sterenn chaque dimanche de Pâques : c'est un morceau de la vie de Châteauneuf. Pourtant, je l'ai eu difficile à trouver en ligne.",
+ "constats": [
+  {
+   "titre": "Une fête qui compte",
+   "etat": "bien",
+   "texte": "Près de cinquante ans d'histoire, une centaine d'artistes, environ 2 000 visiteurs, et un fest-noz, inscrit au patrimoine immatériel de l'UNESCO."
+  },
+  {
+   "titre": "Votre nom sur Google",
+   "etat": "moyen",
+   "texte": "En cherchant « Printemps de Châteauneuf », on tombe vite sur les Printemps de Châteauneuf-du-Pape, un salon des vins en Provence."
+  },
+  {
+   "titre": "Votre site",
+   "etat": "absent",
+   "texte": "Je n'ai pas trouvé de site ni de page à votre nom. Les informations passent par des agendas de festivals."
+  },
+  {
+   "titre": "Vos images",
+   "etat": "absent",
+   "texte": "Aucune photo récente de la fête que l'on puisse partager facilement pour donner envie de venir à l'édition suivante."
+  }
+ ],
+ "maquette": {
+  "type": "site",
+  "accroche": "Ce que ça pourrait donner",
+  "titre": "Printemps de Châteauneuf",
+  "logoTexte": "Printemps de Châteauneuf",
+  "surtitre": "Fête bretonne à Châteauneuf-du-Faou",
+  "sousTitre": "Chaque dimanche de Pâques depuis 1976, de 15 h 30 à minuit : fest-deiz, concerts et fest-noz à la salle Ar Sterenn.",
+  "bouton": "Voir le programme",
+  "menu": [
+   "Le programme",
+   "Infos pratiques",
+   "Les bénévoles"
+  ],
+  "infos": [
+   {
+    "t": "Quand",
+    "l": [
+     "Le dimanche de Pâques",
+     "De 15 h 30 à minuit"
+    ]
+   },
+   {
+    "t": "Où",
+    "l": [
+     "Salle Ar Sterenn",
+     "Châteauneuf-du-Faou"
+    ]
+   },
+   {
+    "t": "Entrée",
+    "l": [
+     "10 €",
+     "Une centaine d'artistes, un fest-noz"
+    ]
+   }
+  ],
+  "pied": "Association Nevezamzer, Châteauneuf-du-Faou",
+  "domaine": "printemps-chateauneuf.bzh",
+  "imageTexte": "Ici, une photo du fest-noz en pleine soirée à Ar Sterenn.",
+  "couleurs": {
+   "fond": "#F2F4EE",
+   "texte": "#1E2A22",
+   "accent": "#3E6B48"
+  },
+  "police": "Fraunces",
+  "explication": "Une page simple qui dit l'essentiel en un coup d'œil : la date, le lieu, le prix, et une grande photo de la fête. Le nom de Châteauneuf-du-Faou y figure pour qu'on ne vous confonde plus.",
+  "legende": "Une première piste, faite sans vous. Elle se discute et se corrige."
+ },
+ "pistes": [
+  {
+   "palier": "Prise de vue",
+   "titre": "La fête en photos",
+   "texte": "Le dimanche de Pâques sur le vif, de l'après-midi au fest-noz : musiciens, danseurs, public, bénévoles."
+  },
+  {
+   "palier": "Tirage",
+   "titre": "Une page à votre nom",
+   "texte": "Un site d'une page avec la date, le programme et les infos pratiques, pour qu'on vous trouve en cherchant Châteauneuf-du-Faou."
+  },
+  {
+   "palier": "Exposition",
+   "titre": "D'une édition à l'autre",
+   "texte": "Le site tenu à jour et les photos réutilisées pour annoncer l'édition suivante dès l'hiver."
+  }
+ ],
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ }
+}

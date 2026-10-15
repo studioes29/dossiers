@@ -1,0 +1,96 @@
+{
+ "nom": "Fête de la Crêpe",
+ "secteur": "Festival",
+ "ville": "Gourin",
+ "date": "2026-10-15",
+ "accroche": "Je vis à Leuhan, à quelques kilomètres de Tronjoly, et la Fête de la Crêpe fait partie de ce que je connais du pays. Je me suis demandé comment on la retrouve en ligne le reste de l'année, quand le parc est vide.",
+ "constats": [
+  {
+   "titre": "Une fête installée",
+   "etat": "bien",
+   "texte": "34 éditions, des milliers de visiteurs chaque dernier week-end de juillet, et un programme riche : concours de la plus grande crêpe, battages à l'ancienne, fest-deiz, fest-noz, bagadoù."
+  },
+  {
+   "titre": "Le parc de Tronjoly",
+   "etat": "bien",
+   "texte": "Un cadre que peu de fêtes ont. Il mérite d'être montré autant que la programmation."
+  },
+  {
+   "titre": "Votre site dans les recherches",
+   "etat": "moyen",
+   "texte": "En cherchant « Fête de la Crêpe Gourin », on tombe d'abord sur des agendas et des sites de festivals. Votre propre site arrive après eux."
+  },
+  {
+   "titre": "Vos réseaux",
+   "etat": "moyen",
+   "texte": "Je n'ai trouvé que votre page Facebook. Pas de compte Instagram à votre nom, alors que c'est là que les photos de fête circulent le plus.",
+   "lien": "https://www.facebook.com/fetedelacrepegourin"
+  }
+ ],
+ "maquette": {
+  "type": "insta",
+  "accroche": "Ce que ça pourrait donner",
+  "compte": "fetedelacrepegourin",
+  "titre": "Fête de la Crêpe",
+  "statsTexte": "Gourin · dernier week-end de juillet",
+  "bio": "Crêpes Mod Gourin, musique et danse bretonnes au château de Tronjoly depuis 1991. Rendez-vous fin juillet.",
+  "cases": [
+   {
+    "texte": "La plus grande crêpe"
+   },
+   {
+    "texte": "Fest-noz sous les arbres"
+   },
+   {
+    "texte": "Les battages"
+   },
+   {
+    "texte": "Les bilig en cuisine"
+   },
+   {
+    "texte": "Les bénévoles"
+   },
+   {
+    "texte": "Bagad dans le parc"
+   },
+   {
+    "texte": "J-30"
+   },
+   {
+    "texte": "Les artisans"
+   },
+   {
+    "texte": "Merci et à l'an prochain"
+   }
+  ],
+  "couleurs": {
+   "fond": "#FBF5EA",
+   "texte": "#2B1E14",
+   "accent": "#B5572A"
+  },
+  "police": "Bitter",
+  "explication": "Une grille qui raconte la fête de bout en bout, de la préparation au fest-noz, pour garder le lien avec le public toute l'année.",
+  "legende": "Une première piste, faite sans vous. Elle se discute et se corrige."
+ },
+ "pistes": [
+  {
+   "palier": "Prise de vue",
+   "titre": "Le week-end en photos",
+   "texte": "Les deux jours sur le vif : le concours, les cuisines, le public, les danseurs, les bénévoles. Une sélection livrée vite pour la presse et les réseaux."
+  },
+  {
+   "palier": "Tirage",
+   "titre": "L'affiche et ses déclinaisons",
+   "texte": "Les images de l'édition servent l'affiche suivante, les formats réseaux et le dossier pour les partenaires."
+  },
+  {
+   "palier": "Exposition",
+   "titre": "Un compte vivant toute l'année",
+   "texte": "Quelques publications par mois à partir des photos, pour que l'édition suivante s'annonce bien avant juillet."
+  }
+ ],
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ }
+}
