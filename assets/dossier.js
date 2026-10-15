@@ -66,6 +66,19 @@
       }).join("") + '</ol>'));
     }
 
+    if((d.poles || []).length){
+      o.push(planche("cream", 1, '<h2 class="rv">' + esc(d.titrePoles || "Ce que je peux prendre en charge") + '</h2>' + (d.textePoles ? '<p class="lede rv">' + esc(d.textePoles) + '</p>' : '') + '<div class="poles">' + d.poles.slice(0, 4).map(function(p, k){
+        return '<div class="pole rv" style="--k:' + k + '"><span class="nb">' + ("0" + (k + 1)).slice(-2) + '</span><h3>' + esc(p.titre) + '</h3>' + (p.texte ? '<p>' + esc(p.texte) + '</p>' : '') + '<ul>' + (p.items || []).slice(0, 6).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>';
+      }).join("") + '</div>'));
+    }
+
+    if((d.outils || []).length){
+      var ots = d.outils.filter(function(x){ return OUTILS[x.type]; }).slice(0, 4);
+      if(ots.length) o.push(planche("", 2, '<h2 class="rv">' + esc(d.titreOutils || "Des outils faits pour vos services") + '</h2><p class="lede rv">' + esc(d.texteOutils || "Quelques exemples, à essayer : ils fonctionnent. Chaque outil se construit avec les agents qui l'utiliseront, sur téléphone comme sur ordinateur.") + '</p>' +
+        '<div class="otabs rv" role="tablist">' + ots.map(function(x, k){ return '<button type="button" role="tab" data-t="' + k + '" aria-selected="' + (k === 0) + '">' + esc(x.titre || OUTILS[x.type].titre) + '</button>'; }).join("") + '</div><div class="odemo rv" id="odemo"></div>'));
+      d.__outils = ots;
+    }
+
     if(d.configurateur && (d.configurateur.etapes || []).length){
       o.push(planche("nuit", 0, '<h2 class="rv">Combien pour votre projet ?</h2><p class="lede rv">' + esc(d.configurateur.intro || "Composez votre offre : le prix s'affiche au fur et à mesure, et le devis se génère tout de suite.") + '</p><div class="cfg" id="cfg"></div>'));
     }
@@ -74,6 +87,7 @@
     o.push(planche("sapin fin", 1, '<h2 class="rv">' + esc(d.titreFin || "On en parle ?") + '</h2><p class="lede rv">' + esc(d.texteFin || "Trente minutes au téléphone suffisent pour voir si ça vous correspond. Sans engagement.") + '</p><div class="row rv"><a class="btn" href="' + rdv + '" target="_blank" rel="noopener">Choisir un créneau</a><a class="btn line" href="mailto:' + esc(mail) + '?subject=' + encodeURIComponent("Dossier " + (d.nom || "")) + '">Écrire</a></div><p class="sm rv">Ewen Soupault, Studio ES · <a href="https://studioes.fr">studioes.fr</a></p>'));
     document.getElementById("app").innerHTML = o.join("");
     if(d.configurateur) configurateur(d.configurateur, d);
+    if(d.__outils) demos(d.__outils, d);
     apparition();
   }
 
@@ -85,9 +99,9 @@
     function visible(e, k){ var o = etapes[e].options[k]; if(!o.si) return true; var c = choix[o.si[0]]; return o.si[1].some(function(x){ return c.indexOf(x) >= 0; }); }
     function nettoyer(){ etapes.forEach(function(e, n){ choix[n] = choix[n].filter(function(k){ return visible(n, k); }); }); }
     function etapesVisibles(){ return etapes.map(function(e, n){ return n; }).filter(function(n){ return etapes[n].options.some(function(o, k){ return visible(n, k) && !o.aucun; }); }); }
-    function lignes(){ var r = []; etapes.forEach(function(e, n){ choix[n].forEach(function(k){ var o = e.options[k]; if(o.aucun) return; r.push({n:o.titreDevis || o.l, l:o.lignes || (o.d ? [o.d] : []), p:o.p || 0, mois:!!o.mois, min:o.min, devis:!!o.devis}); }); }); return r; }
+    function lignes(){ var r = []; etapes.forEach(function(e, n){ choix[n].forEach(function(k){ var o = e.options[k]; if(o.aucun) return; r.push({n:(o.titreDevis || o.l) + (o.an ? ", par an" : ""), l:o.lignes || (o.d ? [o.d] : []), p:o.p || 0, mois:!!o.mois, min:o.min, devis:!!o.devis}); }); }); return r; }
     function totaux(){ var L = lignes(), a = 0, m = 0, dv = 0; L.forEach(function(x){ if(x.devis) dv++; else if(x.mois) m += x.p; else a += x.p; }); return {once:a, mois:m, devis:dv, lignes:L}; }
-    function prix(o){ return o.aucun ? "" : o.devis ? "sur devis" : eur(o.p) + (o.mois ? " / mois" : ""); }
+    function prix(o){ return o.aucun ? "" : o.devis ? "sur devis" : eur(o.p) + (o.mois ? " / mois" : o.an ? " / an" : ""); }
     function code(){ return choix.map(function(c){ return c.length ? c.join("") : "x"; }).join("-"); }
 
     function pas(){
@@ -104,7 +118,7 @@
       T.lignes.forEach(function(x){ h += '<li><span>' + esc(x.n) + '</span><span>' + (x.devis ? "sur devis" : eur(x.p) + (x.mois ? " / mois" : "")) + '</span></li>'; });
       if(!T.lignes.length) h += '<li><span>Rien de sélectionné pour l\'instant</span><span></span></li>';
       h += '</ul><div class="total">';
-      if(T.once){ h += '<b>' + eur(T.once) + '</b><span>en une fois, dont un acompte de ' + eur(T.once * .3) + ' à la commande</span>'; }
+      if(T.once){ h += '<b>' + eur(T.once) + '</b><span>' + (cf.public ? "hors abonnements, réglé sur facture après service fait (mandat administratif)" : "en une fois, dont un acompte de " + eur(T.once * .3) + " à la commande") + '</span>'; }
       if(T.mois) h += (T.once ? '<span class="plus">+ ' + eur(T.mois) + ' par mois' : '<b>' + eur(T.mois) + ' <small>/ mois</small></b><span>') + ', à partir d\'une date que l\'on fixe ensemble</span>';
       if(T.devis) h += '<span>' + (T.devis > 1 ? "Certains éléments sont" : "Un élément est") + ' chiffré' + (T.devis > 1 ? "s" : "") + ' après notre échange.</span>';
       h += '<span>TVA non applicable, art. 293 B du CGI.</span></div><div class="nav2"><button type="button" class="btn line" data-a="refaire">Modifier</button>' + (T.lignes.length ? '<button type="button" class="btn" data-a="devis">Recevoir le devis</button>' : '') + '</div>';
@@ -112,10 +126,12 @@
     }
     function formulaire(){
       var T = totaux(), lien = lienAcompte(T.once), h = '<h3>Votre devis</h3><p class="sm">Il se génère tout de suite, avec les conditions de vente. Rien n\'est engagé tant que vous ne l\'acceptez pas.</p><form class="form" novalidate>';
-      [["struct","Structure", D.nom, "organization"],["rep","Votre nom", "", "name"],["fonction","Votre fonction", "Gérant, présidente…", "organization-title"],["adr","Adresse", "", "street-address"],["ville","Code postal et ville", "", "address-level2"],["mail","E-mail", "", "email"]].forEach(function(f){
+      [["struct","Structure", D.nom, "organization"],["rep","Votre nom", "", "name"],["fonction","Votre fonction", cf.public ? "Maire, secrétaire de mairie…" : "Gérant, présidente…", "organization-title"],["adr","Adresse", "", "street-address"],["ville","Code postal et ville", "", "address-level2"],["mail","E-mail", "", "email"]].forEach(function(f){
         h += '<label><span>' + f[1] + '</span><input name="' + f[0] + '" autocomplete="' + f[3] + '"' + (f[0] === "mail" ? ' type="email" inputmode="email"' : '') + ' value="' + esc(client[f[0]] || (f[0] === "struct" ? D.nom : "")) + '" placeholder="' + esc(f[0] === "struct" ? "" : f[2]) + '" required></label>'; });
       h += '</form><p class="err" aria-live="polite"></p><div class="nav2"><button type="button" class="btn line" data-a="retour">Retour</button><button type="button" class="btn" data-a="pdf">Télécharger le devis</button></div>';
-      if(T.once && lien){
+      if(cf.public){
+        h += '<p class="sm">Ce devis peut servir de base à votre bon de commande. Pour la suite, choisissez un créneau : nous calons ensemble le démarrage et les modalités.</p><div class="nav2"><span></span><a class="btn" href="' + esc(rdv()) + '" target="_blank" rel="noopener">Choisir un créneau</a></div>';
+      } else if(T.once && lien){
         h += '<div class="engage"><label class="accord"><input type="checkbox" name="ok"><span>J\'ai lu le devis n° ' + num + ' et ses conditions générales de vente, et je l\'accepte. Le paiement de l\'acompte vaut commande ferme.</span></label>' +
           '<button type="button" class="btn" data-a="payer" disabled>Payer l\'acompte de ' + eur(T.once * .3) + '</button><p class="sm">Paiement sécurisé par Stripe. Vous recevez le devis accepté, puis vous choisissez un créneau de 30 minutes pour lancer le projet.</p></div>';
       } else h += '<p class="sm">Pour la suite, choisissez un créneau : nous calons ensemble le démarrage.</p><div class="nav2"><span></span><a class="btn" href="' + esc(rdv()) + '" target="_blank" rel="noopener">Choisir un créneau</a></div>';
@@ -127,7 +143,7 @@
     function rdv(){ return (D.contact && /^https:\/\//.test(D.contact.rdv || "")) ? D.contact.rdv : "https://cal.eu/studioes/30min"; }
     function pdf(accepte){
       if(!window.jspdf || !window.studioDevis || !window.DEVIS_FONTS){ box.querySelector(".err").textContent = "Le devis n'a pas pu se charger. Rechargez la page avec une connexion active."; return null; }
-      var out = window.studioDevis({nom:D.nom, objet:cf.objet}, totaux().lignes, client, num, accepte ? {date:new Date().toISOString(), nom:client.rep} : null, cf.regles);
+      var out = window.studioDevis({nom:D.nom, objet:cf.objet, public:!!cf.public}, totaux().lignes, client, num, accepte ? {date:new Date().toISOString(), nom:client.rep} : null, cf.regles);
       var u = URL.createObjectURL(out.blob), a = document.createElement("a"); a.href = u; a.download = out.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(u); }, 60000);
       return out;
     }
@@ -150,6 +166,61 @@
     });
     box.addEventListener("change", function(ev){ if(ev.target.name === "ok"){ var p = box.querySelector('[data-a="payer"]'); if(p) p.disabled = !ev.target.checked; } });
     pas();
+  }
+
+  /* ---------- outils de démonstration (collectivités) ---------- */
+  var OUTILS = {
+    demandes:{titre:"Demandes et interventions", sous:"Services techniques", etats:["À traiter","En cours","Fait"], defaut:[
+      {t:"Lampadaire éteint", l:"Rue de la Mairie", s:"Voirie", e:0, d:"Signalé ce matin"},{t:"Banc cassé au terrain de jeux", l:"Parc du bourg", s:"Espaces verts", e:1, d:"Prévu jeudi"},
+      {t:"Nid-de-poule", l:"Route de la gare", s:"Voirie", e:0, d:"Signalé hier"},{t:"Fuite au robinet des vestiaires", l:"Salle des sports", s:"Bâtiments", e:1, d:"Plombier mardi"},
+      {t:"Haie à tailler", l:"Allée des écoles", s:"Espaces verts", e:2, d:"Fait le 8"},{t:"Panneau stop penché", l:"Carrefour de Kerlan", s:"Voirie", e:2, d:"Fait le 6"}]},
+    projets:{titre:"Projets du mandat", sous:"Suivi des projets", defaut:[
+      {t:"Rénovation de l'école", r:"Adjointe aux affaires scolaires", f:"Juin 2027", steps:[["Étude de faisabilité",1],["Choix de l'architecte",1],["Permis de construire",0],["Travaux",0],["Inauguration",0]]},
+      {t:"Aire de jeux du bourg", r:"Services techniques", f:"Avril 2027", steps:[["Consultation des familles",1],["Devis",1],["Commande",1],["Installation",0]]},
+      {t:"Nouveau site de la commune", r:"Secrétariat de mairie", f:"Mars 2027", steps:[["Cadrage",1],["Maquette",0],["Contenus",0],["Mise en ligne",0]]},
+      {t:"Voie douce vers le collège", r:"Maire", f:"2028", steps:[["Étude",1],["Subventions",0],["Acquisitions",0],["Travaux",0]]}]},
+    salles:{titre:"Réservation des salles", sous:"Salles municipales", jours:["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"], defaut:[
+      {t:"Salle des fêtes", r:{"Sam":"Mariage","Ven":"Loto du club","Mar":"Gym douce"}},{t:"Salle polyvalente", r:{"Lun":"Judo","Mer":"Danse","Jeu":"Judo"}},{t:"Salle du conseil", r:{"Mar":"Conseil municipal","Jeu":"Permanence"}},{t:"Maison des associations", r:{"Mer":"Club des aînés","Sam":"Assemblée générale"}}]},
+    com:{titre:"Calendrier de communication", sous:"Planning éditorial", canaux:{site:"Site",fb:"Facebook",mag:"Bulletin",pan:"Panneau"}, defaut:[
+      {sem:"Semaine 43", items:[{c:"fb", t:"Vacances : horaires de la médiathèque", ok:1},{c:"site", t:"Compte rendu du conseil municipal", ok:1},{c:"pan", t:"Collecte des encombrants", ok:0}]},
+      {sem:"Semaine 44", items:[{c:"fb", t:"Photos de la commémoration", ok:0},{c:"site", t:"Inscriptions à la cantine", ok:0}]},
+      {sem:"Semaine 45", items:[{c:"mag", t:"Bouclage du bulletin d'hiver", ok:0},{c:"fb", t:"Marché de Noël : appel aux exposants", ok:0},{c:"pan", t:"Travaux de voirie route de la gare", ok:0}]}]}
+  };
+  function demos(ots, D){
+    var box = document.getElementById("odemo"), tabs = document.querySelector(".otabs"); if(!box) return; var cur = 0, etat = ots.map(function(x){ return JSON.parse(JSON.stringify((x.exemples && x.exemples.length) ? x.exemples : OUTILS[x.type].defaut)); }), filtre = -1;
+    function cadre(x, corps, outilsBarre){ var O = OUTILS[x.type];
+      return '<div class="app"><div class="abar"><i></i><i></i><i></i><span>' + esc((D.nom || "Commune") + " · " + (x.titre || O.titre)) + '</span></div><div class="ahead"><div><small>' + esc(x.sous || O.sous) + '</small><b>' + esc(x.titre || O.titre) + '</b></div>' + (outilsBarre || "") + '</div><div class="abody">' + corps + '</div></div>' + (x.texte ? '<p class="otx">' + esc(x.texte) + '</p>' : ''); }
+    function rendre(){
+      var x = ots[cur], E = etat[cur], O = OUTILS[x.type], h = "";
+      if(x.type === "demandes"){
+        var n = [0,0,0]; E.forEach(function(r){ n[r.e]++; });
+        var barre = '<div class="pills">' + ['<button type="button" data-f="-1" aria-pressed="' + (filtre < 0) + '">Tout ' + E.length + '</button>'].concat(O.etats.map(function(t, k){ return '<button type="button" data-f="' + k + '" aria-pressed="' + (filtre === k) + '">' + t + ' ' + n[k] + '</button>'; })).join("") + '</div>';
+        h = '<ul class="dem">' + E.map(function(r, k){ if(filtre >= 0 && r.e !== filtre) return ""; return '<li><button type="button" data-r="' + k + '" class="e' + r.e + '"><span class="pt"></span><span class="tt"><b>' + esc(r.t) + '</b><small>' + esc(r.l) + ' · ' + esc(r.s) + '</small></span><span class="st">' + O.etats[r.e] + '<small>' + esc(r.d || "") + '</small></span></button></li>'; }).join("") + '</ul><p class="astuce">Touchez une demande pour la faire avancer.</p>';
+        h = cadre(x, h, barre);
+      } else if(x.type === "projets"){
+        h = '<ul class="prj">' + E.map(function(p, k){ var f = p.steps.filter(function(s){ return s[1]; }).length, pc = Math.round(f / p.steps.length * 100), nx = p.steps.filter(function(s){ return !s[1]; })[0];
+          return '<li><details' + (k === 0 ? " open" : "") + '><summary><span class="tt"><b>' + esc(p.t) + '</b><small>' + esc(p.r) + ' · ' + esc(p.f) + '</small></span><span class="pct">' + pc + ' %</span><span class="jauge"><i style="width:' + pc + '%"></i></span><small class="nx">' + (nx ? "Prochaine étape : " + esc(nx[0]) : "Terminé") + '</small></summary><ol>' + p.steps.map(function(s, j){ return '<li><button type="button" data-p="' + k + '" data-s="' + j + '" aria-pressed="' + !!s[1] + '"><span class="ck"></span>' + esc(s[0]) + '</button></li>'; }).join("") + '</ol></details></li>'; }).join("") + '</ul>';
+        h = cadre(x, h, '<span class="kpi">' + E.length + ' projets</span>');
+      } else if(x.type === "salles"){
+        var J = O.jours; h = '<div class="sal"><div class="sg" style="--n:' + J.length + '"><span></span>' + J.map(function(j){ return '<b>' + j + '</b>'; }).join("") +
+          E.map(function(s, k){ return '<em>' + esc(s.t) + '</em>' + J.map(function(j){ var r = (s.r || {})[j]; return '<button type="button" data-sl="' + k + '" data-j="' + j + '" class="' + (r ? "pris" : "") + '" aria-label="' + esc(s.t + ", " + j + (r ? ", " + r : ", libre")) + '">' + (r ? esc(r) : "") + '</button>'; }).join(""); }).join("") + '</div></div><p class="astuce">Touchez un créneau libre pour le réserver.</p>';
+        h = cadre(x, h, '<span class="kpi">Semaine en cours</span>');
+      } else if(x.type === "com"){
+        h = '<div class="cal">' + E.map(function(w, k){ return '<div class="sem"><b>' + esc(w.sem) + '</b><ul>' + w.items.map(function(it, j){ return '<li><button type="button" data-w="' + k + '" data-i="' + j + '" aria-pressed="' + !!it.ok + '"><span class="cn c-' + esc(it.c) + '">' + esc(O.canaux[it.c] || it.c) + '</span><span class="tt">' + esc(it.t) + '</span><span class="ck"></span></button></li>'; }).join("") + '</ul></div>'; }).join("") + '</div><p class="astuce">Touchez une publication pour la marquer comme faite.</p>';
+        var tot = 0, ok = 0; E.forEach(function(w){ w.items.forEach(function(it){ tot++; if(it.ok) ok++; }); });
+        h = cadre(x, h, '<span class="kpi">' + ok + ' / ' + tot + ' publiés</span>');
+      }
+      box.innerHTML = h;
+    }
+    tabs.addEventListener("click", function(ev){ var b = ev.target.closest("button[data-t]"); if(!b) return; cur = +b.dataset.t; filtre = -1; Array.prototype.forEach.call(tabs.children, function(x){ x.setAttribute("aria-selected", String(x === b)); }); rendre(); });
+    box.addEventListener("click", function(ev){ var b = ev.target.closest("button"); if(!b) return; var E = etat[cur];
+      if(b.dataset.f != null){ filtre = +b.dataset.f; }
+      else if(b.dataset.r != null){ var r = E[+b.dataset.r]; r.e = (r.e + 1) % 3; r.d = ["Signalé à l'instant","Pris en charge","Fait aujourd'hui"][r.e]; }
+      else if(b.dataset.p != null){ var st = E[+b.dataset.p].steps[+b.dataset.s]; st[1] = st[1] ? 0 : 1; rendre(); var dd = box.querySelectorAll(".prj details")[+b.dataset.p]; if(dd) dd.open = true; return; }
+      else if(b.dataset.sl != null){ var s = E[+b.dataset.sl]; s.r = s.r || {}; if(s.r[b.dataset.j]) delete s.r[b.dataset.j]; else s.r[b.dataset.j] = "Réservé"; }
+      else if(b.dataset.w != null){ var it = E[+b.dataset.w].items[+b.dataset.i]; it.ok = it.ok ? 0 : 1; }
+      else return; rendre(); });
+    rendre();
   }
 
   function apparition(){
