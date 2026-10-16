@@ -46,11 +46,14 @@
     document.title = (d.nom || "Dossier") + " | Studio ES";
     var ct = d.contact || {}, rdv = url(ct.rdv) || "https://cal.eu/studioes/30min", mail = /^[^@\s]+@[^@\s]+$/.test(ct.mail || "") ? ct.mail : "contact@studioes.fr";
     var a = d.configurateur && (d.configurateur.etapes || []).length, ots = (d.outils || []).filter(function(x){ return OUTILS[x.type]; }).slice(0, 4);
-    var mq = d.maquette ? maquette(d.maquette) : null, mtel = mq ? (typeof mq === "string" ? mq : mq.tel) : "", mpc = mq && typeof mq !== "string" ? mq.pc : "";
+    /* une maquette ne s'affiche que si elle est faite avec leur vraie matière (photo de leur site) ou validée par Ewen ("valide": true) :
+       un aperçu générique dessert plus qu'il ne sert. */
+    var mqm = d.maquette || null, vraie = mqm && (mqm.valide === true || url(mqm.image) || (mqm.cases || []).some(function(c){ return url(c && c.image); }));
+    var mq = vraie ? maquette(mqm) : null, mtel = mq ? (typeof mq === "string" ? mq : mq.tel) : "", mpc = mq && typeof mq !== "string" ? mq.pc : "";
     var o = [], k = 0;
     function sec(id, titre, intro, corps){ var c = (k++ % 2 === 0) ? "cream" : ""; o.push('<section class="pl v3 ' + c + '" id="' + id + '"><div class="in"><div class="h3t"><h2 class="t rv">' + esc(titre) + '</h2>' + (intro ? '<p class="intro rv">' + esc(intro) + '</p>' : '') + '</div>' + corps + '</div></section>'); }
 
-    o.push('<section class="pl v3 cover"><div class="in"><a class="sig" href="https://studioes.fr">' + LOGO + '<span><b>Studio ES</b><span>Photographe et graphiste</span></span></a>' +
+    o.push('<section class="pl v3 cover' + (mtel ? ' a-tel' : '') + '"><div class="in"><a class="sig" href="https://studioes.fr">' + LOGO + '<span><b>Studio ES</b><span>Photographe et graphiste</span></span></a>' +
       '<div class="g"><div class="cv"><h1 class="rv">' + esc(d.nom) + '</h1>' +
       '<p class="date rv">' + [d.secteur, d.ville].filter(Boolean).map(esc).join(" · ") + (d.date ? '<br>Préparé le ' + esc(dateFr(d.date)) : '') + '</p>' +
       (d.accroche ? '<p class="intro rv">' + esc(d.accroche) + '</p>' : '') +

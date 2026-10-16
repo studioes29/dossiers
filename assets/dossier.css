@@ -327,3 +327,5 @@ strong{font-weight:500}
 .pl.v3 .cfg{max-width:680px}
 .pl.v3 .sm{margin-top:28px}
 .pl.v3 .otabs button[aria-selected="true"]{background:var(--hd);color:var(--bg);box-shadow:none}
+.pl.v3.cover:not(.a-tel),.pl.v3.cover:not(.a-tel) .in{min-height:0}
+.pl.v3.cover:not(.a-tel) .g{padding-block:clamp(70px,12vw,160px) clamp(30px,5vw,70px)}
