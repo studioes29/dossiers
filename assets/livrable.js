@@ -5,7 +5,7 @@
   /* typographie française : insécables avant : ; ? ! », après «, entre chiffre et unité, et sur les mots courts et débuts de phrase */
   var SKIP = /^(SCRIPT|STYLE|TEXTAREA|INPUT|SELECT|OPTION|SVG|CODE)$/;
   function fix(t){ return t
-    .replace(/ ([:;?!»])/g, " $1").replace(/« /g, "« ")
+    .replace(/\b(0\d) (\d\d) (\d\d) (\d\d) (\d\d)\b/g, "$1 $2 $3 $4 $5").replace(/ ([:;?!»])/g, " $1").replace(/« /g, "« ")
     .replace(/(\d) (€|%|h\b|cm\b|min\b|jours?\b|mois\b|ans\b|milliards\b)/g, "$1 $2")
     .replace(/([.!?]) ([^\s ]{1,14}) /g, "$1 $2 ").replace(/([.!?]) ([^\s ]+ [^\s ]{1,12}) /g, "$1 $2 ")
     .replace(/(^|[\s(])(à|a|de|du|le|la|les|un|une|des|et|ou|en|au|aux|par|pour|sur|ce|ces|son|sa|ses|vos|votre|nos|notre|je|j'ai|il|on|ne|y|me|vous) /gi, "$1$2 "); }
