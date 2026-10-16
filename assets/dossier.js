@@ -40,72 +40,46 @@
   }
   function paysage(){ return '<svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="300" fill="var(--m-accent)"/><circle cx="292" cy="96" r="34" fill="var(--m-fond)" opacity=".28"/><path d="M0 170 Q80 128 160 150 T300 138 T400 150 V300 H0Z" fill="var(--m-fond)" opacity=".16"/><path d="M0 205 Q100 165 200 190 T400 178 V300 H0Z" fill="var(--m-texte)" opacity=".22"/><path d="M0 240 Q120 214 230 236 T400 228 V300 H0Z" fill="var(--m-texte)" opacity=".38"/><path d="M0 268 H400 V300 H0Z" fill="var(--m-texte)" opacity=".5"/><path d="M40 268 h120 M210 268 h150" stroke="var(--m-fond)" stroke-opacity=".35" stroke-width="1.5"/></svg>'; }
 
-  /* Trame des portails clients (comme le dossier de fin de projet Pierceval) : couverture alignée à gauche,
-     sommaire numéroté, en-têtes de rubrique en deux colonnes, la maquette expliquée à gauche et montrée à droite. */
-  function titreDeux(nom){ var m = /^(.*\S)\s+(\S+)$/.exec(String(nom || "")); return m ? esc(m[1]) + ' <span>' + esc(m[2]) + '</span>' : esc(nom); }
-  function tete(n, titre, texte){ return '<div class="h2g"><div class="rv"><p class="kick">' + ("0" + n).slice(-2) + '</p><h2>' + esc(titre) + '</h2></div>' + (texte ? '<p class="rv">' + esc(texte) + '</p>' : '') + '</div>'; }
+  /* Trame des portails clients (v3, comme le livrable de fin de projet) : rubriques en alternance encre / crème,
+     grands titres, beaucoup d'air, l'ocre en seul accent. La couverture montre la maquette dans un téléphone. */
   function rendre(d){
     document.title = (d.nom || "Dossier") + " | Studio ES";
     var ct = d.contact || {}, rdv = url(ct.rdv) || "https://cal.eu/studioes/30min", mail = /^[^@\s]+@[^@\s]+$/.test(ct.mail || "") ? ct.mail : "contact@studioes.fr";
     var a = d.configurateur && (d.configurateur.etapes || []).length, ots = (d.outils || []).filter(function(x){ return OUTILS[x.type]; }).slice(0, 4);
-    var S = [];
-    if((d.constats || []).length) S.push({id:"constats", t:d.titreConstats || "Ce qu'on voit aujourd'hui"});
-    if(d.maquette) S.push({id:"maquette", t:d.maquette.accroche || "Ce que ça pourrait donner"});
-    if((d.pistes || []).length) S.push({id:"pistes", t:d.titrePistes || "Par où commencer"});
-    if((d.poles || []).length) S.push({id:"poles", t:d.titrePoles || "Ce que je peux prendre en charge"});
-    if(ots.length) S.push({id:"outils", t:d.titreOutils || "Des outils faits pour vos services"});
-    if(a) S.push({id:"prix", t:"Combien pour votre projet ?"});
-    S.push({id:"contact", t:d.titreFin || "On en parle ?"});
-    var num = {}; S.forEach(function(s, k){ num[s.id] = k + 1; });
-    var o = [];
-    o.push('<section class="pl cover"><div class="in"><a class="sig" href="https://studioes.fr">' + LOGO + '<span><b>Studio ES</b><span>Graphisme, photographie, web</span></span></a>' +
-      '<div class="cv"><p class="kick rv">Un dossier préparé pour vous</p><h1 class="rv">' + titreDeux(d.nom) + '</h1>' +
-      (d.accroche ? '<p class="lede rv">' + esc(d.accroche) + '</p>' : '') +
-      '<div class="row rv"><a class="btn" href="#' + (a ? "prix" : S[0].id) + '">' + (a ? "Voir les prix" : "Lire le dossier") + '</a><a class="btn line" href="' + rdv + '" target="_blank" rel="noopener">Choisir un créneau ↗</a></div>' +
-      '<p class="meta rv">' + [d.secteur, d.ville, d.date ? "Préparé le " + dateFr(d.date) : ""].filter(Boolean).map(esc).join(" · ") + '</p></div></div></section>');
+    var mq = d.maquette ? maquette(d.maquette) : null, mtel = mq ? (typeof mq === "string" ? mq : mq.tel) : "", mpc = mq && typeof mq !== "string" ? mq.pc : "";
+    var o = [], k = 0;
+    function sec(id, titre, intro, corps){ var c = (k++ % 2 === 0) ? "cream" : ""; o.push('<section class="pl v3 ' + c + '" id="' + id + '"><div class="in"><div class="h3t"><h2 class="t rv">' + esc(titre) + '</h2>' + (intro ? '<p class="intro rv">' + esc(intro) + '</p>' : '') + '</div>' + corps + '</div></section>'); }
 
-    if(S.length > 2) o.push(planche("cream", 0, '<h2 class="rv">Au sommaire</h2><nav class="som rv" aria-label="Sommaire">' + S.map(function(s){ return '<a href="#' + s.id + '">' + esc(s.t) + '</a>'; }).join("") + '</nav>'));
+    o.push('<section class="pl v3 cover"><div class="in"><a class="sig" href="https://studioes.fr">' + LOGO + '<span><b>Studio ES</b><span>Photographe et graphiste</span></span></a>' +
+      '<div class="g"><div class="cv"><h1 class="rv">' + esc(d.nom) + '</h1>' +
+      '<p class="date rv">' + [d.secteur, d.ville].filter(Boolean).map(esc).join(" · ") + (d.date ? '<br>Préparé le ' + esc(dateFr(d.date)) : '') + '</p>' +
+      (d.accroche ? '<p class="intro rv">' + esc(d.accroche) + '</p>' : '') +
+      '<div class="row rv"><a class="btn" href="' + (a ? "#prix" : "#contact") + '">' + (a ? "Voir les prix" : "On en parle ?") + '</a><a class="btn line" href="' + rdv + '" target="_blank" rel="noopener">Choisir un créneau ↗</a></div></div>' +
+      (mtel ? '<div class="tel-c rv"><div class="dv">' + mtel + '</div></div>' : '') + '</div></div></section>');
 
-    if((d.constats || []).length){
-      o.push(planche("", 2, tete(num.constats, S[num.constats - 1].t, d.texteConstats || "Ce que j'ai regardé avant de vous écrire : votre site, vos réseaux, ce que l'on trouve en vous cherchant.") + '<ul class="cons">' + d.constats.map(function(c){
-        var n = ICONES[c.etat] ? c.etat : "moyen", lien = url(c.lien);
-        return '<li class="rv"><span class="note ' + n + '" role="img" aria-label="' + ({bien:"Ce qui va bien",moyen:"À améliorer",absent:"Absent"})[n] + '"><svg viewBox="0 0 24 24">' + ICONES[n] + '</svg></span><h3>' + esc(c.titre) + '</h3><p>' + esc(c.texte) + (lien ? ' <a href="' + lien + '" target="_blank" rel="noopener">Voir ↗</a>' : '') + '</p></li>';
-      }).join("") + '</ul>', "constats"));
-    }
+    if((d.constats || []).length) sec("constats", d.titreConstats || "Ce qu'on voit aujourd'hui", d.texteConstats || "Ce que j'ai regardé avant de vous écrire : votre site, vos réseaux, ce que l'on trouve en vous cherchant.",
+      '<ul class="pts">' + d.constats.map(function(c){ var n = ICONES[c.etat] ? c.etat : "moyen", lien = url(c.lien);
+        return '<li class="rv"><span class="ico ' + n + '" role="img" aria-label="' + ({bien:"Ce qui va bien",moyen:"À améliorer",absent:"Absent"})[n] + '"><svg viewBox="0 0 24 24">' + ICONES[n] + '</svg></span><h3>' + esc(c.titre) + '</h3><p>' + esc(c.texte) + (lien ? ' <a href="' + lien + '" target="_blank" rel="noopener">Voir ↗</a>' : '') + '</p></li>'; }).join("") + '</ul>');
 
-    if(d.maquette){
-      var mq = maquette(d.maquette), mtel = typeof mq === "string" ? mq : mq.tel, mpc = typeof mq === "string" ? "" : mq.pc;
-      var pts = (d.maquette.points || []).slice(0, 4);
-      o.push(planche("cream", 1, '<div class="choix2"><div class="tx"><p class="kick rv">' + ("0" + num.maquette).slice(-2) + '</p><h2 class="rv">' + esc(S[num.maquette - 1].t) + '</h2>' +
-        (d.maquette.explication ? '<p class="rv">' + esc(d.maquette.explication) + '</p>' : '') +
-        (pts.length ? '<ul class="pq2 rv">' + pts.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' : '') +
-        '<p class="nt rv">' + esc(d.maquette.legende || "Une première piste, faite à partir de ce qui existe déjà. Elle se discute.") + '</p></div>' +
-        '<div class="duo2 rv' + (mpc ? "" : " solo") + '">' + mpc + '<div class="dv">' + mtel + '</div></div></div>', "maquette"));
-    }
+    if(mq){ var pts = (d.maquette.points || []).slice(0, 4);
+      sec("maquette", d.maquette.accroche || "Ce que ça pourrait donner", d.maquette.explication || "",
+        (pts.length ? '<ul class="tirets rv">' + pts.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' : '') +
+        '<div class="cap3 rv' + (mpc ? "" : " solo") + '">' + mpc + '<div class="dv">' + mtel + '</div></div><p class="leg rv">' + esc(d.maquette.legende || "Une première piste, faite à partir de ce qui existe déjà. Elle se discute.") + '</p>'); }
 
-    if((d.pistes || []).length){
-      o.push(planche("ochre", 0, tete(num.pistes, S[num.pistes - 1].t, d.textePistes || "Trois façons de commencer, de la plus simple à la plus suivie. On peut s'arrêter à la première.") + '<ol class="pistes">' + d.pistes.slice(0, 3).map(function(p){
-        return '<li class="rv">' + (p.palier ? '<em>' + esc(p.palier) + '</em>' : '') + '<h3>' + esc(p.titre) + '</h3><p>' + esc(p.texte) + '</p></li>';
-      }).join("") + '</ol>', "pistes"));
-    }
+    if((d.pistes || []).length) sec("pistes", d.titrePistes || "Par où commencer", d.textePistes || "Trois façons de commencer, de la plus simple à la plus suivie. On peut s'arrêter à la première.",
+      '<ol class="trois3">' + d.pistes.slice(0, 3).map(function(p){ return '<li class="rv">' + (p.palier ? '<em>' + esc(p.palier) + '</em>' : '') + '<h3>' + esc(p.titre) + '</h3><p>' + esc(p.texte) + '</p></li>'; }).join("") + '</ol>');
 
-    if((d.poles || []).length){
-      o.push(planche("", 2, tete(num.poles, S[num.poles - 1].t, d.textePoles || "") + '<div class="poles">' + d.poles.slice(0, 4).map(function(p, k){
-        return '<div class="pole rv" style="--k:' + k + '"><h3>' + esc(p.titre) + '</h3>' + (p.texte ? '<p>' + esc(p.texte) + '</p>' : '') + '<ul>' + (p.items || []).slice(0, 6).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>';
-      }).join("") + '</div>', "poles"));
-    }
+    if((d.poles || []).length) sec("poles", d.titrePoles || "Ce que je peux prendre en charge", d.textePoles || "",
+      '<div class="pts pts3">' + d.poles.slice(0, 4).map(function(p){ return '<div class="rv"><h3>' + esc(p.titre) + '</h3>' + (p.texte ? '<p>' + esc(p.texte) + '</p>' : '') + '<ul class="tirets">' + (p.items || []).slice(0, 6).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>'; }).join("") + '</div>');
 
-    if(ots.length){
-      o.push(planche("cream", 1, tete(num.outils, S[num.outils - 1].t, d.texteOutils || "Quelques exemples, à essayer : ils fonctionnent. Chaque outil se construit avec les agents qui l'utiliseront, sur téléphone comme sur ordinateur.") +
-        '<div class="otabs rv" role="tablist">' + ots.map(function(x, k){ return '<button type="button" role="tab" data-t="' + k + '" aria-selected="' + (k === 0) + '">' + esc(x.titre || OUTILS[x.type].titre) + '</button>'; }).join("") + '</div><div class="odemo rv" id="odemo"></div>', "outils"));
-      d.__outils = ots;
-    }
+    if(ots.length){ sec("outils", d.titreOutils || "Des outils faits pour vos services", d.texteOutils || "Quelques exemples, à essayer : ils fonctionnent. Chaque outil se construit avec les agents qui l'utiliseront, sur téléphone comme sur ordinateur.",
+        '<div class="otabs rv" role="tablist">' + ots.map(function(x, n){ return '<button type="button" role="tab" data-t="' + n + '" aria-selected="' + (n === 0) + '">' + esc(x.titre || OUTILS[x.type].titre) + '</button>'; }).join("") + '</div><div class="odemo rv" id="odemo"></div>');
+      d.__outils = ots; }
 
-    if(a){
-      o.push(planche("nuit", 0, tete(num.prix, S[num.prix - 1].t, d.configurateur.intro || "Composez votre offre : le prix s'affiche au fur et à mesure, et le devis se génère tout de suite.") + '<div class="cfg" id="cfg"></div>', "prix"));
-    }
+    if(a) sec("prix", "Combien pour votre projet ?", d.configurateur.intro || "Composez votre offre : le prix s'affiche au fur et à mesure, et le devis se génère tout de suite.", '<div class="cfg" id="cfg"></div>');
 
-    o.push(planche("sapin fin", 1, tete(num.contact, S[num.contact - 1].t, d.texteFin || "Trente minutes au téléphone suffisent pour voir si ça vous correspond. Sans engagement.") + '<div class="row rv"><a class="btn" href="' + rdv + '" target="_blank" rel="noopener">Choisir un créneau ↗</a><a class="btn line" href="mailto:' + esc(mail) + '?subject=' + encodeURIComponent("Dossier " + (d.nom || "")) + '">Écrire</a></div><p class="sm rv">Ewen Soupault, Studio ES · <a href="https://studioes.fr">studioes.fr</a></p>', "contact"));
+    sec("contact", d.titreFin || "On en parle ?", d.texteFin || "Trente minutes au téléphone suffisent pour voir si ça vous correspond. Sans engagement.",
+      '<div class="row rv"><a class="btn" href="' + rdv + '" target="_blank" rel="noopener">Choisir un créneau ↗</a><a class="btn line" href="mailto:' + esc(mail) + '?subject=' + encodeURIComponent("Dossier " + (d.nom || "")) + '">Écrire</a></div><p class="sm rv">Ewen Soupault, Studio ES · <a href="https://studioes.fr">studioes.fr</a></p>');
     document.getElementById("app").innerHTML = o.join("");
     if(a) configurateur(d.configurateur, d);
     if(d.__outils) demos(d.__outils, d);
