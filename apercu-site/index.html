@@ -808,7 +808,7 @@ body.has-sel .svc{display:none}
 html body .hero.hx{min-height:0!important;display:block!important;padding:0!important;background:#191919!important;overflow:hidden;position:relative}
 html body .hero.hx .hero-ph{display:none!important}
 .hv{display:none;position:relative;min-height:max(640px,100svh)}
-body.hv-a .hv-a,body.hv-b .hv-b,body.hv-c .hv-c{display:block}
+body.hv-a .hv-a,body.hv-b .hv-b,body.hv-c .hv-c,body.hv-d .hv-d,body.hv-e .hv-e{display:block}
 .hx-lead{font-size:clamp(17px,1.45vw,20px);line-height:1.5;color:rgba(225,219,196,.78);max-width:34em}
 .hx-cta{display:flex;flex-wrap:wrap;gap:10px}
 .hx .btn{--fg:var(--cream);--bg:#191919}
@@ -820,6 +820,24 @@ html body .hero.hx .whos{display:flex!important;flex-wrap:wrap;gap:8px!important
 html body .hero.hx .who{min-height:0!important;padding:8px 15px!important;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(225,219,196,.28);font-family:var(--text)!important;font-weight:400!important;font-size:15px!important;letter-spacing:0!important;color:rgba(225,219,196,.85)!important;animation:none!important;transition:background .3s,color .3s,box-shadow .3s!important;white-space:nowrap;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);background:rgba(25,25,25,.18)}
 html body .hero.hx .who svg,html body .hero.hx .who .bar{display:none!important}
 html body .hero.hx .who:hover,html body .hero.hx .who.on{color:#191919!important;background:var(--wc,var(--cream));box-shadow:none}
+/* D : typographie seule */
+.hD-in{min-height:calc(max(640px,100svh) - 90px);display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,2vw,26px);padding-top:80px}
+html body .hero.hx .hv-d .catch{font-size:clamp(48px,7.4vw,124px)!important;line-height:.92}
+.hD-b{padding-bottom:clamp(28px,3vw,40px)}
+.hx-cta.mini{gap:28px}
+.tl{display:inline-flex;align-items:center;gap:.45em;font:500 17px var(--text);color:var(--cream);text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;padding-bottom:4px;border:0;cursor:pointer}
+.tl svg{width:1em;height:1em;transition:transform .4s var(--ease)}
+.tl:hover svg{transform:translateX(4px)}
+.hv-d .hero-cib,.hv-e .hero-cib{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px}
+.hv-d .hero-cib .who-l,.hv-e .hero-cib .who-l{font-size:14px!important;opacity:.45!important}
+html body .hero.hx .hv-d .whos,html body .hero.hx .hv-e .whos{gap:4px 18px!important}
+html body .hero.hx .hv-d .who,html body .hero.hx .hv-e .who{padding:2px 0!important;box-shadow:none!important;background:none!important;-webkit-backdrop-filter:none;backdrop-filter:none;font-size:14.5px!important;color:rgba(225,219,196,.55)!important;border-radius:0}
+html body .hero.hx .hv-d .who.on,html body .hero.hx .hv-d .who:hover,html body .hero.hx .hv-e .who.on,html body .hero.hx .hv-e .who:hover{color:var(--wc,var(--cream))!important}
+/* E : la vidéo seule */
+.hE-v{background:#191919}
+.hE-v video{display:block;width:100%;height:auto;max-height:82svh;object-fit:cover;object-position:50% 100%}
+.hE-in{display:grid;gap:18px;justify-items:start;padding-block:clamp(10px,1.4vw,20px) clamp(40px,5vw,64px)}
+@media (max-width:820px){.hD-in{min-height:calc(100svh - 120px)}.hE-v video{height:62vw;min-height:280px}.hx-cta.mini{gap:20px}.tl{font-size:16px}}
 /* A */
 .hA-ph{position:absolute;inset:0;overflow:hidden}
 .hA-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.03);transition:opacity 1.4s var(--ease),transform 9s linear}
@@ -958,15 +976,15 @@ p,li,small,em,.me p{text-wrap:pretty}
 <section class="hero hx" id="accueil" aria-label="Accueil">
   <div class="hero-ph" id="heroPh" hidden></div>
   <div hidden><div class="whos" id="whos"></div></div>
-  <div class="hv hv-a"><div class="hA-ph"><img src="https://studioes.fr/h/festival-1600.webp" srcset="https://studioes.fr/h/festival-800.webp 800w, https://studioes.fr/h/festival-1600.webp 1600w" sizes="100vw" alt="" class=on loading="eager"><img src="https://studioes.fr/h/collectivite-1600.webp" srcset="https://studioes.fr/h/collectivite-800.webp 800w, https://studioes.fr/h/collectivite-1600.webp 1600w" sizes="100vw" alt="" loading="lazy"><img src="https://studioes.fr/h/entreprise-1600.webp" srcset="https://studioes.fr/h/entreprise-800.webp 800w, https://studioes.fr/h/entreprise-1600.webp 1600w" sizes="100vw" alt="" loading="lazy"><img src="https://studioes.fr/h/club-1600.webp" srcset="https://studioes.fr/h/club-800.webp 800w, https://studioes.fr/h/club-1600.webp 1600w" sizes="100vw" alt="" loading="lazy"><img src="https://studioes.fr/h/mariage-1600.webp" srcset="https://studioes.fr/h/mariage-800.webp 800w, https://studioes.fr/h/mariage-1600.webp 1600w" sizes="100vw" alt="" loading="lazy"></div><div class="wrap hA-in">
+  <div class="hv hv-d"><div class="wrap hD-in"><h1 class="catch"><span class="sr">Studio ES, photographe de reportage et d'événement en Bretagne. </span><span class="l1" aria-hidden="true">Votre <span class="w" id="word"></span></span><span aria-hidden="true">sur&nbsp;le&nbsp;vif.</span></h1><p class="hx-lead">Reportage photo, graphisme, sites et communication. Basé en Bretagne.</p><div class="hx-cta mini"><button class="tl" type="button" data-devis>Demander un devis <svg aria-hidden="true"><use href="#arr"/></svg></button><a class="tl" href="#portfolio">Voir le portfolio <svg aria-hidden="true"><use href="#arr"/></svg></a></div></div><div class="wrap hD-b"><div class="hero-cib"><p class="who-l">Vous êtes</p><div class="slot-cib"></div></div></div></div><div class="hv hv-e"><div class="hE-v"><video autoplay muted loop playsinline preload="auto" poster="https://studioes.fr/v/banniere.jpg" aria-hidden="true"><source src="https://studioes.fr/v/banniere.mp4" type="video/mp4"></video></div><div class="wrap hE-in"><p class="hx-lead">Reportage photo, graphisme, sites et communication. Basé en Bretagne.</p><div class="hx-cta mini"><button class="tl" type="button" data-devis>Demander un devis <svg aria-hidden="true"><use href="#arr"/></svg></button><a class="tl" href="#portfolio">Voir le portfolio <svg aria-hidden="true"><use href="#arr"/></svg></a></div><div class="hero-cib"><p class="who-l">Vous êtes</p><div class="slot-cib"></div></div></div></div><div class="hv hv-a"><div class="hA-ph"><img src="https://studioes.fr/h/festival-1600.webp" srcset="https://studioes.fr/h/festival-800.webp 800w, https://studioes.fr/h/festival-1600.webp 1600w" sizes="100vw" alt="" class=on loading="eager"><img src="https://studioes.fr/h/collectivite-1600.webp" srcset="https://studioes.fr/h/collectivite-800.webp 800w, https://studioes.fr/h/collectivite-1600.webp 1600w" sizes="100vw" alt="" loading="lazy"><img src="https://studioes.fr/h/entreprise-1600.webp" srcset="https://studioes.fr/h/entreprise-800.webp 800w, https://studioes.fr/h/entreprise-1600.webp 1600w" sizes="100vw" alt="" loading="lazy"><img src="https://studioes.fr/h/club-1600.webp" srcset="https://studioes.fr/h/club-800.webp 800w, https://studioes.fr/h/club-1600.webp 1600w" sizes="100vw" alt="" loading="lazy"><img src="https://studioes.fr/h/mariage-1600.webp" srcset="https://studioes.fr/h/mariage-800.webp 800w, https://studioes.fr/h/mariage-1600.webp 1600w" sizes="100vw" alt="" loading="lazy"></div><div class="wrap hA-in">
   <h2 class="hA-t">Photographie, design<br>et communication.</h2>
-  <p class="hx-lead">Reportages, identités, sites et supports pour les festivals, les collectivités, les entreprises et les associations. Basé en Finistère, en mission partout, en France comme à l'étranger.</p>
+  <p class="hx-lead">Reportages, identités, sites et supports pour les festivals, les collectivités, les entreprises et les associations. Basé en Bretagne.</p>
   <div class="hx-cta"><button class="btn" type="button" data-devis>Demander un devis <svg aria-hidden="true"><use href="#arr"/></svg></button><a class="btn line" href="#portfolio">Voir le portfolio</a></div><div class="hero-cib"><p class="who-l">Vous êtes&nbsp;?</p><div class="slot-cib"></div></div></div></div><div class="hv hv-b"><div class="wrap hB-in">
   <p class="hB-k">Studio ES</p>
   <ul class="hB-l"><li><a href="#portfolio" data-svc="photo"><span>Photographie</span><img src="https://studioes.fr/p/t/matmatah-7.webp" alt="" loading="lazy"></a></li><li><a href="#portfolio" data-svc="graph"><span>Graphisme</span><img src="https://studioes.fr/p/t/affiches-2.webp" alt="" loading="lazy"></a></li><li><a href="#est" data-svc="web"><span>Sites et outils</span><img src="https://studioes.fr/s/site.webp" alt="" loading="lazy"></a></li><li><a href="#plan-large" data-svc="com" data-op><span>Communication</span><img src="https://studioes.fr/s/brochure.webp" alt="" loading="lazy"></a></li></ul>
-  <div class="hB-f"><p class="hx-lead">Pour les festivals, les collectivités, les entreprises et les associations. Basé en Finistère, en mission partout, en France comme à l'étranger.</p><div class="hx-cta"><button class="btn" type="button" data-devis>Demander un devis <svg aria-hidden="true"><use href="#arr"/></svg></button><a class="btn line" href="#portfolio">Voir le portfolio</a></div></div><div class="hero-cib"><p class="who-l">Vous êtes&nbsp;?</p><div class="slot-cib"></div></div></div></div><div class="hv hv-c"><div class="hC-ph" data-reel="[[&quot;philippe-katerine-1&quot;, &quot;Philippe Katerine&quot;], [&quot;pub-petites-folies-5&quot;, &quot;Les Petites Folies&quot;], [&quot;inaug-digue-7&quot;, &quot;Inauguration&quot;], [&quot;the-avener-2&quot;, &quot;The Avener&quot;], [&quot;pub-eucalyptus-11&quot;, &quot;Le Chant de l'Eucalyptus&quot;], [&quot;kemmler-5&quot;, &quot;Kemmler&quot;], [&quot;voeux-ph-1&quot;, &quot;Cérémonie des vœux&quot;], [&quot;candeur-cyclone-3&quot;, &quot;Candeur Cyclone&quot;], [&quot;pub-petites-folies-2&quot;, &quot;Les Petites Folies&quot;], [&quot;bushi-1&quot;, &quot;Bu$hi&quot;], [&quot;feder-2&quot;, &quot;Feder&quot;], [&quot;dali-5&quot;, &quot;Dali&quot;]]"><img class="on" src="https://studioes.fr/p/philippe-katerine-1.jpg" alt=""><img alt=""></div>
+  <div class="hB-f"><p class="hx-lead">Pour les festivals, les collectivités, les entreprises et les associations. Basé en Bretagne.</p><div class="hx-cta"><button class="btn" type="button" data-devis>Demander un devis <svg aria-hidden="true"><use href="#arr"/></svg></button><a class="btn line" href="#portfolio">Voir le portfolio</a></div></div><div class="hero-cib"><p class="who-l">Vous êtes&nbsp;?</p><div class="slot-cib"></div></div></div></div><div class="hv hv-c"><div class="hC-ph" data-reel="[[&quot;philippe-katerine-1&quot;, &quot;Philippe Katerine&quot;], [&quot;pub-petites-folies-5&quot;, &quot;Les Petites Folies&quot;], [&quot;inaug-digue-7&quot;, &quot;Inauguration&quot;], [&quot;the-avener-2&quot;, &quot;The Avener&quot;], [&quot;pub-eucalyptus-11&quot;, &quot;Le Chant de l'Eucalyptus&quot;], [&quot;kemmler-5&quot;, &quot;Kemmler&quot;], [&quot;voeux-ph-1&quot;, &quot;Cérémonie des vœux&quot;], [&quot;candeur-cyclone-3&quot;, &quot;Candeur Cyclone&quot;], [&quot;pub-petites-folies-2&quot;, &quot;Les Petites Folies&quot;], [&quot;bushi-1&quot;, &quot;Bu$hi&quot;], [&quot;feder-2&quot;, &quot;Feder&quot;], [&quot;dali-5&quot;, &quot;Dali&quot;]]"><img class="on" src="https://studioes.fr/p/philippe-katerine-1.jpg" alt=""><img alt=""></div>
   <div class="hC-vf" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="hC-rec">REC</span><span class="hC-af"></span><span class="hC-ex"><b class="hC-n">Philippe Katerine</b><em>1/250</em><em>f/2,8</em><em>ISO 1600</em></span></div>
-  <div class="wrap hC-in"><h1 class="catch"><span class="sr">Studio ES, photographe de reportage et d'événement en Bretagne. </span><span class="l1" aria-hidden="true">Votre <span class="w" id="word"></span></span><span aria-hidden="true">sur&nbsp;le&nbsp;vif.</span></h1><p class="hx-lead">Reportage photo, graphisme, sites et communication. Basé en Finistère, en mission partout, en France comme à l'étranger.</p><div class="hx-cta"><button class="btn" type="button" data-devis>Demander un devis <svg aria-hidden="true"><use href="#arr"/></svg></button><a class="btn line" href="#portfolio">Voir le portfolio</a></div><div class="hero-cib"><p class="who-l">Vous êtes&nbsp;?</p><div class="slot-cib"></div></div></div></div><div class="hv-sw" hidden><span>En-tête</span><button data-hv="a">A</button><button data-hv="b">B</button><button data-hv="c">C</button></div>
+  <div class="wrap hC-in"><h1 class="catch"><span class="sr">Studio ES, photographe de reportage et d'événement en Bretagne. </span><span class="l1" aria-hidden="true">Votre <span class="w" id="word"></span></span><span aria-hidden="true">sur&nbsp;le&nbsp;vif.</span></h1><p class="hx-lead">Reportage photo, graphisme, sites et communication. Basé en Bretagne.</p><div class="hx-cta"><button class="btn" type="button" data-devis>Demander un devis <svg aria-hidden="true"><use href="#arr"/></svg></button><a class="btn line" href="#portfolio">Voir le portfolio</a></div><div class="hero-cib"><p class="who-l">Vous êtes&nbsp;?</p><div class="slot-cib"></div></div></div></div><div class="hv-sw" hidden><span>En-tête</span><button data-hv="d">D</button><button data-hv="e">E</button></div>
 </section>
 
 <div id="sel" hidden></div>
@@ -1059,7 +1077,7 @@ p,li,small,em,.me p{text-wrap:pretty}
   <div class="wrap ct">
     <div class="ct-l">
       <h2>Parlons de votre projet.</h2>
-      <div class="me"><img src="https://studioes.fr/a/ewen-nb.webp" alt="Portrait d'Ewen, photographe et graphiste à Studio ES" loading="lazy"><p data-nosnippet><b>Ewen Soupault, Studio ES.</b> Un interlocuteur unique, du premier échange à la livraison, en Finistère comme ailleurs.</p></div>
+      <div class="me"><img src="https://studioes.fr/a/ewen-nb.webp" alt="Portrait d'Ewen, photographe et graphiste à Studio ES" loading="lazy"><p data-nosnippet><b>Ewen Soupault, Studio ES.</b> Un interlocuteur unique, du premier échange à la livraison.</p></div>
       <div class="ways" data-nosnippet>
         <a class="way" href="mailto:contact@studioes.fr"><svg><use href="#mail"/></svg>contact@studioes.fr<svg class="go"><use href="#arr"/></svg></a>
         <a class="way" href="tel:+33651222107"><svg><use href="#tel"/></svg>06 51 22 21 07<svg class="go"><use href="#arr"/></svg></a>
@@ -1088,7 +1106,7 @@ p,li,small,em,.me p{text-wrap:pretty}
     <div class="ft">
       <div class="ft-id">
         <a class="foot-id" href="#top" id="home3" aria-label="Studio ES, haut de page"><svg viewBox="0 0 98 186" aria-hidden="true"><use href="#logo"/></svg><span><b>Studio ES</b></span></a>
-        <p>Photographie, design graphique, sites et communication. Basé en Finistère, en mission partout, en France comme à l'étranger.</p>
+        <p>Photographie, design graphique, sites et communication. Basé en Bretagne.</p>
       </div>
       <div class="ft-col"><h3>Métiers</h3><ul>
         <li><a href="#portfolio" data-ft="photo">Photographie</a></li>
@@ -1768,8 +1786,8 @@ function run(){fix(document.body);}
 if(document.readyState!=="loading")run();else document.addEventListener("DOMContentLoaded",run);
 var t=0;new MutationObserver(function(m){if(t)return;t=setTimeout(function(){t=0;m.length&&run();},60);}).observe(document.body,{childList:true,subtree:true});
 document.addEventListener("click",function(e){var d=e.target.closest("[data-devis]");if(d){var b=document.getElementById("toEst");if(b)b.click();}});
-var HV=(function(){var m=/[?&]h=([abc])/.exec(location.search);var v=m?m[1]:"";try{v=v||localStorage.getItem("hv")||"";}catch(e){}return v||"c";})();
-function setHV(v){document.body.classList.remove("hv-a","hv-b","hv-c");document.body.classList.add("hv-"+v);var w=document.getElementById("whos"),sl=document.querySelector(".hv.hv-"+v+" .slot-cib");if(w&&sl)sl.appendChild(w);
+var HV=(function(){var m=/[?&]h=([abcde])/.exec(location.search);var v=m?m[1]:"";try{v=v||localStorage.getItem("hv")||"";}catch(e){}if("abc".indexOf(v)>=0&&!m)v="";return v||"d";})();
+function setHV(v){document.body.classList.remove("hv-a","hv-b","hv-c","hv-d","hv-e");document.body.classList.add("hv-"+v);var w=document.getElementById("whos"),sl=document.querySelector(".hv.hv-"+v+" .slot-cib");if(w&&sl)sl.appendChild(w);
  [].forEach.call(document.querySelectorAll(".hv-sw button"),function(b){b.setAttribute("aria-pressed",String(b.dataset.hv===v));});try{localStorage.setItem("hv",v);}catch(e){}}
 setHV(HV);
 var sw=document.querySelector(".hv-sw");if(sw&&(/^dossiers\.|localhost|127\.0/.test(location.hostname)))sw.hidden=false;
