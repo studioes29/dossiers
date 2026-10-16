@@ -60,6 +60,7 @@ input,select,textarea{font:inherit;color:inherit}
 ::selection{background:var(--pink);color:var(--ink)}
 .wrap{max-width:var(--wrap);margin-inline:auto;padding-left:var(--gl);padding-right:var(--gr)}
 h1,h2,h3,p{margin:0}
+p,dd,li,figcaption{text-wrap:pretty}
 .title{font-weight:700;letter-spacing:-.03em;line-height:1;text-wrap:balance;font-size:clamp(2.3rem,5.6vw,4.4rem)}
 .title em,.it{font-family:var(--f-serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
 .title em{color:var(--pink);font-size:1.08em}
@@ -134,8 +135,6 @@ h3{font-size:1.2rem;font-weight:600;line-height:1.25;letter-spacing:-.01em}
 .menu-open .menu li{animation:mIn .6s var(--ease) both}
 .menu-open .menu li:nth-child(2){animation-delay:.05s}.menu-open .menu li:nth-child(3){animation-delay:.1s}.menu-open .menu li:nth-child(4){animation-delay:.15s}.menu-open .menu li:nth-child(5){animation-delay:.2s}.menu-open .menu li:nth-child(6){animation-delay:.25s}
 @keyframes mIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-.menu .m-foot{max-width:var(--wrap);width:100%;margin-inline:auto;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;color:var(--muted);font-size:.95rem}
-.menu .m-foot a:not(.btn){text-decoration:none;color:var(--text)}
 html.menu-open,html.menu-open body{overflow:hidden}
 
 /* ---------- Hero ---------- */
@@ -159,7 +158,7 @@ html.menu-open,html.menu-open body{overflow:hidden}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .hero-logo{color:var(--text);display:grid;place-items:center;position:relative}
 .hero-logo svg.lg{width:min(100%,480px);height:auto;animation:fade 1.2s .2s both;will-change:transform}
-@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;padding-top:24px}.hero-logo{order:-1;justify-items:start}.hero-logo svg.lg{width:min(58%,230px)}.hero .wrap{padding-top:96px}.hero::before{background:linear-gradient(180deg,rgba(28,15,31,.7) 0%,rgba(28,15,31,.82) 55%,rgba(28,15,31,.96) 100%)}}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;padding-top:24px}.hero-logo{order:-1;justify-items:center}.hero .wrap{text-align:center;justify-items:center}.hero .cta{display:flex;justify-content:center}.hero-logo svg.lg{width:min(58%,230px)}.hero .wrap{padding-top:96px}.hero::before{background:linear-gradient(180deg,rgba(28,15,31,.7) 0%,rgba(28,15,31,.82) 55%,rgba(28,15,31,.96) 100%)}}
 
 /* bande défilante */
 .ribbon-wrap{position:relative;z-index:2;overflow:hidden;background:linear-gradient(180deg,var(--ink) 50%,var(--skin) 50%);padding-block:18px;margin-block:-18px}
@@ -175,6 +174,7 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .plum{background:var(--plum)}
 .head{display:grid;grid-template-columns:1fr minmax(0,400px);gap:16px 48px;align-items:end;margin-bottom:clamp(30px,5vw,54px)}
 @media (max-width:820px){.head{grid-template-columns:1fr}}
+.head.stack{grid-template-columns:1fr;align-items:start;gap:18px}.head.stack .lead{max-width:46ch}.head.stack .filters{margin-top:4px}
 
 /* deux métiers */
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:18px}
@@ -227,6 +227,7 @@ html.menu-open,html.menu-open body{overflow:hidden}
 .years{font-weight:700;letter-spacing:-.05em;line-height:.85;font-size:clamp(4.6rem,12vw,9.5rem);color:var(--plum)}
 .years em{font-family:var(--f-serif);font-weight:400;font-style:italic;letter-spacing:-.02em;color:var(--plum-2)}
 .years-sub{font-size:1.25rem;margin-top:14px;max-width:26ch}
+@media (min-width:1000px){.years-sub{max-width:none;white-space:nowrap}}
 .years-sub em{font-family:var(--f-serif);font-size:1.15em}
 .facts{margin:30px 0 0;display:grid}
 .facts div{display:grid;grid-template-columns:130px 1fr;gap:16px;padding:16px 0;border-top:1px solid var(--skin-line)}
@@ -468,9 +469,6 @@ footer{background:var(--ink);position:relative}
 .socials a{display:flex;align-items:center;gap:10px;text-decoration:none;width:fit-content;transition:color .25s}
 .socials a:hover{color:var(--pink)}
 .socials svg{width:22px;height:22px;flex:none}
-.f-big{overflow:hidden;color:var(--plum);font-weight:800;letter-spacing:-.06em;line-height:.8;font-size:clamp(3.4rem,14vw,13rem);white-space:nowrap;text-align:center;padding-top:10px;user-select:none}
-.f-big em{font-family:var(--f-serif);font-weight:400;font-style:italic;letter-spacing:-.03em}
-@media (max-width:640px){.f-big{display:grid;justify-items:center;white-space:normal;font-size:20.5vw;line-height:.86;padding-top:18px}.f-big span,.f-big em{display:block}.f-big em{font-size:1.12em;margin-top:-.08em}}
 .f-bottom{border-top:1px solid color-mix(in oklab,var(--text) 12%,transparent);display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;padding-block:20px calc(96px + env(safe-area-inset-bottom,0px));font-size:.86rem;color:var(--muted)}
 .f-bottom nav{display:flex;gap:18px;flex-wrap:wrap}
 .f-bottom button{color:var(--muted);background:none;border:0;padding:0;font-size:inherit}
@@ -485,7 +483,7 @@ dialog h2{font-weight:700;letter-spacing:-.03em;font-size:2rem}
 dialog h2 em{font-family:var(--f-serif);font-weight:400;font-style:italic;color:var(--plum-2)}
 dialog h3{font-size:1rem;margin-top:10px}
 dialog p{font-size:.95rem;color:var(--on-skin-2)}
-dialog .close:focus{outline:none}dialog .close:focus-visible{outline:none;text-decoration-thickness:2px}dialog .close{justify-self:end;border:0;background:none;font-size:.95rem;text-decoration:underline;color:var(--on-skin)}
+dialog .close{justify-self:end;position:sticky;top:0;width:42px;height:42px;border-radius:50%;border:1.5px solid color-mix(in oklab,var(--on-skin) 22%,transparent);background:var(--skin);color:var(--on-skin);display:grid;place-items:center;padding:0;font-size:0;transition:background .25s,color .25s,border-color .25s;-webkit-tap-highlight-color:transparent}dialog .close::before,dialog .close::after{content:"";grid-area:1/1;width:15px;height:1.6px;background:currentColor;border-radius:2px;transform:rotate(45deg)}dialog .close::after{transform:rotate(-45deg)}dialog .close:hover{background:var(--on-skin);color:var(--skin);border-color:var(--on-skin)}dialog .close:focus{outline:none}dialog .close:focus-visible{border-color:var(--on-skin)}
 
 .toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:var(--skin);color:var(--on-skin);padding:10px 18px;border-radius:999px;font-size:.92rem;opacity:0;pointer-events:none;transition:all .3s;z-index:95;max-width:calc(100% - 32px);width:max-content}
 .toast.on{opacity:1;transform:translate(-50%,0)}
@@ -539,7 +537,6 @@ dialog .close:focus{outline:none}dialog .close:focus-visible{outline:none;text-d
     <li><a href="#faq">Questions</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="m-foot"><a class="btn btn-pink" href="#rdv"><span>Prendre rendez-vous</span> <span class="arr">→</span></a></div>
 </nav>
 
 <main id="top">
@@ -562,7 +559,6 @@ dialog .close:focus{outline:none}dialog .close:focus-visible{outline:none;text-d
   <div class="wrap">
     <div class="head reveal">
       <h2 class="title" id="t-metiers">Deux métiers, <em>un seul studio</em></h2>
-      <p class="lead">Un tatouage dessiné pour vous, ou un piercing posé dans la journée.</p>
     </div>
     <div class="duo reveal stagger">
       <a class="metier" href="#rdv" data-pick="tattoo" style="--i:0">
@@ -586,7 +582,7 @@ dialog .close:focus{outline:none}dialog .close:focus-visible{outline:none;text-d
 <!-- ===================== RÉALISATIONS ===================== -->
 <section class="band" id="realisations" aria-labelledby="t-real">
   <div class="wrap">
-    <div class="head reveal">
+    <div class="head stack reveal">
       <h2 class="title" id="t-real">Quelques <em>réalisations</em></h2>
       <div class="filters" id="filters" role="group" aria-label="Filtrer les réalisations"></div>
     </div>
@@ -610,7 +606,7 @@ dialog .close:focus{outline:none}dialog .close:focus-visible{outline:none;text-d
       <dl class="facts">
         <div><dt>Hygiène</dt><dd>Aiguilles et matériel stériles à usage unique, salle réservée aux soins, formation hygiène du professionnel.</dd></div>
         <div><dt>Sur mesure</dt><dd>Chaque tatouage part d'un dessin préparé pour vous et pour l'emplacement choisi.</dd></div>
-        <div><dt>Horaires</dt><dd>Du mercredi au samedi, de 10h à 12h et de 14h à 18h. Le soir sur rendez-vous.</dd></div>
+        <div><dt>Horaires</dt><dd>Du mercredi au samedi, de 10h à 12h et de 14h à 18h. Le soir dès 20h30, sur rendez-vous.</dd></div>
       </dl>
     </div>
   </div>
@@ -733,7 +729,7 @@ dialog .close:focus{outline:none}dialog .close:focus-visible{outline:none;text-d
 <!-- ===================== CARTE CADEAU ===================== -->
 <section class="band skin" id="cadeau" aria-labelledby="t-gift">
   <div class="wrap">
-    <div class="head reveal">
+    <div class="head stack reveal">
       <h2 class="title" id="t-gift">Pour marquer le coup, <em>offrez un cadeau qui reste</em></h2>
       <p class="lead">Une carte cadeau valable pour un tatouage ou un piercing, réglée en ligne et reçue tout de suite en PDF.</p>
     </div>
@@ -814,7 +810,7 @@ dialog .close:focus{outline:none}dialog .close:focus-visible{outline:none;text-d
     </div>
   </div>
   <div class="wrap f-grid">
-    <div><h3>Horaires</h3><div class="hours" id="hours"></div><p style="font-size:.9rem;color:var(--muted);margin-top:6px">Le soir sur rendez-vous</p></div>
+    <div><h3>Horaires</h3><div class="hours" id="hours"></div><p style="font-size:.9rem;color:var(--muted);margin-top:6px">Le soir dès 20h30, sur rendez-vous</p></div>
     <div><h3>Contact</h3>
       <div class="f-list">
         <a class="tel ulink" href="tel:+33298594533">02 98 59 45 33</a>
@@ -829,7 +825,6 @@ dialog .close:focus{outline:none}dialog .close:focus-visible{outline:none;text-d
       </div>
     </div>
   </div>
-  <div class="f-big" aria-hidden="true"><span>Pierceval</span> <em>Tattoo</em></div>
   <div class="wrap f-bottom">
     <span>© <span id="yr">2026</span> Pierceval Tattoo</span>
     <nav aria-label="Informations légales"><button type="button" data-dialog="legal">Mentions légales</button><button type="button" data-dialog="privacy">Confidentialité</button></nav>
@@ -1038,7 +1033,7 @@ let calM=new Date(TODAY.getFullYear(),TODAY.getMonth(),1);
 const closed=d=>CONFIG.closures.some(c=>iso(d)>=c.from&&iso(d)<=c.to);
 function bookable(d){const diff=daysBetween(TODAY,d);return diff>=1&&diff<=CONFIG.bookingHorizonDays&&!closed(d)&&CONFIG.bookingDays[B.type||'tattoo'].includes(d.getDay())}
 function renderCal(){
-  $('#dateSub').textContent=B.type==='piercing'?'Les piercings se font du mercredi au samedi, par créneaux de 30 minutes.':B.type==='tattoo'?'Choisissez une demi-journée : l\'heure exacte se fixe avec le tatoueur, selon la durée de la séance.':'Choisissez un moment pour passer au studio.';
+  $('#dateSub').textContent=B.type==='piercing'?'Les piercings se font du mercredi au samedi, par créneaux de 30 minutes.':B.type==='tattoo'?'Choisissez le matin, l\'après-midi ou la soirée : l\'heure exacte se fixe avec le tatoueur, selon la durée de la séance.':'Choisissez un moment pour passer au studio.';
   $('#monthLbl').textContent=calM.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
   const max=new Date(TODAY.getTime()+CONFIG.bookingHorizonDays*864e5);
   $('#prevM').disabled=calM<=new Date(TODAY.getFullYear(),TODAY.getMonth(),1);$('#nextM').disabled=new Date(calM.getFullYear(),calM.getMonth()+1,1)>max;
@@ -1050,7 +1045,7 @@ $('#prevM').onclick=()=>{calM=new Date(calM.getFullYear(),calM.getMonth()-1,1);r
 $('#nextM').onclick=()=>{calM=new Date(calM.getFullYear(),calM.getMonth()+1,1);renderCal()};
 function renderSlots(){const el=$('#slots');if(!B.date){$('#slotLbl').textContent='Choisissez un jour';el.innerHTML='<p class="empty">Les jours où le studio peut vous recevoir sont en clair dans le calendrier.</p>';return}
   const d=new Date(B.date+'T12:00');$('#slotLbl').innerHTML=`<span style="text-transform:capitalize;color:var(--text)">${fmtDate(d)}</span>`;let h='';
-  if(B.type==='tattoo'){h=CONFIG.tattooSlots.map(([l,t])=>`<button type="button" class="wide" data-s="${l}, dès ${hh(t)}">${l}<span>dès ${hh(t)}</span></button>`).join('');if(CONFIG.eveningOnRequest)h+=`<button type="button" class="wide" data-s="Soirée, sur demande">Soirée<span>sur demande</span></button>`}
+  if(B.type==='tattoo'){h=CONFIG.tattooSlots.map(([l,t])=>`<button type="button" class="wide" data-s="${l}, dès ${hh(t)}">${l}<span>dès ${hh(t)}</span></button>`).join('');if(CONFIG.eveningOnRequest)h+=`<button type="button" class="wide" data-s="Soirée, dès 20h30">Soirée<span>dès 20h30</span></button>`}
   else(CONFIG.hours[d.getDay()]||[]).forEach(([a,b],i)=>{h+=`<span class="grp">${i?'Après-midi':'Matin'}</span>`;for(let m=toMin(a);m+30<=toMin(b);m+=30){const s=pad(m/60|0)+'h'+pad(m%60);h+=`<button type="button" data-s="${s}">${s}</button>`}});
   el.innerHTML=h;$$('button',el).forEach(b=>{b.classList.toggle('sel',b.dataset.s===B.slot);b.onclick=()=>{B.slot=b.dataset.s;renderSlots();save();validate()}})}
 function contactExtras(){const t=B.type==='tattoo';$('#tatRules').hidden=!t;$('#rulesCheck').hidden=!t;$('#minorNote').hidden=B.age!=='mineur'}
@@ -1196,6 +1191,19 @@ go('type',false);
       else{const h=box.scrollHeight;const an=box.animate([{height:h+'px',opacity:1},{height:'0px',opacity:0}],{duration:300,easing:'cubic-bezier(.2,.8,.2,1)'});an.onfinish=()=>el.open=false}}
     d._toggle=toggle});
   function toggle(el,on){el._toggle(el,on)}
+})();
+
+/* typographie : espaces insécables (ponctuation, débuts de phrase, montants) */
+(function(){
+  const SKIP=/^(SCRIPT|STYLE|TEXTAREA|INPUT|CANVAS|SVG|CODE)$/;
+  function fix(t){return t
+    .replace(/ ([:;?!»])/g,' $1').replace(/« /g,'« ')
+    .replace(/(\d) (€|%|h\b|cm\b|min\b|jours?\b|mois\b|ans\b)/g,'$1 $2')
+    .replace(/([.!?]) ([^\s ]{1,14}) /g,'$1 $2 ').replace(/([.!?]) ([^\s ]+ [^\s ]{1,12}) /g,'$1 $2 ')
+    .replace(/(^|[\s(])(à|a|de|du|le|la|les|un|une|des|et|ou|en|au|aux|par|pour|sur|ce|ces|son|sa|ses|vos|votre|nos|notre|je|il|on|ne|y) /gi,'$1$2 ')}
+  function walk(n){if(n.nodeType===3){const v=fix(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v;return}
+    if(n.nodeType!==1||SKIP.test(n.nodeName.toUpperCase()))return;for(const c of n.childNodes)walk(c)}
+  walk(document.body);let q;new MutationObserver(ms=>{clearTimeout(q);q=setTimeout(()=>ms.forEach(m=>m.addedNodes.forEach(walk)),30)}).observe(document.body,{childList:true,subtree:true});
 })();
 </script>
 
