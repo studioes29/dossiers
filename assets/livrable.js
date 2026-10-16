@@ -22,6 +22,10 @@
   function mode(m){ document.body.classList.toggle("m", m === "m"); if(seg) $$("button", seg).forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.m === m)); }); }
   mode(matchMedia("(max-width:760px)").matches ? "m" : "d");
   if(seg) $$("button", seg).forEach(function(b){ b.onclick = function(){ mode(b.dataset.m); }; });
+  /* la bascule n'apparaît que pendant la rubrique des captures */
+  var zone = $("[data-seg-zone]");
+  if(seg && zone && "IntersectionObserver" in window){ new IntersectionObserver(function(es){ es.forEach(function(x){ seg.classList.toggle("on", x.isIntersecting); }); }, {rootMargin:"-30% 0px -30% 0px"}).observe(zone); }
+  else if(seg) seg.classList.add("on");
 
   /* zoom */
   var lb = $(".lbx");
