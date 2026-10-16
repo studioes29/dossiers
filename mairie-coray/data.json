@@ -8,8 +8,7 @@
     {
       "titre": "Les démarches sont en ligne",
       "texte": "État civil, urbanisme avec le lien vers le PLU sur le Géoportail : l'essentiel est là pour qui sait où chercher.",
-      "etat": "bien",
-      "lien": "https://coray.fr/accueil/a-votre-service/demarches-administratives/etat-civil/"
+      "etat": "bien"
     },
     {
       "titre": "Des contenus anciens encore en avant",
@@ -28,55 +27,6 @@
       "etat": "absent"
     }
   ],
-  "maquette": {
-    "type": "site",
-    "accroche": "Ce que ça pourrait donner",
-    "explication": "Une page d'accueil qui répond d'abord aux questions des habitants : horaires, démarches, ce qui se passe cette semaine.",
-    "titre": "Coray",
-    "logoTexte": "Coray",
-    "surtitre": "Commune du Finistère",
-    "sousTitre": "Mairie ouverte du lundi au jeudi de 8 h 30 à 12 h et de 13 h 30 à 17 h 30, le vendredi jusqu'à 16 h 30.",
-    "bouton": "Faire une démarche",
-    "menu": [
-      "Mairie",
-      "Vivre à Coray",
-      "Agenda"
-    ],
-    "infos": [
-      {
-        "t": "Mairie",
-        "l": [
-          "1 rue Grégoire-le-Cam",
-          "02 98 59 10 10"
-        ]
-      },
-      {
-        "t": "Démarches",
-        "l": [
-          "État civil",
-          "Urbanisme et PLU",
-          "Transports scolaires"
-        ]
-      },
-      {
-        "t": "Vivre à Coray",
-        "l": [
-          "Associations",
-          "Écoles",
-          "Découvrir la commune"
-        ]
-      }
-    ],
-    "pied": "Mairie de Coray, 1 rue Grégoire-le-Cam, 29370 Coray",
-    "imageTexte": "Ici, une photo du bourg de Coray un matin de marché ou de cérémonie.",
-    "couleurs": {
-      "fond": "#f4f2ec",
-      "texte": "#1d2a24",
-      "accent": "#2f5d46"
-    },
-    "police": "Outfit",
-    "legende": "Une première piste. Les couleurs et le blason de la commune restent à intégrer."
-  },
   "titrePoles": "Ce que je peux prendre en charge",
   "textePoles": "J'ai été chargé de communication dans une collectivité, seul sur tout le périmètre. Je peux aujourd'hui intervenir sur une partie ou sur l'ensemble, selon vos besoins.",
   "poles": [
