@@ -184,41 +184,75 @@
       {sem:"Semaine 44", items:[{c:"fb", t:"Photos de la commémoration", ok:0},{c:"site", t:"Inscriptions à la cantine", ok:0}]},
       {sem:"Semaine 45", items:[{c:"mag", t:"Bouclage du bulletin d'hiver", ok:0},{c:"fb", t:"Marché de Noël : appel aux exposants", ok:0},{c:"pan", t:"Travaux de voirie route de la gare", ok:0}]}]}
   };
+  /* Démonstrations d'outils v2 : une vraie petite application, en version ordinateur ou téléphone,
+     avec des compteurs qui bougent, des cartes qui changent de colonne et des confirmations. */
+  var OIC = {demandes:"M4 6h16M4 12h10M4 18h7M18 15l2 2 3-4", projets:"M4 19V9M10 19V5M16 19v-7M22 19H2", salles:"M3 5h18v15H3zM3 10h18M8 3v4M16 3v4", com:"M4 11l14-6v14L4 13zM4 11v2M8 13.5V18h3"};
+  var POOL = [{t:"Éclairage du parking", l:"Place de l'église", s:"Voirie"},{t:"Poubelle renversée", l:"Arrêt de car", s:"Propreté"},{t:"Porte du local qui ferme mal", l:"Salle des associations", s:"Bâtiments"},{t:"Branche tombée", l:"Chemin de randonnée", s:"Espaces verts"},{t:"Tag sur le mur", l:"Abri bus", s:"Propreté"}];
+  function svgI(p){ return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + p + '"/></svg>'; }
   function demos(ots, D){
-    var box = document.getElementById("odemo"), tabs = document.querySelector(".otabs"); if(!box) return; var cur = 0, etat = ots.map(function(x){ return JSON.parse(JSON.stringify((x.exemples && x.exemples.length) ? x.exemples : OUTILS[x.type].defaut)); }), filtre = -1;
-    function cadre(x, corps, outilsBarre){ var O = OUTILS[x.type];
-      return '<div class="app"><div class="abar"><i></i><i></i><i></i><span>' + esc((D.nom || "Commune") + " · " + (x.titre || O.titre)) + '</span></div><div class="ahead"><div><small>' + esc(x.sous || O.sous) + '</small><b>' + esc(x.titre || O.titre) + '</b></div>' + (outilsBarre || "") + '</div><div class="abody">' + corps + '</div></div>' + (x.texte ? '<p class="otx">' + esc(x.texte) + '</p>' : ''); }
-    function rendre(){
-      var x = ots[cur], E = etat[cur], O = OUTILS[x.type], h = "";
-      if(x.type === "demandes"){
-        var n = [0,0,0]; E.forEach(function(r){ n[r.e]++; });
-        var barre = '<div class="pills">' + ['<button type="button" data-f="-1" aria-pressed="' + (filtre < 0) + '">Tout ' + E.length + '</button>'].concat(O.etats.map(function(t, k){ return '<button type="button" data-f="' + k + '" aria-pressed="' + (filtre === k) + '">' + t + ' ' + n[k] + '</button>'; })).join("") + '</div>';
-        h = '<ul class="dem">' + E.map(function(r, k){ if(filtre >= 0 && r.e !== filtre) return ""; return '<li><button type="button" data-r="' + k + '" class="e' + r.e + '"><span class="pt"></span><span class="tt"><b>' + esc(r.t) + '</b><small>' + esc(r.l) + ' · ' + esc(r.s) + '</small></span><span class="st">' + O.etats[r.e] + '<small>' + esc(r.d || "") + '</small></span></button></li>'; }).join("") + '</ul><p class="astuce">Touchez une demande pour la faire avancer.</p>';
-        h = cadre(x, h, barre);
-      } else if(x.type === "projets"){
-        h = '<ul class="prj">' + E.map(function(p, k){ var f = p.steps.filter(function(s){ return s[1]; }).length, pc = Math.round(f / p.steps.length * 100), nx = p.steps.filter(function(s){ return !s[1]; })[0];
-          return '<li><details' + (k === 0 ? " open" : "") + '><summary><span class="tt"><b>' + esc(p.t) + '</b><small>' + esc(p.r) + ' · ' + esc(p.f) + '</small></span><span class="pct">' + pc + ' %</span><span class="jauge"><i style="width:' + pc + '%"></i></span><small class="nx">' + (nx ? "Prochaine étape : " + esc(nx[0]) : "Terminé") + '</small></summary><ol>' + p.steps.map(function(s, j){ return '<li><button type="button" data-p="' + k + '" data-s="' + j + '" aria-pressed="' + !!s[1] + '"><span class="ck"></span>' + esc(s[0]) + '</button></li>'; }).join("") + '</ol></details></li>'; }).join("") + '</ul>';
-        h = cadre(x, h, '<span class="kpi">' + E.length + ' projets</span>');
-      } else if(x.type === "salles"){
-        var J = O.jours; h = '<div class="sal"><div class="sg" style="--n:' + J.length + '"><span></span>' + J.map(function(j){ return '<b>' + j + '</b>'; }).join("") +
-          E.map(function(s, k){ return '<em>' + esc(s.t) + '</em>' + J.map(function(j){ var r = (s.r || {})[j]; return '<button type="button" data-sl="' + k + '" data-j="' + j + '" class="' + (r ? "pris" : "") + '" aria-label="' + esc(s.t + ", " + j + (r ? ", " + r : ", libre")) + '">' + (r ? esc(r) : "") + '</button>'; }).join(""); }).join("") + '</div></div><p class="astuce">Touchez un créneau libre pour le réserver.</p>';
-        h = cadre(x, h, '<span class="kpi">Semaine en cours</span>');
-      } else if(x.type === "com"){
-        h = '<div class="cal">' + E.map(function(w, k){ return '<div class="sem"><b>' + esc(w.sem) + '</b><ul>' + w.items.map(function(it, j){ return '<li><button type="button" data-w="' + k + '" data-i="' + j + '" aria-pressed="' + !!it.ok + '"><span class="cn c-' + esc(it.c) + '">' + esc(O.canaux[it.c] || it.c) + '</span><span class="tt">' + esc(it.t) + '</span><span class="ck"></span></button></li>'; }).join("") + '</ul></div>'; }).join("") + '</div><p class="astuce">Touchez une publication pour la marquer comme faite.</p>';
-        var tot = 0, ok = 0; E.forEach(function(w){ w.items.forEach(function(it){ tot++; if(it.ok) ok++; }); });
-        h = cadre(x, h, '<span class="kpi">' + ok + ' / ' + tot + ' publiés</span>');
-      }
-      box.innerHTML = h;
+    var box = document.getElementById("odemo"); if(!box) return;
+    var cur = 0, etat = ots.map(function(x){ return JSON.parse(JSON.stringify((x.exemples && x.exemples.length) ? x.exemples : OUTILS[x.type].defaut)); });
+    var mode = window.matchMedia("(max-width:700px)").matches ? "tel" : "pc", filtre = -1, neuf = null, msg = "", pi = 0, kpiAvant = {};
+    var acc = couleur(D.accent, "#2450B8"), nomC = D.nom || "Commune", ini = nomC.replace(/^(Commune|Mairie|Ville)\s+(de\s+|du\s+|d'|des\s+)?/i, "").replace(/^(Le|La|Les)\s+/i, "").charAt(0).toUpperCase();
+    function kpis(x, E){
+      if(x.type === "demandes"){ var n = [0,0,0]; E.forEach(function(r){ n[r.e]++; }); return [["À traiter", n[0], "e0"],["En cours", n[1], "e1"],["Faites", n[2], "e2"]]; }
+      if(x.type === "projets"){ var t = 0, f = 0; E.forEach(function(p){ p.steps.forEach(function(s){ t++; if(s[1]) f++; }); }); return [["Projets", E.length, ""],["Avancement", Math.round(f / Math.max(1, t) * 100), "", " %"],["Étapes restantes", t - f, ""]]; }
+      if(x.type === "salles"){ var J = OUTILS.salles.jours, pr = 0, tot = E.length * J.length; E.forEach(function(s){ pr += Object.keys(s.r || {}).length; }); return [["Réservations", pr, ""],["Créneaux libres", tot - pr, ""],["Occupation", Math.round(pr / Math.max(1, tot) * 100), "", " %"]]; }
+      var a = 0, o = 0; E.forEach(function(w){ w.items.forEach(function(it){ a++; if(it.ok) o++; }); }); return [["Publications", a, ""],["Faites", o, "e2"],["À venir", a - o, "e1"]];
     }
-    tabs.addEventListener("click", function(ev){ var b = ev.target.closest("button[data-t]"); if(!b) return; cur = +b.dataset.t; filtre = -1; Array.prototype.forEach.call(tabs.children, function(x){ x.setAttribute("aria-selected", String(x === b)); }); rendre(); });
-    box.addEventListener("click", function(ev){ var b = ev.target.closest("button"); if(!b) return; var E = etat[cur];
-      if(b.dataset.f != null){ filtre = +b.dataset.f; }
-      else if(b.dataset.r != null){ var r = E[+b.dataset.r]; r.e = (r.e + 1) % 3; r.d = ["Signalé à l'instant","Pris en charge","Fait aujourd'hui"][r.e]; }
-      else if(b.dataset.p != null){ var st = E[+b.dataset.p].steps[+b.dataset.s]; st[1] = st[1] ? 0 : 1; rendre(); var dd = box.querySelectorAll(".prj details")[+b.dataset.p]; if(dd) dd.open = true; return; }
-      else if(b.dataset.sl != null){ var s = E[+b.dataset.sl]; s.r = s.r || {}; if(s.r[b.dataset.j]) delete s.r[b.dataset.j]; else s.r[b.dataset.j] = "Réservé"; }
-      else if(b.dataset.w != null){ var it = E[+b.dataset.w].items[+b.dataset.i]; it.ok = it.ok ? 0 : 1; }
-      else return; rendre(); });
-    rendre();
+    function action(x){ return {demandes:"Nouvelle demande", projets:"Voir le tableau du conseil", salles:"Réserver une salle", com:"Programmer une publication"}[x.type]; }
+    function corps(x, E){
+      var O = OUTILS[x.type], h = "";
+      if(x.type === "demandes"){
+        if(mode === "pc"){ h = '<div class="kb">' + O.etats.map(function(t, c){ return '<div class="col c' + c + '"><b>' + t + ' <i>' + E.filter(function(r){ return r.e === c; }).length + '</i></b>' + E.map(function(r, k){ if(r.e !== c) return ""; return '<button type="button" data-r="' + k + '" class="crd' + (neuf === k ? " neuf" : "") + '"><span class="tg">' + esc(r.s) + '</span><strong>' + esc(r.t) + '</strong><small>' + esc(r.l) + '</small><em>' + esc(r.d || "") + '</em></button>'; }).join("") + '</div>'; }).join("") + '</div>'; }
+        else { var n = [0,0,0]; E.forEach(function(r){ n[r.e]++; }); h = '<div class="pl2">' + ['<button type="button" data-f="-1" aria-pressed="' + (filtre < 0) + '">Tout</button>'].concat(O.etats.map(function(t, k){ return '<button type="button" data-f="' + k + '" aria-pressed="' + (filtre === k) + '">' + t + ' ' + n[k] + '</button>'; })).join("") + '</div><div class="lst">' + E.map(function(r, k){ if(filtre >= 0 && r.e !== filtre) return ""; return '<button type="button" data-r="' + k + '" class="ln e' + r.e + (neuf === k ? " neuf" : "") + '"><span class="pt"></span><span class="tt"><strong>' + esc(r.t) + '</strong><small>' + esc(r.l) + ' · ' + esc(r.s) + '</small></span><span class="st">' + O.etats[r.e] + '</span></button>'; }).join("") + '</div>'; }
+      } else if(x.type === "projets"){
+        h = '<div class="pj">' + E.map(function(p, k){ var f = p.steps.filter(function(s){ return s[1]; }).length, pc = Math.round(f / p.steps.length * 100), C = 2 * Math.PI * 22, nx = p.steps.filter(function(s){ return !s[1]; })[0];
+          return '<div class="pjc"><div class="ph"><svg class="rg" viewBox="0 0 56 56"><circle cx="28" cy="28" r="22"/><circle class="v" cx="28" cy="28" r="22" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + (C * (1 - pc / 100)).toFixed(1) + '"/></svg><span class="pc">' + pc + '<small>%</small></span><span class="tt"><strong>' + esc(p.t) + '</strong><small>' + esc(p.r) + ' · ' + esc(p.f) + '</small></span></div><div class="stp">' + p.steps.map(function(s, j){ return '<button type="button" data-p="' + k + '" data-s="' + j + '" aria-pressed="' + !!s[1] + '"><i></i>' + esc(s[0]) + '</button>'; }).join("") + '</div><p class="nx">' + (nx ? "Prochaine étape : " + esc(nx[0]) : "Projet terminé") + '</p></div>'; }).join("") + '</div>';
+      } else if(x.type === "salles"){
+        var J = O.jours, jj = mode === "pc" ? J : J.slice(0, 5);
+        h = '<div class="sl" style="--n:' + jj.length + '"><span></span>' + jj.map(function(j){ return '<b>' + j + '</b>'; }).join("") + E.map(function(s, k){ return '<em>' + esc(s.t) + '</em>' + jj.map(function(j){ var r = (s.r || {})[j]; return '<button type="button" data-sl="' + k + '" data-j="' + j + '" class="' + (r ? "pris" : "") + (neuf === k + j ? " neuf" : "") + '">' + (r ? '<span>' + esc(r) + '</span>' : '<i>+</i>') + '</button>'; }).join(""); }).join("") + '</div>';
+      } else {
+        h = '<div class="cl">' + E.map(function(w, k){ return '<div class="wk"><b>' + esc(w.sem) + '</b>' + w.items.map(function(it, j){ return '<button type="button" data-w="' + k + '" data-i="' + j + '" aria-pressed="' + !!it.ok + '"><span class="cn c-' + esc(it.c) + '">' + esc(O.canaux[it.c] || it.c) + '</span><span class="tt">' + esc(it.t) + '</span><i></i></button>'; }).join("") + '</div>'; }).join("") + '</div>';
+      }
+      return h;
+    }
+    function rendreD(){
+      var x = ots[cur], E = etat[cur], O = OUTILS[x.type], K = kpis(x, E), cle = cur + ":";
+      var nav = ots.map(function(o, k){ return '<button type="button" data-t="' + k + '" aria-current="' + (k === cur) + '">' + svgI(OIC[o.type]) + '<span>' + esc(o.titre || OUTILS[o.type].titre) + '</span></button>'; }).join("");
+      var kp = '<div class="kp">' + K.map(function(q, i){ return '<div class="k ' + q[2] + '"><small>' + q[0] + '</small><b data-v="' + q[1] + '" data-de="' + (kpiAvant[cle + i] != null ? kpiAvant[cle + i] : 0) + '" data-s="' + (q[3] || "") + '">' + q[1] + (q[3] || "") + '</b></div>'; }).join("") + '</div>';
+      K.forEach(function(q, i){ kpiAvant[cle + i] = q[1]; });
+      var tete = '<div class="hd"><div><small>' + esc(x.sous || O.sous) + '</small><h4>' + esc(x.titre || O.titre) + '</h4></div><button type="button" class="cta" data-a="1">' + (mode === "pc" ? esc(action(x)) : "+") + '</button></div>';
+      var toast = msg ? '<div class="tst">' + esc(msg) + '</div>' : "";
+      var h = '<div class="seg2" role="group" aria-label="Affichage"><button type="button" data-m="pc" aria-pressed="' + (mode === "pc") + '">Ordinateur</button><button type="button" data-m="tel" aria-pressed="' + (mode === "tel") + '">Téléphone</button></div>';
+      if(mode === "pc") h += '<div class="pcw"><div class="pcs" style="--a:' + acc + '"><div class="bar"><i></i><i></i><i></i><span>services.' + esc(String(D.ville || "commune").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-")) + '.fr</span></div><div class="win"><aside><div class="lg"><span>' + esc(ini || "C") + '</span><b>' + esc(nomC) + '</b></div><nav>' + nav + '</nav><p class="who">Connecté : accueil de la mairie</p></aside><main>' + tete + kp + '<div class="bd">' + corps(x, E) + '</div>' + toast + '</main></div></div></div>';
+      else h += '<div class="tlw"><div class="tls" style="--a:' + acc + '"><div class="isl"></div><div class="scr">' + tete + kp + '<div class="bd">' + corps(x, E) + '</div></div><nav>' + nav + '</nav>' + toast + '</div></div>';
+      h += x.texte ? '<p class="otx">' + esc(x.texte) + '</p>' : '';
+      box.innerHTML = h; ajuste(); compte(); neuf = null;
+      if(msg){ var m0 = msg; setTimeout(function(){ if(msg === m0){ msg = ""; var t = box.querySelector(".tst"); if(t) t.classList.add("out"); } }, 2200); }
+    }
+    function compte(){ box.querySelectorAll(".kp b").forEach(function(b){ var v = +b.dataset.v, de = +b.dataset.de, s = b.dataset.s; if(de === v || matchMedia("(prefers-reduced-motion: reduce)").matches) return; var t0 = performance.now();
+      (function pas(t){ var k = Math.min(1, (t - t0) / 600); b.textContent = Math.round(de + (v - de) * (1 - Math.pow(1 - k, 3))) + s; if(k < 1) requestAnimationFrame(pas); })(t0); }); }
+    function ajuste(){ var w = box.querySelector(".pcw"), s = box.querySelector(".pcs"); if(!w || !s) return; var k = Math.min(1, w.clientWidth / 980); s.style.transform = "scale(" + k + ")"; w.style.height = Math.ceil(s.offsetHeight * k) + "px"; }
+    window.addEventListener("resize", ajuste);
+    var tabs = document.querySelector(".otabs"); if(tabs) tabs.remove();
+    box.addEventListener("click", function(ev){ var b = ev.target.closest("button"); if(!b || !box.contains(b)) return; var x = ots[cur], E = etat[cur];
+      if(b.dataset.m){ mode = b.dataset.m; filtre = -1; msg = ""; }
+      else if(b.dataset.t != null){ cur = +b.dataset.t; filtre = -1; msg = ""; }
+      else if(b.dataset.f != null){ filtre = +b.dataset.f; }
+      else if(b.dataset.a){
+        if(x.type === "demandes"){ var r = POOL[pi++ % POOL.length]; E.unshift({t:r.t, l:r.l, s:r.s, e:0, d:"Signalé à l'instant"}); neuf = 0; msg = "Demande enregistrée : les services techniques la voient tout de suite."; filtre = -1; }
+        else if(x.type === "salles"){ var J = OUTILS.salles.jours; outer: for(var a = 0; a < E.length; a++) for(var j = 0; j < J.length; j++){ E[a].r = E[a].r || {}; if(!E[a].r[J[j]]){ E[a].r[J[j]] = "Réservé"; neuf = a + J[j]; msg = E[a].t + ", " + J[j] + " : réservé. Le demandeur reçoit sa confirmation."; break outer; } } }
+        else if(x.type === "com"){ var w = E[E.length - 1]; w.items.push({c:"fb", t:"Nouvelle publication", ok:0}); msg = "Publication programmée en " + w.sem.toLowerCase() + "."; }
+        else msg = "Le tableau se projette tel quel en conseil municipal.";
+      }
+      else if(b.dataset.r != null){ var q = E[+b.dataset.r]; q.e = (q.e + 1) % 3; q.d = ["Signalé à l'instant","Pris en charge aujourd'hui","Fait aujourd'hui"][q.e]; neuf = +b.dataset.r; msg = q.t + " : " + OUTILS.demandes.etats[q.e].toLowerCase() + "."; }
+      else if(b.dataset.p != null){ var st = E[+b.dataset.p].steps[+b.dataset.s]; st[1] = st[1] ? 0 : 1; msg = st[1] ? "Étape validée : " + st[0] + "." : ""; }
+      else if(b.dataset.sl != null){ var s2 = E[+b.dataset.sl]; s2.r = s2.r || {}; if(s2.r[b.dataset.j]){ delete s2.r[b.dataset.j]; msg = "Créneau libéré."; } else { s2.r[b.dataset.j] = "Réservé"; neuf = +b.dataset.sl + b.dataset.j; msg = s2.t + ", " + b.dataset.j + " : réservé."; } }
+      else if(b.dataset.w != null){ var it = E[+b.dataset.w].items[+b.dataset.i]; it.ok = it.ok ? 0 : 1; msg = it.ok ? "Publié : " + it.t + "." : ""; }
+      else return;
+      rendreD(); });
+    rendreD();
   }
 
   function apparition(){

@@ -112,7 +112,7 @@
     }
   ],
   "titreOutils": "Des outils faits pour vos services",
-  "texteOutils": "Quatre exemples, à essayer : ils fonctionnent. Chaque outil se construit avec les agents qui l'utiliseront, sur téléphone comme sur ordinateur, avec vos données.",
+  "texteOutils": "Des exemples à essayer : ils fonctionnent, sur ordinateur comme sur téléphone. Chaque outil se construit ensuite avec les agents qui l'utiliseront, avec vos données.",
   "outils": [
     {
       "type": "demandes",
