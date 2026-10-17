@@ -178,34 +178,35 @@ function openPF(c) { PF.c = c || 'all'; pfRender(); pf.classList.add('on'); pf.s
 function closePF() { if (!pf.classList.contains('on')) return; pf.classList.remove('on'); root.style.overflow = ''; dockOff(false); }
 $('#pfX').onclick = closePF;
 
-/* ================= PLAN LARGE : du plan serré au plan large ================= */
-const INC = [
-  ['Le reportage, sur place', 'Une sélection resserrée, retouchée image par image', 'Livraison le jour même, en option'],
-  ['Les supports tirés du reportage : affiches, brochures, visuels réseaux', 'Une direction artistique commune'],
-  ['Un suivi sur la saison ou sur l\'année', 'Un photographe et un interlocuteur communication unique']
+/* ================= PLAN LARGE : un bloc, la cible, le curseur, ce qui s'ajoute ================= */
+const BASEI = [
+  ['Reportage sur place', 'Sélection retouchée image par image', 'Livraison le jour même, en option'],
+  ['Affiches, brochures, visuels réseaux', 'Direction artistique commune'],
+  ['Suivi sur la saison ou l\'année', 'Un interlocuteur unique']
 ];
-const GEN = [[250, ''], [280, ''], [240, 'mois']];
-const off = $('#offre'), rng = $('#rng');
-$('#inc').innerHTML = INC.map((g, i) => `<li class="gh" data-g="${i}">${PAL[i][0]}<small>${PAL[i][1]}</small></li>` + g.map(t => `<li class="it" data-g="${i}">${ico('ok')}<span>${esc(t)}</span></li>`).join('')).join('');
+const off = $('#offre'), rng = $('#rng'), grps = $('#grps');
 const PL = {z: 0, t: 0};
 function low(n) { let lo = Infinity, u = ''; n.calc[0].o.forEach(o => { if (o[1] != null && o[1] > 0 && o[1] < lo) { lo = o[1]; u = o[2] || ''; } }); return lo === Infinity ? null : [lo, u]; }
 const unitS = u => u ? ' / ' + ({mois: 'mois', an: 'an', saison: 'saison', semaine: 'semaine'}[u]) : '';
-function plPrice(i) { const p = st.p ? P[st.p] : null; if (p) { const xs = p.n.filter(n => n.pal === i).map(low).filter(Boolean); if (xs.length) return xs.reduce((a, b) => b[0] < a[0] ? b : a); } return GEN[i]; }
 $('#who').innerHTML = WHO.map(([k, l]) => `<button data-k="${k}">${l}</button>`).join('');
+function plGroups() {
+  const k = st.p || 'culture', n = P[k].n;
+  grps.innerHTML = PAL.map((x, i) => {
+    const extra = n.filter(m => m.pal === i).map(m => m.l);
+    const items = [...BASEI[i], ...extra];
+    return `<div class="grp3" data-g="${i}"><h4>${x[0]}<small>${x[1]}</small></h4><ul>${items.map(t => `<li>${ico('ok')}${esc(t)}</li>`).join('')}</ul></div>`;
+  }).join('');
+  plText();
+}
 function plText() {
   const i = PL.t;
-  $('#plH').textContent = PAL[i][0]; $('#plL').textContent = PAL[i][1];
-  $$('#inc li').forEach(li => { const on = +li.dataset.g <= i; li.classList.toggle('on', on); li.classList.toggle('off', !on); });
-  const pr = plPrice(i); $('#plP').textContent = `${fmt(pr[0])} €${unitS(pr[1])}`;
-  $('#plFk').textContent = st.p ? 'À partir de, pour ' + WHO.find(w => w[0] === st.p)[1].toLowerCase() : 'À partir de';
+  $$('.grp3', grps).forEach(g => { const on = +g.dataset.g <= i; g.classList.toggle('on', on); g.classList.toggle('off', !on); });
+  $('#plN').innerHTML = `<b>${PAL[i][0]}</b> : ${['le reportage seul.', 'le reportage et ses supports.', 'le reportage, les supports et le suivi dans la durée.'][i]}`;
   $$('#zmL button').forEach((b, j) => b.classList.toggle('on', j === i)); rng.setAttribute('aria-valuenow', i);
 }
-function plZ(z) {
-  PL.z = clamp(z, 0, 1); off.style.setProperty('--z', PL.z.toFixed(4));
-  const t = Math.round(PL.z * 2); if (t !== PL.t) { PL.t = t; plText(); }
-}
+function plZ(z) { PL.z = clamp(z, 0, 1); off.style.setProperty('--z', PL.z.toFixed(4)); const t = Math.round(PL.z * 2); if (t !== PL.t) { PL.t = t; plText(); } }
 function plSnap(t) { off.classList.add('snap'); plZ(t / 2); }
-function plImg() { $$('#who button').forEach(b => b.classList.toggle('on', b.dataset.k === st.p)); plText(); }
+function plImg() { $$('#who button').forEach(b => b.classList.toggle('on', b.dataset.k === (st.p || 'culture'))); plGroups(); }
 { let drag = false;
   const at = x => { const r = rng.getBoundingClientRect(); return clamp((x - r.left) / r.width, 0, 1); };
   rng.addEventListener('pointerdown', e => { drag = true; off.classList.remove('snap'); rng.setPointerCapture(e.pointerId); plZ(at(e.clientX)); });
@@ -215,9 +216,9 @@ function plImg() { $$('#who button').forEach(b => b.classList.toggle('on', b.dat
   rng.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { plSnap(Math.min(2, PL.t + 1)); e.preventDefault(); } if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { plSnap(Math.max(0, PL.t - 1)); e.preventDefault(); } });
   $('#zmL').addEventListener('click', e => { const b = e.target.closest('button'); if (b) plSnap(+b.dataset.i); });
 }
-$('#who').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.p = st.p === b.dataset.k ? null : b.dataset.k; store.set('ses5', st.p); plImg(); });
-$('#plGo').onclick = () => openCfg({p: st.p, pal: PL.t});
-off.classList.add('snap'); plImg(); plZ(0); plText();
+$('#who').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.p = b.dataset.k; store.set('ses5', st.p); plImg(); });
+$('#plGo').onclick = () => openCfg({p: st.p || 'culture', pal: PL.t});
+off.classList.add('snap'); plImg(); plZ(0);
 
 /* ================= CONFIGURATEUR (panier) ================= */
 const CF = {step: 0, p: null, n: null, picks: [], basket: []};
@@ -351,7 +352,7 @@ function calLoad() {
   (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; const s = d.createElement('script'); s.src = A; s.onerror = calFallback; d.head.appendChild(s); cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.eu/embed/embed.js', 'init');
   Cal('init', 'rdv', {origin: 'https://app.cal.eu'});
   Cal.ns.rdv('inline', {elementOrSelector: '#calEmbed', calLink: 'studioes/30min', config: {layout: 'month_view', theme: 'dark'}});
-  Cal.ns.rdv('ui', {theme: 'dark', hideEventTypeDetails: true, layout: 'month_view', cssVarsPerTheme: {dark: {'cal-brand': '#E1DBC4', 'cal-brand-emphasis': '#ece7d6', 'cal-brand-text': '#17130F', 'cal-bg': '#171412', 'cal-bg-muted': '#201B18', 'cal-border': 'rgba(239,233,223,.12)', 'cal-text': '#EFE9DF'}}});
+  Cal.ns.rdv('ui', {theme: 'dark', hideEventTypeDetails: true, layout: 'month_view', cssVarsPerTheme: {dark: {'cal-brand': '#E1DBC4', 'cal-brand-emphasis': '#ece7d6', 'cal-brand-text': '#17130F', 'cal-bg': '#14141C', 'cal-bg-muted': '#1C1C27', 'cal-border': 'rgba(239,235,227,.12)', 'cal-text': '#EFEBE3'}}});
   setTimeout(() => { if (!$('iframe', calBox)) calFallback(); }, 7000);
 }
 new IntersectionObserver(es => { if (es[0].isIntersecting) calLoad(); }, {rootMargin: FINE ? '600px' : '150px'}).observe(calBox);
@@ -443,7 +444,7 @@ addEventListener('scroll', () => {
   requestAnimationFrame(() => {
     const y = scrollY; top.classList.toggle('sc', y > 30);
     if (y > 300 && y > lastY + 3) top.classList.add('hide'); else if (y < lastY - 3 || y < 300) top.classList.remove('hide');
-    lastY = y; dockSync();
+    lastY = y; dockSync(); document.body.classList.toggle('top-on', !top.classList.contains('hide'));
     const mid = innerHeight * .45; let cur = 'accueil';
     ['accueil', 'travaux', 'offre', 'rdv'].forEach(id => { if ($('#' + id).getBoundingClientRect().top <= mid) cur = id; });
     links.forEach(a => a.classList.toggle('on', a.dataset.s === cur));
