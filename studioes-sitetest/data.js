@@ -68,7 +68,7 @@ const fmt = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 const up50 = n => Math.ceil(n / 50) * 50;
 function estimate(calc, picks) {
   let lo = 0, devis = false, unit = ''; const labels = [];
-  calc.forEach((g, gi) => (picks[gi] || []).forEach(oi => { const o = g.o[oi]; if (o[1] == null) devis = true; else lo += o[1]; if (o[2]) unit = o[2]; if (o[1] !== 0) labels.push(g.q + ' : ' + o[0]); }));
+  calc.forEach((g, gi) => (picks[gi] || []).forEach(oi => { const o = g.o[oi]; if (o[1] == null) devis = true; else lo += o[1]; if (o[2]) unit = o[2]; if (o[1] !== 0) labels.push(g.q + '\u00a0: ' + o[0]); }));
   return {lo, hi: up50(lo * 1.2), unit, devis, labels};
 }
 const rangeText = e => e.lo ? `${fmt(e.lo)} à ${fmt(e.hi)} €${e.unit ? ' ' + UNIT[e.unit] : ''}${e.devis ? ', plus une partie sur devis' : ''}` : 'Sur devis';

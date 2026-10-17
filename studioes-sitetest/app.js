@@ -15,6 +15,10 @@ const anim = (el, kf, o) => el.animate ? el.animate(kf, Object.assign({fill: 'fo
 const IOE = 'cubic-bezier(.76,0,.24,1)';
 const root = document.documentElement;
 
+/* ---------- Images : apparition douce une fois chargées ---------- */
+document.addEventListener('load', e => { const t = e.target; if (t && t.tagName === 'IMG') t.classList.add('ld'); }, true);
+const markLoaded = root => $$('img', root).forEach(i => { if (i.complete && i.naturalWidth) i.classList.add('ld'); });
+
 /* ---------- Données ---------- */
 const FMAP = {}; REPS.forEach(r => r.ph.forEach(p => { FMAP[p[0]] = [r, p]; }));
 const big = (r, f) => BASE + (r.old ? 'images/' : 'p/') + f + '.jpg';
@@ -35,6 +39,11 @@ const st = {p: null, tab: 'all'};
 const seen = new Set((store.get('ses5-seen') || '').split(',').filter(Boolean));
 let toastT = 0;
 function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('on'), 2200); }
+
+/* ---------- Focus : on entre dans chaque fenêtre et on revient d'où l'on vient ---------- */
+const FOC = [];
+function focusIn(el, sel) { FOC.push(document.activeElement); setTimeout(() => { const f = $(sel || 'button,a,input,[tabindex]', el); if (f) f.focus({preventScroll: true}); }, 60); }
+function focusBack() { const f = FOC.pop(); if (f && f.focus) f.focus({preventScroll: true}); }
 
 /* ---------- Ancres ---------- */
 function goTo(el) { if (!el) return; window.scrollTo({top: el.getBoundingClientRect().top + scrollY - (el.id === 'accueil' ? 0 : 20), behavior: RM ? 'auto' : 'smooth'}); }
@@ -108,7 +117,7 @@ const stories = $('#stories');
 function renderStories() {
   stories.style.display = ORD.length ? '' : 'none';
   stories.innerHTML = ORD.map((r, i) => `<button class="sto${seen.has(r.id) ? ' seen' : ''}" data-i="${i}" style="transition-delay:${Math.min(i, 12) * 30}ms"><span class="ring"><span><img src="${sm(r, r.ph[0][0])}" alt="" loading="lazy"></span></span><b>${esc(r.t)}</b></button>`).join('');
-  stories.scrollLeft = 0;
+  stories.scrollLeft = 0; markLoaded(stories); edge(stories);
 }
 stories.addEventListener('click', e => { const b = e.target.closest('.sto'); if (b) openSV(ORD, +b.dataset.i, 0); });
 
@@ -132,7 +141,7 @@ function renderFeed() {
     const mix = [...items.filter(x => x[1] === 'p').slice(0, 5), items.find(x => x[1] === 'g'), ...items.filter(x => x[1] === 'p').slice(5), ...items.filter(x => x[1] === 'g').slice(1)].filter(Boolean).slice(0, 8);
     h = mix.map((x, i) => cardRep(x[0], LAY[i], x[1])).join('');
   }
-  feed.innerHTML = h;
+  feed.innerHTML = h; markLoaded(feed);
   $$('.c', feed).forEach((c, i) => { c.style.transitionDelay = (i % 4) * 60 + 'ms'; io.observe(c); });
   $$('.c[data-r]', feed).forEach(bindCard);
   $$('.c[data-cfg]', feed).forEach(c => c.onclick = () => openCfg({p: c.dataset.cfg}));
@@ -153,6 +162,19 @@ st.tab = st.p && TABS.some(t => t[0] === st.p) ? st.p : 'culture';
 function moveInk() { const b = $(`button[data-k="${st.tab}"]`, tabs); if (!b) return; ink.style.width = b.offsetWidth + 'px'; ink.style.transform = `translateX(${b.offsetLeft - 5}px)`; ink.style.left = '5px'; $$('button', tabs).forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); }); tabs.scrollTo({left: b.offsetLeft - (tabs.clientWidth - b.offsetWidth) / 2, behavior: 'smooth'}); }
 tabs.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b || b.dataset.k === st.tab) return; st.tab = b.dataset.k; if (P[st.tab]) { st.p = st.tab; store.set('ses5', st.p); plImg(); } moveInk(); renderFeed(); });
 
+/* rangées défilantes : glisser à la souris, fondu de bord tant qu'il reste du contenu */
+function edge(el) { el.classList.toggle('end', el.scrollLeft + el.clientWidth >= el.scrollWidth - 4); }
+function dragScroll(el) {
+  let down = false, x0 = 0, s0 = 0, moved = 0;
+  el.addEventListener('scroll', () => edge(el), {passive: true});
+  el.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; moved = 0; x0 = e.clientX; s0 = el.scrollLeft; });
+  addEventListener('pointermove', e => { if (!down) return; const d = e.clientX - x0; moved = Math.max(moved, Math.abs(d)); if (moved > 5) { el.classList.add('drag'); el.scrollLeft = s0 - d; } });
+  addEventListener('pointerup', () => { if (!down) return; down = false; setTimeout(() => el.classList.remove('drag'), 0); });
+  el.addEventListener('click', e => { if (moved > 5) { e.stopPropagation(); e.preventDefault(); moved = 0; } }, true);
+  edge(el);
+}
+dragScroll(stories); dragScroll(tabs);
+
 /* ================= PORTFOLIO PLEIN ÉCRAN ================= */
 const SEAS = ['soute', 'ellipse', 'marelle', 'atrium'], CAMP = ['campagnes', 'recrutement', 'budget', 'festin', 'affiches'];
 const CH = [
@@ -169,13 +191,14 @@ function pfRender() {
   PF.list = REPS.filter(r => f(r) && (!q || norm(r.t + ' ' + CAT(r) + ' ' + r.ph.map(p => p[2] || '').join(' ')).includes(q)));
   $$('button', pfC).forEach(b => b.classList.toggle('on', b.dataset.c === PF.c));
   $('#pfN').textContent = PF.list.length;
+  setTimeout(() => markLoaded(pfG), 0);
   pfG.innerHTML = PF.list.length ? PF.list.map((r, i) => { const p = r.ph[0]; return `<button class="pc" data-i="${i}" style="animation-delay:${Math.min(i, 16) * 35}ms"><img src="${sm(r, p[0])}" alt="" loading="lazy" style="aspect-ratio:${p[1]}"><span class="chip glass"><i></i>${CAT(r)}</span><span class="ti"><b>${esc(r.t)}</b><span>${r.ph.length}</span></span></button>`; }).join('') : '<p class="pf-empty">Aucun résultat. Essayez un autre mot.</p>';
 }
 pfC.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; PF.c = b.dataset.c; pfRender(); b.scrollIntoView({inline: 'nearest', block: 'nearest', behavior: 'smooth'}); });
 pfQ.addEventListener('input', () => { PF.q = pfQ.value; pfRender(); });
 pfG.addEventListener('click', e => { const b = e.target.closest('.pc'); if (b) openSV(PF.list, +b.dataset.i, 0); });
-function openPF(c) { PF.c = c || 'all'; pfRender(); pf.classList.add('on'); pf.scrollTop = 0; root.style.overflow = 'hidden'; dockOff(true); }
-function closePF() { if (!pf.classList.contains('on')) return; pf.classList.remove('on'); root.style.overflow = ''; dockOff(false); }
+function openPF(c) { PF.c = c || 'all'; pfRender(); pf.classList.add('on'); pf.scrollTop = 0; root.style.overflow = 'hidden'; dockOff(true); focusIn(pf, '#pfX'); }
+function closePF() { if (!pf.classList.contains('on')) return; pf.classList.remove('on'); root.style.overflow = ''; dockOff(false); focusBack(); }
 $('#pfX').onclick = closePF;
 
 /* ================= PLAN LARGE : un bloc, la cible, le curseur, ce qui s'ajoute ================= */
@@ -201,7 +224,7 @@ function plGroups() {
 function plText() {
   const i = PL.t;
   $$('.grp3', grps).forEach(g => { const on = +g.dataset.g <= i; g.classList.toggle('on', on); g.classList.toggle('off', !on); });
-  $$('#zmL button').forEach((b, j) => b.classList.toggle('on', j === i)); rng.setAttribute('aria-valuenow', i);
+  $$('#zmL button').forEach((b, j) => b.classList.toggle('on', j === i)); rng.setAttribute('aria-valuenow', i); rng.setAttribute('aria-valuetext', PAL[i][0]);
 }
 function plZ(z) { PL.z = clamp(z, 0, 1); off.style.setProperty('--z', PL.z.toFixed(4)); const t = Math.round(PL.z * 2); if (t !== PL.t) { PL.t = t; plText(); } }
 function plSnap(t) { off.classList.add('snap'); plZ(t / 2); }
@@ -243,7 +266,7 @@ function cfgRender() {
     const pub = CF.basket.some(b => b.p === 'collectivite');
     h = `<div class="stp"><h3 class="d">Votre sélection</h3><ul class="bask">${CF.basket.map((b, i) => `<li><span><b>${esc(b.l)}</b><small>${esc(b.labels.join(' · ') || 'Sur devis')}</small></span><span class="pr">${b.lo ? fmt(b.lo) + ' à ' + fmt(b.hi) + ' €' + unitS(b.unit) : 'Sur devis'}<button class="rm" data-rm="${i}">Retirer</button></span></li>`).join('')}</ul>
       <button class="addb" id="addMore">+ Ajouter un autre besoin</button>
-      <p class="note">${pub ? 'Pour une collectivité : paiement après la prestation, sur facture. Le devis peut servir de base au bon de commande.' : 'À la commande : un acompte de 30 % sur la partie ponctuelle. Les formules mensuelles démarrent à une date fixée ensemble.'}</p>
+      <p class="note">${pub ? 'Pour une collectivité : paiement après la prestation, sur facture. Le devis peut servir de base au bon de commande.' : 'À la commande : un acompte de 30 % sur la partie ponctuelle. Les formules mensuelles démarrent à une date fixée ensemble.'}</p>
       <form id="cfgForm" style="margin-top:18px" novalidate>
         <div class="two"><label class="fld"><span>Date souhaitée</span><input name="date" type="date"></label><label class="fld"><span>Lieu</span><input name="lieu" placeholder="Ville, salle…"></label></div>
         <div class="two"><label class="fld"><span>Nom, structure</span><input name="name" autocomplete="name" required></label><label class="fld"><span>E-mail</span><input name="email" type="email" autocomplete="email" required></label></div>
@@ -290,7 +313,7 @@ async function sendCfg(btn) {
   const f = $('#cfgForm'), ok = $('#cfgOk');
   if (!f.name.value.trim() || !/\S+@\S+\.\S+/.test(f.email.value)) { ok.textContent = 'Merci de renseigner votre nom et votre e-mail.'; f.name.focus(); return; }
   const t = totals(), d = Object.fromEntries(new FormData(f));
-  d.selection = CF.basket.map(b => `• ${b.l} : ${b.labels.join(', ')} (${b.lo ? fmt(b.lo) + ' à ' + fmt(b.hi) + ' €' + (b.unit ? ' ' + UNIT[b.unit] : '') : 'sur devis'})`).join('\n');
+  d.selection = CF.basket.map(b => `• ${b.l} : ${b.labels.join(', ')} (${b.lo ? fmt(b.lo) + ' à ' + fmt(b.hi) + ' €' + (b.unit ? ' ' + UNIT[b.unit] : '') : 'sur devis'})`).join('\n');
   d.total = t.lo ? `${fmt(t.lo)} à ${fmt(t.hi)} €` : 'sur devis'; d.profil = (PROFS.find(p => p[0] === CF.basket[0].p) || [])[1] || '';
   d._subject = 'Demande de devis depuis studioes.fr'; d._template = 'table';
   btn.textContent = 'Envoi…';
@@ -302,8 +325,8 @@ saveCart();
 
 /* ================= FEUILLES ================= */
 const veil = $('#veil'); let sheetOpen = null;
-function openSheet(id) { $$('.sheet.on').forEach(s => s.classList.remove('on')); const s = $('#' + id); s.classList.add('on'); veil.classList.add('on'); sheetOpen = s; root.style.overflow = 'hidden'; dockOff(true); }
-function closeSheets() { if (!sheetOpen) return; $$('.sheet.on').forEach(s => { s.classList.remove('on'); s.style.transform = ''; }); sheetOpen = null; veil.classList.remove('on'); if (!pf.classList.contains('on')) { root.style.overflow = ''; dockOff(false); } }
+function openSheet(id) { if (!sheetOpen) FOC.push(document.activeElement); $$('.sheet.on').forEach(s => s.classList.remove('on')); const s = $('#' + id); setTimeout(() => { const f = $('[data-close]', s); if (f) f.focus({preventScroll: true}); }, 60); s.classList.add('on'); veil.classList.add('on'); sheetOpen = s; root.style.overflow = 'hidden'; dockOff(true); }
+function closeSheets() { if (!sheetOpen) return; $$('.sheet.on').forEach(s => { s.classList.remove('on'); s.style.transform = ''; }); sheetOpen = null; veil.classList.remove('on'); focusBack(); if (!pf.classList.contains('on')) { root.style.overflow = ''; dockOff(false); } }
 veil.onclick = closeSheets;
 $$('[data-close]').forEach(b => b.onclick = closeSheets);
 $$('.sheet .gr').forEach(g => { let y0 = 0, dy = 0; const s = g.parentElement;
@@ -359,9 +382,9 @@ new IntersectionObserver(es => { if (es[0].isIntersecting) calLoad(); }, {rootMa
 /* ================= STORIES PLEIN ÉCRAN ================= */
 const sv = $('#sv');
 const S = {list: [], ri: 0, pi: 0, t0: 0, el: 0, paused: false, open: false, busy: false, DUR: 4800};
-function openSV(list, ri, pi = 0) { S.list = list; S.open = true; sv.classList.add('on'); root.style.overflow = 'hidden'; dockOff(true); loadRep(ri, pi, 0); requestAnimationFrame(svTick); }
+function openSV(list, ri, pi = 0) { if (!S.open) focusIn(sv, '#svX'); S.list = list; S.open = true; sv.classList.add('on'); root.style.overflow = 'hidden'; dockOff(true); loadRep(ri, pi, 0); requestAnimationFrame(svTick); }
 function closeSV() {
-  if (!S.open) return; S.open = false; sv.classList.remove('on');
+  if (!S.open) return; S.open = false; sv.classList.remove('on'); focusBack();
   if (!pf.classList.contains('on') && !sheetOpen) { root.style.overflow = ''; dockOff(false); }
   $$('.sto', stories).forEach(b => b.classList.toggle('seen', seen.has(ORD[+b.dataset.i].id)));
   if (location.hash.startsWith('#r=')) history.replaceState(null, '', location.pathname);
