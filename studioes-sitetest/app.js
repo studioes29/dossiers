@@ -82,7 +82,7 @@ new IntersectionObserver(es => { heroVis = es[0].isIntersecting; }).observe($('#
 H.cur.src = bigF(HERO[0]); amb.style.backgroundImage = `url(${smF(HERO[0])})`; heroMeta(); preload(bigF(HERO[1]));
 const startUp = () => { if (document.body.classList.contains('go')) return; document.body.classList.add('go'); if (!RM) anim(H.cur, [{opacity: 0}, {opacity: 1}], {duration: 900, easing: 'ease-out'}); };
 H.cur.complete ? requestAnimationFrame(startUp) : (H.cur.onload = startUp, setTimeout(startUp, 2200));
-$('#hCard').onclick = () => { const r = FMAP[HERO[H.i]][0]; openSV(ORD, ORD.indexOf(r), r.ph.findIndex(p => p[0] === HERO[H.i])); };
+$('#hCard').onclick = () => { const r = FMAP[HERO[H.i]][0]; openSV(SCENE, SCENE.indexOf(r), r.ph.findIndex(p => p[0] === HERO[H.i])); };
 
 /* ================= LE TRAVAIL : stories + onglets par cible + grille ================= */
 /* notoriété des artistes : les plus connus en premier */
@@ -90,20 +90,26 @@ const POP = ['philippe-katerine', 'matmatah', 'fatal-bazooka', 'la-fouine', 'gae
 const rank = r => { const i = POP.indexOf(r.id); return i < 0 ? 99 : i; };
 const SCENE = PHR.filter(r => r.k === 'scene').sort((a, b) => rank(a) - rank(b));
 const PUB = PHR.filter(r => r.k === 'public'), COL = PHR.filter(isCol), ENT = PHR.filter(isEnt);
-const ORD = [...SCENE.slice(0, 6), PUB[0], ...SCENE.slice(6, 12), PUB[1], ...COL.slice(0, 2), ...SCENE.slice(12), PUB[2], ...COL.slice(2), ...ENT];
+let ORD = [];
 const GPREF = ['soute', 'identites', 'marelle', 'campagnes', 'signaletique', 'ellipse', 'recrutement', 'affiches', 'atrium', 'festin', 'editions', 'budget'];
 const GORD = GRR.slice().sort((a, b) => GPREF.indexOf(a.id) - GPREF.indexOf(b.id));
+const FORUM = byId('forum-asso'), INAUG = byId('inauguration'), VOEUX = byId('voeux-ph'), COMM = byId('commemo');
+/* [clé, libellé, reportages photo (stories et grille, dans l'ordre), projets graphiques] */
 const TABS = [
-  ['culture', 'Concerts et festivals', () => [...SCENE.slice(0, 5), PUB[0], ...SCENE.slice(5, 7)], ['soute', 'marelle', 'ellipse']],
-  ['collectivite', 'Collectivités', () => [...COL, PUB[1]], ['signaletique', 'campagnes', 'recrutement']],
-  ['entreprise', 'Entreprises', () => [...ENT, COL[1], SCENE[1]], ['identites', 'recrutement', 'signaletique', 'campagnes']],
-  ['club', 'Clubs et assos', () => [PUB[0], byId('forum-asso'), PUB[1], PUB[2]], ['identites', 'affiches', 'festin', 'campagnes']],
-  ['particulier', 'Particuliers', () => [PUB[1], PUB[0], SCENE[0], SCENE[3]], ['identites', 'affiches']],
+  ['culture', 'Concerts et festivals', () => [...SCENE.slice(0, 5), PUB[0], ...SCENE.slice(5, 11), PUB[1], ...SCENE.slice(11), PUB[2]], ['soute', 'marelle', 'ellipse', 'atrium']],
+  ['collectivite', 'Collectivités', () => [INAUG, FORUM, VOEUX, COMM, ...PUB], ['signaletique', 'campagnes', 'recrutement', 'budget']],
+  ['entreprise', 'Entreprises', () => [...ENT, INAUG, VOEUX], ['identites', 'recrutement', 'signaletique', 'campagnes']],
+  ['club', 'Clubs et assos', () => [FORUM, ...PUB], ['identites', 'affiches', 'festin', 'campagnes']],
+  ['particulier', 'Particuliers', () => [...PUB], ['identites', 'affiches']],
   ['web', 'Sites et outils', () => [], []]
 ];
 const PFMAP = {culture: 'scene', collectivite: 'col', entreprise: 'ent', club: 'public', particulier: 'photo'};
 const stories = $('#stories');
-stories.innerHTML = ORD.map((r, i) => `<button class="sto${seen.has(r.id) ? ' seen' : ''}" data-i="${i}" style="transition-delay:${Math.min(i, 12) * 35}ms"><span class="ring"><span><img src="${sm(r, r.ph[0][0])}" alt="" loading="lazy"></span></span><b>${esc(r.t)}</b></button>`).join('');
+function renderStories() {
+  stories.style.display = ORD.length ? '' : 'none';
+  stories.innerHTML = ORD.map((r, i) => `<button class="sto${seen.has(r.id) ? ' seen' : ''}" data-i="${i}" style="transition-delay:${Math.min(i, 12) * 30}ms"><span class="ring"><span><img src="${sm(r, r.ph[0][0])}" alt="" loading="lazy"></span></span><b>${esc(r.t)}</b></button>`).join('');
+  stories.scrollLeft = 0;
+}
 stories.addEventListener('click', e => { const b = e.target.closest('.sto'); if (b) openSV(ORD, +b.dataset.i, 0); });
 
 const SZ = {L: [6, 4, 6, 2, 2], M: [3, 2, 3, 1, 1], W: [6, 2, 6, 2, 1]};
@@ -117,6 +123,7 @@ const feed = $('#feed');
 const LAY = ['L', 'M', 'M', 'M', 'M', 'W', 'M', 'M'];
 function renderFeed() {
   const T = TABS.find(t => t[0] === st.tab); let h = '';
+  ORD = T[2]().filter(Boolean); renderStories();
   if (st.tab === 'web') h = `<button class="c ph k-site" data-cfg="autre" style="${sz('L')}"><img class="bgi" src="${BASE}s/site.webp" alt="" loading="lazy"><span class="chip glass"><i></i>Site internet</span><span class="bot"><h3>Sites sur mesure</h3><span class="ic">${ico('ne')}</span></span></button>` + TX('i-web', 'Sites internet', 'Une page, quelques pages ou un site complet.', 'autre') + TX('i-app', 'Outils et applications', 'Espaces de travail, configurateurs, automatisations.', 'autre') + TX('i-star', 'Projets sur mesure', 'Un jeu, une application, une idée à construire.', 'autre') + TX('i-calc', 'Estimer mon projet', 'Une fourchette en quelques choix.', 'autre');
   else {
     const ph = T[2]().filter(Boolean), gr = T[3].map(byId).filter(Boolean), items = [];
@@ -143,7 +150,7 @@ function bindCard(c) {
 const tabs = $('#tabs'), ink = $('#ink');
 tabs.insertAdjacentHTML('beforeend', TABS.map(([k, l]) => `<button role="tab" data-k="${k}">${l}</button>`).join(''));
 st.tab = st.p && TABS.some(t => t[0] === st.p) ? st.p : 'culture';
-function moveInk() { const b = $(`button[data-k="${st.tab}"]`, tabs); if (!b) return; ink.style.width = b.offsetWidth + 'px'; ink.style.transform = `translateX(${b.offsetLeft - 5}px)`; ink.style.left = '5px'; $$('button', tabs).forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); }); }
+function moveInk() { const b = $(`button[data-k="${st.tab}"]`, tabs); if (!b) return; ink.style.width = b.offsetWidth + 'px'; ink.style.transform = `translateX(${b.offsetLeft - 5}px)`; ink.style.left = '5px'; $$('button', tabs).forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); }); tabs.scrollTo({left: b.offsetLeft - (tabs.clientWidth - b.offsetWidth) / 2, behavior: 'smooth'}); }
 tabs.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b || b.dataset.k === st.tab) return; st.tab = b.dataset.k; if (P[st.tab]) { st.p = st.tab; store.set('ses5', st.p); plImg(); } moveInk(); renderFeed(); });
 
 /* ================= PORTFOLIO PLEIN ÉCRAN ================= */
@@ -173,15 +180,13 @@ $('#pfX').onclick = closePF;
 
 /* ================= PLAN LARGE : du plan serré au plan large ================= */
 const INC = [
-  ['Le reportage, sur place', 'Une sélection resserrée, retouchée image par image', 'En option : livraison le jour même'],
+  ['Le reportage, sur place', 'Une sélection resserrée, retouchée image par image', 'Livraison le jour même, en option'],
   ['Les supports tirés du reportage : affiches, brochures, visuels réseaux', 'Une direction artistique commune'],
   ['Un suivi sur la saison ou sur l\'année', 'Un photographe et un interlocuteur communication unique']
 ];
-const PREV = ['', 'Tout le palier Prise de vue, plus :', 'Tout le palier Tirage, plus :'];
 const GEN = [[250, ''], [280, ''], [240, 'mois']];
-/* une photo par profil, avec son point d'intérêt pour le zoom */
-const PLIMG = {none: ['p/pub-petites-folies-7.jpg', '50% 45%'], culture: ['p/helena-3.jpg', '45% 35%'], collectivite: ['p/inaug-digue-7.jpg', '50% 45%'], entreprise: ['p/fl-auto-photo-10.jpg', '50% 50%'], club: ['p/pub-eucalyptus-7.jpg', '50% 40%'], particulier: ['p/pub-eucalyptus-5.jpg', '50% 45%']};
-const off = $('#offre'), pl = $('#pl'), rng = $('#rng');
+const off = $('#offre'), rng = $('#rng');
+$('#inc').innerHTML = INC.map((g, i) => `<li class="gh" data-g="${i}">${PAL[i][0]}<small>${PAL[i][1]}</small></li>` + g.map(t => `<li class="it" data-g="${i}">${ico('ok')}<span>${esc(t)}</span></li>`).join('')).join('');
 const PL = {z: 0, t: 0};
 function low(n) { let lo = Infinity, u = ''; n.calc[0].o.forEach(o => { if (o[1] != null && o[1] > 0 && o[1] < lo) { lo = o[1]; u = o[2] || ''; } }); return lo === Infinity ? null : [lo, u]; }
 const unitS = u => u ? ' / ' + ({mois: 'mois', an: 'an', saison: 'saison', semaine: 'semaine'}[u]) : '';
@@ -189,19 +194,18 @@ function plPrice(i) { const p = st.p ? P[st.p] : null; if (p) { const xs = p.n.f
 $('#who').innerHTML = WHO.map(([k, l]) => `<button data-k="${k}">${l}</button>`).join('');
 function plText() {
   const i = PL.t;
-  $('#plH').textContent = PAL[i][0]; $('#plL').textContent = PAL[i][1]; $('#plPrev').textContent = PREV[i];
-  $('#inc').innerHTML = INC[i].map((t, k) => `<li style="animation-delay:${k * 60}ms">${ico('ok')}<span>${esc(t)}</span></li>`).join('');
+  $('#plH').textContent = PAL[i][0]; $('#plL').textContent = PAL[i][1];
+  $$('#inc li').forEach(li => { const on = +li.dataset.g <= i; li.classList.toggle('on', on); li.classList.toggle('off', !on); });
   const pr = plPrice(i); $('#plP').textContent = `${fmt(pr[0])} €${unitS(pr[1])}`;
   $('#plFk').textContent = st.p ? 'À partir de, pour ' + WHO.find(w => w[0] === st.p)[1].toLowerCase() : 'À partir de';
   $$('#zmL button').forEach((b, j) => b.classList.toggle('on', j === i)); rng.setAttribute('aria-valuenow', i);
 }
 function plZ(z) {
   PL.z = clamp(z, 0, 1); off.style.setProperty('--z', PL.z.toFixed(4));
-  $('#mm').textContent = Math.round(85 - 61 * PL.z) + ' mm';
   const t = Math.round(PL.z * 2); if (t !== PL.t) { PL.t = t; plText(); }
 }
 function plSnap(t) { off.classList.add('snap'); plZ(t / 2); }
-function plImg() { const [u, fx] = PLIMG[st.p] || PLIMG.none; const im = $('#plImg'); im.src = BASE + u; im.style.setProperty('--fx', fx); $$('#who button').forEach(b => b.classList.toggle('on', b.dataset.k === st.p)); plText(); }
+function plImg() { $$('#who button').forEach(b => b.classList.toggle('on', b.dataset.k === st.p)); plText(); }
 { let drag = false;
   const at = x => { const r = rng.getBoundingClientRect(); return clamp((x - r.left) / r.width, 0, 1); };
   rng.addEventListener('pointerdown', e => { drag = true; off.classList.remove('snap'); rng.setPointerCapture(e.pointerId); plZ(at(e.clientX)); });
@@ -347,7 +351,7 @@ function calLoad() {
   (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; const s = d.createElement('script'); s.src = A; s.onerror = calFallback; d.head.appendChild(s); cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.eu/embed/embed.js', 'init');
   Cal('init', 'rdv', {origin: 'https://app.cal.eu'});
   Cal.ns.rdv('inline', {elementOrSelector: '#calEmbed', calLink: 'studioes/30min', config: {layout: 'month_view', theme: 'dark'}});
-  Cal.ns.rdv('ui', {theme: 'dark', hideEventTypeDetails: true, layout: 'month_view', cssVarsPerTheme: {dark: {'cal-brand': '#3B5BFF', 'cal-brand-emphasis': '#5C78FF', 'cal-brand-text': '#ffffff', 'cal-bg': '#14141C', 'cal-bg-muted': '#1C1C27', 'cal-border': 'rgba(239,235,227,.12)', 'cal-text': '#EFEBE3'}}});
+  Cal.ns.rdv('ui', {theme: 'dark', hideEventTypeDetails: true, layout: 'month_view', cssVarsPerTheme: {dark: {'cal-brand': '#E1DBC4', 'cal-brand-emphasis': '#ece7d6', 'cal-brand-text': '#17130F', 'cal-bg': '#171412', 'cal-bg-muted': '#201B18', 'cal-border': 'rgba(239,233,223,.12)', 'cal-text': '#EFE9DF'}}});
   setTimeout(() => { if (!$('iframe', calBox)) calFallback(); }, 7000);
 }
 new IntersectionObserver(es => { if (es[0].isIntersecting) calLoad(); }, {rootMargin: '600px'}).observe(calBox);
