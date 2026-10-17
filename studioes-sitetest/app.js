@@ -43,13 +43,12 @@ document.addEventListener('click', e => {
   const t = $(a.getAttribute('href')); if (!t) return;
   e.preventDefault(); closeSheets(); closeSV(); closePF(); goTo(t);
 });
-$$('[data-open-pf]').forEach(b => b.addEventListener('click', () => openPF(b.id === 'feedMore' ? ({photo: 'photo', graph: 'graph'}[st.tab] || 'all') : 'all')));
+$$('[data-open-pf]').forEach(b => b.addEventListener('click', () => openPF(b.id === 'feedMore' ? (PFMAP[st.tab] || 'all') : 'all')));
 
-/* ================= ACCUEIL ================= */
-/* une photo par artiste ; transition : la nouvelle image monte comme un rideau, nette, l'ancienne s'éteint */
-const HERO = ['la-fouine-5', 'mentissa-3', 'danakil-2', 'rimk-2', 'matmatah-3', 'genezio-2', 'bekar-3'];
+/* ================= ACCUEIL : une photo par artiste, fondu rapide ================= */
+const HERO = ['la-fouine-3', 'philippe-katerine-4', 'matmatah-10', 'danakil-4', 'franglish-5', 'genezio-3', 'fatal-bazooka-1', 'gael-faye-5'];
 const por = $('#por'), amb = $('#amb'), dots = $('#hDots');
-const H = {i: 0, busy: false, t0: 0, el: 0, dur: 6000, cur: $('#pImg')};
+const H = {i: 0, busy: false, t0: 0, el: 0, dur: 5200, cur: $('#pImg')};
 dots.innerHTML = HERO.map(() => '<s><i></i></s>').join('');
 function heroMeta() {
   const f = HERO[H.i], r = FMAP[f][0];
@@ -62,11 +61,9 @@ function heroGo(i) {
   const run = () => {
     H.i = i; heroMeta(); H.el = 0; H.t0 = performance.now();
     const old = H.cur, nx = document.createElement('img'); nx.className = 'nx'; nx.alt = ''; nx.src = u; por.appendChild(nx); H.cur = nx;
-    if (RM) { old.remove(); nx.className = ''; H.busy = false; return; }
-    anim(nx, [{clipPath: 'inset(100% 0 0 0)', transform: 'scale(1.12) translateY(4%)', filter: 'blur(10px)'}, {clipPath: 'inset(0% 0 0 0)', transform: 'scale(1) translateY(0)', filter: 'blur(0)'}], {duration: 1300, easing: IOE});
-    anim(old, [{transform: 'scale(1)', filter: 'brightness(1)'}, {transform: 'scale(.94)', filter: 'brightness(.35)'}], {duration: 1300, easing: IOE});
-    amb.style.opacity = .15; setTimeout(() => { amb.style.backgroundImage = `url(${smF(HERO[i])})`; amb.style.opacity = ''; }, 500);
-    setTimeout(() => { old.remove(); nx.getAnimations().forEach(a => a.commitStyles && a.commitStyles()); nx.className = ''; H.busy = false; }, 1350);
+    amb.style.backgroundImage = `url(${smF(HERO[i])})`;
+    requestAnimationFrame(() => requestAnimationFrame(() => nx.classList.add('in')));
+    setTimeout(() => { old.remove(); nx.className = ''; H.busy = false; }, RM ? 0 : 600);
     preload(bigF(HERO[(i + 1) % HERO.length]));
   };
   im.complete ? run() : (im.onload = run, im.onerror = () => { H.busy = false; });
@@ -83,22 +80,28 @@ new IntersectionObserver(es => { heroVis = es[0].isIntersecting; }).observe($('#
   requestAnimationFrame(loop);
 })(performance.now());
 H.cur.src = bigF(HERO[0]); amb.style.backgroundImage = `url(${smF(HERO[0])})`; heroMeta(); preload(bigF(HERO[1]));
-const startUp = () => {
-  if (document.body.classList.contains('go')) return; document.body.classList.add('go');
-  if (!RM) anim(H.cur, [{clipPath: 'inset(100% 0 0 0)', transform: 'scale(1.12)', filter: 'blur(12px)'}, {clipPath: 'inset(0% 0 0 0)', transform: 'scale(1)', filter: 'blur(0)'}], {duration: 1500, easing: IOE});
-};
+const startUp = () => { if (document.body.classList.contains('go')) return; document.body.classList.add('go'); if (!RM) anim(H.cur, [{opacity: 0}, {opacity: 1}], {duration: 900, easing: 'ease-out'}); };
 H.cur.complete ? requestAnimationFrame(startUp) : (H.cur.onload = startUp, setTimeout(startUp, 2200));
-$('#hCard').onclick = () => { const r = FMAP[HERO[H.i]][0]; openSV(PHR, PHR.indexOf(r), r.ph.findIndex(p => p[0] === HERO[H.i])); };
+$('#hCard').onclick = () => { const r = FMAP[HERO[H.i]][0]; openSV(ORD, ORD.indexOf(r), r.ph.findIndex(p => p[0] === HERO[H.i])); };
 
-/* ================= LE TRAVAIL : stories + onglets métiers + bento ================= */
-function order() {
-  const lists = [PHR.filter(r => r.k === 'scene'), PHR.filter(r => r.k === 'public'), PHR.filter(r => r.k === 'corp')], out = [], used = new Set();
-  for (let i = 0; i < 40; i++) lists.forEach(l => { const r = l[i]; if (r && !used.has(r.id)) { used.add(r.id); out.push(r); } });
-  return out;
-}
-const ORD = order();
+/* ================= LE TRAVAIL : stories + onglets par cible + grille ================= */
+/* notoriété des artistes : les plus connus en premier */
+const POP = ['philippe-katerine', 'matmatah', 'fatal-bazooka', 'la-fouine', 'gael-faye', 'rimk', 'danakil', 'axel-bauer', 'the-avener', 'synapson', 'bakermat', 'les-sheriff', 'biga-ranx', 'mentissa', 'bekar', 'kemmler', 'ramoneurs', 'dali', 'helena', 'franglish', 'genezio', 'sara-lugo', 'jahneration', 'feder', 'bushi', 'radio-byzance', 'aupinard', 'candeur-cyclone', 'perceval', 'starfish', 'atipycs'];
+const rank = r => { const i = POP.indexOf(r.id); return i < 0 ? 99 : i; };
+const SCENE = PHR.filter(r => r.k === 'scene').sort((a, b) => rank(a) - rank(b));
+const PUB = PHR.filter(r => r.k === 'public'), COL = PHR.filter(isCol), ENT = PHR.filter(isEnt);
+const ORD = [...SCENE.slice(0, 6), PUB[0], ...SCENE.slice(6, 12), PUB[1], ...COL.slice(0, 2), ...SCENE.slice(12), PUB[2], ...COL.slice(2), ...ENT];
 const GPREF = ['soute', 'identites', 'marelle', 'campagnes', 'signaletique', 'ellipse', 'recrutement', 'affiches', 'atrium', 'festin', 'editions', 'budget'];
 const GORD = GRR.slice().sort((a, b) => GPREF.indexOf(a.id) - GPREF.indexOf(b.id));
+const TABS = [
+  ['culture', 'Concerts et festivals', () => [...SCENE.slice(0, 5), PUB[0], ...SCENE.slice(5, 7)], ['soute', 'marelle', 'ellipse']],
+  ['collectivite', 'Collectivités', () => [...COL, PUB[1]], ['signaletique', 'campagnes', 'recrutement']],
+  ['entreprise', 'Entreprises', () => [...ENT, COL[1], SCENE[1]], ['identites', 'recrutement', 'signaletique', 'campagnes']],
+  ['club', 'Clubs et assos', () => [PUB[0], byId('forum-asso'), PUB[1], PUB[2]], ['identites', 'affiches', 'festin', 'campagnes']],
+  ['particulier', 'Particuliers', () => [PUB[1], PUB[0], SCENE[0], SCENE[3]], ['identites', 'affiches']],
+  ['web', 'Sites et outils', () => [], []]
+];
+const PFMAP = {culture: 'scene', collectivite: 'col', entreprise: 'ent', club: 'public', particulier: 'photo'};
 const stories = $('#stories');
 stories.innerHTML = ORD.map((r, i) => `<button class="sto${seen.has(r.id) ? ' seen' : ''}" data-i="${i}" style="transition-delay:${Math.min(i, 12) * 35}ms"><span class="ring"><span><img src="${sm(r, r.ph[0][0])}" alt="" loading="lazy"></span></span><b>${esc(r.t)}</b></button>`).join('');
 stories.addEventListener('click', e => { const b = e.target.closest('.sto'); if (b) openSV(ORD, +b.dataset.i, 0); });
@@ -109,20 +112,23 @@ function cardRep(r, s, list) {
   const f = r.ph.find(p => s === 'W' ? p[1] > 1.2 : p[1] < 1.2) || r.ph[0];
   return `<button class="c ph" data-r="${r.id}" data-l="${list}" data-sz="${s}" style="${sz(s)}"><img class="bgi" src="${sm(r, f[0])}" alt="" loading="lazy" decoding="async"><span class="bars">${r.ph.slice(0, 5).map(() => '<s><i></i></s>').join('')}</span><span class="chip glass"><i></i>${CAT(r)}</span><span class="chip glass cnt">${r.ph.length}${r.k === 'g' ? ' visuels' : ' photos'}</span><span class="bot"><h3>${esc(r.t)}</h3><span class="ic">${ico('ne')}</span></span></button>`;
 }
-const STAT = () => `<div class="c k-stat" style="${sz('M')}"><b>${PHR.length}</b><p>reportages en ligne<br><span class="se">retouchés image par image.</span></p></div>`;
-const DC = () => `<a class="c k-dc" href="https://declic.studioes.fr" target="_blank" rel="noopener" style="--cw:6;--ch:2;--tw:6;--mw:2;--mh:1"><span class="tx"><b>Trois scènes, un seul déclic.</b><span>Un mini-jeu pour se mettre dans la peau du photographe.</span></span><img src="${BASE}a/declic.webp" alt="" loading="lazy"></a>`;
-const TX = (ic, t, p) => `<div class="c k-tx" style="${sz('M')}">${ico(ic).replace('<svg', '<svg class="big"')}<span><h3>${t}</h3><p>${p}</p></span></div>`;
+const TX = (ic, t, p, cfg) => `<button class="c k-tx" data-cfg="${cfg || ''}" style="${sz('M')}">${ico(ic).replace('<svg', '<svg class="big"')}<span><h3>${t}</h3><p>${p}</p></span></button>`;
 const feed = $('#feed');
+const LAY = ['L', 'M', 'M', 'M', 'M', 'W', 'M', 'M'];
 function renderFeed() {
-  const P1 = ORD, G = GORD; let h = '';
-  if (st.tab === 'all') { const ph = ['la-fouine', 'pub-petites-folies', 'inauguration', 'philippe-katerine', 'pub-eucalyptus'].map(byId); h = cardRep(ph[0], 'L', 'p') + cardRep(ph[1], 'M', 'p') + STAT() + cardRep(G[0], 'M', 'g') + cardRep(ph[2], 'M', 'p') + DC() + cardRep(G[1], 'M', 'g') + cardRep(ph[3], 'M', 'p'); }
-  if (st.tab === 'photo') h = ['L', 'M', 'M', 'M', 'M', 'W', 'M', 'M'].map((s, i) => cardRep(P1[i], s, 'p')).join('');
-  if (st.tab === 'graph') h = ['L', 'M', 'M', 'M', 'M', 'W', 'M', 'M'].map((s, i) => cardRep(G[i], s, 'g')).join('');
-  if (st.tab === 'web') h = `<a class="c ph k-site" href="#rdv" data-cfg="autre" style="${sz('L')}"><img class="bgi" src="${BASE}s/site.webp" alt="" loading="lazy"><span class="chip glass"><i></i>Site internet</span><span class="bot"><h3>Sites sur mesure</h3><span class="ic">${ico('ne')}</span></span></a>` + DC() + TX('i-app', 'Outils et applications', 'Espaces de travail, configurateurs, automatisations.') + TX('i-star', 'Projets sur mesure', 'Un jeu, une application, une idée à construire.');
+  const T = TABS.find(t => t[0] === st.tab); let h = '';
+  if (st.tab === 'web') h = `<button class="c ph k-site" data-cfg="autre" style="${sz('L')}"><img class="bgi" src="${BASE}s/site.webp" alt="" loading="lazy"><span class="chip glass"><i></i>Site internet</span><span class="bot"><h3>Sites sur mesure</h3><span class="ic">${ico('ne')}</span></span></button>` + TX('i-web', 'Sites internet', 'Une page, quelques pages ou un site complet.', 'autre') + TX('i-app', 'Outils et applications', 'Espaces de travail, configurateurs, automatisations.', 'autre') + TX('i-star', 'Projets sur mesure', 'Un jeu, une application, une idée à construire.', 'autre') + TX('i-calc', 'Estimer mon projet', 'Une fourchette en quelques choix.', 'autre');
+  else {
+    const ph = T[2]().filter(Boolean), gr = T[3].map(byId).filter(Boolean), items = [];
+    ph.forEach(r => items.push([r, 'p'])); gr.forEach(r => items.push([r, 'g']));
+    /* on alterne : 5 photos, puis le graphisme glissé dans la grille */
+    const mix = [...items.filter(x => x[1] === 'p').slice(0, 5), items.find(x => x[1] === 'g'), ...items.filter(x => x[1] === 'p').slice(5), ...items.filter(x => x[1] === 'g').slice(1)].filter(Boolean).slice(0, 8);
+    h = mix.map((x, i) => cardRep(x[0], LAY[i], x[1])).join('');
+  }
   feed.innerHTML = h;
   $$('.c', feed).forEach((c, i) => { c.style.transitionDelay = (i % 4) * 60 + 'ms'; io.observe(c); });
   $$('.c[data-r]', feed).forEach(bindCard);
-  const s = $('.k-site', feed); if (s) s.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); openCfg({p: 'autre'}); }, true);
+  $$('.c[data-cfg]', feed).forEach(c => c.onclick = () => openCfg({p: c.dataset.cfg}));
   $('#feedMore').style.display = st.tab === 'web' ? 'none' : '';
 }
 function bindCard(c) {
@@ -135,8 +141,10 @@ function bindCard(c) {
   c.addEventListener('pointerleave', () => { cancelAnimationFrame(raf); c.classList.remove('play'); bars.forEach(b => b.style.transform = ''); img.src = orig; });
 }
 const tabs = $('#tabs'), ink = $('#ink');
+tabs.insertAdjacentHTML('beforeend', TABS.map(([k, l]) => `<button role="tab" data-k="${k}">${l}</button>`).join(''));
+st.tab = st.p && TABS.some(t => t[0] === st.p) ? st.p : 'culture';
 function moveInk() { const b = $(`button[data-k="${st.tab}"]`, tabs); if (!b) return; ink.style.width = b.offsetWidth + 'px'; ink.style.transform = `translateX(${b.offsetLeft - 5}px)`; ink.style.left = '5px'; $$('button', tabs).forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); }); }
-tabs.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b || b.dataset.k === st.tab) return; st.tab = b.dataset.k; moveInk(); renderFeed(); });
+tabs.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b || b.dataset.k === st.tab) return; st.tab = b.dataset.k; if (P[st.tab]) { st.p = st.tab; store.set('ses5', st.p); plImg(); } moveInk(); renderFeed(); });
 
 /* ================= PORTFOLIO PLEIN ÉCRAN ================= */
 const SEAS = ['soute', 'ellipse', 'marelle', 'atrium'], CAMP = ['campagnes', 'recrutement', 'budget', 'festin', 'affiches'];
@@ -167,48 +175,45 @@ $('#pfX').onclick = closePF;
 const INC = [
   ['Le reportage, sur place', 'Une sélection resserrée, retouchée image par image', 'En option : livraison le jour même'],
   ['Les supports tirés du reportage : affiches, brochures, visuels réseaux', 'Une direction artistique commune'],
-  ['Un suivi sur la saison ou sur l\'année', 'Un seul interlocuteur pour la photo et la communication']
+  ['Un suivi sur la saison ou sur l\'année', 'Un photographe et un interlocuteur communication unique']
 ];
-const ZT = ['Plan serré : une date, un reportage', 'Plan moyen : le reportage et ses supports', 'Plan large : toute une saison'];
+const PREV = ['', 'Tout le palier Prise de vue, plus :', 'Tout le palier Tirage, plus :'];
 const GEN = [[250, ''], [280, ''], [240, 'mois']];
-const pl = $('#pl'), rng = $('#rng');
-const PL = {z: 0, t: 0, touched: false};
+/* une photo par profil, avec son point d'intérêt pour le zoom */
+const PLIMG = {none: ['p/pub-petites-folies-7.jpg', '50% 45%'], culture: ['p/helena-3.jpg', '45% 35%'], collectivite: ['p/inaug-digue-7.jpg', '50% 45%'], entreprise: ['p/fl-auto-photo-10.jpg', '50% 50%'], club: ['p/pub-eucalyptus-7.jpg', '50% 40%'], particulier: ['p/pub-eucalyptus-5.jpg', '50% 45%']};
+const off = $('#offre'), pl = $('#pl'), rng = $('#rng');
+const PL = {z: 0, t: 0};
 function low(n) { let lo = Infinity, u = ''; n.calc[0].o.forEach(o => { if (o[1] != null && o[1] > 0 && o[1] < lo) { lo = o[1]; u = o[2] || ''; } }); return lo === Infinity ? null : [lo, u]; }
 const unitS = u => u ? ' / ' + ({mois: 'mois', an: 'an', saison: 'saison', semaine: 'semaine'}[u]) : '';
 function plPrice(i) { const p = st.p ? P[st.p] : null; if (p) { const xs = p.n.filter(n => n.pal === i).map(low).filter(Boolean); if (xs.length) return xs.reduce((a, b) => b[0] < a[0] ? b : a); } return GEN[i]; }
 $('#who').innerHTML = WHO.map(([k, l]) => `<button data-k="${k}">${l}</button>`).join('');
-function plText(animIn) {
+function plText() {
   const i = PL.t;
-  $('#plH').textContent = PAL[i][0]; $('#plL').textContent = PAL[i][1];
-  const items = []; for (let j = 0; j <= i; j++) INC[j].forEach(t => items.push([t, j === i && i > 0]));
-  $('#inc').innerHTML = items.map(([t, nw], k) => `<li class="${nw ? 'nw' : ''}${nw && animIn ? ' add' : ''}" style="transition-delay:${k * 40}ms">${ico('ok')}<span>${esc(t)}</span></li>`).join('');
-  if (animIn) requestAnimationFrame(() => requestAnimationFrame(() => $$('#inc li.add').forEach(li => li.classList.remove('add'))));
+  $('#plH').textContent = PAL[i][0]; $('#plL').textContent = PAL[i][1]; $('#plPrev').textContent = PREV[i];
+  $('#inc').innerHTML = INC[i].map((t, k) => `<li style="animation-delay:${k * 60}ms">${ico('ok')}<span>${esc(t)}</span></li>`).join('');
   const pr = plPrice(i); $('#plP').textContent = `${fmt(pr[0])} €${unitS(pr[1])}`;
-  $('#plFk').textContent = st.p ? 'À partir de, pour vous' : 'À partir de';
-  $$('#zmL button').forEach((b, j) => b.classList.toggle('on', j === i));
-  $('#zmT').textContent = ZT[i]; rng.setAttribute('aria-valuenow', i);
+  $('#plFk').textContent = st.p ? 'À partir de, pour ' + WHO.find(w => w[0] === st.p)[1].toLowerCase() : 'À partir de';
+  $$('#zmL button').forEach((b, j) => b.classList.toggle('on', j === i)); rng.setAttribute('aria-valuenow', i);
 }
 function plZ(z) {
-  PL.z = clamp(z, 0, 1); pl.style.setProperty('--z', PL.z.toFixed(4));
+  PL.z = clamp(z, 0, 1); off.style.setProperty('--z', PL.z.toFixed(4));
   $('#mm').textContent = Math.round(85 - 61 * PL.z) + ' mm';
-  const t = Math.round(PL.z * 2); if (t !== PL.t) { PL.t = t; plText(true); }
+  const t = Math.round(PL.z * 2); if (t !== PL.t) { PL.t = t; plText(); }
 }
-function plSnap(t) { pl.classList.add('snap'); plZ(t / 2); }
-function plImg() { $('#plImg').src = BASE + 'h/' + (st.p ? HERO_OF[st.p] : 'festival') + '-1600.webp'; $$('#who button').forEach(b => b.classList.toggle('on', b.dataset.k === st.p)); plText(false); }
+function plSnap(t) { off.classList.add('snap'); plZ(t / 2); }
+function plImg() { const [u, fx] = PLIMG[st.p] || PLIMG.none; const im = $('#plImg'); im.src = BASE + u; im.style.setProperty('--fx', fx); $$('#who button').forEach(b => b.classList.toggle('on', b.dataset.k === st.p)); plText(); }
 { let drag = false;
   const at = x => { const r = rng.getBoundingClientRect(); return clamp((x - r.left) / r.width, 0, 1); };
-  rng.addEventListener('pointerdown', e => { drag = true; PL.touched = true; pl.classList.remove('snap'); rng.setPointerCapture(e.pointerId); plZ(at(e.clientX)); });
+  rng.addEventListener('pointerdown', e => { drag = true; off.classList.remove('snap'); rng.setPointerCapture(e.pointerId); plZ(at(e.clientX)); });
   rng.addEventListener('pointermove', e => { if (drag) plZ(at(e.clientX)); });
   const up = () => { if (!drag) return; drag = false; plSnap(Math.round(PL.z * 2)); };
-  rng.addEventListener('pointerup', up); rng.addEventListener('pointercancel', up);
-  rng.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { PL.touched = true; plSnap(Math.min(2, PL.t + 1)); e.preventDefault(); } if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { PL.touched = true; plSnap(Math.max(0, PL.t - 1)); e.preventDefault(); } });
-  $('#zmL').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { PL.touched = true; plSnap(+b.dataset.i); } });
+  rng.addEventListener('pointerup', up); rng.addEventListener('pointercancel', up); rng.addEventListener('lostpointercapture', up);
+  rng.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { plSnap(Math.min(2, PL.t + 1)); e.preventDefault(); } if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { plSnap(Math.max(0, PL.t - 1)); e.preventDefault(); } });
+  $('#zmL').addEventListener('click', e => { const b = e.target.closest('button'); if (b) plSnap(+b.dataset.i); });
 }
 $('#who').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.p = st.p === b.dataset.k ? null : b.dataset.k; store.set('ses5', st.p); plImg(); });
 $('#plGo').onclick = () => openCfg({p: st.p, pal: PL.t});
-/* petite démonstration du curseur la première fois qu'on arrive sur le bloc */
-new IntersectionObserver((es, o) => { if (!es[0].isIntersecting || RM) return; o.disconnect(); setTimeout(() => { if (PL.touched) return; plSnap(1); setTimeout(() => { if (!PL.touched) plSnap(0); }, 1700); }, 900); }, {threshold: .5}).observe(pl);
-plImg(); plZ(0); plText(false);
+off.classList.add('snap'); plImg(); plZ(0); plText();
 
 /* ================= CONFIGURATEUR (panier) ================= */
 const CF = {step: 0, p: null, n: null, picks: [], basket: []};
@@ -302,6 +307,9 @@ $$('.sheet .gr').forEach(g => { let y0 = 0, dy = 0; const s = g.parentElement;
   g.addEventListener('pointermove', e => { if (!y0) return; dy = Math.max(0, e.clientY - y0); s.style.transform = `translate(-50%,${dy}px)`; });
   g.addEventListener('pointerup', () => { s.style.transition = ''; y0 = 0; if (dy > 110) closeSheets(); else s.style.transform = ''; }); });
 $('#openMsg').onclick = () => openSheet('shM');
+$('#ctDevis').onclick = () => openCfg({});
+$$('[data-pf]').forEach(b => b.onclick = () => openPF(b.dataset.pf));
+$$('[data-cfgp]').forEach(b => b.onclick = () => openCfg(b.dataset.cfgp ? {p: b.dataset.cfgp} : {}));
 $('#mlB').onclick = () => openSheet('shL');
 $('#form').addEventListener('submit', async e => {
   e.preventDefault(); const f = e.target, ok = $('#fOk'), b = $('#sendB');
@@ -413,7 +421,7 @@ if (FINE && !RM) {
 /* ================= APPARITIONS ================= */
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } }), {rootMargin: '0px 0px -6% 0px'});
 $$('[data-in],.mk,.stories').forEach(el => io.observe(el));
-$$('.t2,.rdv-t').forEach(h => $$('.mk', h).forEach((m, i) => m.firstElementChild.style.transitionDelay = i * .1 + 's'));
+$$('.t2').forEach(h => $$('.mk', h).forEach((m, i) => m.firstElementChild.style.transitionDelay = i * .1 + 's'));
 
 /* ================= DÉFILEMENT ================= */
 const top = $('#top'); let lastY = scrollY, tk = false;
