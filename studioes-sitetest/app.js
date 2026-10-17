@@ -201,46 +201,38 @@ function openPF(c) { PF.c = c || 'all'; pfRender(); pf.classList.add('on'); pf.s
 function closePF() { if (!pf.classList.contains('on')) return; pf.classList.remove('on'); root.style.overflow = ''; dockOff(false); focusBack(); }
 $('#pfX').onclick = closePF;
 
-/* ================= PLAN LARGE : un bloc, la cible, le curseur, ce qui s'ajoute ================= */
-const BASEI = [
-  ['Reportage sur place', 'Sélection retouchée image par image', 'Livraison le jour même, en option'],
-  ['Affiches, brochures, visuels réseaux', 'Direction artistique commune'],
-  ['Suivi sur la saison ou l\'année', 'Un interlocuteur unique']
-];
-const off = $('#offre'), rng = $('#rng'), grps = $('#grps');
-const PL = {z: 0, t: 0};
+/* ================= PLAN LARGE : trois paliers, une image qui s'élargit ================= */
+const off = $('#offre'), plS = $('#plS'), plV = $('#plV');
+const PL = {t: 0, auto: true, t0: 0, DUR: 5200, vis: false};
 function low(n) { let lo = Infinity, u = ''; n.calc[0].o.forEach(o => { if (o[1] != null && o[1] > 0 && o[1] < lo) { lo = o[1]; u = o[2] || ''; } }); return lo === Infinity ? null : [lo, u]; }
 const unitS = u => u ? ' / ' + ({mois: 'mois', an: 'an', saison: 'saison', semaine: 'semaine'}[u]) : '';
-$('#who').innerHTML = WHO.map(([k, l]) => `<button data-k="${k}">${l}</button>`).join('');
-function plGroups() {
-  const k = st.p || 'culture', n = P[k].n;
-  grps.innerHTML = PAL.map((x, i) => {
-    const extra = n.filter(m => m.pal === i).map(m => m.l);
-    const items = [...BASEI[i], ...extra];
-    return `<div class="grp3" data-g="${i}"><h4>${x[0]}<small>${x[1]}</small></h4><ul>${items.map(t => `<li>${ico('ok')}${esc(t)}</li>`).join('')}</ul></div>`;
-  }).join('');
-  plText();
+function plImg() {
+  const ph = P[st.p || 'culture'].ph.filter(f => FMAP[f]), set = (im, u) => { if (im.getAttribute('src') !== u) im.src = u; };
+  const [v0, v1, v2] = $$('.v', plV);
+  set($('img', v0), bigF(ph[0]));
+  const i1 = $$('img', v1); set(i1[0], smF(ph[1] || ph[0])); set(i1[1], BASE + 's/affiche.webp'); set(i1[2], BASE + 's/site.webp');
+  $$('img', v2).forEach((im, j) => set(im, smF(ph[(j + 2) % ph.length])));
 }
-function plText() {
-  const i = PL.t;
-  $$('.grp3', grps).forEach(g => { const on = +g.dataset.g <= i; g.classList.toggle('on', on); g.classList.toggle('off', !on); });
-  $$('#zmL button').forEach((b, j) => b.classList.toggle('on', j === i)); rng.setAttribute('aria-valuenow', i); rng.setAttribute('aria-valuetext', PAL[i][0]);
+function plSnap(t, user) {
+  PL.t = t; PL.t0 = performance.now(); PL.el = 0; if (user) PL.auto = false;
+  plS.classList.toggle('man', !PL.auto || RM);
+  $$('li', plS).forEach((li, j) => { li.classList.toggle('on', j === t); li.classList.toggle('dn', j < t); const b = $('button', li); b.setAttribute('aria-selected', j === t); if (j !== t || !PL.auto) $('s i', li).style.transform = ''; });
+  $$('.v', plV).forEach((v, j) => v.classList.toggle('on', j === t));
 }
-function plZ(z) { PL.z = clamp(z, 0, 1); off.style.setProperty('--z', PL.z.toFixed(4)); const t = Math.round(PL.z * 2); if (t !== PL.t) { PL.t = t; plText(); } }
-function plSnap(t) { off.classList.add('snap'); plZ(t / 2); }
-function plImg() { $$('#who button').forEach(b => b.classList.toggle('on', b.dataset.k === (st.p || 'culture'))); plGroups(); }
-{ let drag = false;
-  const at = x => { const r = rng.getBoundingClientRect(); return clamp((x - r.left) / r.width, 0, 1); };
-  rng.addEventListener('pointerdown', e => { drag = true; off.classList.remove('snap'); rng.setPointerCapture(e.pointerId); plZ(at(e.clientX)); });
-  rng.addEventListener('pointermove', e => { if (drag) plZ(at(e.clientX)); });
-  const up = () => { if (!drag) return; drag = false; plSnap(Math.round(PL.z * 2)); };
-  rng.addEventListener('pointerup', up); rng.addEventListener('pointercancel', up); rng.addEventListener('lostpointercapture', up);
-  rng.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { plSnap(Math.min(2, PL.t + 1)); e.preventDefault(); } if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { plSnap(Math.max(0, PL.t - 1)); e.preventDefault(); } });
-  $('#zmL').addEventListener('click', e => { const b = e.target.closest('button'); if (b) plSnap(+b.dataset.i); });
-}
-$('#who').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; st.p = b.dataset.k; store.set('ses5', st.p); plImg(); });
+plS.addEventListener('click', e => { const b = e.target.closest('button'); if (b) plSnap(+b.dataset.i, true); });
+plS.addEventListener('keydown', e => { const d = {ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1}[e.key]; if (d == null) return; e.preventDefault(); const t = clamp(PL.t + d, 0, 2); plSnap(t, true); $$('button', plS)[t].focus(); });
+new IntersectionObserver(es => { PL.vis = es[0].isIntersecting; if (PL.vis) PL.t0 = performance.now() - 0; }, {threshold: .45}).observe(plV);
+(function plLoop(now) {
+  if (PL.auto && !RM) {
+    if (!PL.vis || document.hidden) PL.t0 = now - (PL.el || 0);
+    PL.el = now - PL.t0; const p = clamp(PL.el / PL.DUR, 0, 1), li = $$('li', plS)[PL.t];
+    if (PL.t < 2) $('s i', li).style.transform = `scaleY(${p})`;
+    if (p >= 1) { PL.el = 0; if (PL.t < 2) plSnap(PL.t + 1); else { PL.auto = false; plS.classList.add('man'); } }
+  }
+  requestAnimationFrame(plLoop);
+})(performance.now());
 $('#plGo').onclick = () => openCfg({p: st.p || 'culture', pal: PL.t});
-off.classList.add('snap'); plImg(); plZ(0);
+plImg(); plSnap(0);
 
 /* ================= CONFIGURATEUR (panier) ================= */
 const CF = {step: 0, p: null, n: null, picks: [], basket: []};
