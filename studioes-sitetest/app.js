@@ -474,6 +474,8 @@ addEventListener('resize', moveInk);
 renderFeed(); moveInk(); dockSync();
 if (document.fonts) document.fonts.ready.then(moveInk);
 { const h = location.hash;
+  const AL = {'#contact': '#rdv', '#portfolio': '#travaux', '#plan-large': '#offre', '#services': '#offre'};
+  if (AL[h]) { history.replaceState(null, '', AL[h]); setTimeout(() => $(AL[h]).scrollIntoView(), 200); }
   if (h === '#devis') { history.replaceState(null, '', location.pathname); openCfg({}); }
   if (h.startsWith('#r=')) { const r = byId(h.slice(3)); if (r) { const list = r.k === 'g' ? GORD : ORD; openSV(list, list.indexOf(r), 0); } } }
 })();
