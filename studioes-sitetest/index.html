@@ -248,7 +248,7 @@ body:not(.top-on) .zm{top:10px}
 .pl-go p b{color:var(--tx);font-weight:600}
 
 /* ---------- rendez-vous ---------- */
-.ct{display:grid;grid-template-columns:1fr 1.2fr;gap:12px;align-items:start}
+.ct{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);justify-content:space-between;gap:12px clamp(12px,4vw,64px);align-items:start}
 .ct-col{display:flex;flex-direction:column;gap:12px}
 .ct-dv,.ct-c{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 20px 20px 24px;border-radius:24px;text-align:left;transition:transform .5s var(--sp),background .3s}
 .ct-dv{color:var(--act)}
@@ -555,7 +555,6 @@ body:not(.top-on) .zm{top:10px}
 
 <header class="top" id="top">
   <a class="logo" href="#accueil" aria-label="Studio ES, accueil"><svg viewBox="0 0 98 186" aria-hidden="true"><use href="#logo"/></svg>Studio ES</a>
-  <span class="stat glass"><i class="dot"></i>Basé en Bretagne, agenda ouvert</span>
   <div class="top-r"><a class="bt bt-w bt-s pi" href="#rdv">Réserver un appel<span class="o"><svg><use href="#a"/></svg></span></a></div>
 </header>
 
@@ -622,7 +621,7 @@ body:not(.top-on) .zm{top:10px}
 
 <footer class="ft w">
   <div class="ft-g">
-    <div class="ft-id"><a class="logo" href="#accueil"><svg viewBox="0 0 98 186" aria-hidden="true"><use href="#logo"/></svg>Studio ES</a><p>Photographie, graphisme, web. Basé en Bretagne.</p></div>
+    <div class="ft-id"><a class="logo" href="#accueil"><svg viewBox="0 0 98 186" aria-hidden="true"><use href="#logo"/></svg>Studio ES</a><p>Photographie, graphisme, web.<br>Basé en Bretagne.</p></div>
     <div class="ft-col"><h3>Métiers</h3><ul><li><button data-pf="photo">Photographie</button></li><li><button data-pf="graph">Graphisme</button></li><li><button data-cfgp="autre">Sites et outils</button></li><li><a href="#offre">L'offre Plan large</a></li></ul></div>
     <div class="ft-col"><h3>Contact</h3><ul><li><a href="mailto:contact@studioes.fr">contact@studioes.fr</a></li><li><a href="tel:+33651222107">06 51 22 21 07</a></li><li><a href="https://cal.eu/studioes/30min" target="_blank" rel="noopener">Réserver un appel</a></li><li><button data-cfgp="">Demander un devis</button></li></ul></div>
     <div class="ft-col"><h3>Suivre</h3><ul><li><a href="https://www.instagram.com/ewen.studioes/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://declic.studioes.fr" target="_blank" rel="noopener">Déclic, le jeu</a></li></ul></div>

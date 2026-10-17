@@ -66,9 +66,13 @@ const UNIT = {mois: 'par mois', an: 'par an', saison: 'par saison', semaine: 'pa
 
 const fmt = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 const up50 = n => Math.ceil(n / 50) * 50;
+/* prix arrondis : jamais un tarif à l'euro près */
+const stepOf = n => n < 300 ? 10 : n < 1000 ? 50 : n < 5000 ? 100 : 500;
+const rNr = n => Math.round(n / stepOf(n)) * stepOf(n), rDn = n => Math.floor(n / stepOf(n)) * stepOf(n), rUp = n => Math.ceil(n / stepOf(n)) * stepOf(n);
+const rangeF = v => `${fmt(rNr(v))} à ${fmt(rUp(v * 1.2))} €`;
 function estimate(calc, picks) {
   let lo = 0, devis = false, unit = ''; const labels = [];
   calc.forEach((g, gi) => (picks[gi] || []).forEach(oi => { const o = g.o[oi]; if (o[1] == null) devis = true; else lo += o[1]; if (o[2]) unit = o[2]; if (o[1] !== 0) labels.push(g.q + '\u00a0: ' + o[0]); }));
   return {lo, hi: up50(lo * 1.2), unit, devis, labels};
 }
-const rangeText = e => e.lo ? `${fmt(e.lo)} à ${fmt(e.hi)} €${e.unit ? ' ' + UNIT[e.unit] : ''}${e.devis ? ', plus une partie sur devis' : ''}` : 'Sur devis';
+const rangeText = e => e.lo ? `${rangeF(e.lo)}${e.unit ? ' ' + UNIT[e.unit] : ''}${e.devis ? ', plus une partie sur devis' : ''}` : 'Sur devis';
