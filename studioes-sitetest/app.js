@@ -423,7 +423,16 @@ if (FINE && !RM) {
 }
 
 /* ================= APPARITIONS ================= */
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } }), {rootMargin: '0px 0px -6% 0px'});
+/* Apparitions : on vérifie la position à chaque défilement (plus fiable sur Safari iOS qu'un observateur) */
+const REV = '[data-in]:not(.vis),.mk:not(.vis),.stories:not(.vis),.c:not(.vis)';
+let revQ = false;
+function reveal() { revQ = false; const lim = innerHeight * .96; $$(REV).forEach(el => { const r = el.getBoundingClientRect(); if (r.top < lim && r.bottom > -40) el.classList.add('vis'); }); }
+function queueReveal() { if (revQ) return; revQ = true; requestAnimationFrame(reveal); }
+const io = {observe: queueReveal, unobserve() {}};
+addEventListener('scroll', queueReveal, {passive: true});
+addEventListener('resize', queueReveal);
+addEventListener('load', queueReveal);
+setTimeout(() => $$(REV).forEach(el => { if (el.getBoundingClientRect().top < innerHeight * 3) el.classList.add('vis'); }), 2500);
 $$('[data-in],.mk,.stories').forEach(el => io.observe(el));
 $$('.t2').forEach(h => $$('.mk', h).forEach((m, i) => m.firstElementChild.style.transitionDelay = i * .1 + 's'));
 
