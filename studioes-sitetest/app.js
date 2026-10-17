@@ -201,7 +201,6 @@ function plGroups() {
 function plText() {
   const i = PL.t;
   $$('.grp3', grps).forEach(g => { const on = +g.dataset.g <= i; g.classList.toggle('on', on); g.classList.toggle('off', !on); });
-  $('#plN').innerHTML = `<b>${PAL[i][0]}</b> : ${['le reportage seul.', 'le reportage et ses supports.', 'le reportage, les supports et le suivi dans la durée.'][i]}`;
   $$('#zmL button').forEach((b, j) => b.classList.toggle('on', j === i)); rng.setAttribute('aria-valuenow', i);
 }
 function plZ(z) { PL.z = clamp(z, 0, 1); off.style.setProperty('--z', PL.z.toFixed(4)); const t = Math.round(PL.z * 2); if (t !== PL.t) { PL.t = t; plText(); } }
@@ -352,7 +351,7 @@ function calLoad() {
   (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; const s = d.createElement('script'); s.src = A; s.onerror = calFallback; d.head.appendChild(s); cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.eu/embed/embed.js', 'init');
   Cal('init', 'rdv', {origin: 'https://app.cal.eu'});
   Cal.ns.rdv('inline', {elementOrSelector: '#calEmbed', calLink: 'studioes/30min', config: {layout: 'month_view', theme: 'dark'}});
-  Cal.ns.rdv('ui', {theme: 'dark', hideEventTypeDetails: true, layout: 'month_view', cssVarsPerTheme: {dark: {'cal-brand': '#E1DBC4', 'cal-brand-emphasis': '#ece7d6', 'cal-brand-text': '#17130F', 'cal-bg': '#14141C', 'cal-bg-muted': '#1C1C27', 'cal-border': 'rgba(239,235,227,.12)', 'cal-text': '#EFEBE3'}}});
+  Cal.ns.rdv('ui', {theme: 'dark', hideEventTypeDetails: true, layout: 'month_view', cssVarsPerTheme: {dark: {'cal-brand': '#E1DBC4', 'cal-brand-emphasis': '#ece7d6', 'cal-brand-text': '#191919', 'cal-bg': '#1A1A17', 'cal-bg-muted': '#23221F', 'cal-border': 'rgba(237,233,221,.12)', 'cal-text': '#EDE9DD'}}});
   setTimeout(() => { if (!$('iframe', calBox)) calFallback(); }, 7000);
 }
 new IntersectionObserver(es => { if (es[0].isIntersecting) calLoad(); }, {rootMargin: FINE ? '600px' : '150px'}).observe(calBox);
