@@ -133,7 +133,7 @@ const LAY = ['L', 'M', 'M', 'M', 'M', 'W', 'M', 'M'];
 function renderFeed() {
   const T = TABS.find(t => t[0] === st.tab); let h = '';
   ORD = T[2]().filter(Boolean); renderStories();
-  if (st.tab === 'web') h = `<button class="c ph k-site" data-cfg="autre" style="${sz('L')}"><img class="bgi" src="${BASE}s/site.webp" alt="" loading="lazy"><span class="chip glass"><i></i>Site internet</span><span class="bot"><h3>Sites sur mesure</h3><span class="ic">${ico('ne')}</span></span></button>` + TX('i-web', 'Sites internet', 'Une page, quelques pages ou un site complet.', 'autre') + TX('i-app', 'Outils et applications', 'Espaces de travail, configurateurs, automatisations.', 'autre') + TX('i-star', 'Projets sur mesure', 'Un jeu, une application, une idée à construire.', 'autre') + TX('i-calc', 'Estimer mon projet', 'Une fourchette en quelques choix.', 'autre');
+  if (st.tab === 'web') h = CASES.map(c => `<a class="c ph k-site" href="${c.url}" style="${sz('L')}"><img class="bgi" src="${c.img}" alt="" loading="lazy"><span class="chip glass"><i></i>${c.k}</span><span class="bot"><h3>${c.t}</h3><span class="ic">${ico('ne')}</span></span></a>`).join('') + TX('i-web', 'Sites internet', 'Une page, quelques pages ou un site complet.', 'autre') + TX('i-app', 'Outils et applications', 'Espaces de travail, configurateurs, automatisations.', 'autre') + TX('i-star', 'Projets sur mesure', 'Un jeu, une application, une idée à construire.', 'autre') + TX('i-calc', 'Estimer mon projet', 'Une fourchette en quelques choix.', 'autre');
   else {
     const ph = T[2]().filter(Boolean), gr = T[3].map(byId).filter(Boolean), items = [];
     ph.forEach(r => items.push([r, 'p'])); gr.forEach(r => items.push([r, 'g']));
@@ -176,23 +176,26 @@ function dragScroll(el) {
 dragScroll(stories); dragScroll(tabs);
 
 /* ================= PORTFOLIO PLEIN ÉCRAN ================= */
+const CASES = [{id: 'pierceval-tattoo', t: 'Pierceval Tattoo', k: 'Site internet', q: 'pierceval tattoo tatouage piercing site internet web scaer', url: 'projets/pierceval-tattoo/', img: 'projets/pierceval-tattoo/img/cover.webp', ar: 1.43}];
 const SEAS = ['soute', 'ellipse', 'marelle', 'atrium'], CAMP = ['campagnes', 'recrutement', 'budget', 'festin', 'affiches'];
 const CH = [
   ['all', 'Tout', () => true], ['photo', 'Photographie', r => r.k !== 'g'], ['scene', 'Concerts', r => r.k === 'scene'], ['public', 'Festivals', r => r.k === 'public'],
   ['col', 'Collectivités', isCol], ['ent', 'Entreprises', isEnt], ['graph', 'Graphisme', r => r.k === 'g'], ['seas', 'Saisons culturelles', r => SEAS.includes(r.id)],
-  ['id', 'Identités', r => r.id === 'identites'], ['camp', 'Campagnes', r => CAMP.includes(r.id)], ['sig', 'Signalétique', r => r.id === 'signaletique'], ['ed', 'Éditions', r => r.id === 'editions']
+  ['id', 'Identités', r => r.id === 'identites'], ['camp', 'Campagnes', r => CAMP.includes(r.id)], ['sig', 'Signalétique', r => r.id === 'signaletique'], ['ed', 'Éditions', r => r.id === 'editions'], ['web', 'Web', () => false]
 ];
 const pf = $('#pf'), pfG = $('#pfG'), pfQ = $('#pfQ'), pfC = $('#pfC');
 const PF = {c: 'all', q: '', list: []};
-pfC.innerHTML = CH.map(([k, l, f]) => `<button data-c="${k}">${l}<em>${REPS.filter(f).length}</em></button>`).join('');
+const caseIn = c => c === 'all' || c === 'web';
+pfC.innerHTML = CH.map(([k, l, f]) => `<button data-c="${k}">${l}<em>${REPS.filter(f).length + (caseIn(k) ? CASES.length : 0)}</em></button>`).join('');
 const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 function pfRender() {
   const f = CH.find(c => c[0] === PF.c)[2], q = norm(PF.q.trim());
   PF.list = REPS.filter(r => f(r) && (!q || norm(r.t + ' ' + CAT(r) + ' ' + r.ph.map(p => p[2] || '').join(' ')).includes(q)));
   $$('button', pfC).forEach(b => b.classList.toggle('on', b.dataset.c === PF.c));
-  $('#pfN').textContent = PF.list.length;
+  const cs = caseIn(PF.c) ? CASES.filter(c => !q || norm(c.t + ' ' + c.q).includes(q)) : [];
+  $('#pfN').textContent = PF.list.length + cs.length;
   setTimeout(() => markLoaded(pfG), 0);
-  pfG.innerHTML = PF.list.length ? PF.list.map((r, i) => { const p = r.ph[0]; return `<button class="pc" data-i="${i}" style="animation-delay:${Math.min(i, 16) * 35}ms"><img src="${sm(r, p[0])}" alt="" loading="lazy" style="aspect-ratio:${p[1]}"><span class="chip glass"><i></i>${CAT(r)}</span><span class="ti"><b>${esc(r.t)}</b><span>${r.ph.length}</span></span></button>`; }).join('') : '<p class="pf-empty">Aucun résultat. Essayez un autre mot.</p>';
+  pfG.innerHTML = PF.list.length + cs.length ? cs.map(c => `<a class="pc" href="${c.url}"><img src="${c.img}" alt="" loading="lazy" style="aspect-ratio:${c.ar}"><span class="chip glass"><i></i>${c.k}</span><span class="ti"><b>${esc(c.t)}</b><span>Étude de cas</span></span></a>`).join('') + PF.list.map((r, i) => { const p = r.ph[0]; return `<button class="pc" data-i="${i}" style="animation-delay:${Math.min(i, 16) * 35}ms"><img src="${sm(r, p[0])}" alt="" loading="lazy" style="aspect-ratio:${p[1]}"><span class="chip glass"><i></i>${CAT(r)}</span><span class="ti"><b>${esc(r.t)}</b><span>${r.ph.length}</span></span></button>`; }).join('') : '<p class="pf-empty">Aucun résultat. Essayez un autre mot.</p>';
 }
 pfC.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; PF.c = b.dataset.c; pfRender(); b.scrollIntoView({inline: 'nearest', block: 'nearest', behavior: 'smooth'}); });
 pfQ.addEventListener('input', () => { PF.q = pfQ.value; pfRender(); });
@@ -210,8 +213,9 @@ function plImg() {
   const ph = P[st.p || 'culture'].ph.filter(f => FMAP[f]), set = (im, u) => { if (im.getAttribute('src') !== u) im.src = u; };
   const [v0, v1, v2] = $$('.v', plV);
   set($('img', v0), bigF(ph[0]));
-  const i1 = $$('img', v1); set(i1[0], smF(ph[1] || ph[0])); set(i1[1], BASE + 's/affiche.webp'); set(i1[2], BASE + 's/site.webp');
-  $$('img', v2).forEach((im, j) => set(im, smF(ph[(j + 2) % ph.length])));
+  const i1 = $$('img', v1); set(i1[0], bigF(ph[1] || ph[0])); set(i1[1], BASE + 's/affiche.webp'); set(i1[2], BASE + 's/site.webp');
+  const tall = ph.slice(1).filter(f => FMAP[f][1][1] < 1.05), rest = ph.slice(1).filter(f => !tall.includes(f)), six = [...tall, ...rest];
+  $$('img', v2).forEach((im, j) => set(im, smF(six[j % six.length])));
 }
 function plSnap(t, user) {
   PL.t = t; PL.t0 = performance.now(); PL.el = 0; if (user) PL.auto = false;
@@ -470,5 +474,6 @@ addEventListener('resize', moveInk);
 renderFeed(); moveInk(); dockSync();
 if (document.fonts) document.fonts.ready.then(moveInk);
 { const h = location.hash;
+  if (h === '#devis') { history.replaceState(null, '', location.pathname); openCfg({}); }
   if (h.startsWith('#r=')) { const r = byId(h.slice(3)); if (r) { const list = r.k === 'g' ? GORD : ORD; openSV(list, list.indexOf(r), 0); } } }
 })();
