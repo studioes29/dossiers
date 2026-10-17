@@ -174,8 +174,8 @@ function pfRender() {
 pfC.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; PF.c = b.dataset.c; pfRender(); b.scrollIntoView({inline: 'nearest', block: 'nearest', behavior: 'smooth'}); });
 pfQ.addEventListener('input', () => { PF.q = pfQ.value; pfRender(); });
 pfG.addEventListener('click', e => { const b = e.target.closest('.pc'); if (b) openSV(PF.list, +b.dataset.i, 0); });
-function openPF(c) { PF.c = c || 'all'; pfRender(); pf.classList.add('on'); pf.scrollTop = 0; root.style.overflow = 'hidden'; dockOff(true); history.replaceState(null, '', '#portfolio'); }
-function closePF() { if (!pf.classList.contains('on')) return; pf.classList.remove('on'); root.style.overflow = ''; dockOff(false); history.replaceState(null, '', location.pathname); }
+function openPF(c) { PF.c = c || 'all'; pfRender(); pf.classList.add('on'); pf.scrollTop = 0; root.style.overflow = 'hidden'; dockOff(true); }
+function closePF() { if (!pf.classList.contains('on')) return; pf.classList.remove('on'); root.style.overflow = ''; dockOff(false); }
 $('#pfX').onclick = closePF;
 
 /* ================= PLAN LARGE : du plan serré au plan large ================= */
@@ -354,7 +354,7 @@ function calLoad() {
   Cal.ns.rdv('ui', {theme: 'dark', hideEventTypeDetails: true, layout: 'month_view', cssVarsPerTheme: {dark: {'cal-brand': '#E1DBC4', 'cal-brand-emphasis': '#ece7d6', 'cal-brand-text': '#17130F', 'cal-bg': '#171412', 'cal-bg-muted': '#201B18', 'cal-border': 'rgba(239,233,223,.12)', 'cal-text': '#EFE9DF'}}});
   setTimeout(() => { if (!$('iframe', calBox)) calFallback(); }, 7000);
 }
-new IntersectionObserver(es => { if (es[0].isIntersecting) calLoad(); }, {rootMargin: '600px'}).observe(calBox);
+new IntersectionObserver(es => { if (es[0].isIntersecting) calLoad(); }, {rootMargin: FINE ? '600px' : '150px'}).observe(calBox);
 
 /* ================= STORIES PLEIN ÉCRAN ================= */
 const sv = $('#sv');
@@ -447,6 +447,5 @@ addEventListener('resize', moveInk);
 renderFeed(); moveInk(); dockSync();
 if (document.fonts) document.fonts.ready.then(moveInk);
 { const h = location.hash;
-  if (h.startsWith('#r=')) { const r = byId(h.slice(3)); if (r) { const list = r.k === 'g' ? GORD : ORD; openSV(list, list.indexOf(r), 0); } }
-  else if (h === '#portfolio') openPF('all'); }
+  if (h.startsWith('#r=')) { const r = byId(h.slice(3)); if (r) { const list = r.k === 'g' ? GORD : ORD; openSV(list, list.indexOf(r), 0); } } }
 })();
