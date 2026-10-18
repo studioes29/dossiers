@@ -126,9 +126,17 @@ const SZ = {L: [6, 4, 6, 2, 2], M: [3, 2, 3, 1, 1], W: [6, 2, 6, 2, 1], T: [4, 3
 const sz = s => { const z = SZ[s]; return `--cw:${z[0]};--ch:${z[1]};--tw:${z[2]};--mw:${z[3]};--mh:${z[4]}`; };
 /* couverture choisie pour chaque projet graphique : l'image la plus lisible, la moins chargée */
 const COVER = {soute: 'soute-7', marelle: 'marelle-1', atrium: 'atrium-1', budget: 'budget-1', recrutement: 'recrutement-1', identites: 'molan-move-1', signaletique: 'totem-1', campagnes: 'voeux-1', affiches: 'affiches-8'};
-const CASE_OF = {soute: 'la-soute'};
+const CASE_OF = {soute: 'la-soute', marelle: 'mjc-la-marelle'};
 const caseFor = r => CASE_OF[r.id] && CASES.find(x => x.id === CASE_OF[r.id]);
 const coverOf = (r, s) => (COVER[r.id] && (s !== 'W' || r.ph.find(p => p[0] === COVER[r.id])[1] > 1.2) && r.ph.find(p => p[0] === COVER[r.id])) || r.ph.find(p => s === 'W' ? p[1] > 1.2 : p[1] < 1.2) || r.ph[0];
+const cardCC = (c, i) => `<a class="cc" href="${c.url}" style="--i:${i}"><span class="cc-i"><img src="${c.img}" alt="" loading="lazy"></span><span class="cc-b"><span class="cc-m">${c.y} · ${esc(c.k)}</span><b class="d">${esc(c.t)}</b><em>${esc(c.s)}</em><span class="cc-t">${c.tags.map(t => `<i>${esc(t)}</i>`).join('')}</span><span class="cc-v">Voir le projet<span class="ic">${ico('a')}</span></span></span></a>`;
+const ccs = $('#ccs');
+function renderCC() {
+  const l = st.tab === 'web' ? CASES.filter(c => c.web) : st.tab === 'graph' ? CASES.filter(c => c.g) : [];
+  ccs.hidden = !l.length; ccs.classList.remove('in');
+  ccs.innerHTML = l.length ? `<div class="cc-h"><h3 class="d">Études de cas</h3><span>${l.length} projets, du brief à la livraison</span></div><div class="cc-r">${l.map(cardCC).join('')}</div>` : '';
+  if (l.length) { const r = $('.cc-r', ccs); dragScroll(r); markLoaded(ccs); requestAnimationFrame(() => requestAnimationFrame(() => ccs.classList.add('in'))); }
+}
 const cardCase = (c, s) => `<a class="c ph k-site" href="${c.url}" style="${sz(s)}"><img class="bgi" src="${c.img}" alt="" loading="lazy"><span class="chip glass"><i></i>${c.k}</span><span class="bot"><h3>${esc(c.t)}</h3><span class="ic">${ico('ne')}</span></span></a>`;
 function cardRep(r, s, list) {
   const f = coverOf(r, s);
@@ -141,8 +149,9 @@ const LAY = ['L', 'M', 'M', 'M', 'M', 'W', 'M', 'M'];
 function renderFeed() {
   const T = TABS.find(t => t[0] === st.tab); let h = '';
   ORD = T[2]().filter(Boolean); renderStories();
-  if (st.tab === 'web') h = CASES.filter(c => c.web).map(c => cardCase(c, 'T')).join('');
-  else if (st.tab === 'graph') { ORD = GORD.slice(); renderStories(); h = GORD.map((r, i) => cardRep(r, i % 6 === 0 ? 'L' : 'M', 'g')).join(''); }
+  renderCC();
+  if (st.tab === 'web') h = '';
+  else if (st.tab === 'graph') { ORD = GORD.slice(); renderStories(); const G2 = GORD.filter(r => !CASE_OF[r.id]); h = G2.map((r, i) => cardRep(r, i % 6 === 0 ? 'L' : 'M', 'g')).join(''); }
   else {
     const ph = T[2]().filter(Boolean), items = [];
     ph.forEach(r => items.push([r, 'p']));
@@ -155,7 +164,7 @@ function renderFeed() {
   $$('.c', feed).forEach((c, i) => { c.style.transitionDelay = (i % 4) * 60 + 'ms'; io.observe(c); });
   $$('.c[data-r]', feed).forEach(bindCard);
   $$('.c[data-cfg]', feed).forEach(c => c.onclick = () => openCfg({p: c.dataset.cfg}));
-  $('#feedMore').style.display = st.tab === 'web' ? 'none' : '';
+  $('#feedMore').style.display = st.tab === 'web' ? 'none' : ''; feed.style.display = h ? '' : 'none';
 }
 const goCase = r => { const c = r && caseFor(r); if (c) { location.href = c.url; return true; } return false; };
 function bindCard(c) {
@@ -171,7 +180,7 @@ const tabs = $('#tabs'), ink = $('#ink');
 tabs.insertAdjacentHTML('beforeend', TABS.map(([k, l]) => `<button role="tab" data-k="${k}">${l}</button>`).join(''));
 st.tab = st.p && TABS.some(t => t[0] === st.p) ? st.p : 'culture';
 function moveInk() { const b = $(`button[data-k="${st.tab}"]`, tabs); if (!b) return; ink.style.width = b.offsetWidth + 'px'; ink.style.transform = `translateX(${b.offsetLeft - 5}px)`; ink.style.left = '5px'; $$('button', tabs).forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); }); tabs.scrollTo({left: b.offsetLeft - (tabs.clientWidth - b.offsetWidth) / 2, behavior: 'smooth'}); }
-tabs.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b || b.dataset.k === st.tab) return; st.tab = b.dataset.k; if (P[st.tab]) { st.p = st.tab; store.set('ses5', st.p); plImg(); } moveInk(); renderFeed(); });
+tabs.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b || b.dataset.k === st.tab) return; st.tab = b.dataset.k; if (P[st.tab]) { st.p = st.tab; store.set('ses5', st.p); } moveInk(); renderFeed(); });
 
 /* rangées défilantes : glisser à la souris, fondu de bord tant qu'il reste du contenu */
 function edge(el) { el.classList.toggle('end', el.scrollLeft + el.clientWidth >= el.scrollWidth - 4); }
@@ -194,12 +203,16 @@ dragScroll(stories); dragScroll(tabs);
 /* quatre métiers : chaque carte ouvre la bonne rubrique */
 $('#mt').addEventListener('click', e => {
   const b = e.target.closest('.mtc'); if (!b) return; const g = b.dataset.go;
-  if (g === 'com') { $('#offre').scrollIntoView({behavior: RM ? 'auto' : 'smooth'}); plSnap(2, true); return; }
+  if (g === 'com') { foShow('com'); $('#offre').scrollIntoView({behavior: RM ? 'auto' : 'smooth'}); return; }
   if (st.tab !== g) { st.tab = g; moveInk(); renderFeed(); }
   $('#travaux').scrollIntoView({behavior: RM ? 'auto' : 'smooth'});
 });
 /* ================= PORTFOLIO PLEIN ÉCRAN ================= */
-const CASES = [{id: 'flouz', web: 1, t: 'flouz.', k: 'Application', q: 'flouz application mobile budget finances app web', url: 'projets/flouz/', img: 'projets/flouz/img/cover.webp', ar: 1.43}, {id: 'la-soute', web: 1, t: 'La Soute', k: 'Identité et site', q: 'la soute salle de spectacle concert saison brochure affiche identite site internet web billetterie', url: 'projets/la-soute/', img: 'projets/la-soute/img/cover.webp', ar: 1.43}, {id: 'pierceval-tattoo', web: 1, t: 'Pierceval Tattoo', k: 'Site internet', q: 'pierceval tattoo tatouage piercing site internet web scaer', url: 'projets/pierceval-tattoo/', img: 'projets/pierceval-tattoo/img/cover.webp', ar: 1.43}];
+const CASES = [
+  {id: 'la-soute', web: 1, g: 1, t: 'La Soute', k: 'Identité et site', y: 2026, s: 'Une salle, un hublot, une saison.', tags: ['Identité', 'Brochure', 'Affiches', 'Site'], q: 'la soute salle de spectacle concert saison brochure affiche identite site internet web billetterie', url: 'projets/la-soute/', img: 'projets/la-soute/img/cover.webp', ar: 1.43},
+  {id: 'mjc-la-marelle', g: 1, t: 'MJC La Marelle', k: 'Brochure de saison', y: 2026, s: 'Une saison, vingt-quatre pages.', tags: ['Mise en page', 'Illustration', 'Photo'], q: 'mjc la marelle centre social scaer brochure saison mise en page illustration couverture', url: 'projets/mjc-la-marelle/', img: 'projets/mjc-la-marelle/img/cover.webp', ar: 1.43},
+  {id: 'pierceval-tattoo', web: 1, t: 'Pierceval Tattoo', k: 'Site internet', y: 2026, s: 'Tatouage et piercing depuis 1995.', tags: ['Site', 'Réservation', 'Carte cadeau'], q: 'pierceval tattoo tatouage piercing site internet web scaer', url: 'projets/pierceval-tattoo/', img: 'projets/pierceval-tattoo/img/cover.webp', ar: 1.43},
+  {id: 'flouz', web: 1, t: 'flouz.', k: 'Application', y: 2026, s: 'Le budget du mois, d’un coup d’œil.', tags: ['Application', 'Interface', 'Identité'], q: 'flouz application mobile budget finances app web', url: 'projets/flouz/', img: 'projets/flouz/img/cover.webp', ar: 1.43}];
 const SEAS = ['soute', 'marelle', 'atrium'], CAMP = ['campagnes', 'recrutement', 'budget', 'affiches'];
 const CH = [
   ['all', 'Tout', () => true], ['photo', 'Photographie', r => r.k !== 'g'], ['scene', 'Concerts', r => r.k === 'scene'], ['public', 'Festivals', r => r.k === 'public'],
@@ -227,43 +240,88 @@ function openPF(c) { PF.c = c || 'all'; pfRender(); pf.classList.add('on'); pf.s
 function closePF() { if (!pf.classList.contains('on')) return; pf.classList.remove('on'); root.style.overflow = ''; dockOff(false); focusBack(); }
 $('#pfX').onclick = closePF;
 
-/* ================= PLAN LARGE : trois paliers, une image qui s'élargit ================= */
-const off = $('#offre'), plS = $('#plS'), plV = $('#plV');
-const PL = {t: 0, auto: true, t0: 0, DUR: 5200, vis: false};
+/* ================= PLAN LARGE : formules et tarifs, en cartes ================= */
+/* Prix « à partir de » tirés de la grille du 15 oct. 2026, arrondis vers le haut (jamais sous la grille). */
 function low(n) { let lo = Infinity, u = ''; n.calc[0].o.forEach(o => { if (o[1] != null && o[1] > 0 && o[1] < lo) { lo = o[1]; u = o[2] || ''; } }); return lo === Infinity ? null : [lo, u]; }
 const unitS = u => u ? ' / ' + ({mois: 'mois', an: 'an', saison: 'saison', semaine: 'semaine'}[u]) : '';
-function plImg() {
-  const ph = P[st.p || 'culture'].ph.filter(f => FMAP[f]), set = (im, u) => { if (im.getAttribute('src') !== u) im.src = u; };
-  const [v0, v1, v2] = $$('.v', plV);
-  const bg = (el, u) => { const v = `url("${u}")`; if (el.style.backgroundImage !== v) el.style.backgroundImage = v; };
-  bg($('i', v0), bigF(ph[0]));
-  const i1 = $$('img', v1); set(i1[0], bigF(ph[1] || ph[0])); set(i1[1], BASE + 's/affiche.webp'); set(i1[2], BASE + 's/site.webp');
-  /* photothèque : uniquement des verticales 3:4 ou 4:5, pour ne rien couper */
-  const pv = f => { const r = FMAP[f] && FMAP[f][1][1]; return r >= .7 && r <= .85; };
-  const k0 = FMAP[ph[0]][0].k, six = [...ph.slice(1).filter(pv)];
-  for (const r of REPS) { if (six.length >= 6) break; if (r.k !== k0 && k0 !== 'g') continue; const f = r.ph.map(p => p[0]).find(pv); if (f && !six.includes(f) && f !== ph[0]) six.push(f); }
-  $$('i', v2).forEach((el, j) => bg(el, smF(six[j % six.length])));
+const FO = [
+  {k: 'photo', t: 'Photographie', n: 'Mariage, saison associative, collectivité à l’année : tous les cas sont dans le configurateur.', c: [
+    {h: 'Prise de vue', s: 'Le reportage', p: 250, hot: 1, a: 'Une intervention pour un moment précis, des images retouchées et prêtes à servir.',
+      inc: ['Concert, spectacle, cérémonie, inauguration ou journée en entreprise', 'Une sélection retouchée, livrée sous 72 h', 'Droits d’usage pour votre communication'],
+      opt: [['Livraison le soir même', 100], ['Formats réseaux prêts à poster', 90], ['Heure supplémentaire sur place', 80]], go: {pal: 0}},
+    {h: 'Tirage', s: 'Le reportage et ses supports', p: 530, a: 'Les mêmes images deviennent votre affiche, vos visuels réseaux, votre brochure.',
+      inc: ['Le reportage', 'Une affiche et trois formats réseaux tirés des images', 'Deux allers-retours de corrections', 'Fichiers pour l’impression et le web'],
+      opt: [['Kakémono ou roll-up', 140], ['Brochure de 8 à 16 pages', 550, 1]], go: {pal: 1}},
+    {h: 'Exposition', s: 'Le suivi dans la durée', p: 340, u: 'mois', a: 'Un rythme défini ensemble, et une photothèque qui grandit avec votre actualité.',
+      inc: ['Une demi-journée de reportage par mois', 'Des dates fixées ensemble, sans mensualité payée d’avance', 'Une photothèque classée, prête à servir', 'Engagement de 6 mois'],
+      opt: [['Trois demi-journées par mois', 990, 2, 'mois'], ['Saison culturelle, 5 dates', 1190, 2]], go: {pal: 2}}]},
+  {k: 'graph', t: 'Identité', n: 'Affiches, flyers, brochures, signalétique : chiffrés à l’unité dans le configurateur.', c: [
+    {h: 'Logo', s: 'Le signe', p: 550, a: 'Un signe lisible partout, de l’enseigne à la photo de profil.',
+      inc: ['Recherches et pistes présentées', 'Le logo et ses variantes : couleur, monochrome, réduit', 'Deux allers-retours de corrections', 'Fichiers pour l’impression et le web'],
+      opt: [['Couleurs, typographies et motif', 210], ['Cartes de visite', 90]], go: {ol: "Logo", nl: 'Une identité, une campagne'}},
+    {h: 'Identité', s: 'Le logo et ses règles', p: 990, hot: 1, a: 'Le logo et tout ce qui l’entoure, pour que chaque support se ressemble.',
+      inc: ['Logo et variantes', 'Couleurs, typographies, motif', 'Charte graphique complète', 'Trois déclinaisons au choix : carte, affiche, réseaux…'],
+      opt: [['Kakémono ou roll-up', 140], ['Signalétique, à la journée', 550]], go: {ol: "Identité complète", nl: 'Une identité, une campagne'}},
+    {h: 'Identité et supports', s: 'Tout pour démarrer', p: 1250, a: 'L’identité complète et les supports du quotidien, prêts le jour de l’ouverture.',
+      inc: ['L’identité complète', 'Cartes de visite et papier à en-tête', 'Signature mail', 'Deux gabarits pour les réseaux'],
+      opt: [['Reportage photo de lancement', 370, 1], ['Affiche de lancement', 140]], go: {ol: "Identité et supports", nl: 'Une identité, une campagne'}}]},
+  {k: 'web', t: 'Sites', n: 'Réservations, inscriptions, espace membres : fonctions sur mesure, chiffrées à la journée.', c: [
+    {h: 'Une page', s: 'La vitrine', p: 990, a: 'Qui vous êtes, ce que vous proposez, comment vous joindre. L’essentiel, bien dit.',
+      inc: ['Maquette sur mesure, à votre identité', 'Textes rédigés', 'Rapide, adapté au mobile, sans bandeau cookies', 'Référencement local et mise en ligne', 'Nom de domaine à votre nom'],
+      opt: [['Hébergement et maintenance', 35, 0, 'mois'], ['Reportage photo pour le site', 370, 1]], go: {ol: "Site d'une page", nl: 'Un site internet'}},
+    {h: '3 à 5 pages', s: 'Une page par offre', p: 1890, hot: 1, a: 'Chaque offre a sa page, pour être trouvée sur Google et comprise en quelques secondes.',
+      inc: ['Tout le site d’une page', 'Des pages dédiées à chaque offre', 'Formulaire de contact', 'Mesure d’audience sans cookie'],
+      opt: [['Hébergement et maintenance', 35, 0, 'mois'], ['Configurateur ou calculateur de devis', 1100, 1]], go: {ol: "Site de 3 à 5 pages", nl: 'Un site internet'}},
+    {h: 'Site complet', s: 'De 6 à 12 pages', p: 4400, a: 'Actualités, agenda, contenus : un site que vous faites vivre vous-même.',
+      inc: ['Tout le site de 3 à 5 pages', 'Actualités ou agenda modifiables par vous', 'Reprise des contenus existants', 'Formation à la prise en main'],
+      opt: [['Hébergement et maintenance', 35, 0, 'mois'], ['Fonctions sur mesure, à la journée', 550]], go: {ol: "Site complet", nl: 'Un site internet'}}]},
+  {k: 'com', t: 'Réseaux et com', n: 'Plan de communication, relations presse, pack événement : détaillés dans le configurateur.', c: [
+    {h: 'Remise à plat', s: 'Vos comptes, en ordre', p: 300, a: 'Un audit et un grand ménage, avant de publier mieux.',
+      inc: ['Analyse du compte et de ce qui marche', 'Nettoyage, bio, mises en avant', 'Recommandations de rythme et de ton'],
+      opt: [['Gabarits de publications et de stories', 210]], go: {nl: 'Mes réseaux sociaux suivis'}},
+    {h: 'Réseaux suivis', s: 'Chaque mois', p: 240, u: 'mois', hot: 1, a: 'Des contenus produits en série, validés ensemble, prêts à publier.',
+      inc: ['6, 12, 20 ou 30 contenus par mois', 'Visuels et textes', 'Un calendrier validé ensemble', 'Engagement de 6 mois'],
+      opt: [['Publication par Studio ES', 70, 1, 'mois'], ['Reportage photo mensuel', 340, 0, 'mois']], go: {ol: '12 contenus par mois', nl: 'Mes réseaux sociaux suivis'}},
+    {h: 'Service com', s: 'Externalisé', p: 550, u: 'mois', a: 'Un jour par mois ou un jour par semaine : site, réseaux, supports, presse.',
+      inc: ['Un interlocuteur pour toute la communication', 'Coordination des imprimeurs et prestataires', 'Relations presse comprises', 'Remplacement possible pendant vos congés'],
+      opt: [['Deux jours par mois', 1100, 2, 'mois'], ['Plan de communication annuel', 1100]], go: {ol: 'Appui ponctuel', nl: 'Un service com externalisé'}}]}
+];
+const foP = v => fmt(rUp(v));
+const nb = t => t.replace(/(\d) (h|min|mois|pages|dates|à)\b/g, '$1\u00a0$2').replace(/ (€|:)/g, '\u00a0$1');
+const foT = $('#foT'), foG = $('#foG'), foN = $('#foN'), foInk = $('.ink', foT);
+let foK = 'photo', foSeen = false;
+foT.insertAdjacentHTML('beforeend', FO.map(f => `<button role="tab" data-f="${f.k}" aria-selected="false">${f.t}</button>`).join(''));
+function foInkMove() { const b = $(`button[data-f="${foK}"]`, foT); if (!b) return; foInk.style.width = b.offsetWidth + 'px'; foInk.style.transform = `translateX(${b.offsetLeft - 5}px)`; }
+function foRender() {
+  const f = FO.find(x => x.k === foK);
+  $$('button', foT).forEach(b => { const on = b.dataset.f === foK; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
+  foG.classList.remove('in');
+  foG.innerHTML = f.c.map((c, i) => `<article class="fo${c.hot ? ' hot' : ''}" style="--i:${i}">
+    <div class="fo-h"><h3 class="d">${c.h}</h3>${c.hot ? '<span class="fo-b">Le plus demandé</span>' : ''}</div>
+    <p class="fo-s">${c.s}</p>
+    <p class="fo-p"><small>à partir de</small><b class="d">${foP(c.p)} €</b>${c.u ? `<em>par ${c.u}</em>` : ''}</p>
+    <p class="fo-a">${nb(c.a)}</p>
+    <h4>Compris</h4><ul class="fo-c">${c.inc.map(x => `<li><svg><use href="#ok"/></svg><span>${nb(x)}</span></li>`).join('')}</ul>
+    ${c.opt.length ? `<h4>En option</h4><ul class="fo-o">${c.opt.map(o => `<li><span>${nb(o[0])}</span><b>${['+', 'dès ', ''][o[2] || 0]}${foP(o[1])} €${o[3] ? ' / ' + o[3] : ''}</b></li>`).join('')}</ul>` : ''}
+    <div class="fo-f"><button class="bt ${c.hot ? 'bt-a' : 'bt-g'} pi bt-s" data-fi="${i}">Composer mon devis<span class="o"><svg><use href="#a"/></svg></span></button><a href="#rdv" data-rdv>ou réserver un appel de 30 min</a></div>
+  </article>`).join('');
+  foN.innerHTML = f.n.replace(/configurateur/, '<button type="button" data-cfg>configurateur</button>');
+  foG.scrollLeft = 0; foInkMove();
+  if (foSeen) requestAnimationFrame(() => requestAnimationFrame(() => foG.classList.add('in')));
 }
-function plSnap(t, user) {
-  PL.t = t; PL.t0 = performance.now(); PL.el = 0; if (user) PL.auto = false;
-  plS.classList.toggle('man', !PL.auto || RM);
-  $$('li', plS).forEach((li, j) => { li.classList.toggle('on', j === t); li.classList.toggle('dn', j < t); const b = $('button', li); b.setAttribute('aria-selected', j === t); if (j !== t || !PL.auto) $('s i', li).style.transform = ''; });
-  $$('.v', plV).forEach((v, j) => v.classList.toggle('on', j === t));
-}
-plS.addEventListener('click', e => { const b = e.target.closest('button'); if (b) plSnap(+b.dataset.i, true); });
-plS.addEventListener('keydown', e => { const d = {ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1}[e.key]; if (d == null) return; e.preventDefault(); const t = clamp(PL.t + d, 0, 2); plSnap(t, true); $$('button', plS)[t].focus(); });
-new IntersectionObserver(es => { PL.vis = es[0].isIntersecting; if (PL.vis) PL.t0 = performance.now() - 0; }, {threshold: .45}).observe(plV);
-(function plLoop(now) {
-  if (PL.auto && !RM) {
-    if (!PL.vis || document.hidden) PL.t0 = now - (PL.el || 0);
-    PL.el = now - PL.t0; const p = clamp(PL.el / PL.DUR, 0, 1), li = $$('li', plS)[PL.t];
-    if (PL.t < 2) $('s i', li).style.transform = `scaleY(${p})`;
-    if (p >= 1) { PL.el = 0; if (PL.t < 2) plSnap(PL.t + 1); else { PL.auto = false; plS.classList.add('man'); } }
-  }
-  requestAnimationFrame(plLoop);
-})(performance.now());
-$('#plGo').onclick = () => openCfg({p: st.p || 'culture', pal: PL.t});
-plImg(); plSnap(0);
+function foShow(k) { if (FO.some(f => f.k === k) && k !== foK) { foK = k; foRender(); } }
+foT.addEventListener('click', e => { const b = e.target.closest('button[data-f]'); if (b) foShow(b.dataset.f); });
+foT.addEventListener('keydown', e => { const d = {ArrowRight: 1, ArrowLeft: -1}[e.key]; if (!d) return; e.preventDefault(); const i = clamp(FO.findIndex(f => f.k === foK) + d, 0, FO.length - 1); foShow(FO[i].k); $$('button', foT)[i].focus(); });
+foG.addEventListener('click', e => {
+  const b = e.target.closest('button[data-fi]');
+  if (b) { const go = FO.find(f => f.k === foK).c[+b.dataset.fi].go, p = st.p && P[st.p] && (go.pal != null || P[st.p].n.some(x => x.l === go.nl)) ? st.p : go.pal != null ? 'culture' : 'entreprise'; openCfg(Object.assign({p}, go)); }
+});
+foN.addEventListener('click', e => { if (e.target.closest('[data-cfg]')) openCfg({}); });
+dragScroll(foT);
+foRender();
+new IntersectionObserver(es => { if (es[0].isIntersecting) { foSeen = true; foG.classList.add('in'); } }, {threshold: .15}).observe(foG);
+addEventListener('resize', foInkMove);
+if (document.fonts) document.fonts.ready.then(foInkMove);
 
 /* ================= CONFIGURATEUR (panier) ================= */
 const CF = {step: 0, p: null, n: null, picks: [], basket: []};
@@ -272,8 +330,9 @@ const cfg = $('#cfg');
 const STEPS = ['Profil', 'Besoin', 'Formule', 'Récapitulatif'];
 const saveCart = () => { store.set('ses5-cart', JSON.stringify(CF.basket)); const n = CF.basket.length; $('#estN').textContent = n; $('#estB').classList.toggle('has', n > 0); };
 function openCfg(o = {}) {
-  if (o.p) { CF.p = o.p; CF.step = 1; CF.n = null; if (o.pal != null) { const j = P[CF.p].n.findIndex(x => x.pal === o.pal); if (j >= 0) { CF.n = j; initPicks(); CF.step = 2; } } }
+  if (o.p) { CF.p = o.p; CF.step = 1; CF.n = null; if (o.nl) { const j = P[CF.p].n.findIndex(x => x.l === o.nl); if (j >= 0) { CF.n = j; initPicks(); CF.step = 2; } } else if (o.pal != null) { const j = P[CF.p].n.findIndex(x => x.pal === o.pal); if (j >= 0) { CF.n = j; initPicks(); CF.step = 2; } } }
   else CF.step = CF.basket.length && o.pal == null ? 3 : 0;
+  if (o.ol && CF.n != null) { const g = P[CF.p].n[CF.n].calc[0], k = g.o.findIndex(x => x[0] === o.ol); if (k >= 0) CF.picks[0] = [k]; }
   cfgRender(); openSheet('shE');
 }
 function initPicks() { CF.picks = P[CF.p].n[CF.n].calc.map(g => g.m ? [] : [0]); }
