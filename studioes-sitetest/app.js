@@ -9,6 +9,9 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replac
 const store = {get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} }};
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
+/* mesure d'audience GoatCounter (sans cookie) : événements utiles */
+const gc = (p, t) => { try { if (window.goatcounter && goatcounter.count) goatcounter.count({path: p, title: t || p, event: true}); } catch (e) {} };
+document.addEventListener('click', e => { const l = e.target.closest('a[href^="mailto:"],a[href^="tel:"],a[href*="cal.eu"],a[href$="#rdv"],a[href*="instagram.com"]'); if (!l) return; const u = l.getAttribute('href'); gc(u.startsWith('mailto:') ? 'clic-mail' : u.startsWith('tel:') ? 'clic-telephone' : u.includes('instagram') ? 'clic-instagram' : 'clic-rendez-vous'); }, true);
 const ico = id => `<svg aria-hidden="true"><use href="#${id}"/></svg>`;
 const preload = u => { const i = new Image(); i.decoding = 'async'; i.src = u; return i; };
 const anim = (el, kf, o) => el.animate ? el.animate(kf, Object.assign({fill: 'forwards', easing: 'cubic-bezier(.16,1,.3,1)'}, o)) : null;
@@ -93,96 +96,97 @@ const startUp = () => { if (document.body.classList.contains('go')) return; docu
 H.cur.complete ? requestAnimationFrame(startUp) : (H.cur.onload = startUp, setTimeout(startUp, 2200));
 $('#hCard').onclick = () => { const r = FMAP[HERO[H.i]][0]; openSV(SCENE, SCENE.indexOf(r), r.ph.findIndex(p => p[0] === HERO[H.i])); };
 
-/* ================= LE TRAVAIL : stories + onglets par cible + grille ================= */
+/* ================= LE TRAVAIL : onglets par métier, rangée de cartes qui défile ================= */
 /* notoriété des artistes : les plus connus en premier */
 const POP = ['philippe-katerine', 'matmatah', 'fatal-bazooka', 'la-fouine', 'gael-faye', 'bekar', 'rimk', 'danakil', 'axel-bauer', 'the-avener', 'synapson', 'bakermat', 'les-sheriff', 'biga-ranx', 'mentissa', 'kemmler', 'ramoneurs', 'dali', 'helena', 'franglish', 'genezio', 'sara-lugo', 'jahneration', 'feder', 'bushi', 'radio-byzance', 'aupinard', 'candeur-cyclone', 'perceval', 'starfish', 'atipycs'];
 const rank = r => { const i = POP.indexOf(r.id); return i < 0 ? 99 : i; };
 const SCENE = PHR.filter(r => r.k === 'scene').sort((a, b) => rank(a) - rank(b));
 const PUB = PHR.filter(r => r.k === 'public'), COL = PHR.filter(isCol), ENT = PHR.filter(isEnt);
-let ORD = [];
 const GPREF = ['soute', 'identites', 'marelle', 'campagnes', 'signaletique', 'recrutement', 'affiches', 'atrium', 'budget'];
 const GORD = GRR.slice().sort((a, b) => GPREF.indexOf(a.id) - GPREF.indexOf(b.id));
 const FORUM = byId('forum-asso'), INAUG = byId('inauguration'), VOEUX = byId('voeux-ph'), COMM = byId('commemo');
-/* [clé, libellé, reportages photo (stories et grille, dans l'ordre), projets graphiques] */
+/* [clé, libellé, contenus] : le portfolio est trié par métier, comme les formules */
 const TABS = [
-  ['culture', 'Concerts et festivals', () => [...SCENE.slice(0, 5), PUB[0], ...SCENE.slice(5, 11), PUB[1], ...SCENE.slice(11), PUB[2]], ['soute', 'marelle', 'atrium', 'affiches']],
-  ['collectivite', 'Collectivités', () => [INAUG, VOEUX, FORUM, COMM], ['campagnes', 'signaletique', 'recrutement', 'budget']],
-  ['entreprise', 'Entreprises', () => [...ENT], ['case:pierceval-tattoo', 'identites']],
-  ['club', 'Clubs et assos', () => [FORUM, ...PUB], ['identites']],
-  ['particulier', 'Particuliers', () => [...PUB], []],
-  ['graph', 'Graphisme', () => [], ['*']],
-  ['web', 'Sites et outils', () => [], []]
+  ['photo', 'Photographie', () => [...SCENE.slice(0, 5), PUB[0], INAUG, ...SCENE.slice(5, 10), ENT[0], PUB[1], VOEUX, ...SCENE.slice(10, 16), PUB[2], FORUM, COMM].filter(Boolean).map(r => ({r, k: 'p'}))],
+  ['graph', 'Graphisme', () => [...CASES.filter(c => c.g).map(c => ({c, k: 'c'})), ...GORD.filter(r => !CASE_OF[r.id] && !['campagnes', 'recrutement', 'budget'].includes(r.id)).map(r => ({r, k: 'g'}))]],
+  ['web', 'Sites et outils', () => CASES.filter(c => c.web).map(c => ({c, k: 'c'}))],
+  ['com', 'Communication', () => ['campagnes', 'recrutement', 'budget'].map(byId).filter(Boolean).map(r => ({r, k: 'g'})).concat(FORUM ? [{r: FORUM, k: 'p'}] : [])]
 ];
-const PFMAP = {culture: 'scene', collectivite: 'col', entreprise: 'ent', club: 'public', particulier: 'photo', graph: 'graph'};
-const stories = $('#stories');
-function renderStories() {
-  stories.style.display = ORD.length ? '' : 'none';
-  stories.innerHTML = ORD.map((r, i) => `<button class="sto${seen.has(r.id) ? ' seen' : ''}" data-i="${i}" style="transition-delay:${Math.min(i, 12) * 30}ms"><span class="ring"><span><img src="${sm(r, (COVER[r.id] || r.ph[0][0]))}" alt="" loading="lazy"></span></span><b>${esc(r.t)}</b></button>`).join('');
-  stories.scrollLeft = 0; markLoaded(stories); edge(stories);
-}
-stories.addEventListener('click', e => { const b = e.target.closest('.sto'); if (b && !goCase(ORD[+b.dataset.i])) openSV(ORD, +b.dataset.i, 0); });
-
-const SZ = {L: [6, 4, 6, 2, 2], M: [3, 2, 3, 1, 1], W: [6, 2, 6, 2, 1], T: [4, 3, 6, 2, 2]};
-const sz = s => { const z = SZ[s]; return `--cw:${z[0]};--ch:${z[1]};--tw:${z[2]};--mw:${z[3]};--mh:${z[4]}`; };
-/* couverture choisie pour chaque projet graphique : l'image la plus lisible, la moins chargée */
+const PFMAP = {photo: 'photo', graph: 'graph', web: 'web', com: 'camp'};
 const COVER = {soute: 'soute-7', marelle: 'marelle-1', atrium: 'atrium-1', budget: 'budget-1', recrutement: 'recrutement-1', identites: 'molan-move-1', signaletique: 'totem-1', campagnes: 'voeux-1', affiches: 'affiches-8'};
 const CASE_OF = {soute: 'la-soute', marelle: 'mjc-la-marelle'};
 const caseFor = r => CASE_OF[r.id] && CASES.find(x => x.id === CASE_OF[r.id]);
 const coverOf = (r, s) => (COVER[r.id] && (s !== 'W' || r.ph.find(p => p[0] === COVER[r.id])[1] > 1.2) && r.ph.find(p => p[0] === COVER[r.id])) || r.ph.find(p => s === 'W' ? p[1] > 1.2 : p[1] < 1.2) || r.ph[0];
-const cardCC = (c, i) => `<a class="cc" href="${c.url}" style="--i:${i}"><span class="cc-i"><img src="${c.img}" alt="" loading="lazy"></span><span class="cc-b"><span class="cc-m">${c.y} · ${esc(c.k)}</span><b class="d">${esc(c.t)}</b><em>${esc(c.s)}</em><span class="cc-t">${c.tags.map(t => `<i>${esc(t)}</i>`).join('')}</span><span class="cc-v">Voir le projet<span class="ic">${ico('a')}</span></span></span></a>`;
-const ccs = $('#ccs');
-function renderCC() {
-  const l = st.tab === 'web' ? CASES.filter(c => c.web) : st.tab === 'graph' ? CASES.filter(c => c.g) : [];
-  ccs.hidden = !l.length; ccs.classList.remove('in');
-  ccs.innerHTML = l.length ? `<div class="cc-h"><h3 class="d">Études de cas</h3><span>${l.length} projets, du brief à la livraison</span></div><div class="cc-r">${l.map(cardCC).join('')}</div>` : '';
-  if (l.length) { const r = $('.cc-r', ccs); dragScroll(r); markLoaded(ccs); requestAnimationFrame(() => requestAnimationFrame(() => ccs.classList.add('in'))); }
-}
-const cardCase = (c, s) => `<a class="c ph k-site" href="${c.url}" style="${sz(s)}"><img class="bgi" src="${c.img}" alt="" loading="lazy"><span class="chip glass"><i></i>${c.k}</span><span class="bot"><h3>${esc(c.t)}</h3><span class="ic">${ico('ne')}</span></span></a>`;
-function cardRep(r, s, list) {
-  const f = coverOf(r, s);
-  if (caseFor(r)) { const c = caseFor(r); return `<a class="c ph" href="${c.url}" style="${sz(s)}"><img class="bgi" src="${sm(r, f[0])}" alt="" loading="lazy" decoding="async"><span class="chip glass"><i></i>${c.k}</span><span class="chip glass cnt">Étude de cas</span><span class="bot"><h3>${esc(r.t)}</h3><span class="ic">${ico('ne')}</span></span></a>`; }
-  return `<button class="c ph" data-r="${r.id}" data-l="${list}" data-sz="${s}" style="${sz(s)}"><img class="bgi" src="${sm(r, f[0])}" alt="" loading="lazy" decoding="async"><span class="bars">${r.ph.slice(0, 5).map(() => '<s><i></i></s>').join('')}</span><span class="chip glass"><i></i>${CAT(r)}</span><span class="chip glass cnt">${r.ph.length}${r.k === 'g' ? ' visuels' : ' photos'}</span><span class="bot"><h3>${esc(r.t)}</h3><span class="ic">${ico('ne')}</span></span></button>`;
-}
-const TX = (ic, t, p, cfg) => `<button class="c k-tx" data-cfg="${cfg || ''}" style="${sz('M')}">${ico(ic).replace('<svg', '<svg class="big"')}<span><h3>${t}</h3><p>${p}</p></span></button>`;
-const feed = $('#feed');
-const LAY = ['L', 'M', 'M', 'M', 'M', 'W', 'M', 'M'];
-function renderFeed() {
-  const T = TABS.find(t => t[0] === st.tab); let h = '';
-  ORD = T[2]().filter(Boolean); renderStories();
-  renderCC();
-  if (st.tab === 'web') h = '';
-  else if (st.tab === 'graph') { ORD = GORD.slice(); renderStories(); const G2 = GORD.filter(r => !CASE_OF[r.id]); h = G2.map((r, i) => cardRep(r, i % 6 === 0 ? 'L' : 'M', 'g')).join(''); }
-  else {
-    const ph = T[2]().filter(Boolean), items = [];
-    ph.forEach(r => items.push([r, 'p']));
-    T[3].forEach(id => { if (id.startsWith('case:')) { const c = CASES.find(x => x.id === id.slice(5)); if (c) items.push([c, 'c']); } else { const r = byId(id); if (r) items.push([r, 'g']); } });
-    /* on alterne : 5 photos, puis le graphisme glissé dans la grille */
-    const ng = items.filter(x => x[1] !== 'p'), mix = [...items.filter(x => x[1] === 'p').slice(0, 5), ng[0], ...items.filter(x => x[1] === 'p').slice(5), ...ng.slice(1)].filter(Boolean).slice(0, 8);
-    h = mix.map((x, i) => x[1] === 'c' ? cardCase(x[0], LAY[i]) : cardRep(x[0], LAY[i], x[1])).join('');
-  }
-  feed.innerHTML = h; markLoaded(feed);
-  $$('.c', feed).forEach((c, i) => { c.style.transitionDelay = (i % 4) * 60 + 'ms'; io.observe(c); });
-  $$('.c[data-r]', feed).forEach(bindCard);
-  $$('.c[data-cfg]', feed).forEach(c => c.onclick = () => openCfg({p: c.dataset.cfg}));
-  $('#feedMore').style.display = st.tab === 'web' ? 'none' : ''; feed.style.display = h ? '' : 'none';
-}
 const goCase = r => { const c = r && caseFor(r); if (c) { location.href = c.url; return true; } return false; };
+
+/* une carte : photo (portrait ou paysage), projet graphique, ou étude de cas */
+function railCard(x, i, dup) {
+  const t = dup ? ' tabindex="-1" aria-hidden="true"' : '', d = ` style="--d:${(i * 1.7) % 9}s"`;
+  if (x.k === 'c') { const c = x.c; return `<a class="rc rc-c" href="${c.url}"${t}${d}><span class="rc-i"><img src="${c.img}" alt="" loading="lazy" decoding="async"></span><span class="rc-b"><span class="rc-m">Étude de cas · ${c.y}</span><b class="d">${esc(c.t)}</b><em>${esc(c.s)}</em><span class="rc-t">${c.tags.slice(0, 3).map(g => `<i>${esc(g)}</i>`).join('')}</span></span><span class="rc-go">${ico('a')}</span></a>`; }
+  const r = x.r, wide = x.k === 'p' && i % 5 === 3 && r.ph.some(p => p[1] > 1.2), f = coverOf(r, wide ? 'W' : 'M');
+  const lab = x.k === 'g' ? 'Graphisme' : CAT(r), n = r.ph.length;
+  return `<button class="rc${wide ? ' rc-w' : ''}" data-r="${r.id}" data-k="${x.k}"${t}${d}><span class="rc-i"><img class="bgi" src="${sm(r, f[0])}" alt="" loading="lazy" decoding="async"></span><span class="bars">${r.ph.slice(0, 5).map(() => '<s><i></i></s>').join('')}</span><span class="rc-l">${lab}</span><span class="rc-n">${n} ${x.k === 'g' ? 'visuels' : 'photos'}</span><span class="rc-f"><b class="d">${esc(r.t)}</b><span class="rc-go">${ico('a')}</span></span></button>`;
+}
+const feed = $('#feed');
+let ORD = [], GL = [];
+const RL = {pos: 0, v: 0, half: 0, auto: false, hold: 0, last: 0, vis: false};
+function renderFeed() {
+  const T = TABS.find(t => t[0] === st.tab), items = T[2]();
+  ORD = items.filter(x => x.k === 'p').map(x => x.r); GL = items.filter(x => x.k === 'g').map(x => x.r);
+  feed.classList.remove('in');
+  feed.innerHTML = `<div class="rl-t">${items.map((x, i) => railCard(x, i)).join('')}</div>`;
+  markLoaded(feed);
+  /* défilement continu seulement si la rangée dépasse l'écran : on duplique pour boucler */
+  const tr = $('.rl-t', feed);
+  RL.auto = !RM && tr.scrollWidth > feed.clientWidth * 1.15;
+  if (RL.auto) { tr.insertAdjacentHTML('beforeend', items.map((x, i) => railCard(x, i, 1)).join('')); markLoaded(feed); }
+  RL.half = RL.auto ? tr.scrollWidth / 2 : 0; RL.pos = 0; feed.scrollLeft = 0; RL.hold = performance.now() + 900;
+  $$('.rc[data-r]', feed).forEach(bindCard);
+  $('#feedMore').style.display = st.tab === 'web' ? 'none' : '';
+  requestAnimationFrame(() => requestAnimationFrame(() => feed.classList.add('in')));
+}
+/* lent par défaut, la main reprend la main : glisser, swiper, la molette accélèrent ; on repart doucement ensuite */
+(function railLoop(now) {
+  const dt = Math.min(64, now - (RL.last || now)); RL.last = now;
+  if (RL.auto && RL.vis && !document.hidden && now > RL.hold && !feed.classList.contains('drag')) {
+    if (Math.abs(feed.scrollLeft - RL.pos) > 2) RL.pos = feed.scrollLeft;
+    RL.pos += (FINE ? 0.03 : 0.024) * dt;
+    if (RL.pos >= RL.half) RL.pos -= RL.half;
+    feed.scrollLeft = RL.pos;
+  } else if (RL.auto) {
+    RL.pos = feed.scrollLeft;
+    if (RL.half && RL.pos >= RL.half) { RL.pos -= RL.half; feed.scrollLeft = RL.pos; }
+  }
+  requestAnimationFrame(railLoop);
+})(performance.now());
+const railHold = ms => { RL.hold = performance.now() + ms; };
+feed.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') railHold(1e9); });
+feed.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') railHold(600); });
+feed.addEventListener('touchstart', () => railHold(1e9), {passive: true});
+feed.addEventListener('touchend', () => railHold(1600), {passive: true});
+feed.addEventListener('wheel', () => railHold(1400), {passive: true});
+feed.addEventListener('focusin', () => railHold(1e9));
+feed.addEventListener('focusout', () => railHold(800));
+new IntersectionObserver(es => { RL.vis = es[0].isIntersecting; }, {threshold: .1}).observe(feed);
+feed.addEventListener('click', e => {
+  const b = e.target.closest('button.rc'); if (!b) return; const r = byId(b.dataset.r);
+  if (goCase(r)) return; const list = b.dataset.k === 'g' ? GL : ORD; openSV(list, list.indexOf(r), 0);
+});
 function bindCard(c) {
-  const r = byId(c.dataset.r), list = c.dataset.l === 'g' ? GORD : ORD, img = $('.bgi', c), bars = $$('.bars s i', c), n = bars.length;
-  c.onclick = () => openSV(list, list.indexOf(r), 0);
-  if (!FINE) return;
+  const r = byId(c.dataset.r), img = $('.bgi', c), bars = $$('.bars s i', c), n = bars.length;
+  if (!FINE || n < 2) return;
   let raf = 0, t0 = 0, idx = 0; const orig = img.src, frames = r.ph.slice(0, n).map(p => sm(r, p[0]));
   const step = now => { const p = (now - t0) / 1100; if (p >= 1) { idx = (idx + 1) % n; t0 = now; img.src = frames[idx]; bars.forEach((b, j) => b.style.transform = `scaleX(${j < idx ? 1 : 0})`); } bars[idx].style.transform = `scaleX(${clamp(p, 0, 1)})`; raf = requestAnimationFrame(step); };
   c.addEventListener('pointerenter', () => { frames.forEach(preload); c.classList.add('play'); idx = 0; t0 = performance.now(); raf = requestAnimationFrame(step); });
   c.addEventListener('pointerleave', () => { cancelAnimationFrame(raf); c.classList.remove('play'); bars.forEach(b => b.style.transform = ''); img.src = orig; });
 }
 const tabs = $('#tabs'), ink = $('#ink');
-tabs.insertAdjacentHTML('beforeend', TABS.map(([k, l]) => `<button role="tab" data-k="${k}">${l}</button>`).join(''));
-st.tab = st.p && TABS.some(t => t[0] === st.p) ? st.p : 'culture';
-function moveInk() { const b = $(`button[data-k="${st.tab}"]`, tabs); if (!b) return; ink.style.width = b.offsetWidth + 'px'; ink.style.transform = `translateX(${b.offsetLeft - 5}px)`; ink.style.left = '5px'; $$('button', tabs).forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); }); tabs.scrollTo({left: b.offsetLeft - (tabs.clientWidth - b.offsetWidth) / 2, behavior: 'smooth'}); }
-tabs.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b || b.dataset.k === st.tab) return; st.tab = b.dataset.k; if (P[st.tab]) { st.p = st.tab; store.set('ses5', st.p); } moveInk(); renderFeed(); });
+function initTabs() { tabs.insertAdjacentHTML('beforeend', TABS.map(([k, l, f]) => `<button role="tab" data-k="${k}">${l}<em>${f().length}</em></button>`).join('')); }
+st.tab = 'photo';
+function moveInk() { const b = $(`button[data-k="${st.tab}"]`, tabs); if (!b) return; ink.style.width = b.offsetWidth + 'px'; ink.style.transform = `translateX(${b.offsetLeft}px)`; $$('button', tabs).forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); }); }
+tabs.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b || b.dataset.k === st.tab) return; st.tab = b.dataset.k; moveInk(); renderFeed(); });
 
-/* rangées défilantes : glisser à la souris, fondu de bord tant qu'il reste du contenu */
+/* rangées défilantes : glisser à la souris */
 function edge(el) { el.classList.toggle('end', el.scrollLeft + el.clientWidth >= el.scrollWidth - 4); }
 function dragScroll(el) {
   let down = false, x0 = 0, s0 = 0, moved = 0;
@@ -193,7 +197,8 @@ function dragScroll(el) {
   el.addEventListener('click', e => { if (moved > 5) { e.stopPropagation(); e.preventDefault(); moved = 0; } }, true);
   edge(el);
 }
-dragScroll(stories); dragScroll(tabs);
+dragScroll(feed); dragScroll(tabs);
+
 
 /* carte Photographie : les reportages défilent en fondu (concert, festival, institution, entreprise) */
 { const c = $('.mtc[data-rot]'), ids = c.dataset.rot.split(','), first = $('img', c);
@@ -203,7 +208,6 @@ dragScroll(stories); dragScroll(tabs);
 /* quatre métiers : chaque carte ouvre la bonne rubrique */
 $('#mt').addEventListener('click', e => {
   const b = e.target.closest('.mtc'); if (!b) return; const g = b.dataset.go;
-  if (g === 'com') { foShow('com'); $('#offre').scrollIntoView({behavior: RM ? 'auto' : 'smooth'}); return; }
   if (st.tab !== g) { st.tab = g; moveInk(); renderFeed(); }
   $('#travaux').scrollIntoView({behavior: RM ? 'auto' : 'smooth'});
 });
@@ -241,7 +245,7 @@ function closePF() { if (!pf.classList.contains('on')) return; pf.classList.remo
 $('#pfX').onclick = closePF;
 
 /* ================= PLAN LARGE : formules et tarifs, en cartes ================= */
-/* Prix « à partir de » tirés de la grille du 15 oct. 2026, arrondis vers le haut (jamais sous la grille). */
+/* Prix « à partir de » tirés de la grille du 15 oct. 2026, arrondis vers le bas, à la fourchette la plus proche. */
 function low(n) { let lo = Infinity, u = ''; n.calc[0].o.forEach(o => { if (o[1] != null && o[1] > 0 && o[1] < lo) { lo = o[1]; u = o[2] || ''; } }); return lo === Infinity ? null : [lo, u]; }
 const unitS = u => u ? ' / ' + ({mois: 'mois', an: 'an', saison: 'saison', semaine: 'semaine'}[u]) : '';
 const FO = [
@@ -255,7 +259,7 @@ const FO = [
     {h: 'Exposition', s: 'Le suivi dans la durée', p: 340, u: 'mois', a: 'Un rythme défini ensemble, et une photothèque qui grandit avec votre actualité.',
       inc: ['Une demi-journée de reportage par mois', 'Des dates fixées ensemble, sans mensualité payée d’avance', 'Une photothèque classée, prête à servir', 'Engagement de 6 mois'],
       opt: [['Trois demi-journées par mois', 990, 2, 'mois'], ['Saison culturelle, 5 dates', 1190, 2]], go: {pal: 2}}]},
-  {k: 'graph', t: 'Identité', n: 'Affiches, flyers, brochures, signalétique : chiffrés à l’unité dans le configurateur.', c: [
+  {k: 'graph', t: 'Graphisme', n: 'Affiches, flyers, brochures, signalétique : chiffrés à l’unité dans le configurateur.', c: [
     {h: 'Logo', s: 'Le signe', p: 550, a: 'Un signe lisible partout, de l’enseigne à la photo de profil.',
       inc: ['Recherches et pistes présentées', 'Le logo et ses variantes : couleur, monochrome, réduit', 'Deux allers-retours de corrections', 'Fichiers pour l’impression et le web'],
       opt: [['Couleurs, typographies et motif', 210], ['Cartes de visite', 90]], go: {ol: "Logo", nl: 'Une identité, une campagne'}},
@@ -265,17 +269,17 @@ const FO = [
     {h: 'Identité et supports', s: 'Pour démarrer', p: 1250, a: 'L’identité complète et les supports du quotidien, prêts le jour de l’ouverture.',
       inc: ['L’identité complète', 'Cartes de visite et papier à en-tête', 'Signature mail', 'Deux gabarits pour les réseaux'],
       opt: [['Reportage photo de lancement', 370, 1], ['Affiche de lancement', 140]], go: {ol: "Identité et supports", nl: 'Une identité, une campagne'}}]},
-  {k: 'web', t: 'Sites', n: 'Réservations, inscriptions, espace membres : fonctions sur mesure, chiffrées à la journée.', c: [
+  {k: 'web', t: 'Sites et outils', n: 'Réservations, inscriptions, espace membres : fonctions sur mesure, chiffrées à la journée.', c: [
     {h: 'Une page', s: 'La vitrine', p: 990, a: 'Qui vous êtes, ce que vous proposez, comment vous joindre.',
-      inc: ['Maquette sur mesure, à votre identité', 'Textes rédigés', 'Rapide, adapté au mobile, sans bandeau cookies', 'Référencement local et mise en ligne', 'Nom de domaine à votre nom'],
+      inc: ['Maquette sur mesure, à votre identité', 'Textes rédigés', 'Adapté au mobile', 'Référencement local et mise en ligne', 'Nom de domaine à votre nom'],
       opt: [['Hébergement et maintenance', 35, 0, 'mois'], ['Reportage photo pour le site', 370, 1]], go: {ol: "Site d'une page", nl: 'Un site internet'}},
     {h: '3 à 5 pages', s: 'Une page par offre', p: 1890, hot: 1, a: 'Chaque offre a sa page, pour être trouvée sur Google et comprise en quelques secondes.',
-      inc: ['Tout le site d’une page', 'Des pages dédiées à chaque offre', 'Formulaire de contact', 'Mesure d’audience sans cookie'],
+      inc: ['Tout le site d’une page', 'Des pages dédiées à chaque offre', 'Formulaire de contact'],
       opt: [['Hébergement et maintenance', 35, 0, 'mois'], ['Configurateur ou calculateur de devis', 1100, 1]], go: {ol: "Site de 3 à 5 pages", nl: 'Un site internet'}},
     {h: 'Site complet', s: 'De 6 à 12 pages', p: 4400, a: 'Actualités, agenda, contenus : un site que vous faites vivre vous-même.',
       inc: ['Tout le site de 3 à 5 pages', 'Actualités ou agenda modifiables par vous', 'Reprise des contenus existants', 'Formation à la prise en main'],
       opt: [['Hébergement et maintenance', 35, 0, 'mois'], ['Fonctions sur mesure, à la journée', 550]], go: {ol: "Site complet", nl: 'Un site internet'}}]},
-  {k: 'com', t: 'Réseaux et com', n: 'Plan de communication, relations presse, pack événement : détaillés dans le configurateur.', c: [
+  {k: 'com', t: 'Communication', n: 'Plan de communication, relations presse, pack événement : détaillés dans le configurateur.', c: [
     {h: 'Remise à plat', s: 'L’audit', p: 300, a: 'L’audit de vos comptes et leur remise en ordre, avant de publier.',
       inc: ['Analyse du compte et de ce qui marche', 'Nettoyage, bio, mises en avant', 'Recommandations de rythme et de ton'],
       opt: [['Gabarits de publications et de stories', 210]], go: {nl: 'Mes réseaux sociaux suivis'}},
@@ -283,15 +287,15 @@ const FO = [
       inc: ['6, 12, 20 ou 30 contenus par mois', 'Visuels et textes', 'Un calendrier validé ensemble', 'Engagement de 6 mois'],
       opt: [['Publication par Studio ES', 70, 1, 'mois'], ['Reportage photo mensuel', 340, 0, 'mois']], go: {ol: '12 contenus par mois', nl: 'Mes réseaux sociaux suivis'}},
     {h: 'Service com', s: 'Externalisé', p: 550, u: 'mois', a: 'Un jour par mois ou un jour par semaine : site, réseaux, supports, presse.',
-      inc: ['Un interlocuteur pour toute la communication', 'Coordination des imprimeurs et prestataires', 'Relations presse comprises', 'Remplacement possible pendant vos congés'],
+      inc: ['Un interlocuteur pour toute la communication', 'Coordination des imprimeurs et prestataires', 'Relations presse comprises'],
       opt: [['Deux jours par mois', 1100, 2, 'mois'], ['Plan de communication annuel', 1100]], go: {ol: 'Appui ponctuel', nl: 'Un service com externalisé'}}]}
 ];
-const foP = v => fmt(rUp(v));
-const nb = t => t.replace(/(\d) (h|min|mois|pages|dates|à)\b/g, '$1\u00a0$2').replace(/ (€|:)/g, '\u00a0$1');
+const foP = v => fmt(rDn(v));
+const nb = t => t.replace(/(\d) (h|min|mois|pages|dates|à)\b/g, '$1 $2').replace(/ (€|:)/g, ' $1');
 const foT = $('#foT'), foG = $('#foG'), foN = $('#foN'), foInk = $('.ink', foT);
 let foK = 'photo', foSeen = false;
-foT.insertAdjacentHTML('beforeend', FO.map(f => `<button role="tab" data-f="${f.k}" aria-selected="false">${f.t}</button>`).join(''));
-function foInkMove() { const b = $(`button[data-f="${foK}"]`, foT); if (!b) return; foInk.style.width = b.offsetWidth + 'px'; foInk.style.transform = `translateX(${b.offsetLeft - 5}px)`; }
+foT.insertAdjacentHTML('beforeend', FO.map((f, i) => `<button role="tab" data-f="${f.k}" aria-selected="false">${f.t}<em>0${i + 1}</em></button>`).join(''));
+function foInkMove() { const b = $(`button[data-f="${foK}"]`, foT); if (!b) return; foInk.style.width = b.offsetWidth + 'px'; foInk.style.transform = `translateX(${b.offsetLeft}px)`; }
 function foRender() {
   const f = FO.find(x => x.k === foK);
   $$('button', foT).forEach(b => { const on = b.dataset.f === foK; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
@@ -301,9 +305,10 @@ function foRender() {
     <p class="fo-s">${c.s}</p>
     <p class="fo-p"><small>à partir de</small><b class="d">${foP(c.p)} €</b>${c.u ? `<em>par ${c.u}</em>` : ''}</p>
     <p class="fo-a">${nb(c.a)}</p>
-    <h4>Compris</h4><ul class="fo-c">${c.inc.map(x => `<li><svg><use href="#ok"/></svg><span>${nb(x)}</span></li>`).join('')}</ul>
-    ${c.opt.length ? `<h4>En option</h4><ul class="fo-o">${c.opt.map(o => `<li><span>${nb(o[0])}</span><b>${['+', 'dès ', ''][o[2] || 0]}${foP(o[1])} €${o[3] ? ' / ' + o[3] : ''}</b></li>`).join('')}</ul>` : ''}
-    <div class="fo-f"><button class="bt ${c.hot ? 'bt-a' : 'bt-g'} pi bt-s" data-fi="${i}">Composer mon devis<span class="o"><svg><use href="#a"/></svg></span></button><a href="#rdv" data-rdv>ou réserver un appel de 30 min</a></div>
+    <div class="fo-acc"><button type="button" class="fo-x" aria-expanded="false" aria-controls="foc${i}"><span>Ce qui est compris</span><em>${c.inc.length}</em><i aria-hidden="true"></i></button>
+      <div class="fo-cw" id="foc${i}"><div><ul class="fo-c">${c.inc.map(x => `<li><svg><use href="#ok"/></svg><span>${nb(x)}</span></li>`).join('')}</ul></div></div></div>
+    ${c.opt.length ? `<div class="fo-op"><h4>En option</h4><ul>${c.opt.map(o => `<li><span>${nb(o[0])}</span><b>${['+', 'dès ', 'dès '][o[2] || 0]}${foP(o[1])}&nbsp;€${o[3] ? '<small> / ' + o[3] + '</small>' : ''}</b></li>`).join('')}</ul></div>` : ''}
+    <div class="fo-f"><button class="bt ${c.hot ? 'bt-a' : 'bt-g'} pi bt-s" data-fi="${i}">Composer mon devis<span class="o"><svg><use href="#a"/></svg></span></button><a href="#rdv">ou réserver un appel de 30&nbsp;min</a></div>
   </article>`).join('');
   foN.innerHTML = f.n.replace(/configurateur/, '<button type="button" data-cfg>configurateur</button>');
   foG.scrollLeft = 0; foInkMove();
@@ -313,6 +318,9 @@ function foShow(k) { if (FO.some(f => f.k === k) && k !== foK) { foK = k; foRend
 foT.addEventListener('click', e => { const b = e.target.closest('button[data-f]'); if (b) foShow(b.dataset.f); });
 foT.addEventListener('keydown', e => { const d = {ArrowRight: 1, ArrowLeft: -1}[e.key]; if (!d) return; e.preventDefault(); const i = clamp(FO.findIndex(f => f.k === foK) + d, 0, FO.length - 1); foShow(FO[i].k); $$('button', foT)[i].focus(); });
 foG.addEventListener('click', e => {
+  const x = e.target.closest('.fo-x');
+  /* un clic ouvre « ce qui est compris » sur toutes les cartes à la fois, pour comparer */
+  if (x) { const open = x.getAttribute('aria-expanded') !== 'true'; $$('.fo-x', foG).forEach(y => { y.setAttribute('aria-expanded', open); y.closest('.fo').classList.toggle('op', open); }); return; }
   const b = e.target.closest('button[data-fi]');
   if (b) { const go = FO.find(f => f.k === foK).c[+b.dataset.fi].go, p = st.p && P[st.p] && (go.pal != null || P[st.p].n.some(x => x.l === go.nl)) ? st.p : go.pal != null ? 'culture' : 'entreprise'; openCfg(Object.assign({p}, go)); }
 });
@@ -330,6 +338,7 @@ const cfg = $('#cfg');
 const STEPS = ['Profil', 'Besoin', 'Formule', 'Récapitulatif'];
 const saveCart = () => { store.set('ses5-cart', JSON.stringify(CF.basket)); const n = CF.basket.length; $('#estN').textContent = n; $('#estB').classList.toggle('has', n > 0); };
 function openCfg(o = {}) {
+  gc('devis-ouvert', 'Configurateur ouvert');
   if (o.p) { CF.p = o.p; CF.step = 1; CF.n = null; if (o.nl) { const j = P[CF.p].n.findIndex(x => x.l === o.nl); if (j >= 0) { CF.n = j; initPicks(); CF.step = 2; } } else if (o.pal != null) { const j = P[CF.p].n.findIndex(x => x.pal === o.pal); if (j >= 0) { CF.n = j; initPicks(); CF.step = 2; } } }
   else CF.step = CF.basket.length && o.pal == null ? 3 : 0;
   if (o.ol && CF.n != null) { const g = P[CF.p].n[CF.n].calc[0], k = g.o.findIndex(x => x[0] === o.ol); if (k >= 0) CF.picks[0] = [k]; }
@@ -342,8 +351,8 @@ function cfgRender() {
   $('#prog').innerHTML = STEPS.map((t, i) => `<button data-s="${i}" class="${i < s ? 'dn' : i === s ? 'on' : ''}" ${i > s || (i === 3 && !CF.basket.length) ? 'disabled' : ''}><i></i>${t}</button>`).join('');
   let h = '';
   if (s === 0) h = `<div class="stp"><h3 class="d">Vous êtes</h3><div class="opts">${PROFS.map(([k, t, d]) => `<button class="op${CF.p === k ? ' on' : ''}" data-p="${k}">${t}<small>${d}</small></button>`).join('')}</div></div>`;
-  if (s === 1) h = `<div class="stp"><h3 class="d">Vous cherchez</h3><div class="opts">${P[CF.p].n.map((x, i) => { const l = low(x); return `<button class="op${CF.n === i ? ' on' : ''}" data-n="${i}">${x.l}<small>${l ? 'dès ' + fmt(rNr(l[0])) + ' €' + unitS(l[1]) : 'sur devis'}</small></button>`; }).join('')}</div></div>`;
-  if (s === 2) { const n = P[CF.p].n[CF.n]; h = `<div class="stp"><h3 class="d">${n.l}</h3>${n.calc.map((g, gi) => `<div class="grp"><h4>${g.q}${g.m ? ', au choix' : ''}</h4><div class="chs" data-g="${gi}">${g.o.map((o, oi) => `<button data-o="${oi}" class="${(CF.picks[gi] || []).includes(oi) ? 'on' : ''}">${o[0]}<em>${o[1] == null ? 'sur devis' : o[1] === 0 ? '' : (g.m ? '+' : '') + fmt(rNr(o[1])) + ' €' + unitS(o[2] || '')}</em></button>`).join('')}</div></div>`).join('')}</div>`; }
+  if (s === 1) h = `<div class="stp"><h3 class="d">Vous cherchez</h3><div class="opts">${P[CF.p].n.map((x, i) => { const l = low(x); return `<button class="op${CF.n === i ? ' on' : ''}" data-n="${i}">${x.l}<small>${l ? 'dès ' + fmt(rDn(l[0])) + ' €' + unitS(l[1]) : 'sur devis'}</small></button>`; }).join('')}</div></div>`;
+  if (s === 2) { const n = P[CF.p].n[CF.n]; h = `<div class="stp"><h3 class="d">${n.l}</h3>${n.calc.map((g, gi) => `<div class="grp"><h4>${g.q}${g.m ? ', au choix' : ''}</h4><div class="chs" data-g="${gi}">${g.o.map((o, oi) => `<button data-o="${oi}" class="${(CF.picks[gi] || []).includes(oi) ? 'on' : ''}">${o[0]}<em>${o[1] == null ? 'sur devis' : o[1] === 0 ? '' : (g.m ? '+ dès ' : 'dès ') + fmt(rDn(o[1])) + ' €' + unitS(o[2] || '')}</em></button>`).join('')}</div></div>`).join('')}</div>`; }
   if (s === 3) {
     const pub = CF.basket.some(b => b.p === 'collectivite');
     h = `<div class="stp"><h3 class="d">Votre sélection</h3><ul class="bask">${CF.basket.map((b, i) => `<li><span><b>${esc(b.l)}</b><small>${esc(b.labels.join(' · ') || 'Sur devis')}</small></span><span class="pr">${b.lo ? rangeF(b.lo) + unitS(b.unit) : 'Sur devis'}<button class="rm" data-rm="${i}">Retirer</button></span></li>`).join('')}</ul>
@@ -398,7 +407,7 @@ async function sendCfg(btn) {
   d.total = t.lo ? rangeF(t.lo) : 'sur devis'; d.profil = (PROFS.find(p => p[0] === CF.basket[0].p) || [])[1] || '';
   d._subject = 'Demande de devis depuis studioes.fr'; d._template = 'table';
   btn.textContent = 'Envoi…';
-  try { const r = await fetch('https://formsubmit.co/ajax/contact@studioes.fr', {method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'}, body: JSON.stringify(d)}); if (!r.ok) throw 0; CF.basket = []; saveCart(); closeSheets(); toast('Demande envoyée. Réponse sous 48 h.'); CF.step = 0; }
+  try { const r = await fetch('https://formsubmit.co/ajax/contact@studioes.fr', {method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'}, body: JSON.stringify(d)}); if (!r.ok) throw 0; CF.basket = []; saveCart(); closeSheets(); toast('Demande envoyée. Réponse sous 48 h.'); gc('devis-envoye', 'Demande de devis envoyée'); CF.step = 0; }
   catch (err) { ok.textContent = 'L\'envoi n\'a pas abouti. Écrivez à contact@studioes.fr.'; btn.textContent = 'Envoyer la demande'; }
 }
 $('#estB').onclick = () => openCfg({});
@@ -423,7 +432,7 @@ $('#form').addEventListener('submit', async e => {
   e.preventDefault(); const f = e.target, ok = $('#fOk'), b = $('#sendB');
   if (!f.name.value.trim() || !/\S+@\S+\.\S+/.test(f.email.value) || !f.message.value.trim()) { ok.textContent = 'Merci de renseigner votre nom, votre e-mail et votre projet.'; return; }
   b.textContent = 'Envoi…';
-  try { const d = Object.fromEntries(new FormData(f)); d._subject = 'Nouveau message depuis studioes.fr'; d._template = 'table'; const r = await fetch('https://formsubmit.co/ajax/contact@studioes.fr', {method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'}, body: JSON.stringify(d)}); if (!r.ok) throw 0; f.reset(); closeSheets(); toast('Message envoyé. Réponse sous 48 h.'); b.textContent = 'Envoyer'; }
+  try { const d = Object.fromEntries(new FormData(f)); d._subject = 'Nouveau message depuis studioes.fr'; d._template = 'table'; const r = await fetch('https://formsubmit.co/ajax/contact@studioes.fr', {method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'}, body: JSON.stringify(d)}); if (!r.ok) throw 0; f.reset(); closeSheets(); toast('Message envoyé. Réponse sous 48 h.'); gc('message-envoye', 'Message envoyé'); b.textContent = 'Envoyer'; }
   catch (err) { ok.textContent = 'L\'envoi n\'a pas abouti. Écrivez directement à contact@studioes.fr.'; b.textContent = 'Envoyer'; }
 });
 
@@ -456,6 +465,7 @@ function calLoad() {
   Cal('init', 'rdv', {origin: 'https://app.cal.eu'});
   Cal.ns.rdv('inline', {elementOrSelector: '#calEmbed', calLink: 'studioes/30min', config: {layout: 'month_view', theme: 'dark'}});
   Cal.ns.rdv('ui', {theme: 'dark', hideEventTypeDetails: true, layout: 'month_view', cssVarsPerTheme: {dark: {'cal-brand': '#E1DBC4', 'cal-brand-emphasis': '#ece7d6', 'cal-brand-text': '#191919', 'cal-bg': '#1A1A17', 'cal-bg-muted': '#23221F', 'cal-border': 'rgba(237,233,221,.12)', 'cal-text': '#EDE9DD'}}});
+  Cal.ns.rdv('on', {action: 'bookingSuccessful', callback: () => gc('rendez-vous-pris', 'Rendez-vous pris (Cal.com)')});
   setTimeout(() => { if (!$('iframe', calBox)) calFallback(); }, 7000);
 }
 new IntersectionObserver(es => { if (es[0].isIntersecting) calLoad(); }, {rootMargin: FINE ? '600px' : '150px'}).observe(calBox);
@@ -467,7 +477,6 @@ function openSV(list, ri, pi = 0) { if (!S.open) focusIn(sv, '#svX'); S.list = l
 function closeSV() {
   if (!S.open) return; S.open = false; sv.classList.remove('on'); focusBack();
   if (!pf.classList.contains('on') && !sheetOpen) { root.style.overflow = ''; dockOff(false); }
-  $$('.sto', stories).forEach(b => b.classList.toggle('seen', seen.has(ORD[+b.dataset.i].id)));
   if (location.hash.startsWith('#r=')) history.replaceState(null, '', location.pathname);
 }
 function layer(r, p) { const d = document.createElement('div'); d.className = 'sv-s'; d.innerHTML = `<div class="fl" style="background-image:url(${sm(r, p[0])})"></div><img class="${p[1] < .9 && r.k !== 'g' ? 'cv' : ''}" src="${big(r, p[0])}" alt="${esc(r.t)}">`; return d; }
@@ -557,11 +566,11 @@ addEventListener('scroll', () => {
 addEventListener('resize', moveInk);
 
 /* ================= DÉPART ================= */
-renderFeed(); moveInk(); dockSync();
+initTabs(); renderFeed(); moveInk(); dockSync();
 if (document.fonts) document.fonts.ready.then(moveInk);
 { const h = location.hash;
   const AL = {'#contact': '#rdv', '#portfolio': '#travaux', '#plan-large': '#offre', '#services': '#offre'};
   if (AL[h]) { history.replaceState(null, '', AL[h]); setTimeout(() => $(AL[h]).scrollIntoView(), 200); }
   if (h === '#devis') { history.replaceState(null, '', location.pathname); openCfg({}); }
-  if (h.startsWith('#r=')) { const r = byId(h.slice(3)); if (r) { const list = r.k === 'g' ? GORD : ORD; openSV(list, list.indexOf(r), 0); } } }
+  if (h.startsWith('#r=')) { const r = byId(h.slice(3)); if (r) { const list = r.k === 'g' ? GORD : PHR; openSV(list, list.indexOf(r), 0); } } }
 })();
