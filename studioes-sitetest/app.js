@@ -205,6 +205,15 @@ dragScroll(feed); dragScroll(tabs);
   const ims = [first, ...ids.slice(1).map(id => { const im = document.createElement('img'); im.alt = ''; im.loading = 'lazy'; im.className = 'off'; im.src = BASE + 'p/t/' + id + '.webp'; c.insertBefore(im, first.nextSibling); return im; })];
   let k = 0;
   if (!RM) setInterval(() => { const b = c.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight || document.hidden) return; ims[k].classList.add('off'); k = (k + 1) % ims.length; ims[k].classList.remove('off'); }, 2800); }
+/* cartes métiers : inclinaison qui suit le doigt ou la souris, reflet qui glisse */
+$$('.mtc').forEach(c => {
+  if (RM) return; let raf = 0;
+  const mv = e => { const b = c.getBoundingClientRect(), x = clamp((e.clientX - b.left) / b.width, 0, 1), y = clamp((e.clientY - b.top) / b.height, 0, 1);
+    cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { c.classList.add('tl'); c.style.transform = `perspective(900px) rotateX(${(.5 - y) * 10}deg) rotateY(${(x - .5) * 12}deg) translateY(-4px)`; c.style.setProperty('--gx', x * 100 + '%'); c.style.setProperty('--gy', y * 100 + '%'); }); };
+  const out = () => { cancelAnimationFrame(raf); c.classList.remove('tl'); c.style.transform = ''; };
+  c.addEventListener('pointermove', mv); c.addEventListener('pointerdown', mv);
+  c.addEventListener('pointerleave', out); c.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') setTimeout(out, 250); }); c.addEventListener('pointercancel', out);
+});
 /* quatre métiers : chaque carte ouvre la bonne rubrique */
 $('#mt').addEventListener('click', e => {
   const b = e.target.closest('.mtc'); if (!b) return; const g = b.dataset.go;
@@ -215,6 +224,8 @@ $('#mt').addEventListener('click', e => {
 const CASES = [
   {id: 'la-soute', web: 1, g: 1, t: 'La Soute', k: 'Identité et site', y: 2026, s: 'Une salle, un hublot, une saison.', tags: ['Identité', 'Brochure', 'Affiches', 'Site'], q: 'la soute salle de spectacle concert saison brochure affiche identite site internet web billetterie', url: 'projets/la-soute/', img: 'projets/la-soute/img/cover.webp', ar: 1.43},
   {id: 'mjc-la-marelle', g: 1, t: 'MJC La Marelle', k: 'Brochure de saison', y: 2026, s: 'Une saison, vingt-quatre pages.', tags: ['Mise en page', 'Illustration', 'Photo'], q: 'mjc la marelle centre social scaer brochure saison mise en page illustration couverture', url: 'projets/mjc-la-marelle/', img: 'projets/mjc-la-marelle/img/cover.webp', ar: 1.43},
+  {id: 'fl-auto', g: 1, t: 'FL Auto', k: 'Identité et signalétique', y: 2025, s: 'De la route à l’atelier.', tags: ['Logo', 'Signalétique', 'Photo'], q: 'fl auto garage mecanique scaer logo identite signaletique enseigne panneau photo reportage', url: 'projets/fl-auto/', img: 'projets/fl-auto/img/cover.webp', ar: 1.43},
+  {id: 'mam-our-et-merveilles', g: 1, t: 'Mam’our et merveilles', k: 'Identité visuelle', y: 2026, s: 'Un trèfle, un brin, un cœur caché.', tags: ['Symbole', 'Charte', 'Motif'], q: 'mam our et merveilles brins de bonheur maison assistantes maternelles laz identite logo charte motif', url: 'projets/mam-our-et-merveilles/', img: 'projets/mam-our-et-merveilles/img/cover.webp', ar: 1.43},
   {id: 'pierceval-tattoo', web: 1, t: 'Pierceval Tattoo', k: 'Site internet', y: 2026, s: 'Tatouage et piercing depuis 1995.', tags: ['Site', 'Réservation', 'Carte cadeau'], q: 'pierceval tattoo tatouage piercing site internet web scaer', url: 'projets/pierceval-tattoo/', img: 'projets/pierceval-tattoo/img/cover.webp', ar: 1.43},
   {id: 'flouz', web: 1, t: 'flouz.', k: 'Application', y: 2026, s: 'Le budget du mois, d’un coup d’œil.', tags: ['Application', 'Interface', 'Identité'], q: 'flouz application mobile budget finances app web', url: 'projets/flouz/', img: 'projets/flouz/img/cover.webp', ar: 1.43}];
 const SEAS = ['soute', 'marelle', 'atrium'], CAMP = ['campagnes', 'recrutement', 'budget', 'affiches'];
@@ -225,14 +236,15 @@ const CH = [
 ];
 const pf = $('#pf'), pfG = $('#pfG'), pfQ = $('#pfQ'), pfC = $('#pfC');
 const PF = {c: 'all', q: '', list: []};
-const caseIn = c => c === 'all' || c === 'web';
-pfC.innerHTML = CH.map(([k, l, f]) => `<button data-c="${k}">${l}<em>${REPS.filter(f).length + (caseIn(k) ? CASES.length : 0)}</em></button>`).join('');
+const casesIn = c => CASES.filter(x => c === 'all' || (c === 'web' && x.web) || (c === 'graph' && x.g));
+const caseIn = c => casesIn(c).length > 0;
+pfC.innerHTML = CH.map(([k, l, f]) => `<button data-c="${k}">${l}<em>${REPS.filter(f).length + casesIn(k).length}</em></button>`).join('');
 const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 function pfRender() {
   const f = CH.find(c => c[0] === PF.c)[2], q = norm(PF.q.trim());
-  PF.list = REPS.filter(r => !(CASE_OF[r.id] && caseIn(PF.c)) && f(r) && (!q || norm(r.t + ' ' + CAT(r) + ' ' + r.ph.map(p => p[2] || '').join(' ')).includes(q)));
+  PF.list = REPS.filter(r => !(CASE_OF[r.id] && casesIn(PF.c).some(x => x.id === CASE_OF[r.id])) && f(r) && (!q || norm(r.t + ' ' + CAT(r) + ' ' + r.ph.map(p => p[2] || '').join(' ')).includes(q)));
   $$('button', pfC).forEach(b => b.classList.toggle('on', b.dataset.c === PF.c));
-  const cs = caseIn(PF.c) ? CASES.filter(c => !q || norm(c.t + ' ' + c.q).includes(q)) : [];
+  const cs = casesIn(PF.c).filter(c => !q || norm(c.t + ' ' + c.q).includes(q));
   $('#pfN').textContent = PF.list.length + cs.length;
   setTimeout(() => markLoaded(pfG), 0);
   pfG.innerHTML = PF.list.length + cs.length ? cs.map(c => `<a class="pc" href="${c.url}"><img src="${c.img}" alt="" loading="lazy" style="aspect-ratio:${c.ar}"><span class="chip glass"><i></i>${c.k}</span><span class="ti"><b>${esc(c.t)}</b><span>Étude de cas</span></span></a>`).join('') + PF.list.map((r, i) => { const p = r.ph.find(x => x[0] === COVER[r.id]) || r.ph[0]; return `<button class="pc" data-i="${i}" style="animation-delay:${Math.min(i, 16) * 35}ms"><img src="${sm(r, p[0])}" alt="" loading="lazy" style="aspect-ratio:${p[1]}"><span class="chip glass"><i></i>${CAT(r)}</span><span class="ti"><b>${esc(r.t)}</b><span>${r.ph.length}</span></span></button>`; }).join('') : '<p class="pf-empty">Aucun résultat. Essayez un autre mot.</p>';

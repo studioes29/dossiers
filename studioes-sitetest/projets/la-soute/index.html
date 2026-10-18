@@ -233,6 +233,38 @@ ul.liv{margin:0;padding:0}
 .cqd-w{padding-inline:var(--side);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 @media (prefers-reduced-motion:reduce){.cqd-w{overflow-x:auto}.mq{animation:none}}
 .mq.ct img{object-fit:contain;padding:10px;background:#1c1c19}
+
+/* en-tête : une scène à la couleur du projet, des formes qui dérivent, le nom qui défile */
+.hero{padding-top:clamp(86px,11vh,118px);overflow:visible}
+.hero::before{display:none}
+.stg{position:relative;isolation:isolate;overflow:hidden;border-radius:clamp(24px,3vw,40px);background:var(--pc);padding:clamp(26px,4vw,64px) clamp(22px,4vw,64px) 0;color:#F4F0E6}
+.stg-bg{position:absolute;inset:0;z-index:-2;pointer-events:none}
+.stg-bg i{position:absolute;display:block;border-radius:50%;filter:blur(2px)}
+.stg-bg i:nth-child(1){width:62%;aspect-ratio:1;right:-14%;top:-30%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pc2) 70%,transparent),transparent);animation:sg1 18s ease-in-out infinite alternate,smo 14s ease-in-out infinite alternate}
+.stg-bg i:nth-child(2){width:46%;aspect-ratio:1;left:-12%;bottom:-20%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pc3) 45%,transparent),transparent);animation:sg2 22s ease-in-out infinite alternate,smo 17s ease-in-out -5s infinite alternate}
+.stg-bg i:nth-child(3){width:34%;aspect-ratio:1;left:38%;top:30%;background:radial-gradient(closest-side,rgba(255,255,255,.14),transparent);animation:sg3 26s ease-in-out infinite alternate}
+@keyframes sg1{to{transform:translate(-18%,22%) scale(1.15)}}
+@keyframes sg2{to{transform:translate(30%,-18%) scale(1.2)}}
+@keyframes sg3{to{transform:translate(-40%,-30%) scale(.8)}}
+@keyframes smo{0%{border-radius:50% 46% 54% 48%/48% 54% 46% 52%}100%{border-radius:36% 64% 42% 58%/62% 38% 60% 40%}}
+.stg::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.stg-mq{position:absolute;left:0;top:clamp(150px,22vw,300px);z-index:-1;display:flex;width:max-content;white-space:nowrap;pointer-events:none;font:800 clamp(110px,17vw,280px)/.8 var(--d);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.13);animation:smq 60s linear infinite}
+.stg-mq span{padding-right:.35em}
+@keyframes smq{to{transform:translateX(-50%)}}
+.stg .k span{background:rgba(255,255,255,.12);color:#F4F0E6;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.stg .k span:first-child::before{background:var(--pc2)}
+.stg h1{color:#F4F0E6}
+.stg h1 .se{color:color-mix(in srgb,#F4F0E6 72%,var(--pc2))}
+.stg .meta{border-top-color:rgba(255,255,255,.16)}
+.stg .meta dt{color:rgba(244,240,230,.6)}
+.stg .meta dd,.stg .meta a{color:#F4F0E6}
+.stg .dev{margin-top:clamp(36px,5vw,72px);padding-bottom:0;margin-bottom:-3%;perspective:1400px}
+.stg .dev>*{transform-origin:50% 100%}
+.stg .shot{border-radius:clamp(14px,1.6vw,22px) clamp(14px,1.6vw,22px) 0 0;box-shadow:0 -30px 80px -30px rgba(0,0,0,.6)}
+.stg .bare{background:none;box-shadow:none;border-radius:0;filter:drop-shadow(0 30px 40px rgba(0,0,0,.35))}
+.stg .tilt{transition:transform .9s cubic-bezier(.16,1,.3,1)}
+@media (max-width:700px){.stg{padding:24px 18px 0}.stg-mq{top:120px}}
+@media (prefers-reduced-motion:reduce){.stg-bg i,.stg-mq{animation:none}}
 </style>
 </head>
 <body>
@@ -250,6 +282,9 @@ ul.liv{margin:0;padding:0}
 
 <main>
 <section class="hero w" aria-labelledby="t">
+<div class="stg" style="--pc:#171a52;--pc2:#ff6b4f;--pc3:#ffe45c">
+  <div class="stg-bg" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="stg-mq" aria-hidden="true"><span>La Soute</span><span>La Soute</span><span>La Soute</span><span>La Soute</span><span>La Soute</span><span>La Soute</span></div>
   <div class="k"><span>Identité et site internet</span><span>Salle de spectacle</span></div>
   <h1 class="d" id="t"><span class="ln"><span>La Soute</span></span><span class="ln"><span class="se">Une salle, un hublot, une saison.</span></span></h1>
   <dl class="meta">
@@ -258,6 +293,7 @@ ul.liv{margin:0;padding:0}
     <div><dt>Discipline</dt><dd>Direction artistique, design, développement</dd></div>
   </dl>
   <div class="dev"><div class="shot" data-r><img src="img/site.webp" width="1400" height="788" alt="Le site de La Soute sur ordinateur et sur téléphone : réservation d'un concert"></div></div>
+</div>
 </section>
 
 <div class="w">
@@ -364,5 +400,11 @@ ul.liv{margin:0;padding:0}
 })();
 </script>
 <script>/* GoatCounter : mesure d'audience sans cookie, uniquement sur studioes.fr */if (/(^|\.)studioes\.fr$/.test(location.hostname) && !location.hostname.startsWith('dossiers')) { const g = document.createElement('script'); g.async = true; g.src = 'https://gc.zgo.at/count.js'; g.dataset.goatcounter = 'https://studioes.goatcounter.com/count'; document.head.appendChild(g); }</script>
+<script>
+/* en-tête : le visuel s'incline légèrement vers la souris */
+(() => { const s = document.querySelector('.stg'), v = s && s.querySelector('.dev'); if (!v || matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(hover: hover)').matches) return;
+  v.classList.add('tilt'); s.addEventListener('pointermove', e => { const b = s.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5; v.style.transform = `rotateX(${(-y * 4).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`; });
+  s.addEventListener('pointerleave', () => { v.style.transform = ''; }); })();
+</script>
 </body>
 </html>
