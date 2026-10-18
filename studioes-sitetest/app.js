@@ -197,7 +197,7 @@ dragScroll(stories); dragScroll(tabs);
 
 /* carte Photographie : les reportages défilent en fondu (concert, festival, institution, entreprise) */
 { const c = $('.mtc[data-rot]'), ids = c.dataset.rot.split(','), first = $('img', c);
-  const ims = [first, ...ids.slice(1).map(id => { const im = document.createElement('img'); im.alt = ''; im.loading = 'lazy'; im.className = 'off'; im.src = BASE + 'p/' + id + '.jpg'; c.insertBefore(im, first.nextSibling); return im; })];
+  const ims = [first, ...ids.slice(1).map(id => { const im = document.createElement('img'); im.alt = ''; im.loading = 'lazy'; im.className = 'off'; im.src = BASE + 'p/t/' + id + '.webp'; c.insertBefore(im, first.nextSibling); return im; })];
   let k = 0;
   if (!RM) setInterval(() => { const b = c.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight || document.hidden) return; ims[k].classList.add('off'); k = (k + 1) % ims.length; ims[k].classList.remove('off'); }, 2800); }
 /* quatre métiers : chaque carte ouvre la bonne rubrique */
@@ -262,11 +262,11 @@ const FO = [
     {h: 'Identité', s: 'Le logo et ses règles', p: 990, hot: 1, a: 'Le logo et tout ce qui l’entoure, pour que chaque support se ressemble.',
       inc: ['Logo et variantes', 'Couleurs, typographies, motif', 'Charte graphique complète', 'Trois déclinaisons au choix : carte, affiche, réseaux…'],
       opt: [['Kakémono ou roll-up', 140], ['Signalétique, à la journée', 550]], go: {ol: "Identité complète", nl: 'Une identité, une campagne'}},
-    {h: 'Identité et supports', s: 'Tout pour démarrer', p: 1250, a: 'L’identité complète et les supports du quotidien, prêts le jour de l’ouverture.',
+    {h: 'Identité et supports', s: 'Pour démarrer', p: 1250, a: 'L’identité complète et les supports du quotidien, prêts le jour de l’ouverture.',
       inc: ['L’identité complète', 'Cartes de visite et papier à en-tête', 'Signature mail', 'Deux gabarits pour les réseaux'],
       opt: [['Reportage photo de lancement', 370, 1], ['Affiche de lancement', 140]], go: {ol: "Identité et supports", nl: 'Une identité, une campagne'}}]},
   {k: 'web', t: 'Sites', n: 'Réservations, inscriptions, espace membres : fonctions sur mesure, chiffrées à la journée.', c: [
-    {h: 'Une page', s: 'La vitrine', p: 990, a: 'Qui vous êtes, ce que vous proposez, comment vous joindre. L’essentiel, bien dit.',
+    {h: 'Une page', s: 'La vitrine', p: 990, a: 'Qui vous êtes, ce que vous proposez, comment vous joindre.',
       inc: ['Maquette sur mesure, à votre identité', 'Textes rédigés', 'Rapide, adapté au mobile, sans bandeau cookies', 'Référencement local et mise en ligne', 'Nom de domaine à votre nom'],
       opt: [['Hébergement et maintenance', 35, 0, 'mois'], ['Reportage photo pour le site', 370, 1]], go: {ol: "Site d'une page", nl: 'Un site internet'}},
     {h: '3 à 5 pages', s: 'Une page par offre', p: 1890, hot: 1, a: 'Chaque offre a sa page, pour être trouvée sur Google et comprise en quelques secondes.',
@@ -276,7 +276,7 @@ const FO = [
       inc: ['Tout le site de 3 à 5 pages', 'Actualités ou agenda modifiables par vous', 'Reprise des contenus existants', 'Formation à la prise en main'],
       opt: [['Hébergement et maintenance', 35, 0, 'mois'], ['Fonctions sur mesure, à la journée', 550]], go: {ol: "Site complet", nl: 'Un site internet'}}]},
   {k: 'com', t: 'Réseaux et com', n: 'Plan de communication, relations presse, pack événement : détaillés dans le configurateur.', c: [
-    {h: 'Remise à plat', s: 'Vos comptes, en ordre', p: 300, a: 'Un audit et un grand ménage, avant de publier mieux.',
+    {h: 'Remise à plat', s: 'L’audit', p: 300, a: 'L’audit de vos comptes et leur remise en ordre, avant de publier.',
       inc: ['Analyse du compte et de ce qui marche', 'Nettoyage, bio, mises en avant', 'Recommandations de rythme et de ton'],
       opt: [['Gabarits de publications et de stories', 210]], go: {nl: 'Mes réseaux sociaux suivis'}},
     {h: 'Réseaux suivis', s: 'Chaque mois', p: 240, u: 'mois', hot: 1, a: 'Des contenus produits en série, validés ensemble, prêts à publier.',
