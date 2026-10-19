@@ -216,40 +216,17 @@ ul.liv{margin:0;padding:0}
 .liv{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media (max-width:700px){.gal,.gal3,.liv{grid-template-columns:1fr}}
 .liv{grid-template-columns:repeat(3,minmax(0,1fr))}@media (max-width:700px){.liv{grid-template-columns:1fr}}.hero::before{background:radial-gradient(60% 55% at 72% 38%,rgba(52,112,66,.55),transparent 70%),radial-gradient(40% 40% at 20% 20%,rgba(240,170,200,.07),transparent 70%)}
-/* le projet en images : les livrables défilent */
-.cqd{padding-block:clamp(70px,9vw,130px);overflow:hidden}
-.cqd>.w{border-top:1px solid var(--ln);padding-top:clamp(70px,9vw,130px)}
-.cqd h2{margin:0 0 clamp(26px,3vw,40px);font-size:clamp(36px,4.4vw,68px);line-height:.92}
-.cqd h2 .se{display:block;font-size:.72em;color:var(--mu)}
-.mq{display:flex;width:max-content;gap:14px;animation:mq var(--dur,60s) linear infinite}
-.mq:hover{animation-play-state:paused}
-@keyframes mq{to{transform:translateX(calc(-50% - 7px))}}
-.mq figure{flex:none;width:clamp(220px,22vw,300px);margin:0;padding:12px 12px 16px;border-radius:22px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--ln);transition:transform .5s var(--sp)}
-.mq figure:hover{transform:translateY(-6px) rotate(-.6deg)}
-.mq img{display:block;width:100%;aspect-ratio:var(--ar,3/4);object-fit:cover;object-position:50% 0;border-radius:12px;background:var(--s2)}
-.mq figcaption{margin-top:12px;padding:0 4px}
-.mq b{display:block;font:800 17px/1.15 var(--d);letter-spacing:-.02em}
-.mq span{display:block;margin-top:3px;font-size:13.5px;color:var(--mu);line-height:1.35}
-.cqd-w{padding-inline:var(--side);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-@media (prefers-reduced-motion:reduce){.cqd-w{overflow-x:auto}.mq{animation:none}}
 
 /* en-tête : une scène à la couleur du projet, des formes qui dérivent, le nom qui défile */
 .hero{padding-top:clamp(86px,11vh,118px);overflow:visible}
 .hero::before{display:none}
 .stg{position:relative;isolation:isolate;overflow:hidden;border-radius:clamp(24px,3vw,40px);background:var(--pc);padding:clamp(26px,4vw,64px) clamp(22px,4vw,64px) 0;color:#F4F0E6}
-.stg-bg{position:absolute;inset:0;z-index:-2;pointer-events:none}
-.stg-bg i{position:absolute;display:block;border-radius:50%;filter:blur(2px)}
-.stg-bg i:nth-child(1){width:62%;aspect-ratio:1;right:-14%;top:-30%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pc2) 70%,transparent),transparent);animation:sg1 18s ease-in-out infinite alternate,smo 14s ease-in-out infinite alternate}
-.stg-bg i:nth-child(2){width:46%;aspect-ratio:1;left:-12%;bottom:-20%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pc3) 45%,transparent),transparent);animation:sg2 22s ease-in-out infinite alternate,smo 17s ease-in-out -5s infinite alternate}
-.stg-bg i:nth-child(3){width:34%;aspect-ratio:1;left:38%;top:30%;background:radial-gradient(closest-side,rgba(255,255,255,.14),transparent);animation:sg3 26s ease-in-out infinite alternate}
-@keyframes sg1{to{transform:translate(-18%,22%) scale(1.15)}}
-@keyframes sg2{to{transform:translate(30%,-18%) scale(1.2)}}
-@keyframes sg3{to{transform:translate(-40%,-30%) scale(.8)}}
-@keyframes smo{0%{border-radius:50% 46% 54% 48%/48% 54% 46% 52%}100%{border-radius:36% 64% 42% 58%/62% 38% 60% 40%}}
+.stg-bg{position:absolute;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.stg-bg i{position:absolute;display:block;left:50%;top:50%;width:260%;aspect-ratio:1;margin:-130% 0 0 -130%;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pc2) 42%,transparent) 0%,color-mix(in srgb,var(--pc2) 16%,transparent) 38%,transparent 72%);animation:sgw 34s ease-in-out infinite}
+.stg-bg i:nth-child(2){width:220%;margin:-110% 0 0 -110%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pc3) 26%,transparent),transparent 70%);animation:sgw2 41s ease-in-out -12s infinite}
+@keyframes sgw{0%{transform:translate(-22%,-28%)}25%{transform:translate(26%,-8%)}50%{transform:translate(10%,30%)}75%{transform:translate(-30%,14%)}100%{transform:translate(-22%,-28%)}}
+@keyframes sgw2{0%{transform:translate(30%,26%)}33%{transform:translate(-26%,20%)}66%{transform:translate(4%,-30%)}100%{transform:translate(30%,26%)}}
 .stg::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.stg-mq{position:absolute;left:0;top:clamp(150px,22vw,300px);z-index:-1;display:flex;width:max-content;white-space:nowrap;pointer-events:none;font:800 clamp(110px,17vw,280px)/.8 var(--d);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.13);animation:smq 60s linear infinite}
-.stg-mq span{padding-right:.35em}
-@keyframes smq{to{transform:translateX(-50%)}}
 .stg .k span{background:rgba(255,255,255,.12);color:#F4F0E6;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
 .stg .k span:first-child::before{background:var(--pc2)}
 .stg h1{color:#F4F0E6}
@@ -262,8 +239,25 @@ ul.liv{margin:0;padding:0}
 .stg .shot{border-radius:clamp(14px,1.6vw,22px) clamp(14px,1.6vw,22px) 0 0;box-shadow:0 -30px 80px -30px rgba(0,0,0,.6)}
 .stg .bare{background:none;box-shadow:none;border-radius:0;filter:drop-shadow(0 30px 40px rgba(0,0,0,.35))}
 .stg .tilt{transition:transform .9s cubic-bezier(.16,1,.3,1)}
-@media (max-width:700px){.stg{padding:24px 18px 0}.stg-mq{top:120px}}
-@media (prefers-reduced-motion:reduce){.stg-bg i,.stg-mq{animation:none}}
+@media (max-width:700px){.stg{padding:24px 18px 0}}
+@media (prefers-reduced-motion:reduce){.stg-bg i{animation:none}}
+
+/* livrables en images : rangée qui défile seule, la main reprend la main */
+.cqd{padding-block:clamp(70px,9vw,130px)}
+.cqd>.w{border-top:1px solid var(--ln);padding-top:clamp(70px,9vw,130px)}
+.cqd h2{margin:0 0 clamp(26px,3vw,40px);font-size:clamp(36px,4.4vw,68px);line-height:.92}
+.cqd h2 .se{display:block;font-size:.72em;color:var(--mu)}
+.cqd-w{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:14px var(--side) 18px;cursor:grab;touch-action:pan-x pan-y}
+.cqd-w::-webkit-scrollbar{display:none}
+.cqd-w.drag{cursor:grabbing}.cqd-w.drag *{pointer-events:none}
+.mq{display:flex;width:max-content;animation:none!important}
+.mq figure{flex:none;width:clamp(230px,22vw,310px);margin:0 14px 0 0;padding:12px 12px 16px;border-radius:22px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--ln);transition:transform .5s cubic-bezier(.34,1.35,.64,1)}
+@media (hover:hover){.mq figure:hover{transform:translateY(-8px)}}
+.mq img{display:block;width:100%;aspect-ratio:var(--ar,3/4);object-fit:cover;object-position:50% 0;border-radius:12px;background:var(--s2)}
+.mq.ct img{object-fit:contain;padding:10px;background:#1c1c19}
+.mq figcaption{margin-top:12px;padding:0 4px}
+.mq b{display:block;font:800 17px/1.15 var(--d);letter-spacing:-.02em}
+.mq span{display:block;margin-top:4px;font-size:13.5px;color:var(--mu);line-height:1.38}
 </style>
 </head>
 <body>
@@ -282,12 +276,12 @@ ul.liv{margin:0;padding:0}
 <main>
 <section class="hero w" aria-labelledby="t">
 <div class="stg" style="--pc:#1f4a33;--pc2:#e98fb5;--pc3:#f3d36b">
-  <div class="stg-bg" aria-hidden="true"><i></i><i></i><i></i></div>
-  <div class="stg-mq" aria-hidden="true"><span>La Marelle</span><span>La Marelle</span><span>La Marelle</span><span>La Marelle</span><span>La Marelle</span><span>La Marelle</span></div>
+  <div class="stg-bg" aria-hidden="true"><i></i><i></i></div>
+  
   <div class="k"><span>Brochure de saison</span><span>MJC et centre social</span></div>
   <h1 class="d" id="t"><span class="ln"><span>MJC La Marelle</span></span><span class="ln"><span class="se">Une saison, vingt-quatre pages.</span></span></h1>
   <dl class="meta">
-    <div><dt>Client</dt><dd>MJC Centre social La Marelle, Scaër</dd></div>
+    <div><dt>Client</dt><dd>MJC La Marelle</dd></div>
     <div><dt>Intervention</dt><dd>Brochure de saison 2026-2027, couverture, photographie</dd></div>
     <div><dt>Discipline</dt><dd>Direction artistique, mise en page, illustration</dd></div>
   </dl>
@@ -335,22 +329,9 @@ ul.liv{margin:0;padding:0}
 </section>
 </div>
 
-<section class="cqd" aria-labelledby="cqd" style="padding-top:0"><div class="w"><h2 class="d" id="cqd" data-r>Le projet <span class="se">en images</span></h2></div>
-  <div class="cqd-w"><div class="mq" style="--ar:758/1075;--dur:48s"><figure><img src="img/p1.webp" alt="Couverture de la brochure de saison de la MJC La Marelle" loading="lazy"><figcaption><b>Couverture</b><span>Illustration d’après photo de la Longère</span></figcaption></figure><figure><img src="img/p2.webp" alt="Page Activités régulières" loading="lazy"><figcaption><b>Activités régulières</b><span>Forme, détente, horaires et lieux</span></figcaption></figure><figure><img src="img/p3.webp" alt="Page École de musique" loading="lazy"><figcaption><b>École de musique</b><span>Parcours, cours individuels</span></figcaption></figure><figure><img src="img/p4.webp" alt="Page Espace Jeunesse" loading="lazy"><figcaption><b>Espace Jeunesse</b><span>Ouverture, horaires, projets</span></figcaption></figure><figure><img src="img/p5.webp" alt="Page Espace Familles Adultes" loading="lazy"><figcaption><b>Espace Familles Adultes</b><span>Accompagnement à la scolarité</span></figcaption></figure><figure><img src="img/p6.webp" alt="Page Chantier d’insertion" loading="lazy"><figcaption><b>Chantier d’insertion</b><span>Friperie, laverie, candidatures</span></figcaption></figure><figure><img src="img/p7.webp" alt="Page Animations culturelles" loading="lazy"><figcaption><b>Animations culturelles</b><span>Documentaires, expositions</span></figcaption></figure><figure><img src="img/p8.webp" alt="Page Spectacles" loading="lazy"><figcaption><b>Spectacles</b><span>Dates, tarifs, réservations</span></figcaption></figure><figure aria-hidden="true"><img src="img/p1.webp" alt="" loading="lazy"><figcaption><b>Couverture</b><span>Illustration d’après photo de la Longère</span></figcaption></figure><figure aria-hidden="true"><img src="img/p2.webp" alt="" loading="lazy"><figcaption><b>Activités régulières</b><span>Forme, détente, horaires et lieux</span></figcaption></figure><figure aria-hidden="true"><img src="img/p3.webp" alt="" loading="lazy"><figcaption><b>École de musique</b><span>Parcours, cours individuels</span></figcaption></figure><figure aria-hidden="true"><img src="img/p4.webp" alt="" loading="lazy"><figcaption><b>Espace Jeunesse</b><span>Ouverture, horaires, projets</span></figcaption></figure><figure aria-hidden="true"><img src="img/p5.webp" alt="" loading="lazy"><figcaption><b>Espace Familles Adultes</b><span>Accompagnement à la scolarité</span></figcaption></figure><figure aria-hidden="true"><img src="img/p6.webp" alt="" loading="lazy"><figcaption><b>Chantier d’insertion</b><span>Friperie, laverie, candidatures</span></figcaption></figure><figure aria-hidden="true"><img src="img/p7.webp" alt="" loading="lazy"><figcaption><b>Animations culturelles</b><span>Documentaires, expositions</span></figcaption></figure><figure aria-hidden="true"><img src="img/p8.webp" alt="" loading="lazy"><figcaption><b>Spectacles</b><span>Dates, tarifs, réservations</span></figcaption></figure></div></div></section>
+<section class="cqd" aria-labelledby="cqd" style="padding-top:0"><div class="w"><h2 class="d" id="cqd" data-r>Les livrables <span class="se">en images</span></h2></div>
+  <div class="cqd-w"><div class="mq" style="--ar:758/1075"><figure><img src="img/p1.webp" alt="Couverture de la brochure"><figcaption><b>Couverture illustrée</b><span>La Longère photographiée, puis redessinée.</span></figcaption></figure><figure><img src="img/p2.webp" alt="Page Activités régulières"><figcaption><b>Brochure de 24 pages</b><span>Mise en page, fichier prêt pour l’imprimeur.</span></figcaption></figure><figure><img src="img/p3.webp" alt="Page École de musique"><figcaption><b>École de musique</b><span>Parcours et cours individuels.</span></figcaption></figure><figure><img src="img/p4.webp" alt="Page Espace Jeunesse"><figcaption><b>Espace Jeunesse</b><span>Ouverture, horaires, projets.</span></figcaption></figure><figure><img src="img/p5.webp" alt="Page Espace Familles Adultes"><figcaption><b>Espace Familles Adultes</b><span>Accompagnement à la scolarité.</span></figcaption></figure><figure><img src="img/p6.webp" alt="Page Chantier d’insertion"><figcaption><b>Chantier d’insertion</b><span>Friperie, laverie, candidatures.</span></figcaption></figure><figure><img src="img/p7.webp" alt="Page Animations culturelles"><figcaption><b>Animations culturelles</b><span>Documentaires, expositions.</span></figcaption></figure><figure><img src="img/p8.webp" alt="Page Spectacles"><figcaption><b>Spectacles</b><span>Dates, tarifs, réservations.</span></figcaption></figure><figure aria-hidden="true"><img src="img/p1.webp" alt=""><figcaption><b>Couverture illustrée</b><span>La Longère photographiée, puis redessinée.</span></figcaption></figure><figure aria-hidden="true"><img src="img/p2.webp" alt=""><figcaption><b>Brochure de 24 pages</b><span>Mise en page, fichier prêt pour l’imprimeur.</span></figcaption></figure><figure aria-hidden="true"><img src="img/p3.webp" alt=""><figcaption><b>École de musique</b><span>Parcours et cours individuels.</span></figcaption></figure><figure aria-hidden="true"><img src="img/p4.webp" alt=""><figcaption><b>Espace Jeunesse</b><span>Ouverture, horaires, projets.</span></figcaption></figure><figure aria-hidden="true"><img src="img/p5.webp" alt=""><figcaption><b>Espace Familles Adultes</b><span>Accompagnement à la scolarité.</span></figcaption></figure><figure aria-hidden="true"><img src="img/p6.webp" alt=""><figcaption><b>Chantier d’insertion</b><span>Friperie, laverie, candidatures.</span></figcaption></figure><figure aria-hidden="true"><img src="img/p7.webp" alt=""><figcaption><b>Animations culturelles</b><span>Documentaires, expositions.</span></figcaption></figure><figure aria-hidden="true"><img src="img/p8.webp" alt=""><figcaption><b>Spectacles</b><span>Dates, tarifs, réservations.</span></figcaption></figure></div></div></section>
 
-<div class="w">
-<section class="ch" aria-labelledby="c9">
-  <div class="tx" data-r>
-    <span class="n">04</span>
-    <h2 class="d" id="c9">Livré <span class="se">avec</span></h2>
-  </div>
-  <ul class="liv">
-    <li data-r><b>Brochure de 24 pages</b><span>Mise en page complète, fichier prêt pour l’imprimeur.</span></li>
-    <li data-r><b>Couverture illustrée</b><span>Photographie de la Longère, puis illustration.</span></li>
-    <li data-r><b>Allers-retours</b><span>Corrections avec l’équipe jusqu’au bon à tirer.</span></li>
-  </ul>
-</section>
-</div>
 
 <section class="end w" aria-labelledby="fin">
   <h2 class="d" id="fin" data-r>Une saison à mettre en pages&#8239;? <span class="se">Parlons-en.</span></h2>
@@ -392,6 +373,25 @@ ul.liv{margin:0;padding:0}
 (() => { const s = document.querySelector('.stg'), v = s && s.querySelector('.dev'); if (!v || matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(hover: hover)').matches) return;
   v.classList.add('tilt'); s.addEventListener('pointermove', e => { const b = s.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5; v.style.transform = `rotateX(${(-y * 4).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`; });
   s.addEventListener('pointerleave', () => { v.style.transform = ''; }); })();
+</script>
+<script>
+/* rangée de livrables : défilement lent et continu, glisser ou swiper pour aller plus vite */
+(() => { const w = document.querySelector('.cqd-w'); if (!w) return; const RM = matchMedia('(prefers-reduced-motion: reduce)').matches, FINE = matchMedia('(hover: hover)').matches;
+  let pos = 0, hold = 0, last = 0, vis = false, half = 0; const t = w.querySelector('.mq');
+  const measure = () => { half = t.scrollWidth / 2; }; measure(); addEventListener('resize', measure); addEventListener('load', measure);
+  new IntersectionObserver(e => { vis = e[0].isIntersecting; }).observe(w);
+  const h = ms => { hold = performance.now() + ms; };
+  w.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') h(1e9); }); w.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') h(500); });
+  w.addEventListener('touchstart', () => h(1e9), {passive: true}); w.addEventListener('touchend', () => h(1500), {passive: true}); w.addEventListener('wheel', () => h(1200), {passive: true});
+  let down = false, x0 = 0, s0 = 0, mv = 0;
+  w.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; mv = 0; x0 = e.clientX; s0 = w.scrollLeft; });
+  addEventListener('pointermove', e => { if (!down) return; const d = e.clientX - x0; mv = Math.max(mv, Math.abs(d)); if (mv > 5) { w.classList.add('drag'); w.scrollLeft = s0 - d; } });
+  addEventListener('pointerup', () => { if (down) { down = false; setTimeout(() => w.classList.remove('drag'), 0); } });
+  (function loop(now) { const dt = Math.min(64, now - (last || now)); last = now;
+    if (!RM && vis && !document.hidden && now > hold && !down) { if (Math.abs(w.scrollLeft - pos) > 2) pos = w.scrollLeft; pos += (FINE ? .03 : .024) * dt; if (half && pos >= half) pos -= half; w.scrollLeft = pos; }
+    else { pos = w.scrollLeft; if (half && pos >= half) { pos -= half; w.scrollLeft = pos; } }
+    requestAnimationFrame(loop); })(performance.now());
+})();
 </script>
 </body>
 </html>

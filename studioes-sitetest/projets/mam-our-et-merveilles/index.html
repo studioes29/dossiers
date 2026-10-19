@@ -216,58 +216,18 @@ ul.liv{margin:0;padding:0}
 .liv{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media (max-width:700px){.gal,.gal3,.liv{grid-template-columns:1fr}}
 
-/* le projet en images : les livrables défilent */
-.cqd{padding-block:clamp(70px,9vw,130px);overflow:hidden}
-.cqd>.w{border-top:1px solid var(--ln);padding-top:clamp(70px,9vw,130px)}
-.cqd h2{margin:0 0 clamp(26px,3vw,40px);font-size:clamp(36px,4.4vw,68px);line-height:.92}
-.cqd h2 .se{display:block;font-size:.72em;color:var(--mu)}
-.mq{display:flex;width:max-content;gap:14px;animation:mq var(--dur,60s) linear infinite}
-.mq:hover{animation-play-state:paused}
-@keyframes mq{to{transform:translateX(calc(-50% - 7px))}}
-.mq figure{flex:none;width:clamp(220px,22vw,300px);margin:0;padding:12px 12px 16px;border-radius:22px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--ln);transition:transform .5s var(--sp)}
-.mq figure:hover{transform:translateY(-6px) rotate(-.6deg)}
-.mq img{display:block;width:100%;aspect-ratio:var(--ar,3/4);object-fit:cover;object-position:50% 0;border-radius:12px;background:var(--s2)}
-.mq figcaption{margin-top:12px;padding:0 4px}
-.mq b{display:block;font:800 17px/1.15 var(--d);letter-spacing:-.02em}
-.mq span{display:block;margin-top:3px;font-size:13.5px;color:var(--mu);line-height:1.35}
-.cqd-w{padding-inline:var(--side);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-@media (prefers-reduced-motion:reduce){.cqd-w{overflow-x:auto}.mq{animation:none}}
-.mq.ct img{object-fit:contain;padding:10px;background:#1c1c19}
 .liv{grid-template-columns:repeat(3,minmax(0,1fr))}@media (max-width:700px){.liv{grid-template-columns:1fr}}
-/* ce que ça donne : les livrables défilent */
-.cqd{padding-block:clamp(70px,9vw,130px);overflow:hidden}
-.cqd>.w{border-top:1px solid var(--ln);padding-top:clamp(70px,9vw,130px)}
-.cqd h2{margin:0 0 clamp(26px,3vw,40px);font-size:clamp(36px,4.4vw,68px);line-height:.92}
-.cqd h2 .se{display:block;font-size:.72em;color:var(--mu)}
-.mq{display:flex;width:max-content;gap:14px;animation:mq var(--dur,60s) linear infinite}
-.mq:hover{animation-play-state:paused}
-@keyframes mq{to{transform:translateX(calc(-50% - 7px))}}
-.mq figure{flex:none;width:clamp(220px,22vw,300px);margin:0;padding:12px 12px 16px;border-radius:22px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--ln);transition:transform .5s var(--sp)}
-.mq figure:hover{transform:translateY(-6px) rotate(-.6deg)}
-.mq img{display:block;width:100%;aspect-ratio:var(--ar,3/4);object-fit:cover;object-position:50% 0;border-radius:12px;background:var(--s2)}
-.mq figcaption{margin-top:12px;padding:0 4px}
-.mq b{display:block;font:800 17px/1.15 var(--d);letter-spacing:-.02em}
-.mq span{display:block;margin-top:3px;font-size:13.5px;color:var(--mu);line-height:1.35}
-.cqd-w{padding-inline:var(--side);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-@media (prefers-reduced-motion:reduce){.cqd-w{overflow-x:auto}.mq{animation:none}}
 
 /* en-tête : une scène à la couleur du projet, des formes qui dérivent, le nom qui défile */
 .hero{padding-top:clamp(86px,11vh,118px);overflow:visible}
 .hero::before{display:none}
 .stg{position:relative;isolation:isolate;overflow:hidden;border-radius:clamp(24px,3vw,40px);background:var(--pc);padding:clamp(26px,4vw,64px) clamp(22px,4vw,64px) 0;color:#F4F0E6}
-.stg-bg{position:absolute;inset:0;z-index:-2;pointer-events:none}
-.stg-bg i{position:absolute;display:block;border-radius:50%;filter:blur(2px)}
-.stg-bg i:nth-child(1){width:62%;aspect-ratio:1;right:-14%;top:-30%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pc2) 70%,transparent),transparent);animation:sg1 18s ease-in-out infinite alternate,smo 14s ease-in-out infinite alternate}
-.stg-bg i:nth-child(2){width:46%;aspect-ratio:1;left:-12%;bottom:-20%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pc3) 45%,transparent),transparent);animation:sg2 22s ease-in-out infinite alternate,smo 17s ease-in-out -5s infinite alternate}
-.stg-bg i:nth-child(3){width:34%;aspect-ratio:1;left:38%;top:30%;background:radial-gradient(closest-side,rgba(255,255,255,.14),transparent);animation:sg3 26s ease-in-out infinite alternate}
-@keyframes sg1{to{transform:translate(-18%,22%) scale(1.15)}}
-@keyframes sg2{to{transform:translate(30%,-18%) scale(1.2)}}
-@keyframes sg3{to{transform:translate(-40%,-30%) scale(.8)}}
-@keyframes smo{0%{border-radius:50% 46% 54% 48%/48% 54% 46% 52%}100%{border-radius:36% 64% 42% 58%/62% 38% 60% 40%}}
+.stg-bg{position:absolute;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.stg-bg i{position:absolute;display:block;left:50%;top:50%;width:260%;aspect-ratio:1;margin:-130% 0 0 -130%;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pc2) 42%,transparent) 0%,color-mix(in srgb,var(--pc2) 16%,transparent) 38%,transparent 72%);animation:sgw 34s ease-in-out infinite}
+.stg-bg i:nth-child(2){width:220%;margin:-110% 0 0 -110%;background:radial-gradient(closest-side,color-mix(in srgb,var(--pc3) 26%,transparent),transparent 70%);animation:sgw2 41s ease-in-out -12s infinite}
+@keyframes sgw{0%{transform:translate(-22%,-28%)}25%{transform:translate(26%,-8%)}50%{transform:translate(10%,30%)}75%{transform:translate(-30%,14%)}100%{transform:translate(-22%,-28%)}}
+@keyframes sgw2{0%{transform:translate(30%,26%)}33%{transform:translate(-26%,20%)}66%{transform:translate(4%,-30%)}100%{transform:translate(30%,26%)}}
 .stg::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.stg-mq{position:absolute;left:0;top:clamp(150px,22vw,300px);z-index:-1;display:flex;width:max-content;white-space:nowrap;pointer-events:none;font:800 clamp(110px,17vw,280px)/.8 var(--d);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.13);animation:smq 60s linear infinite}
-.stg-mq span{padding-right:.35em}
-@keyframes smq{to{transform:translateX(-50%)}}
 .stg .k span{background:rgba(255,255,255,.12);color:#F4F0E6;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
 .stg .k span:first-child::before{background:var(--pc2)}
 .stg h1{color:#F4F0E6}
@@ -280,8 +240,25 @@ ul.liv{margin:0;padding:0}
 .stg .shot{border-radius:clamp(14px,1.6vw,22px) clamp(14px,1.6vw,22px) 0 0;box-shadow:0 -30px 80px -30px rgba(0,0,0,.6)}
 .stg .bare{background:none;box-shadow:none;border-radius:0;filter:drop-shadow(0 30px 40px rgba(0,0,0,.35))}
 .stg .tilt{transition:transform .9s cubic-bezier(.16,1,.3,1)}
-@media (max-width:700px){.stg{padding:24px 18px 0}.stg-mq{top:120px}}
-@media (prefers-reduced-motion:reduce){.stg-bg i,.stg-mq{animation:none}}
+@media (max-width:700px){.stg{padding:24px 18px 0}}
+@media (prefers-reduced-motion:reduce){.stg-bg i{animation:none}}
+
+/* livrables en images : rangée qui défile seule, la main reprend la main */
+.cqd{padding-block:clamp(70px,9vw,130px)}
+.cqd>.w{border-top:1px solid var(--ln);padding-top:clamp(70px,9vw,130px)}
+.cqd h2{margin:0 0 clamp(26px,3vw,40px);font-size:clamp(36px,4.4vw,68px);line-height:.92}
+.cqd h2 .se{display:block;font-size:.72em;color:var(--mu)}
+.cqd-w{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;padding:14px var(--side) 18px;cursor:grab;touch-action:pan-x pan-y}
+.cqd-w::-webkit-scrollbar{display:none}
+.cqd-w.drag{cursor:grabbing}.cqd-w.drag *{pointer-events:none}
+.mq{display:flex;width:max-content;animation:none!important}
+.mq figure{flex:none;width:clamp(230px,22vw,310px);margin:0 14px 0 0;padding:12px 12px 16px;border-radius:22px;background:var(--s1);box-shadow:inset 0 0 0 1px var(--ln);transition:transform .5s cubic-bezier(.34,1.35,.64,1)}
+@media (hover:hover){.mq figure:hover{transform:translateY(-8px)}}
+.mq img{display:block;width:100%;aspect-ratio:var(--ar,3/4);object-fit:cover;object-position:50% 0;border-radius:12px;background:var(--s2)}
+.mq.ct img{object-fit:contain;padding:10px;background:#1c1c19}
+.mq figcaption{margin-top:12px;padding:0 4px}
+.mq b{display:block;font:800 17px/1.15 var(--d);letter-spacing:-.02em}
+.mq span{display:block;margin-top:4px;font-size:13.5px;color:var(--mu);line-height:1.38}
 </style>
 </head>
 <body>
@@ -300,16 +277,16 @@ ul.liv{margin:0;padding:0}
 <main>
 <section class="hero w" aria-labelledby="t">
 <div class="stg" style="--pc:#3d5c49;--pc2:#F2A088;--pc3:#9FC9D9">
-  <div class="stg-bg" aria-hidden="true"><i></i><i></i><i></i></div>
-  <div class="stg-mq" aria-hidden="true"><span>Mam’our</span><span>Mam’our</span><span>Mam’our</span><span>Mam’our</span><span>Mam’our</span><span>Mam’our</span></div>
+  <div class="stg-bg" aria-hidden="true"><i></i><i></i></div>
+  
   <div class="k"><span>Identité visuelle</span><span>Maison d’assistantes maternelles</span></div>
   <h1 class="d" id="t"><span class="ln"><span>Mam’our et merveilles</span></span><span class="ln"><span class="se">Un trèfle, un brin, un cœur caché.</span></span></h1>
   <dl class="meta">
-    <div><dt>Client</dt><dd>MAM de Laz, Finistère</dd></div>
+    <div><dt>Client</dt><dd>Mam’our et merveilles</dd></div>
     <div><dt>Intervention</dt><dd>Logo, charte graphique, motif, déclinaisons</dd></div>
     <div><dt>Discipline</dt><dd>Identité visuelle, direction artistique</dd></div>
   </dl>
-  <div class="dev"><div class="shot" data-r><img src="img/b7.webp" width="1600" height="900" alt="Le symbole de la MAM en relief sur un mur de lattes de bois"></div></div>
+  <div class="dev"><div class="shot" data-r><img src="img/b1.webp" width="1600" height="900" alt="Le logo Mam’our et merveilles sur une photo de doudou"></div></div>
 </div>
 </section>
 
@@ -337,49 +314,23 @@ ul.liv{margin:0;padding:0}
     <img data-r class="wide" src="img/b5.webp" width="1600" height="900" alt="Typographie et versions du symbole" loading="lazy">
   </div>
 </section>
-<section class="ch" aria-labelledby="c3">
-  <div class="tx" data-r>
-    <span class="n">03</span>
-    <h2 class="d" id="c3">Un nom qui change, <span class="se">un signe qui reste</span></h2>
-    <p>La MAM a changé de nom en cours de route. Le symbole, les couleurs et la charte sont restés&#8239;; seul le nom s’est adapté.</p>
-  </div>
-  <div class="gal">
-    <img data-r class="wide" src="img/b6.webp" width="1600" height="900" alt="Le symbole associé à plusieurs noms" loading="lazy">
-    <img data-r class="wide" src="img/b1.webp" width="1600" height="900" alt="Le logo sur une photo de doudou" loading="lazy">
-  </div>
-</section>
 <section class="ch" aria-labelledby="c4">
   <div class="tx" data-r>
-    <span class="n">04</span>
+    <span class="n">03</span>
     <h2 class="d" id="c4">Au quotidien, <span class="se">dans la maison</span></h2>
-    <p>Une enseigne, des étiquettes de casier, un motif pour le textile et le papier, et les visuels des réseaux sociaux pour annoncer l’ouverture.</p>
+    <p>Des étiquettes de casier, un motif pour le textile et le papier, et les visuels des réseaux sociaux pour annoncer l’ouverture.</p>
   </div>
   <div class="gal">
     <img data-r class="wide" src="img/b9.webp" width="1600" height="900" alt="Étiquettes de casier aux prénoms des enfants" loading="lazy">
     <img data-r src="img/b8.webp" width="1600" height="900" alt="Sac en toile au motif de la MAM" loading="lazy">
-    <img data-r src="img/b10.webp" width="1600" height="900" alt="Bob au motif de la MAM" loading="lazy">
+    <img data-r src="img/b11.webp" width="1600" height="900" alt="Coussin au motif et au logo de la MAM" loading="lazy">
     <img data-r class="wide" src="img/reseaux-couverture.webp" width="1400" height="508" alt="Couverture des réseaux sociaux" loading="lazy">
   </div>
 </section>
 </div>
 
-<section class="cqd" aria-labelledby="cqd" style="padding-top:0"><div class="w"><h2 class="d" id="cqd" data-r>Le projet <span class="se">en images</span></h2></div>
-  <div class="cqd-w"><div class="mq" style="--ar:16/10;--dur:54s"><figure><img src="img/b2.webp" alt="Symbole" loading="lazy"><figcaption><b>Le symbole</b><span>Un trèfle, un cœur</span></figcaption></figure><figure><img src="img/b4.webp" alt="Palette" loading="lazy"><figcaption><b>Les couleurs</b><span>Huit teintes</span></figcaption></figure><figure><img src="img/b5.webp" alt="Typographie" loading="lazy"><figcaption><b>La typographie</b><span>Ronde et généreuse</span></figcaption></figure><figure><img src="img/b7.webp" alt="Enseigne" loading="lazy"><figcaption><b>L’enseigne</b><span>En relief, bois et couleurs</span></figcaption></figure><figure><img src="img/b9.webp" alt="Casiers" loading="lazy"><figcaption><b>Les casiers</b><span>Un prénom par enfant</span></figcaption></figure><figure><img src="img/b8.webp" alt="Sac" loading="lazy"><figcaption><b>Le sac</b><span>Au motif</span></figcaption></figure><figure><img src="img/b11.webp" alt="Coussin" loading="lazy"><figcaption><b>Le coussin</b><span>Textile</span></figcaption></figure><figure><img src="img/b12.webp" alt="Papier" loading="lazy"><figcaption><b>Le papier</b><span>Motif en répétition</span></figcaption></figure><figure><img src="img/reseaux-profil.webp" alt="Réseaux" loading="lazy"><figcaption><b>Les réseaux</b><span>Photo de profil</span></figcaption></figure><figure aria-hidden="true"><img src="img/b2.webp" alt="" loading="lazy"><figcaption><b>Le symbole</b><span>Un trèfle, un cœur</span></figcaption></figure><figure aria-hidden="true"><img src="img/b4.webp" alt="" loading="lazy"><figcaption><b>Les couleurs</b><span>Huit teintes</span></figcaption></figure><figure aria-hidden="true"><img src="img/b5.webp" alt="" loading="lazy"><figcaption><b>La typographie</b><span>Ronde et généreuse</span></figcaption></figure><figure aria-hidden="true"><img src="img/b7.webp" alt="" loading="lazy"><figcaption><b>L’enseigne</b><span>En relief, bois et couleurs</span></figcaption></figure><figure aria-hidden="true"><img src="img/b9.webp" alt="" loading="lazy"><figcaption><b>Les casiers</b><span>Un prénom par enfant</span></figcaption></figure><figure aria-hidden="true"><img src="img/b8.webp" alt="" loading="lazy"><figcaption><b>Le sac</b><span>Au motif</span></figcaption></figure><figure aria-hidden="true"><img src="img/b11.webp" alt="" loading="lazy"><figcaption><b>Le coussin</b><span>Textile</span></figcaption></figure><figure aria-hidden="true"><img src="img/b12.webp" alt="" loading="lazy"><figcaption><b>Le papier</b><span>Motif en répétition</span></figcaption></figure><figure aria-hidden="true"><img src="img/reseaux-profil.webp" alt="" loading="lazy"><figcaption><b>Les réseaux</b><span>Photo de profil</span></figcaption></figure></div></div></section>
-<div class="w">
-<section class="ch" aria-labelledby="c9">
-  <div class="tx" data-r>
-    <span class="n">05</span>
-    <h2 class="d" id="c9">Livré <span class="se">avec</span></h2>
-  </div>
-  <ul class="liv">
-    <li data-r><b>Symbole et logo</b><span>En couleurs et en monochrome, avec ses versions de nom.</span></li>
-    <li data-r><b>Charte graphique</b><span>Couleurs, typographie, règles d’usage, en un document.</span></li>
-    <li data-r><b>Motif</b><span>Pour le textile, le papier et les fonds de visuels.</span></li>
-    <li data-r><b>Réseaux sociaux</b><span>Photo de profil et couverture pour l’ouverture.</span></li>
-    <li data-r><b>Maquettes</b><span>Enseigne, casiers, textile, papeterie.</span></li>
-  </ul>
-</section>
-</div>
+<section class="cqd" aria-labelledby="cqd" style="padding-top:0"><div class="w"><h2 class="d" id="cqd" data-r>Les livrables <span class="se">en images</span></h2></div>
+  <div class="cqd-w"><div class="mq" style="--ar:16/10"><figure><img src="img/b2.webp" alt="Symbole"><figcaption><b>Symbole</b><span>Un trèfle, un cœur dans la contre-forme.</span></figcaption></figure><figure><img src="img/b4.webp" alt="Palette"><figcaption><b>Palette</b><span>Huit couleurs, douces et franches.</span></figcaption></figure><figure><img src="img/b5.webp" alt="Typographie"><figcaption><b>Typographie</b><span>Ronde et généreuse, deux registres.</span></figcaption></figure><figure><img src="img/b3.webp" alt="Logo sur fond vert"><figcaption><b>Logo</b><span>Le symbole et le nom, en version claire.</span></figcaption></figure><figure><img src="img/b9.webp" alt="Casiers"><figcaption><b>Casiers</b><span>Un prénom par enfant.</span></figcaption></figure><figure><img src="img/b8.webp" alt="Sac"><figcaption><b>Textile</b><span>Le logo et le motif sur le sac et le coussin.</span></figcaption></figure><figure><img src="img/b12.webp" alt="Papier"><figcaption><b>Motif</b><span>En répétition, pour le papier.</span></figcaption></figure><figure><img src="img/reseaux-profil.webp" alt="Réseaux"><figcaption><b>Réseaux sociaux</b><span>Photo de profil et couverture.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b2.webp" alt=""><figcaption><b>Symbole</b><span>Un trèfle, un cœur dans la contre-forme.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b4.webp" alt=""><figcaption><b>Palette</b><span>Huit couleurs, douces et franches.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b5.webp" alt=""><figcaption><b>Typographie</b><span>Ronde et généreuse, deux registres.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b3.webp" alt=""><figcaption><b>Logo</b><span>Le symbole et le nom, en version claire.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b9.webp" alt=""><figcaption><b>Casiers</b><span>Un prénom par enfant.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b8.webp" alt=""><figcaption><b>Textile</b><span>Le logo et le motif sur le sac et le coussin.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b12.webp" alt=""><figcaption><b>Motif</b><span>En répétition, pour le papier.</span></figcaption></figure><figure aria-hidden="true"><img src="img/reseaux-profil.webp" alt=""><figcaption><b>Réseaux sociaux</b><span>Photo de profil et couverture.</span></figcaption></figure></div></div></section>
 
 <section class="end w" aria-labelledby="fin">
   <h2 class="d" id="fin" data-r>Une identité à créer&#8239;? <span class="se">Parlons-en.</span></h2>
@@ -421,6 +372,25 @@ ul.liv{margin:0;padding:0}
 (() => { const s = document.querySelector('.stg'), v = s && s.querySelector('.dev'); if (!v || matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(hover: hover)').matches) return;
   v.classList.add('tilt'); s.addEventListener('pointermove', e => { const b = s.getBoundingClientRect(), x = (e.clientX - b.left) / b.width - .5, y = (e.clientY - b.top) / b.height - .5; v.style.transform = `rotateX(${(-y * 4).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`; });
   s.addEventListener('pointerleave', () => { v.style.transform = ''; }); })();
+</script>
+<script>
+/* rangée de livrables : défilement lent et continu, glisser ou swiper pour aller plus vite */
+(() => { const w = document.querySelector('.cqd-w'); if (!w) return; const RM = matchMedia('(prefers-reduced-motion: reduce)').matches, FINE = matchMedia('(hover: hover)').matches;
+  let pos = 0, hold = 0, last = 0, vis = false, half = 0; const t = w.querySelector('.mq');
+  const measure = () => { half = t.scrollWidth / 2; }; measure(); addEventListener('resize', measure); addEventListener('load', measure);
+  new IntersectionObserver(e => { vis = e[0].isIntersecting; }).observe(w);
+  const h = ms => { hold = performance.now() + ms; };
+  w.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') h(1e9); }); w.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') h(500); });
+  w.addEventListener('touchstart', () => h(1e9), {passive: true}); w.addEventListener('touchend', () => h(1500), {passive: true}); w.addEventListener('wheel', () => h(1200), {passive: true});
+  let down = false, x0 = 0, s0 = 0, mv = 0;
+  w.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; mv = 0; x0 = e.clientX; s0 = w.scrollLeft; });
+  addEventListener('pointermove', e => { if (!down) return; const d = e.clientX - x0; mv = Math.max(mv, Math.abs(d)); if (mv > 5) { w.classList.add('drag'); w.scrollLeft = s0 - d; } });
+  addEventListener('pointerup', () => { if (down) { down = false; setTimeout(() => w.classList.remove('drag'), 0); } });
+  (function loop(now) { const dt = Math.min(64, now - (last || now)); last = now;
+    if (!RM && vis && !document.hidden && now > hold && !down) { if (Math.abs(w.scrollLeft - pos) > 2) pos = w.scrollLeft; pos += (FINE ? .03 : .024) * dt; if (half && pos >= half) pos -= half; w.scrollLeft = pos; }
+    else { pos = w.scrollLeft; if (half && pos >= half) { pos -= half; w.scrollLeft = pos; } }
+    requestAnimationFrame(loop); })(performance.now());
+})();
 </script>
 </body>
 </html>

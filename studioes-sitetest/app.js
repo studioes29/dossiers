@@ -94,7 +94,7 @@ new IntersectionObserver(es => { heroVis = es[0].isIntersecting; }).observe($('#
 H.cur.src = bigF(HERO[0]); amb.style.backgroundImage = `url(${smF(HERO[0])})`; heroMeta(); preload(bigF(HERO[1]));
 const startUp = () => { if (document.body.classList.contains('go')) return; document.body.classList.add('go'); if (!RM) anim(H.cur, [{opacity: 0}, {opacity: 1}], {duration: 900, easing: 'ease-out'}); };
 H.cur.complete ? requestAnimationFrame(startUp) : (H.cur.onload = startUp, setTimeout(startUp, 2200));
-$('#hCard').onclick = () => { const r = FMAP[HERO[H.i]][0]; openSV(SCENE, SCENE.indexOf(r), r.ph.findIndex(p => p[0] === HERO[H.i])); };
+$('#hCard').onclick = () => { const r = FMAP[HERO[H.i]][0]; openGal(r, r.ph.findIndex(p => p[0] === HERO[H.i])); };
 
 /* ================= LE TRAVAIL : onglets par métier, rangée de cartes qui défile ================= */
 /* notoriété des artistes : les plus connus en premier */
@@ -107,7 +107,7 @@ const GORD = GRR.slice().sort((a, b) => GPREF.indexOf(a.id) - GPREF.indexOf(b.id
 const FORUM = byId('forum-asso'), INAUG = byId('inauguration'), VOEUX = byId('voeux-ph'), COMM = byId('commemo');
 /* [clé, libellé, contenus] : le portfolio est trié par métier, comme les formules */
 const TABS = [
-  ['photo', 'Photographie', () => [...SCENE.slice(0, 5), PUB[0], INAUG, ...SCENE.slice(5, 10), ENT[0], PUB[1], VOEUX, ...SCENE.slice(10, 16), PUB[2], FORUM, COMM].filter(Boolean).map(r => ({r, k: 'p'}))],
+  ['photo', 'Photographie', () => { const l = [...SCENE.slice(0, 5), PUB[0], INAUG, ...SCENE.slice(5, 10), 'C', PUB[1], VOEUX, ...SCENE.slice(10, 16), PUB[2], FORUM, COMM].filter(Boolean); const cs = CASES.filter(c => c.p); return l.map(r => r === 'C' ? (cs.length ? {c: cs[0], k: 'c'} : null) : {r, k: 'p'}).filter(Boolean).concat(cs.slice(1).map(c => ({c, k: 'c'}))); }],
   ['graph', 'Graphisme', () => [...CASES.filter(c => c.g).map(c => ({c, k: 'c'})), ...GORD.filter(r => !CASE_OF[r.id] && !['campagnes', 'recrutement', 'budget'].includes(r.id)).map(r => ({r, k: 'g'}))]],
   ['web', 'Sites et outils', () => CASES.filter(c => c.web).map(c => ({c, k: 'c'}))],
   ['com', 'Communication', () => ['campagnes', 'recrutement', 'budget'].map(byId).filter(Boolean).map(r => ({r, k: 'g'})).concat(FORUM ? [{r: FORUM, k: 'p'}] : [])]
@@ -122,10 +122,10 @@ const goCase = r => { const c = r && caseFor(r); if (c) { location.href = c.url;
 /* une carte : photo (portrait ou paysage), projet graphique, ou étude de cas */
 function railCard(x, i, dup) {
   const t = dup ? ' tabindex="-1" aria-hidden="true"' : '', d = ` style="--d:${(i * 1.7) % 9}s"`;
-  if (x.k === 'c') { const c = x.c; return `<a class="rc rc-c" href="${c.url}"${t}${d}><span class="rc-i"><img src="${c.img}" alt="" loading="lazy" decoding="async"></span><span class="rc-b"><span class="rc-m">Étude de cas · ${c.y}</span><b class="d">${esc(c.t)}</b><em>${esc(c.s)}</em><span class="rc-t">${c.tags.slice(0, 3).map(g => `<i>${esc(g)}</i>`).join('')}</span></span><span class="rc-go">${ico('a')}</span></a>`; }
+  if (x.k === 'c') { const c = x.c; return `<a class="rc rc-c" href="${c.url}"${t}${d}><span class="rc-i"><img src="${c.img}" alt="" decoding="async"></span><span class="rc-b"><b class="d">${esc(c.t)}</b><em>${esc(c.s)}</em><span class="rc-t">${c.tags.slice(0, 3).map(g => `<i>${esc(g)}</i>`).join('')}</span></span><span class="rc-go">${ico('a')}</span></a>`; }
   const r = x.r, wide = x.k === 'p' && i % 5 === 3 && r.ph.some(p => p[1] > 1.2), f = coverOf(r, wide ? 'W' : 'M');
   const lab = x.k === 'g' ? 'Graphisme' : CAT(r), n = r.ph.length;
-  return `<button class="rc${wide ? ' rc-w' : ''}" data-r="${r.id}" data-k="${x.k}"${t}${d}><span class="rc-i"><img class="bgi" src="${sm(r, f[0])}" alt="" loading="lazy" decoding="async"></span><span class="bars">${r.ph.slice(0, 5).map(() => '<s><i></i></s>').join('')}</span><span class="rc-l">${lab}</span><span class="rc-n">${n} ${x.k === 'g' ? 'visuels' : 'photos'}</span><span class="rc-f"><b class="d">${esc(r.t)}</b><span class="rc-go">${ico('a')}</span></span></button>`;
+  return `<button class="rc${wide ? ' rc-w' : ''}" data-r="${r.id}" data-k="${x.k}"${t}${d}><span class="rc-i"><img class="bgi" src="${sm(r, f[0])}" alt="" decoding="async"></span><span class="bars">${r.ph.slice(0, 5).map(() => '<s><i></i></s>').join('')}</span><span class="rc-l">${lab}</span><span class="rc-n">${n} ${x.k === 'g' ? 'visuels' : 'photos'}</span><span class="rc-f"><b class="d">${esc(r.t)}</b><span class="rc-go">${ico('a')}</span></span></button>`;
 }
 const feed = $('#feed');
 let ORD = [], GL = [];
@@ -170,7 +170,7 @@ feed.addEventListener('focusout', () => railHold(800));
 new IntersectionObserver(es => { RL.vis = es[0].isIntersecting; }, {threshold: .1}).observe(feed);
 feed.addEventListener('click', e => {
   const b = e.target.closest('button.rc'); if (!b) return; const r = byId(b.dataset.r);
-  if (goCase(r)) return; const list = b.dataset.k === 'g' ? GL : ORD; openSV(list, list.indexOf(r), 0);
+  openGal(r);
 });
 function bindCard(c) {
   const r = byId(c.dataset.r), img = $('.bgi', c), bars = $$('.bars s i', c), n = bars.length;
@@ -205,28 +205,14 @@ dragScroll(feed); dragScroll(tabs);
   const ims = [first, ...ids.slice(1).map(id => { const im = document.createElement('img'); im.alt = ''; im.loading = 'lazy'; im.className = 'off'; im.src = BASE + 'p/t/' + id + '.webp'; c.insertBefore(im, first.nextSibling); return im; })];
   let k = 0;
   if (!RM) setInterval(() => { const b = c.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight || document.hidden) return; ims[k].classList.add('off'); k = (k + 1) % ims.length; ims[k].classList.remove('off'); }, 2800); }
-/* cartes métiers : inclinaison qui suit le doigt ou la souris, reflet qui glisse */
-$$('.mtc').forEach(c => {
-  if (RM) return; let raf = 0;
-  const mv = e => { const b = c.getBoundingClientRect(), x = clamp((e.clientX - b.left) / b.width, 0, 1), y = clamp((e.clientY - b.top) / b.height, 0, 1);
-    cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { c.classList.add('tl'); c.style.transform = `perspective(900px) rotateX(${(.5 - y) * 10}deg) rotateY(${(x - .5) * 12}deg) translateY(-4px)`; c.style.setProperty('--gx', x * 100 + '%'); c.style.setProperty('--gy', y * 100 + '%'); }); };
-  const out = () => { cancelAnimationFrame(raf); c.classList.remove('tl'); c.style.transform = ''; };
-  c.addEventListener('pointermove', mv); c.addEventListener('pointerdown', mv);
-  c.addEventListener('pointerleave', out); c.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') setTimeout(out, 250); }); c.addEventListener('pointercancel', out);
-});
-/* quatre métiers : chaque carte ouvre la bonne rubrique */
-$('#mt').addEventListener('click', e => {
-  const b = e.target.closest('.mtc'); if (!b) return; const g = b.dataset.go;
-  if (st.tab !== g) { st.tab = g; moveInk(); renderFeed(); }
-  $('#travaux').scrollIntoView({behavior: RM ? 'auto' : 'smooth'});
-});
+/* quatre métiers : chaque carte ouvre sa page descriptive (liens simples) */
 /* ================= PORTFOLIO PLEIN ÉCRAN ================= */
 const CASES = [
   {id: 'la-soute', web: 1, g: 1, t: 'La Soute', k: 'Identité et site', y: 2026, s: 'Une salle, un hublot, une saison.', tags: ['Identité', 'Brochure', 'Affiches', 'Site'], q: 'la soute salle de spectacle concert saison brochure affiche identite site internet web billetterie', url: 'projets/la-soute/', img: 'projets/la-soute/img/cover.webp', ar: 1.43},
   {id: 'mjc-la-marelle', g: 1, t: 'MJC La Marelle', k: 'Brochure de saison', y: 2026, s: 'Une saison, vingt-quatre pages.', tags: ['Mise en page', 'Illustration', 'Photo'], q: 'mjc la marelle centre social scaer brochure saison mise en page illustration couverture', url: 'projets/mjc-la-marelle/', img: 'projets/mjc-la-marelle/img/cover.webp', ar: 1.43},
-  {id: 'fl-auto', g: 1, t: 'FL Auto', k: 'Identité et signalétique', y: 2025, s: 'De la route à l’atelier.', tags: ['Logo', 'Signalétique', 'Photo'], q: 'fl auto garage mecanique scaer logo identite signaletique enseigne panneau photo reportage', url: 'projets/fl-auto/', img: 'projets/fl-auto/img/cover.webp', ar: 1.43},
+  {id: 'fl-auto', g: 1, p: 1, t: 'FL Auto', k: 'Identité et signalétique', y: 2025, s: 'De la route à l’atelier.', tags: ['Logo', 'Signalétique', 'Photo'], q: 'fl auto garage mecanique scaer logo identite signaletique enseigne panneau photo reportage', url: 'projets/fl-auto/', img: 'projets/fl-auto/img/cover.webp', ar: 1.43},
   {id: 'mam-our-et-merveilles', g: 1, t: 'Mam’our et merveilles', k: 'Identité visuelle', y: 2026, s: 'Un trèfle, un brin, un cœur caché.', tags: ['Symbole', 'Charte', 'Motif'], q: 'mam our et merveilles brins de bonheur maison assistantes maternelles laz identite logo charte motif', url: 'projets/mam-our-et-merveilles/', img: 'projets/mam-our-et-merveilles/img/cover.webp', ar: 1.43},
-  {id: 'pierceval-tattoo', web: 1, t: 'Pierceval Tattoo', k: 'Site internet', y: 2026, s: 'Tatouage et piercing depuis 1995.', tags: ['Site', 'Réservation', 'Carte cadeau'], q: 'pierceval tattoo tatouage piercing site internet web scaer', url: 'projets/pierceval-tattoo/', img: 'projets/pierceval-tattoo/img/cover.webp', ar: 1.43},
+  {id: 'pierceval-tattoo', web: 1, g: 1, t: 'Pierceval Tattoo', k: 'Identité et site', y: 2026, s: 'Tatouage et piercing depuis 1995.', tags: ['Site', 'Réservation', 'Carte cadeau'], q: 'pierceval tattoo tatouage piercing site internet web scaer', url: 'projets/pierceval-tattoo/', img: 'projets/pierceval-tattoo/img/cover.webp', ar: 1.43},
   {id: 'flouz', web: 1, t: 'flouz.', k: 'Application', y: 2026, s: 'Le budget du mois, d’un coup d’œil.', tags: ['Application', 'Interface', 'Identité'], q: 'flouz application mobile budget finances app web', url: 'projets/flouz/', img: 'projets/flouz/img/cover.webp', ar: 1.43}];
 const SEAS = ['soute', 'marelle', 'atrium'], CAMP = ['campagnes', 'recrutement', 'budget', 'affiches'];
 const CH = [
@@ -236,7 +222,7 @@ const CH = [
 ];
 const pf = $('#pf'), pfG = $('#pfG'), pfQ = $('#pfQ'), pfC = $('#pfC');
 const PF = {c: 'all', q: '', list: []};
-const casesIn = c => CASES.filter(x => c === 'all' || (c === 'web' && x.web) || (c === 'graph' && x.g));
+const casesIn = c => CASES.filter(x => c === 'all' || (c === 'web' && x.web) || (c === 'graph' && x.g) || (c === 'photo' && x.p));
 const caseIn = c => casesIn(c).length > 0;
 pfC.innerHTML = CH.map(([k, l, f]) => `<button data-c="${k}">${l}<em>${REPS.filter(f).length + casesIn(k).length}</em></button>`).join('');
 const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
@@ -251,7 +237,7 @@ function pfRender() {
 }
 pfC.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; PF.c = b.dataset.c; pfRender(); b.scrollIntoView({inline: 'nearest', block: 'nearest', behavior: 'smooth'}); });
 pfQ.addEventListener('input', () => { PF.q = pfQ.value; pfRender(); });
-pfG.addEventListener('click', e => { const b = e.target.closest('button.pc'); if (b && !goCase(PF.list[+b.dataset.i])) openSV(PF.list, +b.dataset.i, 0); });
+pfG.addEventListener('click', e => { const b = e.target.closest('button.pc'); if (b) openGal(PF.list[+b.dataset.i]); });
 function openPF(c) { PF.c = c || 'all'; pfRender(); pf.classList.add('on'); pf.scrollTop = 0; root.style.overflow = 'hidden'; dockOff(true); focusIn(pf, '#pfX'); }
 function closePF() { if (!pf.classList.contains('on')) return; pf.classList.remove('on'); root.style.overflow = ''; dockOff(false); focusBack(); }
 $('#pfX').onclick = closePF;
@@ -306,7 +292,7 @@ const foP = v => fmt(rDn(v));
 const nb = t => t.replace(/(\d) (h|min|mois|pages|dates|à)\b/g, '$1 $2').replace(/ (€|:)/g, ' $1');
 const foT = $('#foT'), foG = $('#foG'), foN = $('#foN'), foInk = $('.ink', foT);
 let foK = 'photo', foSeen = false;
-foT.insertAdjacentHTML('beforeend', FO.map((f, i) => `<button role="tab" data-f="${f.k}" aria-selected="false">${f.t}<em>0${i + 1}</em></button>`).join(''));
+foT.insertAdjacentHTML('beforeend', FO.map((f, i) => `<button role="tab" data-f="${f.k}" aria-selected="false">${f.t}</button>`).join(''));
 function foInkMove() { const b = $(`button[data-f="${foK}"]`, foT); if (!b) return; foInk.style.width = b.offsetWidth + 'px'; foInk.style.transform = `translateX(${b.offsetLeft}px)`; }
 function foRender() {
   const f = FO.find(x => x.k === foK);
@@ -322,7 +308,7 @@ function foRender() {
     ${c.opt.length ? `<div class="fo-op"><h4>En option</h4><ul>${c.opt.map(o => `<li><span>${nb(o[0])}</span><b>${['+', 'dès ', 'dès '][o[2] || 0]}${foP(o[1])}&nbsp;€${o[3] ? '<small> / ' + o[3] + '</small>' : ''}</b></li>`).join('')}</ul></div>` : ''}
     <div class="fo-f"><button class="bt ${c.hot ? 'bt-a' : 'bt-g'} pi bt-s" data-fi="${i}">Composer mon devis<span class="o"><svg><use href="#a"/></svg></span></button><a href="#rdv">ou réserver un appel de 30&nbsp;min</a></div>
   </article>`).join('');
-  foN.innerHTML = f.n.replace(/configurateur/, '<button type="button" data-cfg>configurateur</button>');
+  foDots();
   foG.scrollLeft = 0; foInkMove();
   if (foSeen) requestAnimationFrame(() => requestAnimationFrame(() => foG.classList.add('in')));
 }
@@ -332,11 +318,17 @@ foT.addEventListener('keydown', e => { const d = {ArrowRight: 1, ArrowLeft: -1}[
 foG.addEventListener('click', e => {
   const x = e.target.closest('.fo-x');
   /* un clic ouvre « ce qui est compris » sur toutes les cartes à la fois, pour comparer */
-  if (x) { const open = x.getAttribute('aria-expanded') !== 'true'; $$('.fo-x', foG).forEach(y => { y.setAttribute('aria-expanded', open); y.closest('.fo').classList.toggle('op', open); }); return; }
+  if (x) { const open = x.getAttribute('aria-expanded') !== 'true'; $$('.fo-x', foG).forEach(y => { y.setAttribute('aria-expanded', open); y.closest('.fo').classList.toggle('open', open); }); return; }
   const b = e.target.closest('button[data-fi]');
   if (b) { const go = FO.find(f => f.k === foK).c[+b.dataset.fi].go, p = st.p && P[st.p] && (go.pal != null || P[st.p].n.some(x => x.l === go.nl)) ? st.p : go.pal != null ? 'culture' : 'entreprise'; openCfg(Object.assign({p}, go)); }
 });
-foN.addEventListener('click', e => { if (e.target.closest('[data-cfg]')) openCfg({}); });
+/* indicateur de défilement : une bulle par carte, comme sous un carrousel */
+function foDots() { const n = foG.children.length; foN.innerHTML = Array.from({length: n}, (_, i) => `<button type="button" aria-label="Carte ${i + 1}" data-d="${i}"></button>`).join(''); foDotsSync(); }
+function foDotsSync() { const cs = [...foG.children], over = foG.scrollWidth > foG.clientWidth + 4; foN.hidden = !over; if (!over) return;
+  const c = foG.scrollLeft + foG.clientWidth / 2; let k = 0, best = 1e9; cs.forEach((x, i) => { const m = x.offsetLeft + x.offsetWidth / 2, d = Math.abs(m - c); if (d < best) { best = d; k = i; } });
+  $$('button', foN).forEach((b, i) => b.classList.toggle('on', i === k)); }
+foG.addEventListener('scroll', foDotsSync, {passive: true}); addEventListener('resize', foDotsSync);
+foN.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (!b) return; const c = foG.children[+b.dataset.d]; foG.scrollTo({left: c.offsetLeft - (foG.clientWidth - c.offsetWidth) / 2, behavior: RM ? 'auto' : 'smooth'}); });
 dragScroll(foT);
 foRender();
 new IntersectionObserver(es => { if (es[0].isIntersecting) { foSeen = true; foG.classList.add('in'); } }, {threshold: .15}).observe(foG);
@@ -482,6 +474,42 @@ function calLoad() {
 }
 new IntersectionObserver(es => { if (es[0].isIntersecting) calLoad(); }, {rootMargin: FINE ? '600px' : '150px'}).observe(calBox);
 
+
+/* ================= GALERIE D'UN REPORTAGE : toutes les photos sur une page ================= */
+const gp = $('#gp'), gpG = $('#gpG'), lb = $('#lb');
+const GP = {r: null, i: 0, open: false};
+function similar(r) {
+  const pool = r.k === 'g' ? GRR : PHR, same = pool.filter(x => x !== r && CAT(x) === CAT(r)), rest = pool.filter(x => x !== r && CAT(x) !== CAT(r));
+  return [...same.sort((x, y) => rank(x) - rank(y)), ...rest].filter(x => !CASE_OF[x.id]).slice(0, 4);
+}
+function openGal(r, start) {
+  if (!r || goCase(r)) return;
+  GP.r = r; const g = r.k === 'g';
+  $('#gpK').textContent = g ? 'Graphisme' : CAT(r); $('#gpT').textContent = r.t;
+  $('#gpS').textContent = g ? r.ph.length + ' visuels' : r.ph.length + ' photos';
+  $('#gpC').textContent = ''; $('.gp-end p', gp).innerHTML = g ? 'Un projet à mettre en forme&#8239;? <span class="se">Parlons-en.</span>' : 'Un événement à couvrir&#8239;? <span class="se">Parlons-en.</span>';
+  gpG.innerHTML = r.ph.map((p, i) => `<button data-i="${i}" aria-label="Agrandir la photo ${i + 1}"><img src="${sm(r, p[0])}" alt="${esc(p[2] || r.t)}" width="640" height="${Math.round(640 / p[1])}" loading="${i < 6 ? 'eager' : 'lazy'}" decoding="async"></button>`).join('');
+  $('#gpSim').innerHTML = similar(r).map(x => `<button data-r="${x.id}"><img src="${sm(x, coverOf(x, 'M')[0])}" alt="" loading="lazy"><b>${esc(x.t)}</b></button>`).join('');
+  markLoaded(gp);
+  if (!GP.open) { focusIn(gp, '#gpX'); GP.open = true; gp.classList.add('on'); root.style.overflow = 'hidden'; dockOff(true); }
+  gp.scrollTop = 0; try { history.replaceState(null, '', '#r=' + r.id); } catch (e) {}
+  const bs = $$('button', gpG); bs.forEach((b, i) => setTimeout(() => b.classList.add('in'), 60 + Math.min(i, 9) * 50));
+  gc('galerie/' + r.id, 'Galerie : ' + r.t);
+  if (start != null && start >= 0) openLb(start);
+}
+function closeGal() { if (!GP.open) return; GP.open = false; gp.classList.remove('on'); closeLb(); if (!pf.classList.contains('on') && !sheetOpen) { root.style.overflow = ''; dockOff(false); } try { history.replaceState(null, '', location.pathname); } catch (e) {} focusBack(); }
+$('#gpX').onclick = closeGal;
+gpG.addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (b) openLb(+b.dataset.i); });
+$('#gpSim').addEventListener('click', e => { const b = e.target.closest('button[data-r]'); if (b) openGal(byId(b.dataset.r)); });
+$('#gpDv').onclick = () => { const g = GP.r && GP.r.k === 'g'; closeGal(); openCfg(g ? {} : {p: st.p || 'culture', pal: 0}); };
+$('#gpRdv').addEventListener('click', () => closeGal());
+function openLb(i) { GP.i = (i + GP.r.ph.length) % GP.r.ph.length; const f = GP.r.ph[GP.i][0], im = $('#lbI'); im.style.opacity = .3; im.onload = () => { im.style.opacity = 1; }; im.src = big(GP.r, f); im.alt = GP.r.ph[GP.i][2] || GP.r.t; $('#lbC').textContent = (GP.i + 1) + ' / ' + GP.r.ph.length; lb.classList.add('on'); preload(big(GP.r, GP.r.ph[(GP.i + 1) % GP.r.ph.length][0])); }
+function closeLb() { lb.classList.remove('on'); }
+$('#lbP').onclick = () => openLb(GP.i - 1); $('#lbN').onclick = () => openLb(GP.i + 1); $('#lbX').onclick = closeLb;
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+{ let x0 = null; lb.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, {passive: true}); lb.addEventListener('touchend', e => { if (x0 == null) return; const d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 50) openLb(GP.i + (d < 0 ? 1 : -1)); x0 = null; }, {passive: true}); }
+addEventListener('keydown', e => { if (lb.classList.contains('on')) { if (e.key === 'ArrowRight') openLb(GP.i + 1); else if (e.key === 'ArrowLeft') openLb(GP.i - 1); else if (e.key === 'Escape') { e.stopPropagation(); closeLb(); } } else if (GP.open && e.key === 'Escape') closeGal(); }, true);
+
 /* ================= STORIES PLEIN ÉCRAN ================= */
 const sv = $('#sv');
 const S = {list: [], ri: 0, pi: 0, t0: 0, el: 0, paused: false, open: false, busy: false, DUR: 4800};
@@ -584,5 +612,5 @@ if (document.fonts) document.fonts.ready.then(moveInk);
   const AL = {'#contact': '#rdv', '#portfolio': '#travaux', '#plan-large': '#offre', '#services': '#offre'};
   if (AL[h]) { history.replaceState(null, '', AL[h]); setTimeout(() => $(AL[h]).scrollIntoView(), 200); }
   if (h === '#devis') { history.replaceState(null, '', location.pathname); openCfg({}); }
-  if (h.startsWith('#r=')) { const r = byId(h.slice(3)); if (r) { const list = r.k === 'g' ? GORD : PHR; openSV(list, list.indexOf(r), 0); } } }
+  if (h.startsWith('#r=')) { const r = byId(h.slice(3)); if (r) openGal(r); } }
 })();
