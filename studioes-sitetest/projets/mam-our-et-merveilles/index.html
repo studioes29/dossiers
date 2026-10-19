@@ -318,19 +318,17 @@ ul.liv{margin:0;padding:0}
   <div class="tx" data-r>
     <span class="n">03</span>
     <h2 class="d" id="c4">Au quotidien, <span class="se">dans la maison</span></h2>
-    <p>Des étiquettes de casier, un motif pour le textile et le papier, et les visuels des réseaux sociaux pour annoncer l’ouverture.</p>
+    <p>Des étiquettes de casier, un motif pour le papier et les fonds de visuels, et les visuels des réseaux sociaux pour annoncer l’ouverture.</p>
   </div>
   <div class="gal">
     <img data-r class="wide" src="img/b9.webp" width="1600" height="900" alt="Étiquettes de casier aux prénoms des enfants" loading="lazy">
-    <img data-r src="img/b8.webp" width="1600" height="900" alt="Sac en toile au motif de la MAM" loading="lazy">
-    <img data-r src="img/b11.webp" width="1600" height="900" alt="Coussin au motif et au logo de la MAM" loading="lazy">
     <img data-r class="wide" src="img/reseaux-couverture.webp" width="1400" height="508" alt="Couverture des réseaux sociaux" loading="lazy">
   </div>
 </section>
 </div>
 
 <section class="cqd" aria-labelledby="cqd" style="padding-top:0"><div class="w"><h2 class="d" id="cqd" data-r>Les livrables <span class="se">en images</span></h2></div>
-  <div class="cqd-w"><div class="mq" style="--ar:16/10"><figure><img src="img/b2.webp" alt="Symbole"><figcaption><b>Symbole</b><span>Un trèfle, un cœur dans la contre-forme.</span></figcaption></figure><figure><img src="img/b4.webp" alt="Palette"><figcaption><b>Palette</b><span>Huit couleurs, douces et franches.</span></figcaption></figure><figure><img src="img/b5.webp" alt="Typographie"><figcaption><b>Typographie</b><span>Ronde et généreuse, deux registres.</span></figcaption></figure><figure><img src="img/b3.webp" alt="Logo sur fond vert"><figcaption><b>Logo</b><span>Le symbole et le nom, en version claire.</span></figcaption></figure><figure><img src="img/b9.webp" alt="Casiers"><figcaption><b>Casiers</b><span>Un prénom par enfant.</span></figcaption></figure><figure><img src="img/b8.webp" alt="Sac"><figcaption><b>Textile</b><span>Le logo et le motif sur le sac et le coussin.</span></figcaption></figure><figure><img src="img/b12.webp" alt="Papier"><figcaption><b>Motif</b><span>En répétition, pour le papier.</span></figcaption></figure><figure><img src="img/reseaux-profil.webp" alt="Réseaux"><figcaption><b>Réseaux sociaux</b><span>Photo de profil et couverture.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b2.webp" alt=""><figcaption><b>Symbole</b><span>Un trèfle, un cœur dans la contre-forme.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b4.webp" alt=""><figcaption><b>Palette</b><span>Huit couleurs, douces et franches.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b5.webp" alt=""><figcaption><b>Typographie</b><span>Ronde et généreuse, deux registres.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b3.webp" alt=""><figcaption><b>Logo</b><span>Le symbole et le nom, en version claire.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b9.webp" alt=""><figcaption><b>Casiers</b><span>Un prénom par enfant.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b8.webp" alt=""><figcaption><b>Textile</b><span>Le logo et le motif sur le sac et le coussin.</span></figcaption></figure><figure aria-hidden="true"><img src="img/b12.webp" alt=""><figcaption><b>Motif</b><span>En répétition, pour le papier.</span></figcaption></figure><figure aria-hidden="true"><img src="img/reseaux-profil.webp" alt=""><figcaption><b>Réseaux sociaux</b><span>Photo de profil et couverture.</span></figcaption></figure></div></div></section>
+  <div class="cqd-w"><div class="mq" style="--ar:16/10"><figure><img src="img/b2.webp" alt="Symbole"><figcaption><b>Symbole</b><span>Un trèfle, un cœur dans la contre-forme.</span></figcaption></figure><figure><img src="img/b4.webp" alt="Palette"><figcaption><b>Palette</b><span>Huit couleurs, douces et franches.</span></figcaption></figure><figure><img src="img/b5.webp" alt="Typographie"><figcaption><b>Typographie</b><span>Ronde et généreuse, deux registres.</span></figcaption></figure><figure><img src="img/b3.webp" alt="Logo sur fond vert"><figcaption><b>Logo</b><span>Le symbole et le nom, en version claire.</span></figcaption></figure><figure><img src="img/b9.webp" alt="Casiers"><figcaption><b>Casiers</b><span>Un prénom par enfant.</span></figcaption></figure><figure><img src="img/b12.webp" alt="Papier"><figcaption><b>Motif</b><span>En répétition, pour le papier.</span></figcaption></figure><figure><img src="img/reseaux-profil.webp" alt="Réseaux"><figcaption><b>Réseaux sociaux</b><span>Photo de profil et couverture.</span></figcaption></figure></div></div></section>
 
 <section class="end w" aria-labelledby="fin">
   <h2 class="d" id="fin" data-r>Une identité à créer&#8239;? <span class="se">Parlons-en.</span></h2>
@@ -374,10 +372,9 @@ ul.liv{margin:0;padding:0}
   s.addEventListener('pointerleave', () => { v.style.transform = ''; }); })();
 </script>
 <script>
-/* rangée de livrables : défilement lent et continu, glisser ou swiper pour aller plus vite */
+/* rangée de livrables : défilement lent jusqu'au dernier livrable, puis arrêt ; glisser ou swiper pour aller plus vite */
 (() => { const w = document.querySelector('.cqd-w'); if (!w) return; const RM = matchMedia('(prefers-reduced-motion: reduce)').matches, FINE = matchMedia('(hover: hover)').matches;
-  let pos = 0, hold = 0, last = 0, vis = false, half = 0; const t = w.querySelector('.mq');
-  const measure = () => { half = t.scrollWidth / 2; }; measure(); addEventListener('resize', measure); addEventListener('load', measure);
+  let pos = 0, hold = 0, last = 0, vis = false, done = false;
   new IntersectionObserver(e => { vis = e[0].isIntersecting; }).observe(w);
   const h = ms => { hold = performance.now() + ms; };
   w.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') h(1e9); }); w.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') h(500); });
@@ -386,9 +383,9 @@ ul.liv{margin:0;padding:0}
   w.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; mv = 0; x0 = e.clientX; s0 = w.scrollLeft; });
   addEventListener('pointermove', e => { if (!down) return; const d = e.clientX - x0; mv = Math.max(mv, Math.abs(d)); if (mv > 5) { w.classList.add('drag'); w.scrollLeft = s0 - d; } });
   addEventListener('pointerup', () => { if (down) { down = false; setTimeout(() => w.classList.remove('drag'), 0); } });
-  (function loop(now) { const dt = Math.min(64, now - (last || now)); last = now;
-    if (!RM && vis && !document.hidden && now > hold && !down) { if (Math.abs(w.scrollLeft - pos) > 2) pos = w.scrollLeft; pos += (FINE ? .03 : .024) * dt; if (half && pos >= half) pos -= half; w.scrollLeft = pos; }
-    else { pos = w.scrollLeft; if (half && pos >= half) { pos -= half; w.scrollLeft = pos; } }
+  (function loop(now) { const dt = Math.min(64, now - (last || now)); last = now; const max = w.scrollWidth - w.clientWidth;
+    if (!RM && !done && max > 8 && vis && !document.hidden && now > hold && !down) { if (Math.abs(w.scrollLeft - pos) > 2) pos = w.scrollLeft; pos = Math.min(max, pos + (FINE ? .03 : .024) * dt); w.scrollLeft = pos; if (pos >= max - 1) done = true; }
+    else pos = w.scrollLeft;
     requestAnimationFrame(loop); })(performance.now());
 })();
 </script>

@@ -337,7 +337,7 @@ ul.liv{margin:0;padding:0}
 
 </div>
 <section class="cqd" aria-labelledby="cqd" style="padding-top:0"><div class="w"><h2 class="d" id="cqd" data-r>Les livrables <span class="se">en images</span></h2></div>
-  <div class="cqd-w"><div class="mq" style="--ar:3/4"><figure><img src="img/main.webp" alt="Écran d’ouverture"><figcaption><b>Identité</b><span>Nom, logotype, icône et palette.</span></figcaption></figure><figure><img src="img/tableau.webp" alt="Tableau de bord"><figcaption><b>Tableau de bord</b><span>Solde et projection de fin de mois.</span></figcaption></figure><figure><img src="img/categories.webp" alt="Catégories"><figcaption><b>Catégories</b><span>Le budget, poste par poste.</span></figcaption></figure><figure><img src="img/budget.webp" alt="Écrans budget"><figcaption><b>Budget</b><span>Classique ou inversé.</span></figcaption></figure><figure><img src="img/objectifs.webp" alt="Objectifs"><figcaption><b>Objectifs</b><span>L’épargne qui avance.</span></figcaption></figure><figure><img src="img/semaine.webp" alt="Résumé de la semaine"><figcaption><b>Résumé de la semaine</b><span>Dépenses par jour et par catégorie.</span></figcaption></figure><figure><img src="img/evolution.webp" alt="Évolution"><figcaption><b>Évolution</b><span>Six mois en un coup d’œil.</span></figcaption></figure><figure><img src="img/transactions.webp" alt="Transactions"><figcaption><b>Application</b><span>Une version installable sur téléphone.</span></figcaption></figure><figure aria-hidden="true"><img src="img/main.webp" alt=""><figcaption><b>Identité</b><span>Nom, logotype, icône et palette.</span></figcaption></figure><figure aria-hidden="true"><img src="img/tableau.webp" alt=""><figcaption><b>Tableau de bord</b><span>Solde et projection de fin de mois.</span></figcaption></figure><figure aria-hidden="true"><img src="img/categories.webp" alt=""><figcaption><b>Catégories</b><span>Le budget, poste par poste.</span></figcaption></figure><figure aria-hidden="true"><img src="img/budget.webp" alt=""><figcaption><b>Budget</b><span>Classique ou inversé.</span></figcaption></figure><figure aria-hidden="true"><img src="img/objectifs.webp" alt=""><figcaption><b>Objectifs</b><span>L’épargne qui avance.</span></figcaption></figure><figure aria-hidden="true"><img src="img/semaine.webp" alt=""><figcaption><b>Résumé de la semaine</b><span>Dépenses par jour et par catégorie.</span></figcaption></figure><figure aria-hidden="true"><img src="img/evolution.webp" alt=""><figcaption><b>Évolution</b><span>Six mois en un coup d’œil.</span></figcaption></figure><figure aria-hidden="true"><img src="img/transactions.webp" alt=""><figcaption><b>Application</b><span>Une version installable sur téléphone.</span></figcaption></figure></div></div></section>
+  <div class="cqd-w"><div class="mq" style="--ar:3/4"><figure><img src="img/main.webp" alt="Écran d’ouverture"><figcaption><b>Identité</b><span>Nom, logotype, icône et palette.</span></figcaption></figure><figure><img src="img/tableau.webp" alt="Tableau de bord"><figcaption><b>Tableau de bord</b><span>Solde et projection de fin de mois.</span></figcaption></figure><figure><img src="img/categories.webp" alt="Catégories"><figcaption><b>Catégories</b><span>Le budget, poste par poste.</span></figcaption></figure><figure><img src="img/budget.webp" alt="Écrans budget"><figcaption><b>Budget</b><span>Classique ou inversé.</span></figcaption></figure><figure><img src="img/objectifs.webp" alt="Objectifs"><figcaption><b>Objectifs</b><span>L’épargne qui avance.</span></figcaption></figure><figure><img src="img/semaine.webp" alt="Résumé de la semaine"><figcaption><b>Résumé de la semaine</b><span>Dépenses par jour et par catégorie.</span></figcaption></figure><figure><img src="img/evolution.webp" alt="Évolution"><figcaption><b>Évolution</b><span>Six mois en un coup d’œil.</span></figcaption></figure><figure><img src="img/transactions.webp" alt="Transactions"><figcaption><b>Application</b><span>Une version installable sur téléphone.</span></figcaption></figure></div></div></section>
 
 <section class="end w" aria-labelledby="fin">
   <h2 class="d" id="fin" data-r>Une application à imaginer&#8239;? <span class="se">Parlons-en.</span></h2>
@@ -381,10 +381,9 @@ ul.liv{margin:0;padding:0}
   s.addEventListener('pointerleave', () => { v.style.transform = ''; }); })();
 </script>
 <script>
-/* rangée de livrables : défilement lent et continu, glisser ou swiper pour aller plus vite */
+/* rangée de livrables : défilement lent jusqu'au dernier livrable, puis arrêt ; glisser ou swiper pour aller plus vite */
 (() => { const w = document.querySelector('.cqd-w'); if (!w) return; const RM = matchMedia('(prefers-reduced-motion: reduce)').matches, FINE = matchMedia('(hover: hover)').matches;
-  let pos = 0, hold = 0, last = 0, vis = false, half = 0; const t = w.querySelector('.mq');
-  const measure = () => { half = t.scrollWidth / 2; }; measure(); addEventListener('resize', measure); addEventListener('load', measure);
+  let pos = 0, hold = 0, last = 0, vis = false, done = false;
   new IntersectionObserver(e => { vis = e[0].isIntersecting; }).observe(w);
   const h = ms => { hold = performance.now() + ms; };
   w.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') h(1e9); }); w.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') h(500); });
@@ -393,9 +392,9 @@ ul.liv{margin:0;padding:0}
   w.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; mv = 0; x0 = e.clientX; s0 = w.scrollLeft; });
   addEventListener('pointermove', e => { if (!down) return; const d = e.clientX - x0; mv = Math.max(mv, Math.abs(d)); if (mv > 5) { w.classList.add('drag'); w.scrollLeft = s0 - d; } });
   addEventListener('pointerup', () => { if (down) { down = false; setTimeout(() => w.classList.remove('drag'), 0); } });
-  (function loop(now) { const dt = Math.min(64, now - (last || now)); last = now;
-    if (!RM && vis && !document.hidden && now > hold && !down) { if (Math.abs(w.scrollLeft - pos) > 2) pos = w.scrollLeft; pos += (FINE ? .03 : .024) * dt; if (half && pos >= half) pos -= half; w.scrollLeft = pos; }
-    else { pos = w.scrollLeft; if (half && pos >= half) { pos -= half; w.scrollLeft = pos; } }
+  (function loop(now) { const dt = Math.min(64, now - (last || now)); last = now; const max = w.scrollWidth - w.clientWidth;
+    if (!RM && !done && max > 8 && vis && !document.hidden && now > hold && !down) { if (Math.abs(w.scrollLeft - pos) > 2) pos = w.scrollLeft; pos = Math.min(max, pos + (FINE ? .03 : .024) * dt); w.scrollLeft = pos; if (pos >= max - 1) done = true; }
+    else pos = w.scrollLeft;
     requestAnimationFrame(loop); })(performance.now());
 })();
 </script>

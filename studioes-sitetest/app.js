@@ -136,11 +136,9 @@ function renderFeed() {
   feed.classList.remove('in');
   feed.innerHTML = `<div class="rl-t">${items.map((x, i) => railCard(x, i)).join('')}</div>`;
   markLoaded(feed);
-  /* défilement continu seulement si la rangée dépasse l'écran : on duplique pour boucler */
-  const tr = $('.rl-t', feed);
-  RL.auto = !RM && tr.scrollWidth > feed.clientWidth * 1.15;
-  if (RL.auto) { tr.insertAdjacentHTML('beforeend', items.map((x, i) => railCard(x, i, 1)).join('')); markLoaded(feed); }
-  RL.half = RL.auto ? tr.scrollWidth / 2 : 0; RL.pos = 0; feed.scrollLeft = 0; RL.hold = performance.now() + 900;
+  /* défilement lent jusqu'au bout de la série, puis arrêt (pas de boucle) */
+  RL.auto = !RM && feed.scrollWidth > feed.clientWidth + 8; RL.done = false;
+  RL.pos = 0; feed.scrollLeft = 0; RL.hold = performance.now() + 900;
   $$('.rc[data-r]', feed).forEach(bindCard);
   $('#feedMore').style.display = st.tab === 'web' ? 'none' : '';
   requestAnimationFrame(() => requestAnimationFrame(() => feed.classList.add('in')));
@@ -148,15 +146,12 @@ function renderFeed() {
 /* lent par défaut, la main reprend la main : glisser, swiper, la molette accélèrent ; on repart doucement ensuite */
 (function railLoop(now) {
   const dt = Math.min(64, now - (RL.last || now)); RL.last = now;
-  if (RL.auto && RL.vis && !document.hidden && now > RL.hold && !feed.classList.contains('drag')) {
+  if (RL.auto && !RL.done && RL.vis && !document.hidden && now > RL.hold && !feed.classList.contains('drag')) {
     if (Math.abs(feed.scrollLeft - RL.pos) > 2) RL.pos = feed.scrollLeft;
-    RL.pos += (FINE ? 0.03 : 0.024) * dt;
-    if (RL.pos >= RL.half) RL.pos -= RL.half;
-    feed.scrollLeft = RL.pos;
-  } else if (RL.auto) {
-    RL.pos = feed.scrollLeft;
-    if (RL.half && RL.pos >= RL.half) { RL.pos -= RL.half; feed.scrollLeft = RL.pos; }
-  }
+    const max = feed.scrollWidth - feed.clientWidth;
+    RL.pos = Math.min(max, RL.pos + (FINE ? 0.03 : 0.024) * dt); feed.scrollLeft = RL.pos;
+    if (RL.pos >= max - 1) RL.done = true;
+  } else RL.pos = feed.scrollLeft;
   requestAnimationFrame(railLoop);
 })(performance.now());
 const railHold = ms => { RL.hold = performance.now() + ms; };
