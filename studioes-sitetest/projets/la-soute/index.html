@@ -407,7 +407,7 @@ ul.liv{margin:0;padding:0}
 <script>
 /* titres : la taille se réduit si un mot dépasse la largeur de l'écran */
 (() => {
-  const els = [...document.querySelectorAll('.stg h1, .end h2')];
+  const els = [...document.querySelectorAll('.stg h1 > .ln:first-child, .end h2')];
   const over = el => [el, ...el.querySelectorAll('*')].some(x => getComputedStyle(x).display !== 'inline' && x.scrollWidth > x.clientWidth + 1);
   const fit = () => els.forEach(el => { el.style.fontSize = ''; let fs = parseFloat(getComputedStyle(el).fontSize), n = 0; while (over(el) && fs > 24 && n++ < 60) { fs -= 2; el.style.fontSize = fs + 'px'; } });
   fit(); if (document.fonts) document.fonts.ready.then(fit);
