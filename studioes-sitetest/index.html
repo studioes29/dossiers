@@ -16,6 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="f/br.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="f/it.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="f/ur-i.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face{font-family:"Bricolage Grotesque";font-weight:200 800;font-display:swap;src:url(f/br.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
 @font-face{font-family:"Bricolage Grotesque";font-weight:200 800;font-display:swap;src:url(f/br-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+A720-A7FF}
@@ -127,7 +128,7 @@ p .se,li .se{font-weight:400}
 .h-name span{display:inline-block;vertical-align:bottom;padding-bottom:.05em;clip-path:inset(-30% -30% 0 -30%)}
 .h-name i{display:inline-block;font-style:normal;transform:translateY(105%);transition:transform 1.4s var(--e)}
 .go .h-name i{transform:none}
-.h-sub{position:absolute;left:var(--side);text-shadow:0 2px 24px rgba(0,0,0,.45);bottom:calc(30px + 2svh + min(19vw,350px) * .8 + 26px);max-width:18ch;margin:0;font-size:clamp(22px,2.3vw,34px);line-height:1.02;opacity:0;transform:translateY(16px);transition:opacity 1s var(--e) .7s,transform 1.2s var(--e) .7s}
+.h-sub{position:absolute;left:var(--side);text-shadow:0 2px 24px rgba(0,0,0,.45);bottom:calc(30px + 2svh + min(19vw,350px) * .8 + 26px);max-width:18ch;margin:0;font-size:clamp(22px,2.3vw,34px);line-height:1.02;opacity:0;transform:translateY(16px);transition:opacity 1s var(--e) .25s,transform 1.2s var(--e) .25s}
 .go .h-sub{opacity:1;transform:none}
 .h-card{position:absolute;right:var(--side);bottom:calc(30px + 2svh + min(19vw,350px) * .8 + 26px);display:flex;align-items:center;gap:14px;padding:9px 18px 9px 9px;border-radius:22px;text-align:left;opacity:0;transform:translateY(16px);transition:opacity 1s var(--e) .85s,transform 1.2s var(--e) .85s}
 .go .h-card{opacity:1;transform:none}
@@ -700,6 +701,7 @@ p .se,li .se{font-weight:400}
   </button>
   <h1 class="h-name d" aria-label="Studio ES"><span><i>S</i></span><span><i>t</i></span><span><i>u</i></span><span><i>d</i></span><span><i>i</i></span><span><i>o</i></span><span><i>&nbsp;</i></span><span><i>E</i></span><span><i>S</i></span></h1>
 </section>
+<script>requestAnimationFrame(() => document.body.classList.add('go'));</script>
 
 <section class="sec w" id="metiers" aria-labelledby="t-me" style="padding-top:clamp(50px,6vw,90px);padding-bottom:0">
   <div class="shp" aria-hidden="true"><i></i><i></i><i></i></div>
