@@ -1,0 +1,45 @@
+{
+ "nom": "Château de Kervoazec",
+ "secteur": "Chambres d'hôtes",
+ "ville": "Saint-Goazec",
+ "date": "2026-10-19",
+ "accroche": "Votre château fait partie du patrimoine recensé de la vallée de l'Aulne. En ligne, je ne l'ai trouvé que sur les plateformes de réservation : voici ce que j'ai remarqué, et ce que je vous proposerais.",
+ "constats": [
+  {
+   "titre": "Votre domaine",
+   "etat": "bien",
+   "texte": "Un domaine du XIXe siècle, décrit dans l'inventaire du patrimoine de Bretagne. C'est un argument que peu d'hébergements autour de Châteauneuf-du-Faou peuvent avancer."
+  },
+  {
+   "titre": "Votre site",
+   "etat": "absent",
+   "texte": "En cherchant « Château de Kervoazec », je n'ai pas trouvé de site à votre nom : les premiers résultats sont Kayak, Hotels.com, Expedia et Trip.com."
+  },
+  {
+   "titre": "La réservation en direct",
+   "etat": "moyen",
+   "texte": "Sans page à vous, chaque séjour passe par une plateforme, avec ses photos, sa présentation et sa commission."
+  }
+ ],
+ "pistes": [
+  {
+   "palier": "Prise de vue",
+   "titre": "Une demi-journée de photos",
+   "texte": "La façade, le parc, les chambres, la table du petit déjeuner, à la lumière du matin. Sur le vif, sans mise en scène."
+  },
+  {
+   "palier": "Tirage",
+   "titre": "Un site de 3 à 5 pages",
+   "texte": "Le château et son histoire, les chambres, les environs de l'Aulne et des Montagnes Noires, et un contact pour réserver en direct."
+  },
+  {
+   "palier": "Exposition",
+   "titre": "Des images au fil des saisons",
+   "texte": "Une demi-journée par mois pour renouveler les photos de vos annonces et de votre site, du printemps à l'automne."
+  }
+ ],
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ }
+}
