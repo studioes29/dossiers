@@ -1,10 +1,16 @@
+@font-face{font-family:"Bricolage Grotesque";font-weight:200 800;font-display:swap;src:url(f/br.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:"Bricolage Grotesque";font-weight:200 800;font-display:swap;src:url(f/br-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+A720-A7FF}
+@font-face{font-family:"Inter Tight";font-weight:100 900;font-display:swap;src:url(f/it.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2190-2199,U+2212}
+@font-face{font-family:"Inter Tight";font-weight:100 900;font-display:swap;src:url(f/it-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+A720-A7FF}
+@font-face{font-family:"Urbanist";font-style:italic;font-weight:100 900;font-display:swap;src:url(f/ur-i.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:"Urbanist";font-style:italic;font-weight:100 900;font-display:swap;src:url(f/ur-i-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+A720-A7FF}
 /* Dossier prospect Studio ES : planches pleine largeur à bord découpé, comme sur studioes.fr.
-   Encre, crème, ocre. Titres Bricolage Grotesque, texte Jost léger. Une maquette dans un téléphone, un configurateur pas à pas. */
+   Encre, crème, ocre. Charte de studioes.fr : titres Bricolage Grotesque, texte Inter Tight, Urbanist italique en accent. Une maquette dans un téléphone, un configurateur pas à pas. */
 :root{
   color-scheme:dark;
-  --ink:#191919;--ink2:#242322;--cream:#E1DBC4;--white:#fff;--ochre:#C8A25A;--sapin:#1E3A2F;--nuit:#1C2747;
+  --ink:#121210;--ink2:#1A1A17;--cream:#E1DBC4;--white:#EDE9DD;--ochre:#C9A46A;--sapin:#23221F;--nuit:#1A1A17;
   --display:'Bricolage Grotesque','Arial Black',sans-serif;
-  --body:'Jost','Futura','Century Gothic',-apple-system,'Segoe UI',sans-serif;
+  --body:'Inter Tight','Helvetica Neue',Arial,sans-serif;--serif:'Urbanist','Avenir Next','Helvetica Neue',sans-serif;
   --soft:cubic-bezier(.2,.8,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
   --edge:clamp(18px,4vw,54px);--pad:clamp(44px,7vw,92px);
 }
@@ -24,12 +30,12 @@ h3{font-size:clamp(19px,2.4vw,24px);line-height:1.08}
 .sm{font-size:14px;color:var(--fg2)}
 strong{font-weight:500}
 
-.pl{--bg:var(--ink);--fg:#fff;--hd:var(--cream);--fg2:rgba(255,255,255,.68);--ln:rgba(225,219,196,.22);--card:var(--ink2);--btn:var(--cream);--btnfg:var(--ink);
+.pl{--bg:var(--ink);--fg:var(--white);--hd:var(--cream);--fg2:rgba(255,255,255,.68);--ln:rgba(225,219,196,.22);--card:var(--ink2);--btn:var(--cream);--btnfg:var(--ink);
   position:relative;background:var(--bg);color:var(--fg);padding-block:var(--pad) calc(var(--pad) + var(--edge))}
 .pl.cream{--bg:var(--cream);--fg:var(--ink);--hd:var(--ink);--fg2:rgba(25,25,25,.72);--ln:rgba(25,25,25,.2);--card:#ece7d6;--btn:var(--ink);--btnfg:var(--cream)}
-.pl.ochre{--bg:var(--ochre);--fg:var(--ink);--hd:var(--ink);--fg2:rgba(25,25,25,.78);--ln:rgba(25,25,25,.28);--card:#d5b473;--btn:var(--ink);--btnfg:var(--cream)}
-.pl.sapin{--bg:var(--sapin);--card:#264739}
-.pl.nuit{--bg:var(--nuit);--card:#263360}
+.pl.ochre{--bg:var(--ochre);--fg:var(--ink);--hd:var(--ink);--fg2:rgba(25,25,25,.78);--ln:rgba(25,25,25,.28);--card:#d6b885;--btn:var(--ink);--btnfg:var(--cream)}
+.pl.sapin{--bg:var(--sapin);--card:#2D2C28}
+.pl.nuit{--bg:var(--nuit);--card:#23221F}
 .edge{position:absolute;left:0;bottom:calc(100% - 2px);width:100%;height:var(--edge);display:block;fill:var(--bg);pointer-events:none}
 .in{max-width:1040px;margin:0 auto;padding-inline:20px;display:grid;gap:clamp(22px,3.4vw,38px)}
 .in>*{min-width:0}
@@ -446,3 +452,5 @@ strong{font-weight:500}
 .tls .sl{grid-template-columns:minmax(76px,1.4fr) repeat(var(--n),minmax(0,1fr));gap:4px}
 .tls .sl em{font-size:11px}.tls .sl button{min-height:44px}.tls .sl button.pris span{font-size:9.5px}
 .tls .tst{bottom:84px;font-size:12px;white-space:normal;text-align:center;width:86%;border-radius:16px}
+
+.se{font-family:var(--serif);font-style:italic;font-weight:300;letter-spacing:-.01em}
