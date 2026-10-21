@@ -1,0 +1,54 @@
+{
+  "nom": "Festival Fisel",
+  "secteur": "Festival",
+  "ville": "Rostrenen",
+  "date": "2026-10-21",
+  "accroche": "Depuis près de cinquante ans, le Fisel fait danser Rostrenen fin août, des stages aux festoù-noz. J'ai regardé comment le festival se montre en ligne, et voici ce que je vous proposerais.",
+  "constats": [
+    {
+      "titre": "Votre programmation",
+      "etat": "bien",
+      "texte": "Concerts, festoù-noz, bal, balade et stages sur cinq jours, avec des partenaires solides, des Vieilles Charrues à France 3 Bretagne.",
+      "lien": "https://festival.fisel.org/"
+    },
+    {
+      "titre": "Les photos du festival",
+      "etat": "moyen",
+      "texte": "Le site ne propose pas de galerie : les images du festival n'apparaissent qu'en vignettes du programme, signées de plusieurs photographes différents.",
+      "lien": "https://festival.fisel.org/"
+    },
+    {
+      "titre": "Votre présence sur Instagram",
+      "etat": "moyen",
+      "texte": "Le compte mis en avant est celui de La Fiselerie, qui porte toute l'année de l'association : le festival n'a pas de fil d'images à lui pendant ses cinq jours.",
+      "lien": "https://festival.fisel.org/infos-pratiques/"
+    },
+    {
+      "titre": "Des images pour vos partenaires",
+      "etat": "absent",
+      "texte": "Je n'ai pas trouvé d'espace presse ni de photothèque à destination des médias et des mécènes qui vous suivent.",
+      "lien": "https://festival.fisel.org/infos-pratiques/"
+    }
+  ],
+  "pistes": [
+    {
+      "palier": "Prise de vue",
+      "titre": "Le festival couvert sur le vif",
+      "texte": "Les cinq jours, des stages du matin au plancher du fest-noz, la scène Ar scénic, la balade et le public. Sans mise en scène."
+    },
+    {
+      "palier": "Tirage",
+      "titre": "Une sélection chaque soir",
+      "texte": "20 à 30 photos livrées le soir même pour vos réseaux, Le Télégramme, RKB ou France 3, puis une photothèque classée pour l'affiche et le programme de l'édition suivante."
+    },
+    {
+      "palier": "Exposition",
+      "titre": "La Fiselerie toute l'année",
+      "texte": "Quelques rendez-vous de l'association dans la saison, stages et festoù-noz, pour que les images ne s'arrêtent pas fin août."
+    }
+  ],
+  "contact": {
+    "rdv": "https://cal.eu/studioes/30min",
+    "mail": "contact@studioes.fr"
+  }
+}
