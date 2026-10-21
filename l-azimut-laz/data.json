@@ -76,17 +76,17 @@
  },
  "pistes": [
   {
-   "palier": "Prise de vue",
+   "palier": "Reportage photo",
    "titre": "Une demi-journée de photos",
    "texte": "La terrasse en fin de journée, la salle, quelques assiettes, l'équipe au travail. Sur le vif, sans mise en scène."
   },
   {
-   "palier": "Tirage",
+   "palier": "Site internet",
    "titre": "Un site d'une page",
    "texte": "La carte, les horaires, l'accès et la réservation, rédigés pour qu'on vous trouve en cherchant « restaurant Laz »."
   },
   {
-   "palier": "Exposition",
+   "palier": "Suivi annuel",
    "titre": "Des images toute l'année",
    "texte": "Quelques photos de saison chaque mois pour votre fiche Google et vos réseaux, pour que la vue reste visible."
   }

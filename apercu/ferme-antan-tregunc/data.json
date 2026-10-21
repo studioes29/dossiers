@@ -1,0 +1,45 @@
+{
+ "nom": "La Ferme d'Antan",
+ "secteur": "Lieu de réception",
+ "ville": "Trégunc",
+ "date": "2026-10-19",
+ "accroche": "Vos 24 avis sur Mariages.net sont tous à 5 sur 5. Pourtant, hors des annuaires, on ne trouve pas votre domaine : voici ce que j'ai remarqué, et ce que je vous proposerais.",
+ "constats": [
+  {
+   "titre": "Vos avis",
+   "etat": "bien",
+   "texte": "24 avis et une note de 5 sur 5 sur Mariages.net : vos mariés recommandent le lieu et l'accueil d'Audrey et David."
+  },
+  {
+   "titre": "Votre site",
+   "etat": "absent",
+   "texte": "En cherchant « La Ferme d'Antan Trégunc », je n'ai trouvé ni site ni compte Instagram à votre nom, seulement Mariages.net et 1001 Salles."
+  },
+  {
+   "titre": "Vos lieux en images",
+   "etat": "moyen",
+   "texte": "Les deux salles communicantes, le hangar, le gîte de 7 personnes et l'espace arboré n'apparaissent que dans la galerie de 33 photos de Mariages.net."
+  }
+ ],
+ "pistes": [
+  {
+   "palier": "Reportage photo",
+   "titre": "Une série du domaine",
+   "texte": "Les deux salles dressées, le hangar, l'espace arboré et le gîte, sur une demi-journée. Puis des mariages chez vous, sur le vif."
+  },
+  {
+   "palier": "Site internet",
+   "titre": "Un site de 3 à 5 pages",
+   "texte": "Les salles, le gîte, les formules et vos avis, avec un formulaire de demande de date, à votre nom."
+  },
+  {
+   "palier": "Suivi annuel",
+   "titre": "Des images de chaque saison",
+   "texte": "Les photos des mariages que je couvre chez vous alimentent votre site et vos annonces, avec l'accord des mariés."
+  }
+ ],
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ }
+}

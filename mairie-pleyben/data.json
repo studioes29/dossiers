@@ -1,485 +1,485 @@
 {
-  "nom": "Commune de Pleyben",
-  "secteur": "Collectivité",
-  "ville": "Pleyben",
-  "date": "2026-10-16",
-  "accroche": "Pleyben a un enclos paroissial que l'on vient voir de loin, et un bulletin, Le VAP, qui existe en ligne. Le site qui porte tout ça repose sur un modèle Joomla qui commence à dater.",
-  "constats": [
-    {
-      "titre": "Un bulletin municipal en ligne",
-      "texte": "Le VAP est accessible depuis la rubrique Restons connectés : la commune a l'habitude de rendre compte.",
-      "etat": "bien",
-      "lien": "https://www.mairiepleyben.fr/index.php/fr/content-joomla/restons-connectes/bulletin-municipal"
-    },
-    {
-      "titre": "Les démarches de Service-Public intégrées",
-      "texte": "Carte d'identité, état civil, urbanisme : les fiches officielles sont reprises sur le site.",
-      "etat": "bien"
-    },
-    {
-      "titre": "Un modèle de site générique",
-      "texte": "Le site repose sur le modèle Joomla « Macommune », dont le titre apparaît encore dans les pages d'actualités.",
-      "etat": "moyen",
-      "lien": "https://www.mairiepleyben.fr/index.php/fr/actualites?start=20"
-    },
-    {
-      "titre": "Des pages anciennes toujours en ligne",
-      "texte": "Des articles de la période Covid-19 restent publiés et ressortent dans les recherches.",
-      "etat": "moyen"
-    }
-  ],
-  "maquette": {
-    "type": "site",
-    "accroche": "Ce que ça pourrait donner",
-    "explication": "La place et l'enclos donnent l'identité de la page ; les horaires et les démarches restent en haut, là où on les cherche.",
-    "titre": "Pleyben",
-    "logoTexte": "Pleyben",
-    "surtitre": "Commune du Finistère",
-    "sousTitre": "Mairie ouverte du lundi au vendredi de 8 h 30 à 12 h et de 13 h 45 à 17 h 15, le samedi de 10 h à 12 h pour l'état civil.",
-    "bouton": "Faire une démarche",
-    "menu": [
-      "Mairie",
-      "Vivre à Pleyben",
-      "Découvrir"
-    ],
-    "infos": [
-      {
-        "t": "Mairie",
-        "l": [
-          "Place Charles de Gaulle",
-          "Lundi au vendredi, 8 h 30 à 12 h, 13 h 45 à 17 h 15"
-        ]
-      },
-      {
-        "t": "Démarches",
-        "l": [
-          "Carte d'identité",
-          "État civil",
-          "Urbanisme"
-        ]
-      },
-      {
-        "t": "Restons connectés",
-        "l": [
-          "Le VAP, bulletin municipal",
-          "Actualités",
-          "Animations et festivités"
-        ]
-      }
-    ],
-    "pied": "Mairie de Pleyben, place Charles de Gaulle, 29190 Pleyben",
-    "imageTexte": "Ici, l'enclos paroissial en fin de journée, avec la vie de la place devant.",
-    "couleurs": {
-      "fond": "#f3f1ec",
-      "texte": "#22252b",
-      "accent": "#7a4b2a"
-    },
-    "police": "Libre Baskerville",
-    "legende": "Une première piste. Les couleurs et le blason de la commune restent à intégrer."
+ "nom": "Commune de Pleyben",
+ "secteur": "Collectivité",
+ "ville": "Pleyben",
+ "date": "2026-10-16",
+ "accroche": "Pleyben a un enclos paroissial que l'on vient voir de loin, et un bulletin, Le VAP, qui existe en ligne. Le site qui porte tout ça repose sur un modèle Joomla qui commence à dater.",
+ "constats": [
+  {
+   "titre": "Un bulletin municipal en ligne",
+   "texte": "Le VAP est accessible depuis la rubrique Restons connectés : la commune a l'habitude de rendre compte.",
+   "etat": "bien",
+   "lien": "https://www.mairiepleyben.fr/index.php/fr/content-joomla/restons-connectes/bulletin-municipal"
   },
-  "titrePoles": "Ce que je peux prendre en charge",
-  "textePoles": "J'ai été chargé de communication dans une collectivité, seul sur tout le périmètre. Je peux aujourd'hui intervenir sur une partie ou sur l'ensemble, selon vos besoins.",
-  "poles": [
-    {
-      "titre": "Photographie",
-      "texte": "La vie de la commune, sur le vif.",
-      "items": [
-        "Vœux, cérémonies, inaugurations",
-        "L'enclos et le patrimoine, au fil des saisons",
-        "Animations et festivités",
-        "Une photothèque pour Le VAP"
-      ]
-    },
-    {
-      "titre": "Communication",
-      "texte": "De l'idée au support imprimé ou publié.",
-      "items": [
-        "Le VAP repensé",
-        "Affiches et programmes des animations",
-        "Un site complet, à jour sur téléphone",
-        "Communiqués et relations presse"
-      ]
-    },
-    {
-      "titre": "Outils sur mesure",
-      "texte": "Pour les services, pas seulement pour la communication.",
-      "items": [
-        "Suivi des demandes et interventions",
-        "Suivi des projets du mandat",
-        "Réservation des salles",
-        "Calendrier de communication"
-      ]
-    }
-  ],
-  "titreOutils": "Des outils faits pour vos services",
-  "texteOutils": "Des exemples à essayer : ils fonctionnent, sur ordinateur comme sur téléphone. Chaque outil se construit ensuite avec les agents qui l'utiliseront, avec vos données.",
-  "outils": [
-    {
-      "type": "demandes",
-      "texte": "Les demandes des habitants enregistrées une fois, suivies jusqu'à l'intervention, visibles par les services techniques."
-    },
-    {
-      "type": "projets",
-      "texte": "Chaque projet du mandat avec ses étapes et son référent, utile en conseil comme pour en rendre compte dans Le VAP."
-    },
-    {
-      "type": "salles",
-      "texte": "Le planning des salles en un coup d'œil, pour l'accueil comme pour les associations."
-    },
-    {
-      "type": "com",
-      "texte": "Ce qui doit paraître dans Le VAP, sur le site et sur les réseaux, et pour quand."
-    }
-  ],
-  "pistes": [
-    {
-      "palier": "Prise de vue",
-      "titre": "Une année en images",
-      "texte": "Quatre à huit demi-journées par an pour la vie de Pleyben, livrées pour Le VAP et le site."
-    },
-    {
-      "palier": "Tirage",
-      "titre": "Un nouveau site et un VAP plus lisible",
-      "texte": "Un site pensé pour le téléphone, que les agents mettent à jour eux-mêmes, et un bulletin à la mise en page reprise."
-    },
-    {
-      "palier": "Exposition",
-      "titre": "Un service communication à vos côtés",
-      "texte": "Un à deux jours par mois pour tenir le site, les réseaux et les supports, et un outil pour suivre les demandes."
-    }
-  ],
-  "configurateur": {
-    "public": true,
-    "objet": "Communication, photographie et outils de la Commune de Pleyben",
-    "intro": "Composez votre offre : le prix s'affiche au fur et à mesure et le devis se génère tout de suite. Il peut servir de base à un bon de commande.",
-    "regles": [
-      "Prix nets, TVA non applicable. Règlement sur facture après service fait, par mandat administratif, pour la Commune de Pleyben.",
-      "Les prestations mensuelles démarrent à une date fixée ensemble ; aucune mensualité n'est payée d'avance."
-    ],
-    "etapes": [
-      {
-        "q": "Des photos de la vie de la commune ?",
-        "options": [
-          {
-            "l": "Un événement",
-            "d": "Une demi-journée : vœux, inauguration, commémoration.",
-            "p": 370,
-            "titreDevis": "Reportage photo, une demi-journée",
-            "lignes": [
-              "Environ 4 heures sur place, à une date convenue",
-              "Sur le vif, sans mise en scène",
-              "Sélection retouchée livrée en haute définition et au format web, sous 7 jours"
-            ]
-          },
-          {
-            "l": "4 demi-journées dans l'année",
-            "d": "Vœux, cérémonies, inaugurations, avec une photothèque.",
-            "p": 1390,
-            "titreDevis": "Photographie à l'année, 4 demi-journées",
-            "lignes": [
-              "4 demi-journées réparties sur l'année",
-              "Photothèque classée, droits d'usage pour la commune",
-              "Livraison sous 72 heures"
-            ],
-            "an": true
-          },
-          {
-            "l": "8 demi-journées dans l'année",
-            "d": "Les temps forts et la vie courante, livrées le jour même.",
-            "p": 3490,
-            "titreDevis": "Photographie à l'année, 8 demi-journées",
-            "lignes": [
-              "8 demi-journées réparties sur l'année",
-              "Sélection livrée le jour même",
-              "Photothèque classée, droits d'usage pour la commune"
-            ],
-            "an": true
-          },
-          {
-            "l": "12 demi-journées dans l'année",
-            "d": "Un suivi complet, calé sur votre agenda.",
-            "p": 3990,
-            "titreDevis": "Photographie à l'année, 12 demi-journées",
-            "lignes": [
-              "12 demi-journées réparties sur l'année",
-              "Calendrier établi ensemble",
-              "Photothèque classée, droits d'usage pour la commune"
-            ],
-            "an": true
-          },
-          {
-            "l": "Pas pour l'instant",
-            "aucun": true
-          }
-        ]
-      },
-      {
-        "q": "Des supports imprimés ?",
-        "multi": true,
-        "options": [
-          {
-            "l": "Le bulletin municipal",
-            "d": "16 à 24 pages : chemin de fer, coordination des contenus, mise en page.",
-            "p": 1650,
-            "titreDevis": "Bulletin municipal, 16 à 24 pages",
-            "lignes": [
-              "Chemin de fer et coordination des contenus",
-              "Rédaction partielle, mise en page, corrections",
-              "Fichiers imprimeur et suivi du bon à tirer"
-            ]
-          },
-          {
-            "l": "Un pack événement",
-            "d": "Affiche, formats réseaux, communiqué et une demi-journée photo.",
-            "p": 790,
-            "titreDevis": "Pack événement",
-            "lignes": [
-              "Affiche et formats réseaux",
-              "Communiqué de presse",
-              "Une demi-journée de photo le jour même"
-            ]
-          },
-          {
-            "l": "Une campagne de recrutement",
-            "d": "Pour un poste difficile à pourvoir : accroche, visuel, annonce.",
-            "p": 830,
-            "titreDevis": "Campagne de recrutement",
-            "lignes": [
-              "Accroche et visuel",
-              "Rédaction de l'annonce",
-              "4 déclinaisons aux formats utiles"
-            ]
-          },
-          {
-            "l": "Un programme d'activités",
-            "d": "Vacances, saison culturelle ou sportive, 4 pages.",
-            "p": 210,
-            "titreDevis": "Programme d'activités, 4 pages",
-            "lignes": [
-              "Mise en page à partir des contenus fournis",
-              "Fichiers impression et web"
-            ]
-          },
-          {
-            "l": "Non merci",
-            "aucun": true
-          }
-        ]
-      },
-      {
-        "q": "Le site internet de la commune ?",
-        "options": [
-          {
-            "l": "Un site complet",
-            "d": "6 à 12 pages, actualités et agenda modifiables par vos agents, formation comprise.",
-            "p": 4400,
-            "titreDevis": "Site internet complet, 6 à 12 pages",
-            "lignes": [
-              "Arborescence et contenus construits avec vous",
-              "Actualités et agenda modifiables par le secrétariat",
-              "Pensé pour le téléphone, accessible, formation comprise"
-            ]
-          },
-          {
-            "l": "Un site de 3 à 5 pages",
-            "d": "Mairie, démarches, vie locale, contact.",
-            "p": 1890,
-            "titreDevis": "Site internet, 3 à 5 pages",
-            "lignes": [
-              "Pages dédiées et formulaire de contact",
-              "Pensé pour le téléphone",
-              "Mise en ligne comprise"
-            ]
-          },
-          {
-            "l": "Des fonctions en plus",
-            "d": "Réservations, inscriptions, annuaire des associations.",
-            "p": 0,
-            "titreDevis": "Fonctions sur mesure du site",
-            "lignes": [
-              "Chiffrées à la journée après notre échange"
-            ],
-            "devis": true
-          },
-          {
-            "l": "Pas pour l'instant",
-            "aucun": true
-          }
-        ]
-      },
-      {
-        "q": "Un outil pour vos services ?",
-        "aide": "Suivi des demandes, des projets, réservation des salles, calendrier de communication.",
-        "multi": true,
-        "options": [
-          {
-            "l": "Commencer par un cadrage",
-            "d": "Un échange de 2 heures, une note de cadrage et un chiffrage précis.",
-            "p": 210,
-            "titreDevis": "Cadrage d'un outil",
-            "lignes": [
-              "Échange de 2 heures avec les agents concernés",
-              "Note de cadrage et chiffrage"
-            ]
-          },
-          {
-            "l": "Un outil simple",
-            "d": "Un espace partagé : demandes, projets ou planning, avec tableaux et modèles.",
-            "p": 550,
-            "titreDevis": "Espace de travail sur mesure",
-            "lignes": [
-              "Bases et vues adaptées à votre service",
-              "Modèles prêts à l'emploi",
-              "Prise en main avec les agents"
-            ]
-          },
-          {
-            "l": "Une application sur mesure",
-            "d": "Plusieurs vues, accès sur téléphone, plusieurs comptes.",
-            "p": 2750,
-            "titreDevis": "Application web sur mesure",
-            "lignes": [
-              "Conception avec les agents qui l'utiliseront",
-              "Accès sur téléphone et ordinateur, plusieurs comptes",
-              "Mise en service et formation"
-            ]
-          },
-          {
-            "l": "Une application avec automatisations",
-            "d": "Notifications, mails aux habitants, rappels automatiques.",
-            "p": 5500,
-            "titreDevis": "Application avec automatisations",
-            "lignes": [
-              "Tout ce que comprend l'application sur mesure",
-              "Notifications et mails automatiques",
-              "Rapports et rappels programmés"
-            ]
-          },
-          {
-            "l": "Non merci",
-            "aucun": true
-          }
-        ]
-      },
-      {
-        "q": "Un service communication à vos côtés ?",
-        "aide": "Rien n'est payé maintenant : on fixe la date de démarrage ensemble.",
-        "options": [
-          {
-            "l": "Un jour par mois",
-            "d": "Appui ponctuel : site, réseaux et un support.",
-            "p": 550,
-            "titreDevis": "Appui communication, 1 jour par mois",
-            "lignes": [
-              "Mise à jour du site et des réseaux",
-              "Un support par mois",
-              "Point mensuel avec la mairie"
-            ],
-            "mois": true
-          },
-          {
-            "l": "Deux jours par mois",
-            "d": "Plan, site, réseaux, supports et presse.",
-            "p": 1100,
-            "titreDevis": "Service communication régulier, 2 jours par mois",
-            "lignes": [
-              "Plan de communication suivi",
-              "Site, réseaux, supports et relations presse",
-              "Point mensuel avec les élus"
-            ],
-            "mois": true
-          },
-          {
-            "l": "Un jour par semaine",
-            "d": "Tout le périmètre, coordination comprise.",
-            "p": 2290,
-            "titreDevis": "Service communication externalisé, 1 jour par semaine",
-            "lignes": [
-              "Tout le périmètre de la communication",
-              "Coordination des prestataires et des imprimeurs",
-              "Présence régulière en mairie"
-            ],
-            "mois": true
-          },
-          {
-            "l": "Pas pour l'instant",
-            "aucun": true
-          }
-        ]
-      },
-      {
-        "q": "Et au mois, à la carte ?",
-        "multi": true,
-        "aide": "Rien n'est payé maintenant : on fixe la date de démarrage ensemble.",
-        "options": [
-          {
-            "l": "Les actualités du site",
-            "d": "Articles, agenda, pages et référencement.",
-            "p": 280,
-            "titreDevis": "Site : actualités et mises à jour",
-            "lignes": [
-              "Articles et agenda tenus à jour",
-              "Pages et référencement"
-            ],
-            "mois": true
-          },
-          {
-            "l": "Les réseaux sociaux",
-            "d": "12 contenus par mois et leur publication.",
-            "p": 550,
-            "titreDevis": "Réseaux sociaux de la commune",
-            "lignes": [
-              "12 contenus par mois",
-              "Publication et suivi"
-            ],
-            "mois": true,
-            "min": 6
-          },
-          {
-            "l": "Les relations presse",
-            "d": "Communiqués, dossiers de presse, contacts journalistes.",
-            "p": 140,
-            "titreDevis": "Relations presse",
-            "lignes": [
-              "Communiqués et dossiers de presse",
-              "Suivi des contacts presse"
-            ],
-            "mois": true
-          },
-          {
-            "l": "Le suivi de l'outil",
-            "d": "Corrections et petites évolutions, 45 minutes par mois.",
-            "p": 50,
-            "titreDevis": "Suivi et évolutions de l'outil",
-            "lignes": [
-              "Corrections et petites évolutions",
-              "45 minutes par mois"
-            ],
-            "mois": true,
-            "min": 6
-          },
-          {
-            "l": "L'hébergement du site",
-            "d": "Sécurité, sauvegardes, 30 minutes de modifications par mois.",
-            "p": 35,
-            "titreDevis": "Hébergement et maintenance du site",
-            "lignes": [
-              "Sécurité et sauvegardes",
-              "30 minutes de modifications par mois"
-            ],
-            "mois": true,
-            "min": 12
-          },
-          {
-            "l": "Non merci",
-            "aucun": true
-          }
-        ]
-      }
-    ]
+  {
+   "titre": "Les démarches de Service-Public intégrées",
+   "texte": "Carte d'identité, état civil, urbanisme : les fiches officielles sont reprises sur le site.",
+   "etat": "bien"
   },
-  "contact": {
-    "rdv": "https://cal.eu/studioes/30min",
-    "mail": "contact@studioes.fr"
+  {
+   "titre": "Un modèle de site générique",
+   "texte": "Le site repose sur le modèle Joomla « Macommune », dont le titre apparaît encore dans les pages d'actualités.",
+   "etat": "moyen",
+   "lien": "https://www.mairiepleyben.fr/index.php/fr/actualites?start=20"
+  },
+  {
+   "titre": "Des pages anciennes toujours en ligne",
+   "texte": "Des articles de la période Covid-19 restent publiés et ressortent dans les recherches.",
+   "etat": "moyen"
   }
+ ],
+ "maquette": {
+  "type": "site",
+  "accroche": "Ce que ça pourrait donner",
+  "explication": "La place et l'enclos donnent l'identité de la page ; les horaires et les démarches restent en haut, là où on les cherche.",
+  "titre": "Pleyben",
+  "logoTexte": "Pleyben",
+  "surtitre": "Commune du Finistère",
+  "sousTitre": "Mairie ouverte du lundi au vendredi de 8 h 30 à 12 h et de 13 h 45 à 17 h 15, le samedi de 10 h à 12 h pour l'état civil.",
+  "bouton": "Faire une démarche",
+  "menu": [
+   "Mairie",
+   "Vivre à Pleyben",
+   "Découvrir"
+  ],
+  "infos": [
+   {
+    "t": "Mairie",
+    "l": [
+     "Place Charles de Gaulle",
+     "Lundi au vendredi, 8 h 30 à 12 h, 13 h 45 à 17 h 15"
+    ]
+   },
+   {
+    "t": "Démarches",
+    "l": [
+     "Carte d'identité",
+     "État civil",
+     "Urbanisme"
+    ]
+   },
+   {
+    "t": "Restons connectés",
+    "l": [
+     "Le VAP, bulletin municipal",
+     "Actualités",
+     "Animations et festivités"
+    ]
+   }
+  ],
+  "pied": "Mairie de Pleyben, place Charles de Gaulle, 29190 Pleyben",
+  "imageTexte": "Ici, l'enclos paroissial en fin de journée, avec la vie de la place devant.",
+  "couleurs": {
+   "fond": "#f3f1ec",
+   "texte": "#22252b",
+   "accent": "#7a4b2a"
+  },
+  "police": "Libre Baskerville",
+  "legende": "Une première piste. Les couleurs et le blason de la commune restent à intégrer."
+ },
+ "titrePoles": "Ce que je peux prendre en charge",
+ "textePoles": "J'ai été chargé de communication dans une collectivité, seul sur tout le périmètre. Je peux aujourd'hui intervenir sur une partie ou sur l'ensemble, selon vos besoins.",
+ "poles": [
+  {
+   "titre": "Photographie",
+   "texte": "La vie de la commune, sur le vif.",
+   "items": [
+    "Vœux, cérémonies, inaugurations",
+    "L'enclos et le patrimoine, au fil des saisons",
+    "Animations et festivités",
+    "Une photothèque pour Le VAP"
+   ]
+  },
+  {
+   "titre": "Communication",
+   "texte": "De l'idée au support imprimé ou publié.",
+   "items": [
+    "Le VAP repensé",
+    "Affiches et programmes des animations",
+    "Un site complet, à jour sur téléphone",
+    "Communiqués et relations presse"
+   ]
+  },
+  {
+   "titre": "Outils sur mesure",
+   "texte": "Pour les services, pas seulement pour la communication.",
+   "items": [
+    "Suivi des demandes et interventions",
+    "Suivi des projets du mandat",
+    "Réservation des salles",
+    "Calendrier de communication"
+   ]
+  }
+ ],
+ "titreOutils": "Des outils faits pour vos services",
+ "texteOutils": "Des exemples à essayer : ils fonctionnent, sur ordinateur comme sur téléphone. Chaque outil se construit ensuite avec les agents qui l'utiliseront, avec vos données.",
+ "outils": [
+  {
+   "type": "demandes",
+   "texte": "Les demandes des habitants enregistrées une fois, suivies jusqu'à l'intervention, visibles par les services techniques."
+  },
+  {
+   "type": "projets",
+   "texte": "Chaque projet du mandat avec ses étapes et son référent, utile en conseil comme pour en rendre compte dans Le VAP."
+  },
+  {
+   "type": "salles",
+   "texte": "Le planning des salles en un coup d'œil, pour l'accueil comme pour les associations."
+  },
+  {
+   "type": "com",
+   "texte": "Ce qui doit paraître dans Le VAP, sur le site et sur les réseaux, et pour quand."
+  }
+ ],
+ "pistes": [
+  {
+   "palier": "Suivi photo annuel",
+   "titre": "Une année en images",
+   "texte": "Quatre à huit demi-journées par an pour la vie de Pleyben, livrées pour Le VAP et le site."
+  },
+  {
+   "palier": "Site internet",
+   "titre": "Un nouveau site et un VAP plus lisible",
+   "texte": "Un site pensé pour le téléphone, que les agents mettent à jour eux-mêmes, et un bulletin à la mise en page reprise."
+  },
+  {
+   "palier": "Appui à la communication",
+   "titre": "Un service communication à vos côtés",
+   "texte": "Un à deux jours par mois pour tenir le site, les réseaux et les supports, et un outil pour suivre les demandes."
+  }
+ ],
+ "configurateur": {
+  "public": true,
+  "objet": "Communication, photographie et outils de la Commune de Pleyben",
+  "intro": "Composez votre offre : le prix s'affiche au fur et à mesure et le devis se génère tout de suite. Il peut servir de base à un bon de commande.",
+  "regles": [
+   "Prix nets, TVA non applicable. Règlement sur facture après service fait, par mandat administratif, pour la Commune de Pleyben.",
+   "Les prestations mensuelles démarrent à une date fixée ensemble ; aucune mensualité n'est payée d'avance."
+  ],
+  "etapes": [
+   {
+    "q": "Des photos de la vie de la commune ?",
+    "options": [
+     {
+      "l": "Un événement",
+      "d": "Une demi-journée : vœux, inauguration, commémoration.",
+      "p": 370,
+      "titreDevis": "Reportage photo, une demi-journée",
+      "lignes": [
+       "Environ 4 heures sur place, à une date convenue",
+       "Sur le vif, sans mise en scène",
+       "Sélection retouchée livrée en haute définition et au format web, sous 7 jours"
+      ]
+     },
+     {
+      "l": "4 demi-journées dans l'année",
+      "d": "Vœux, cérémonies, inaugurations, avec une photothèque.",
+      "p": 1390,
+      "titreDevis": "Photographie à l'année, 4 demi-journées",
+      "lignes": [
+       "4 demi-journées réparties sur l'année",
+       "Photothèque classée, droits d'usage pour la commune",
+       "Livraison sous 72 heures"
+      ],
+      "an": true
+     },
+     {
+      "l": "8 demi-journées dans l'année",
+      "d": "Les temps forts et la vie courante, livrées le jour même.",
+      "p": 3490,
+      "titreDevis": "Photographie à l'année, 8 demi-journées",
+      "lignes": [
+       "8 demi-journées réparties sur l'année",
+       "Sélection livrée le jour même",
+       "Photothèque classée, droits d'usage pour la commune"
+      ],
+      "an": true
+     },
+     {
+      "l": "12 demi-journées dans l'année",
+      "d": "Un suivi complet, calé sur votre agenda.",
+      "p": 3990,
+      "titreDevis": "Photographie à l'année, 12 demi-journées",
+      "lignes": [
+       "12 demi-journées réparties sur l'année",
+       "Calendrier établi ensemble",
+       "Photothèque classée, droits d'usage pour la commune"
+      ],
+      "an": true
+     },
+     {
+      "l": "Pas pour l'instant",
+      "aucun": true
+     }
+    ]
+   },
+   {
+    "q": "Des supports imprimés ?",
+    "multi": true,
+    "options": [
+     {
+      "l": "Le bulletin municipal",
+      "d": "16 à 24 pages : chemin de fer, coordination des contenus, mise en page.",
+      "p": 1650,
+      "titreDevis": "Bulletin municipal, 16 à 24 pages",
+      "lignes": [
+       "Chemin de fer et coordination des contenus",
+       "Rédaction partielle, mise en page, corrections",
+       "Fichiers imprimeur et suivi du bon à tirer"
+      ]
+     },
+     {
+      "l": "Un pack événement",
+      "d": "Affiche, formats réseaux, communiqué et une demi-journée photo.",
+      "p": 790,
+      "titreDevis": "Pack événement",
+      "lignes": [
+       "Affiche et formats réseaux",
+       "Communiqué de presse",
+       "Une demi-journée de photo le jour même"
+      ]
+     },
+     {
+      "l": "Une campagne de recrutement",
+      "d": "Pour un poste difficile à pourvoir : accroche, visuel, annonce.",
+      "p": 830,
+      "titreDevis": "Campagne de recrutement",
+      "lignes": [
+       "Accroche et visuel",
+       "Rédaction de l'annonce",
+       "4 déclinaisons aux formats utiles"
+      ]
+     },
+     {
+      "l": "Un programme d'activités",
+      "d": "Vacances, saison culturelle ou sportive, 4 pages.",
+      "p": 210,
+      "titreDevis": "Programme d'activités, 4 pages",
+      "lignes": [
+       "Mise en page à partir des contenus fournis",
+       "Fichiers impression et web"
+      ]
+     },
+     {
+      "l": "Non merci",
+      "aucun": true
+     }
+    ]
+   },
+   {
+    "q": "Le site internet de la commune ?",
+    "options": [
+     {
+      "l": "Un site complet",
+      "d": "6 à 12 pages, actualités et agenda modifiables par vos agents, formation comprise.",
+      "p": 4400,
+      "titreDevis": "Site internet complet, 6 à 12 pages",
+      "lignes": [
+       "Arborescence et contenus construits avec vous",
+       "Actualités et agenda modifiables par le secrétariat",
+       "Pensé pour le téléphone, accessible, formation comprise"
+      ]
+     },
+     {
+      "l": "Un site de 3 à 5 pages",
+      "d": "Mairie, démarches, vie locale, contact.",
+      "p": 1890,
+      "titreDevis": "Site internet, 3 à 5 pages",
+      "lignes": [
+       "Pages dédiées et formulaire de contact",
+       "Pensé pour le téléphone",
+       "Mise en ligne comprise"
+      ]
+     },
+     {
+      "l": "Des fonctions en plus",
+      "d": "Réservations, inscriptions, annuaire des associations.",
+      "p": 0,
+      "titreDevis": "Fonctions sur mesure du site",
+      "lignes": [
+       "Chiffrées à la journée après notre échange"
+      ],
+      "devis": true
+     },
+     {
+      "l": "Pas pour l'instant",
+      "aucun": true
+     }
+    ]
+   },
+   {
+    "q": "Un outil pour vos services ?",
+    "aide": "Suivi des demandes, des projets, réservation des salles, calendrier de communication.",
+    "multi": true,
+    "options": [
+     {
+      "l": "Commencer par un cadrage",
+      "d": "Un échange de 2 heures, une note de cadrage et un chiffrage précis.",
+      "p": 210,
+      "titreDevis": "Cadrage d'un outil",
+      "lignes": [
+       "Échange de 2 heures avec les agents concernés",
+       "Note de cadrage et chiffrage"
+      ]
+     },
+     {
+      "l": "Un outil simple",
+      "d": "Un espace partagé : demandes, projets ou planning, avec tableaux et modèles.",
+      "p": 550,
+      "titreDevis": "Espace de travail sur mesure",
+      "lignes": [
+       "Bases et vues adaptées à votre service",
+       "Modèles prêts à l'emploi",
+       "Prise en main avec les agents"
+      ]
+     },
+     {
+      "l": "Une application sur mesure",
+      "d": "Plusieurs vues, accès sur téléphone, plusieurs comptes.",
+      "p": 2750,
+      "titreDevis": "Application web sur mesure",
+      "lignes": [
+       "Conception avec les agents qui l'utiliseront",
+       "Accès sur téléphone et ordinateur, plusieurs comptes",
+       "Mise en service et formation"
+      ]
+     },
+     {
+      "l": "Une application avec automatisations",
+      "d": "Notifications, mails aux habitants, rappels automatiques.",
+      "p": 5500,
+      "titreDevis": "Application avec automatisations",
+      "lignes": [
+       "Tout ce que comprend l'application sur mesure",
+       "Notifications et mails automatiques",
+       "Rapports et rappels programmés"
+      ]
+     },
+     {
+      "l": "Non merci",
+      "aucun": true
+     }
+    ]
+   },
+   {
+    "q": "Un service communication à vos côtés ?",
+    "aide": "Rien n'est payé maintenant : on fixe la date de démarrage ensemble.",
+    "options": [
+     {
+      "l": "Un jour par mois",
+      "d": "Appui ponctuel : site, réseaux et un support.",
+      "p": 550,
+      "titreDevis": "Appui communication, 1 jour par mois",
+      "lignes": [
+       "Mise à jour du site et des réseaux",
+       "Un support par mois",
+       "Point mensuel avec la mairie"
+      ],
+      "mois": true
+     },
+     {
+      "l": "Deux jours par mois",
+      "d": "Plan, site, réseaux, supports et presse.",
+      "p": 1100,
+      "titreDevis": "Service communication régulier, 2 jours par mois",
+      "lignes": [
+       "Plan de communication suivi",
+       "Site, réseaux, supports et relations presse",
+       "Point mensuel avec les élus"
+      ],
+      "mois": true
+     },
+     {
+      "l": "Un jour par semaine",
+      "d": "Tout le périmètre, coordination comprise.",
+      "p": 2290,
+      "titreDevis": "Service communication externalisé, 1 jour par semaine",
+      "lignes": [
+       "Tout le périmètre de la communication",
+       "Coordination des prestataires et des imprimeurs",
+       "Présence régulière en mairie"
+      ],
+      "mois": true
+     },
+     {
+      "l": "Pas pour l'instant",
+      "aucun": true
+     }
+    ]
+   },
+   {
+    "q": "Et au mois, à la carte ?",
+    "multi": true,
+    "aide": "Rien n'est payé maintenant : on fixe la date de démarrage ensemble.",
+    "options": [
+     {
+      "l": "Les actualités du site",
+      "d": "Articles, agenda, pages et référencement.",
+      "p": 280,
+      "titreDevis": "Site : actualités et mises à jour",
+      "lignes": [
+       "Articles et agenda tenus à jour",
+       "Pages et référencement"
+      ],
+      "mois": true
+     },
+     {
+      "l": "Les réseaux sociaux",
+      "d": "12 contenus par mois et leur publication.",
+      "p": 550,
+      "titreDevis": "Réseaux sociaux de la commune",
+      "lignes": [
+       "12 contenus par mois",
+       "Publication et suivi"
+      ],
+      "mois": true,
+      "min": 6
+     },
+     {
+      "l": "Les relations presse",
+      "d": "Communiqués, dossiers de presse, contacts journalistes.",
+      "p": 140,
+      "titreDevis": "Relations presse",
+      "lignes": [
+       "Communiqués et dossiers de presse",
+       "Suivi des contacts presse"
+      ],
+      "mois": true
+     },
+     {
+      "l": "Le suivi de l'outil",
+      "d": "Corrections et petites évolutions, 45 minutes par mois.",
+      "p": 50,
+      "titreDevis": "Suivi et évolutions de l'outil",
+      "lignes": [
+       "Corrections et petites évolutions",
+       "45 minutes par mois"
+      ],
+      "mois": true,
+      "min": 6
+     },
+     {
+      "l": "L'hébergement du site",
+      "d": "Sécurité, sauvegardes, 30 minutes de modifications par mois.",
+      "p": 35,
+      "titreDevis": "Hébergement et maintenance du site",
+      "lignes": [
+       "Sécurité et sauvegardes",
+       "30 minutes de modifications par mois"
+      ],
+      "mois": true,
+      "min": 12
+     },
+     {
+      "l": "Non merci",
+      "aucun": true
+     }
+    ]
+   }
+  ]
+ },
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ }
 }

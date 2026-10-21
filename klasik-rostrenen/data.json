@@ -74,17 +74,17 @@
  },
  "pistes": [
   {
-   "palier": "Prise de vue",
+   "palier": "Reportage photo",
    "titre": "Les concerts de l'édition",
    "texte": "Une série de rendez-vous photographiés sur le vif, sans flash, avec une sélection livrée sous 72 heures."
   },
   {
-   "palier": "Tirage",
+   "palier": "Programme de saison",
    "titre": "Le programme de l'an prochain",
    "texte": "Les images de cette édition au service de la brochure et de l'affiche de la 14e."
   },
   {
-   "palier": "Exposition",
+   "palier": "Suivi annuel",
    "titre": "La saison suivie d'année en année",
    "texte": "Un suivi photo et des contenus réguliers, pour que les partenaires et le public voient le festival vivre."
   }
