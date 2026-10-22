@@ -668,3 +668,34 @@ body{background:var(--paper)}
 .ct.absent{--c:#B9B4AA;--f:.18}
 .ct.absent .sw svg{stroke:#141414}.ct.absent .sw em{color:#141414}
 .cfg{box-shadow:none}
+
+/* références, questions fréquentes, page client */
+.docs.ct2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(10px,1.2vw,16px);max-width:900px}
+@media (max-width:640px){.docs.ct2{grid-template-columns:1fr}}
+.docs .ca{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:var(--r);background:var(--card);color:var(--ink);text-decoration:none;box-shadow:0 0 0 1px rgba(20,20,20,.05)}
+.docs .ca i{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--paper2)}
+.docs .ca i svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.docs .ca>span{flex:1}
+.docs .ca b{display:block;font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.035em;line-height:1.1}
+.docs .ca span span{display:block;font-size:13.5px;color:var(--mu);margin-top:3px}
+.docs .ca .ar{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:rgba(20,20,20,.06)}
+.docs .ca .ar svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.refs .ref{display:flex;flex-direction:column;gap:6px;min-height:150px;padding:20px 20px 18px;border-radius:var(--r);background:var(--card);color:var(--ink);text-decoration:none;box-shadow:0 0 0 1px rgba(20,20,20,.05)}
+.refs .ref b{font-family:var(--display);font-weight:800;font-size:clamp(22px,2vw,27px);letter-spacing:-.045em;line-height:1.04}
+.refs .ref span{font-size:14.5px;color:var(--mu);line-height:1.45}
+.refs .ref .ar{margin-top:auto;align-self:flex-start;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--bleu);color:#fff}
+.refs .ref .ar svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:760px){.refs .ref{flex:0 0 74%}}
+.faq{display:grid;gap:10px;max-width:860px}
+.faq details{border-radius:var(--r);background:var(--card);box-shadow:0 0 0 1px rgba(20,20,20,.05)}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;cursor:pointer;list-style:none;font-family:var(--display);font-weight:800;font-size:clamp(17px,1.5vw,20px);letter-spacing:-.03em;line-height:1.2}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{flex:none;position:relative;width:28px;height:28px;border-radius:50%;background:var(--paper2)}
+.faq summary i::before,.faq summary i::after{content:"";position:absolute;left:50%;top:50%;width:11px;height:1.8px;background:currentColor;transform:translate(-50%,-50%)}
+.faq summary i::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .3s var(--e)}
+.faq details[open] summary i::after{transform:translate(-50%,-50%) rotate(0deg)}
+.faq details p{margin:0;padding:0 22px 20px;font-size:15.5px;line-height:1.55;color:var(--mu);max-width:44em}
+.suivi li.fait i{color:var(--vert)}
+.suivi li.cours{box-shadow:0 0 0 1.5px var(--bleu)}
+.prochain{margin-top:22px;font-size:16px}
+.prochain b{display:inline-block;margin-right:8px;padding:5px 12px;border-radius:999px;background:var(--bleu);color:#fff;font-size:13px}
