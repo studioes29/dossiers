@@ -3,7 +3,7 @@
  "secteur": "Festival de musique",
  "ville": "Rostrenen",
  "date": "2026-10-15",
- "accroche": "Votre 13e édition est en cours, une dizaine de rendez-vous éparpillés dans le Kreiz Breizh jusqu'à fin novembre. C'est exactement le genre de festival que j'aime photographier, et je me suis demandé ce qu'il en restera en images.",
+ "accroche": "Votre 13e édition est en cours, une dizaine de rendez-vous éparpillés dans le Kreiz Breizh jusqu'à fin novembre. C'est exactement le genre de festival que nous aimons photographier, et la question est de savoir ce qu'il en restera en images.",
  "constats": [
   {
    "titre": "Un festival qui dure",
@@ -23,13 +23,13 @@
   {
    "titre": "Vos réseaux",
    "etat": "moyen",
-   "texte": "Je n'ai trouvé que votre page Facebook, pas de compte Instagram à votre nom.",
+   "texte": "Seule votre page Facebook apparaît, pas de compte Instagram à votre nom.",
    "lien": "https://www.facebook.com/festivalklasik"
   }
  ],
  "maquette": {
   "type": "insta",
-  "accroche": "Ce que ça pourrait donner",
+  "accroche": "À quoi cela pourrait ressembler",
   "compte": "festivalklasik",
   "titre": "Klasik",
   "statsTexte": "Kreiz Breizh · octobre et novembre",

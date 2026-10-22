@@ -77,19 +77,19 @@
       (d.date ? '<p class="date ap" style="--k:5">Dossier préparé le ' + esc(dateFr(d.date)) + '</p>' : '') + '</div></section>');
 
     if((d.constats || []).length){ var cs = d.constats.slice(0, 4);
-      sec("constats", d.titreConstats || "Ce qu'on voit", d.sousConstats || (d.titreConstats ? "" : "en vous cherchant."), d.texteConstats || "Votre site, vos réseaux, et ce que l'on trouve en tapant votre nom : ce qui fonctionne, ce qui manque.",
+      sec("constats", d.titreConstats || "Ce que nous avons relevé", d.sousConstats || (d.titreConstats ? "" : "en vous cherchant."), d.texteConstats || "Votre site, vos réseaux, et ce que l'on trouve en tapant votre nom : ce qui fonctionne, ce qui manque.",
         '<div class="rail cts" style="--n:' + cs.length + '">' + cs.map(function(c, n){ var e = ICONES[c.etat] ? c.etat : "moyen", lien = url(c.lien);
-          return '<article class="ct gd ' + e + '" style="--i:' + n + '"><div class="sw"><svg viewBox="0 0 24 24" aria-hidden="true">' + ICONES[e] + '</svg><em>' + ({bien:"Ça fonctionne",moyen:"À renforcer",absent:"Absent"})[e] + '</em></div><div class="lab"><h3>' + esc(c.titre) + '</h3><p>' + esc(c.texte) + (lien ? ' <a href="' + lien + '" target="_blank" rel="noopener">Voir</a>' : '') + '</p></div></article>'; }).join("") + '</div>'); }
+          return '<article class="ct gd ' + e + '" style="--i:' + n + '"><div class="sw"><svg viewBox="0 0 24 24" aria-hidden="true">' + ICONES[e] + '</svg><em>' + ({bien:"Acquis",moyen:"À renforcer",absent:"Absent"})[e] + '</em></div><div class="lab"><h3>' + esc(c.titre) + '</h3><p>' + esc(c.texte) + (lien ? ' <a href="' + lien + '" target="_blank" rel="noopener">Voir</a>' : '') + '</p></div></article>'; }).join("") + '</div>'); }
 
     if(mq){ var pts = (d.maquette.points || []).slice(0, 4);
-      sec("maquette", d.maquette.accroche || "Ce que ça pourrait donner", "", d.maquette.explication || "",
+      sec("maquette", d.maquette.accroche || "À quoi cela pourrait ressembler", "", d.maquette.explication || "",
         (pts.length ? '<ul class="tirets rv">' + pts.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' : '') +
         '<div class="cap3 rv' + (mpc ? "" : " solo") + '" style="margin-top:28px">' + mpc + '<div class="dv">' + mtel + '</div></div><p class="leg rv">' + esc(d.maquette.legende || "Une première piste, faite à partir de ce qui existe déjà. Elle se discute.") + '</p>'); }
 
     /* ce que nous proposons : les pistes, et pour une commune ce que le studio peut aussi prendre en charge (une seule rubrique) */
     if(pis.length){ var aussi = [];
       if((d.pistes || []).length) (d.poles || []).forEach(function(p){ (p.items || []).forEach(function(x){ if(aussi.indexOf(x) < 0) aussi.push(x); }); });
-      sec("pistes", d.titrePistes || "Ce que nous proposons", d.sousPistes || (d.titrePistes ? "" : "pour commencer."), d.textePistes || (pis.length > 1 ? "Chaque piste se lance seule, à votre rythme. On peut très bien s'arrêter à la première." : ""),
+      sec("pistes", d.titrePistes || "Les pistes", d.sousPistes || (d.titrePistes ? "" : "pour commencer."), d.textePistes || (pis.length > 1 ? "Chaque piste se lance seule, à votre rythme. On peut très bien s'arrêter à la première." : ""),
         '<ol class="rail pis" style="--n:' + pis.length + '">' + pis.map(function(p, n){ return '<li class="pi gd" id="piste-' + (n + 1) + '" style="--i:' + n + '"><span class="sw"><em>' + esc(p.palier || "") + '</em><i>' + (n + 1) + '</i></span><div class="lab"><h3>' + esc(p.titre) + '</h3><p>' + esc(p.texte) + '</p></div></li>'; }).join("") + '</ol>' +
         (aussi.length ? '<div class="aussi rv"><p>Le studio peut aussi prendre en charge</p><ul>' + aussi.slice(0, 12).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>' : '')); }
 
@@ -103,7 +103,7 @@
     var etapesFin = [["Un appel de 30 minutes", "Pour cerner le besoin et voir par quoi commencer. Sans engagement."],
       ["Un devis détaillé", "Chaque ligne chiffrée, ce qui est inclus écrit noir sur blanc."],
       pub ? ["Le démarrage à la date choisie", "Règlement sur facture après service fait, par mandat administratif."] : ["Le démarrage à la date choisie", "Un acompte de 30 % à la commande, le solde à la livraison."]];
-    sec("contact", d.titreFin || "On en parle", d.titreFin ? "" : "trente minutes suffisent.", d.texteFin || "",
+    sec("contact", d.titreFin || "Prendre contact", d.titreFin ? "" : "trente minutes suffisent.", d.texteFin || "",
       '<div class="ct2"><a class="ca rec rv" href="' + rdv + '" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24">' + IC.cal + '</svg></i><span><b>Choisir un créneau</b><span>30 minutes, au téléphone ou en visio</span></span>' + AR + '</a>' +
       '<a class="ca rv" style="--i:1" href="mailto:' + esc(mail) + '?subject=' + encodeURIComponent("Dossier " + (d.nom || "")) + '"><i><svg viewBox="0 0 24 24">' + IC.mail + '</svg></i><span><b>Écrire</b><span>' + esc(mail) + '</span></span>' + AR + '</a></div>' +
       '<ol class="etp rail" style="--n:3">' + etapesFin.map(function(x, n){ return '<li class="gd" style="--i:' + n + '"><i>' + (n + 1) + '</i><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></li>'; }).join("") + '</ol>' +
@@ -114,7 +114,7 @@
     document.getElementById("app").innerHTML = o.join("");
     if(a) configurateur(d.configurateur, d);
     if(d.__outils) demos(d.__outils, d);
-    apparition();
+    typo(document.getElementById("app") || document.body); apparition();
   }
 
   /* ---------- configurateur : prix réels, devis PDF, acceptation, acompte ---------- */
@@ -297,6 +297,9 @@
     rendreD();
   }
 
+  /* espaces insécables avant : ; ? ! » et après « */
+  function typo(r){ var w = document.createTreeWalker(r, NodeFilter.SHOW_TEXT), n;
+    while((n = w.nextNode())){ var t = n.nodeValue, u = t.replace(/ ([:;?!»])/g, "\u00a0$1").replace(/« /g, "«\u00a0"); if(u !== t) n.nodeValue = u; } }
   function apparition(){
     document.documentElement.classList.add("js");
     var els = document.querySelectorAll(".rv, .gd, .rc, .ap");

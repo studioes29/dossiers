@@ -3,7 +3,7 @@
  "secteur": "Restaurant",
  "ville": "Laz",
  "date": "2026-10-15",
- "accroche": "Vos clients parlent souvent de la vue depuis votre terrasse. En ligne, elle est difficile à voir, et vous êtes même difficile à trouver. Voici ce que j'ai remarqué, et ce que je vous proposerais.",
+ "accroche": "Vos clients parlent souvent de la vue depuis votre terrasse. En ligne, elle est difficile à voir, et le restaurant lui-même est difficile à trouver.",
  "constats": [
   {
    "titre": "Vos avis",
@@ -18,7 +18,7 @@
   {
    "titre": "Votre site",
    "etat": "absent",
-   "texte": "Je n'ai pas trouvé de site à votre nom. Les informations pratiques passent uniquement par votre fiche Google."
+   "texte": "Aucun site n'existe à votre nom. Les informations pratiques passent uniquement par votre fiche Google."
   },
   {
    "titre": "La vue, votre premier argument",
@@ -28,7 +28,7 @@
  ],
  "maquette": {
   "type": "site",
-  "accroche": "Ce que ça pourrait donner",
+  "accroche": "À quoi cela pourrait ressembler",
   "explication": "Une page d'accueil sobre, la vue en grand, et les informations qu'on cherche avant de réserver : horaires, accès, téléphone. Couleurs et typographie restent à choisir avec vous.",
   "titre": "L'Azimut",
   "logoTexte": "L'Azimut",
@@ -100,12 +100,12 @@
      {
       "l": "Une demi-journée",
       "d": "Environ 4 h : la terrasse en fin de journée, la salle, quelques assiettes, l'équipe au travail.",
-      "p": 370,
+      "p": 350,
       "titreDevis": "Reportage photo, une demi-journée",
       "lignes": [
        "Environ 4 heures sur place, à une date convenue ensemble",
        "Terrasse, salle, assiettes et équipe, sur le vif, sans mise en scène",
-       "Sélection retouchée livrée en haute définition et au format web, sous 7 jours"
+       "Sélection retouchée livrée en haute définition et au format web, sous 10 jours"
       ]
      },
      {
@@ -116,7 +116,7 @@
       "lignes": [
        "Environ 8 heures sur place, du service du midi à la lumière du soir",
        "Terrasse, salle, cuisine, assiettes et équipe, sur le vif",
-       "Sélection retouchée livrée en haute définition et au format web, sous 7 jours"
+       "Sélection retouchée livrée en haute définition et au format web, sous 10 jours"
       ]
      },
      {
@@ -132,7 +132,7 @@
       "l": "Un site d'une page",
       "d": "Accueil, carte du moment, horaires, accès, réservation. Textes rédigés, référencement local, mise en ligne comprise.",
       "p": 990,
-      "titreDevis": "Site internet d'une page",
+      "titreDevis": "Site Essentiel, une page",
       "lignes": [
        "Une page pensée d'abord pour le téléphone : accueil, carte du moment, horaires, accès, bouton de réservation",
        "Rédaction des textes à partir de notre échange, référencement local (Google, « restaurant Laz »)",
@@ -143,8 +143,8 @@
      {
       "l": "Un site de 3 à 5 pages",
       "d": "La même base, avec des pages dédiées : carte, groupes et événements, galerie, contact.",
-      "p": 1890,
-      "titreDevis": "Site internet de 3 à 5 pages",
+      "p": 1990,
+      "titreDevis": "Site Vitrine, 3 à 5 pages",
       "lignes": [
        "Accueil et jusqu'à 4 pages dédiées (carte, groupes et événements, galerie, contact)",
        "Rédaction des textes, référencement local, conception sur mesure pensée pour le téléphone",
@@ -226,7 +226,9 @@
       "lignes": [
        "Hébergement, sécurité et sauvegardes du site",
        "Jusqu'à 30 minutes de modifications par mois (carte, horaires, fermetures)"
-      ]
+      ],
+      "obligatoire": true,
+      "pourquoi": "un site a besoin d'un hébergement, des mises à jour de sécurité et d'une sauvegarde pour rester en ligne."
      },
      {
       "l": "Une séance photo chaque mois",
@@ -237,11 +239,11 @@
       "titreDevis": "Suivi photo mensuel",
       "lignes": [
        "Une demi-journée de reportage par mois, à une date convenue ensemble",
-       "Sélection retouchée livrée sous 7 jours"
+       "Sélection retouchée livrée sous 10 jours"
       ]
      },
      {
-      "l": "Rien de mensuel",
+      "l": "Rien d'autre",
       "aucun": true
      }
     ]
@@ -251,20 +253,20 @@
    "Les contenus de base (carte, horaires, informations pratiques) sont fournis par le client. Les photographies du site sont celles du reportage lorsqu'il est commandé."
   ],
   "acompte": {
-   "370": "https://buy.stripe.com/7sY4gz43o7vmejdc1sbQY0u",
-   "460": "https://buy.stripe.com/8x28wP43oaHyfnh6H8bQY0w",
+   "350": "https://buy.stripe.com/cNidR99nI9Duejd4z0bQY0N",
+   "440": "https://buy.stripe.com/7sY5kDdDY02U0sn5D4bQY0O",
    "550": "https://buy.stripe.com/7sY9AT57s3f66QL4z0bQY0v",
    "640": "https://buy.stripe.com/4gM28rarM4jaejde9AbQY0x",
    "990": "https://buy.stripe.com/dRm4gzdDYbLCa2X1mObQY0y",
-   "1360": "https://buy.stripe.com/9B65kDdDY8zq8YTghIbQY0A",
-   "1450": "https://buy.stripe.com/eVq00jarMbLCcb53uWbQY0E",
+   "1340": "https://buy.stripe.com/dRm3cvgQa02Ua2X8PgbQY0P",
+   "1430": "https://buy.stripe.com/3cI6oHdDYbLCgrlghIbQY0Q",
    "1540": "https://buy.stripe.com/bJecN50Rc16Y1wrfdEbQY0B",
    "1630": "https://buy.stripe.com/eVq9ATeI25nefnh1mObQY0F",
-   "1890": "https://buy.stripe.com/cNi9ATdDYg1Scb5e9AbQY0z",
-   "2260": "https://buy.stripe.com/7sYdR9czUcPGejd7LcbQY0C",
-   "2350": "https://buy.stripe.com/4gMfZh2Zk02U5MH7LcbQY0G",
-   "2440": "https://buy.stripe.com/00w28r2ZkdTK8YT8PgbQY0D",
-   "2530": "https://buy.stripe.com/5kQ4gz1Vg3f6df96H8bQY0H"
+   "1990": "https://buy.stripe.com/6oU00j8jE16Y3Ez9TkbQY0R",
+   "2340": "https://buy.stripe.com/dRm7sLfM69Du2Av5D4bQY0S",
+   "2430": "https://buy.stripe.com/fZu6oH8jE02U6QL4z0bQY0T",
+   "2540": "https://buy.stripe.com/00w8wP1Vg7vmdf9d5wbQY0U",
+   "2630": "https://buy.stripe.com/aFa28rbvQ02U7UPd5wbQY0V"
   }
  },
  "contact": {

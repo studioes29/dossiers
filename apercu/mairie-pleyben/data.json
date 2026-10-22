@@ -30,7 +30,7 @@
  ],
  "maquette": {
   "type": "site",
-  "accroche": "Ce que ça pourrait donner",
+  "accroche": "À quoi cela pourrait ressembler",
   "explication": "La place et l'enclos donnent l'identité de la page ; les horaires et les démarches restent en haut, là où on les cherche.",
   "titre": "Pleyben",
   "logoTexte": "Pleyben",
@@ -77,8 +77,8 @@
   "police": "Libre Baskerville",
   "legende": "Une première piste. Les couleurs et le blason de la commune restent à intégrer."
  },
- "titrePoles": "Ce que je peux prendre en charge",
- "textePoles": "J'ai été chargé de communication dans une collectivité, seul sur tout le périmètre. Je peux aujourd'hui intervenir sur une partie ou sur l'ensemble, selon vos besoins.",
+ "titrePoles": "Ce que nous pouvons prendre en charge",
+ "textePoles": "Studio ES connaît le fonctionnement d'un service communication de collectivité, sur tout son périmètre. Nous intervenons sur une partie ou sur l'ensemble, selon vos besoins.",
  "poles": [
   {
    "titre": "Photographie",
@@ -163,12 +163,12 @@
      {
       "l": "Un événement",
       "d": "Une demi-journée : vœux, inauguration, commémoration.",
-      "p": 370,
+      "p": 350,
       "titreDevis": "Reportage photo, une demi-journée",
       "lignes": [
        "Environ 4 heures sur place, à une date convenue",
        "Sur le vif, sans mise en scène",
-       "Sélection retouchée livrée en haute définition et au format web, sous 7 jours"
+       "Sélection retouchée livrée en haute définition et au format web, sous 10 jours"
       ]
      },
      {
@@ -270,10 +270,10 @@
     "q": "Le site internet de la commune ?",
     "options": [
      {
-      "l": "Un site complet",
+      "l": "Un site sur mesure",
       "d": "6 à 12 pages, actualités et agenda modifiables par vos agents, formation comprise.",
       "p": 4490,
-      "titreDevis": "Site internet complet, 6 à 12 pages",
+      "titreDevis": "Site sur mesure",
       "lignes": [
        "Arborescence et contenus construits avec vous",
        "Actualités et agenda modifiables par le secrétariat",
@@ -284,7 +284,7 @@
       "l": "Un site de 3 à 5 pages",
       "d": "Mairie, démarches, vie locale, contact.",
       "p": 1990,
-      "titreDevis": "Site internet, 3 à 5 pages",
+      "titreDevis": "Site Vitrine, 3 à 5 pages",
       "lignes": [
        "Pages dédiées et formulaire de contact",
        "Pensé pour le téléphone",
@@ -347,7 +347,7 @@
      {
       "l": "Une application avec automatisations",
       "d": "Notifications, mails aux habitants, rappels automatiques.",
-      "p": 5500,
+      "p": 5490,
       "titreDevis": "Application avec automatisations",
       "lignes": [
        "Tout ce que comprend l'application sur mesure",

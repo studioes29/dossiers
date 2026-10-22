@@ -660,3 +660,11 @@ body{background:var(--paper)}
 .cfg .opt.oblig[aria-pressed="true"] small{color:var(--mu)}
 .cfg .opt.oblig[aria-pressed="true"] .pq{color:var(--ink)}
 @media (max-width:860px){.rail{display:flex}.rail>*{flex:0 0 min(78%,290px)}}
+
+/* 2027.8 : constats aux couleurs de la charte (jauge bleue, encre, papier) */
+.ct.bien,.ct.moyen,.ct.absent{--t:#E6E2D9}
+.ct.bien{--c:#3B47F2;--f:1}
+.ct.moyen{--c:#141414;--f:.55}
+.ct.absent{--c:#B9B4AA;--f:.18}
+.ct.absent .sw svg{stroke:#141414}.ct.absent .sw em{color:#141414}
+.cfg{box-shadow:none}

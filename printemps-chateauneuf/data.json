@@ -3,7 +3,7 @@
  "secteur": "Fête bretonne",
  "ville": "Châteauneuf-du-Faou",
  "date": "2026-10-15",
- "accroche": "Une fête née en 1976, une centaine d'artistes et 2 000 personnes à Ar Sterenn chaque dimanche de Pâques : c'est un morceau de la vie de Châteauneuf. Pourtant, je l'ai eu difficile à trouver en ligne.",
+ "accroche": "Une fête née en 1976, une centaine d'artistes et 2 000 personnes à Ar Sterenn chaque dimanche de Pâques : c'est un morceau de la vie de Châteauneuf. Pourtant, elle est difficile à trouver en ligne.",
  "constats": [
   {
    "titre": "Une fête qui compte",
@@ -18,7 +18,7 @@
   {
    "titre": "Votre site",
    "etat": "absent",
-   "texte": "Je n'ai pas trouvé de site ni de page à votre nom. Les informations passent par des agendas de festivals."
+   "texte": "Aucun site ni page à votre nom. Les informations passent par des agendas de festivals."
   },
   {
    "titre": "Vos images",
@@ -28,7 +28,7 @@
  ],
  "maquette": {
   "type": "site",
-  "accroche": "Ce que ça pourrait donner",
+  "accroche": "À quoi cela pourrait ressembler",
   "titre": "Printemps de Châteauneuf",
   "logoTexte": "Printemps de Châteauneuf",
   "surtitre": "Fête bretonne à Châteauneuf-du-Faou",

@@ -3,7 +3,7 @@
  "secteur": "Chambres d'hôtes",
  "ville": "Saint-Goazec",
  "date": "2026-10-19",
- "accroche": "Votre château fait partie du patrimoine recensé de la vallée de l'Aulne. En ligne, je ne l'ai trouvé que sur les plateformes de réservation : voici ce que j'ai remarqué, et ce que je vous proposerais.",
+ "accroche": "Votre château fait partie du patrimoine recensé de la vallée de l'Aulne. En ligne, on ne le trouve que sur les plateformes de réservation : voici ce que nous avons relevé, et ce que nous vous proposons.",
  "constats": [
   {
    "titre": "Votre domaine",
@@ -13,7 +13,7 @@
   {
    "titre": "Votre site",
    "etat": "absent",
-   "texte": "En cherchant « Château de Kervoazec », je n'ai pas trouvé de site à votre nom : les premiers résultats sont Kayak, Hotels.com, Expedia et Trip.com."
+   "texte": "Une recherche « Château de Kervoazec » ne fait apparaître aucun site à votre nom : les premiers résultats sont Kayak, Hotels.com, Expedia et Trip.com."
   },
   {
    "titre": "La réservation en direct",

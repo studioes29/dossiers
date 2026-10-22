@@ -4,11 +4,11 @@
 @font-face{font-family:"Inter Tight";font-weight:100 900;font-display:swap;src:url(f/it-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+A720-A7FF}
 @font-face{font-family:"Urbanist";font-style:italic;font-weight:100 900;font-display:swap;src:url(f/ur-i.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
 @font-face{font-family:"Urbanist";font-style:italic;font-weight:100 900;font-display:swap;src:url(f/ur-i-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1E00-1E9F,U+A720-A7FF}
-/* Livrable de fin de projet Studio ES.
-   Rubriques en alternance encre / crème pour qu'on sente chaque changement, l'ocre en seul accent.
+/* Livrable de fin de projet Studio ES, charte 2027 : nuit et papier clair en alternance, le bleu en accent.
+   (ancien commentaire) Rubriques en alternance encre / crème pour qu'on sente chaque changement, l'ocre en seul accent.
    Grands titres Bricolage, texte Inter Tight, beaucoup d'air. Un seul moment animé : le site qui défile dans le téléphone de la couverture. */
 :root{
-  --ink:#121210;--cream:#E1DBC4;--ochre:#C9A46A;--white:#EDE9DD;
+  --ink:#0C0D1E;--cream:#F0EEE9;--ochre:#8D96FF;--white:#EEEDF6;
   --display:'Bricolage Grotesque','Arial Black',sans-serif;
   --body:'Inter Tight','Helvetica Neue',Arial,sans-serif;--serif:'Urbanist','Avenir Next','Helvetica Neue',sans-serif;
   --soft:cubic-bezier(.2,.8,.2,1);
@@ -28,8 +28,8 @@ strong{font-weight:500}
 h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.045em;color:var(--hd);text-wrap:balance}
 
 /* deux fonds, et leurs couleurs */
-.s-ink{--bg:var(--ink);--fg:var(--white);--hd:var(--cream);--fg2:rgba(247,245,239,.74);--fg3:rgba(247,245,239,.5);--ln:rgba(225,219,196,.16);--acc:var(--ochre);--bb:var(--cream);--bf:var(--ink);--frame:rgba(225,219,196,.16)}
-.s-cream{--bg:var(--cream);--fg:var(--ink);--hd:var(--ink);--fg2:rgba(25,25,25,.74);--fg3:rgba(25,25,25,.55);--ln:rgba(25,25,25,.16);--acc:#8c6a24;--bb:var(--ink);--bf:var(--cream);--frame:rgba(25,25,25,.12)}
+.s-ink{--bg:var(--ink);--fg:var(--white);--hd:#fff;--fg2:rgba(247,245,239,.74);--fg3:rgba(247,245,239,.5);--ln:rgba(225,219,196,.16);--acc:var(--ochre);--bb:var(--cream);--bf:var(--ink);--frame:rgba(225,219,196,.16)}
+.s-cream{--bg:var(--cream);--fg:#141414;--hd:#141414;--fg2:rgba(20,20,20,.72);--fg3:rgba(20,20,20,.58);--ln:rgba(20,20,20,.12);--acc:#3B47F2;--bb:#141414;--bf:#fff;--frame:rgba(20,20,20,.1)}
 .sec{background:var(--bg);color:var(--fg);padding-block:var(--sp)}
 .wrap{max-width:var(--w);margin:0 auto;padding-inline:var(--g)}
 .t{font-size:clamp(46px,8.2vw,118px);line-height:.9}
@@ -212,3 +212,16 @@ body.m .if-d,body:not(.m) .if-m{display:none!important}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 .se{font-family:var(--serif);font-style:italic;font-weight:300;letter-spacing:-.01em}
+
+/* ===== v2 (octobre 2026) : charte du site, tout en clair ; feuilles blanches et papier qui se chevauchent ===== */
+body{background:var(--cream);color:#141414}
+.s-ink{--bg:#fff;--fg:#141414;--hd:#141414;--fg2:rgba(20,20,20,.72);--fg3:rgba(20,20,20,.58);--ln:rgba(20,20,20,.1);--acc:#3B47F2;--bb:#141414;--bf:#fff;--frame:rgba(20,20,20,.1)}
+.s-cream{--bg:#F0EEE9}
+main>.sec{position:relative;border-radius:40px 40px 0 0;margin-top:-40px;box-shadow:0 -1px 0 rgba(20,20,20,.05)}
+main>.sec:first-child{margin-top:0;border-radius:0}
+@media (max-width:760px){main>.sec{border-radius:26px 26px 0 0;margin-top:-26px}}
+.cover{--bg:#F0EEE9}
+.cover .date{color:rgba(20,20,20,.6)}
+.sig{color:#141414}.sig span{color:rgba(20,20,20,.6)}
+.roll{box-shadow:0 0 0 1px rgba(20,20,20,.08),0 40px 80px -30px rgba(20,20,20,.45)}
+::selection{background:#3B47F2;color:#fff}

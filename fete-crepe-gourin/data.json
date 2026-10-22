@@ -3,7 +3,7 @@
  "secteur": "Festival",
  "ville": "Gourin",
  "date": "2026-10-15",
- "accroche": "Je vis à Leuhan, à quelques kilomètres de Tronjoly, et la Fête de la Crêpe fait partie de ce que je connais du pays. Je me suis demandé comment on la retrouve en ligne le reste de l'année, quand le parc est vide.",
+ "accroche": "Le studio est à Leuhan, à quelques kilomètres de Tronjoly, et la Fête de la Crêpe fait partie du paysage. La question est de savoir comment on la retrouve en ligne le reste de l'année, quand le parc est vide.",
  "constats": [
   {
    "titre": "Une fête installée",
@@ -23,13 +23,13 @@
   {
    "titre": "Vos réseaux",
    "etat": "moyen",
-   "texte": "Je n'ai trouvé que votre page Facebook. Pas de compte Instagram à votre nom, alors que c'est là que les photos de fête circulent le plus.",
+   "texte": "Seule votre page Facebook apparaît. Pas de compte Instagram à votre nom, alors que c'est là que les photos de fête circulent le plus.",
    "lien": "https://www.facebook.com/fetedelacrepegourin"
   }
  ],
  "maquette": {
   "type": "insta",
-  "accroche": "Ce que ça pourrait donner",
+  "accroche": "À quoi cela pourrait ressembler",
   "compte": "fetedelacrepegourin",
   "titre": "Fête de la Crêpe",
   "statsTexte": "Gourin · dernier week-end de juillet",

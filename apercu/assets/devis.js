@@ -61,7 +61,7 @@
     if(E.length){ var bh = 50 + E.length * 22 + (tOnce && !PUB ? 30 : 0) + 22; need(bh + 10); y += 6;
       d.setFillColor(PAPER); d.roundedRect(L - 14, y, R - L + 28, bh, 14, 14, "F"); var y0 = y; y += 26;
       F("Brico", 13); d.text("Ce que vous réglez, et quand", L, y, {charSpace:-.3}); y += 22;
-      E.forEach(function(e, i){ F("JostM", 10); d.text(e[0], L, y); F("JostL", 9.5, MU); d.text(e[1], L + 118, y); F("JostM", 10.5); d.text(e[2], R, y, {align:"right"}); y += 22; });
+      E.forEach(function(e, i){ F("JostM", 10); d.text(e[0], L, y); F("JostL", 9.5, MU); d.text(e[1], C2, y); F("JostM", 10.5); d.text(e[2], R, y, {align:"right"}); y += 22; });
       if(tOnce && !PUB){ d.setDrawColor(PAPER2); d.setLineWidth(.8); d.line(L, y - 10, R, y - 10); y += 6; F("Brico", 12); d.text("Total des prestations", L, y); F("Brico", 15); d.text(eur(tOnce), R, y + .5, {align:"right"}); y += 14; }
       F("JostL", 8.5, MU); d.text("Montants nets. TVA non applicable, art. 293 B du CGI. Devis gratuit.", L, y0 + bh - 12); y = y0 + bh + 16; }
 

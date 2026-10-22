@@ -3,7 +3,7 @@
  "secteur": "Festival",
  "ville": "Rostrenen",
  "date": "2026-10-21",
- "accroche": "Depuis près de cinquante ans, le Fisel fait danser Rostrenen fin août, des stages aux festoù-noz. J'ai regardé comment le festival se montre en ligne, et voici ce que je vous proposerais.",
+ "accroche": "Depuis près de cinquante ans, le Fisel fait danser Rostrenen fin août, des stages aux festoù-noz. Voici comment le festival se montre en ligne, et ce que nous vous proposons.",
  "constats": [
   {
    "titre": "Votre programmation",
@@ -26,7 +26,7 @@
   {
    "titre": "Des images pour vos partenaires",
    "etat": "absent",
-   "texte": "Je n'ai pas trouvé d'espace presse ni de photothèque à destination des médias et des mécènes qui vous suivent.",
+   "texte": "Aucun espace presse ni photothèque n'est proposé aux médias et aux mécènes qui vous suivent.",
    "lien": "https://festival.fisel.org/infos-pratiques/"
   }
  ],
