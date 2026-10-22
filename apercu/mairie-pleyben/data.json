@@ -220,7 +220,7 @@
      {
       "l": "Le bulletin municipal",
       "d": "16 à 24 pages : chemin de fer, coordination des contenus, mise en page.",
-      "p": 1650,
+      "p": 1690,
       "titreDevis": "Bulletin municipal, 16 à 24 pages",
       "lignes": [
        "Chemin de fer et coordination des contenus",
@@ -272,7 +272,7 @@
      {
       "l": "Un site complet",
       "d": "6 à 12 pages, actualités et agenda modifiables par vos agents, formation comprise.",
-      "p": 4400,
+      "p": 4490,
       "titreDevis": "Site internet complet, 6 à 12 pages",
       "lignes": [
        "Arborescence et contenus construits avec vous",
@@ -283,7 +283,7 @@
      {
       "l": "Un site de 3 à 5 pages",
       "d": "Mairie, démarches, vie locale, contact.",
-      "p": 1890,
+      "p": 1990,
       "titreDevis": "Site internet, 3 à 5 pages",
       "lignes": [
        "Pages dédiées et formulaire de contact",
@@ -336,7 +336,7 @@
      {
       "l": "Une application sur mesure",
       "d": "Plusieurs vues, accès sur téléphone, plusieurs comptes.",
-      "p": 2750,
+      "p": 2790,
       "titreDevis": "Application web sur mesure",
       "lignes": [
        "Conception avec les agents qui l'utiliseront",
@@ -456,7 +456,17 @@
        "45 minutes par mois"
       ],
       "mois": true,
-      "min": 6
+      "min": 6,
+      "obligatoire": true,
+      "si": [
+       3,
+       [
+        1,
+        2,
+        3
+       ]
+      ],
+      "pourquoi": "l'outil a besoin d'un hébergement et de corrections régulières pour continuer de fonctionner."
      },
      {
       "l": "L'hébergement du site",
@@ -468,7 +478,16 @@
        "30 minutes de modifications par mois"
       ],
       "mois": true,
-      "min": 12
+      "min": 12,
+      "obligatoire": true,
+      "si": [
+       2,
+       [
+        0,
+        1
+       ]
+      ],
+      "pourquoi": "un site a besoin d'un hébergement, des mises à jour de sécurité et d'une sauvegarde pour rester en ligne."
      },
      {
       "l": "Non merci",
