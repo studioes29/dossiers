@@ -642,3 +642,21 @@ body{background:var(--paper)}
 @media (max-width:760px){.pied2{grid-template-columns:minmax(0,1fr)}}
 .pied2>*{min-width:0}
 .pied2 .lg span,.pied2 .sg span{white-space:normal}
+
+/* v2.1 : cartes neutres et à la largeur de celles du site, titre de raccourcis en H2, bouton d'offre */
+.rail{grid-template-columns:repeat(var(--n,3),minmax(0,300px));justify-content:start}
+.cts.rail{grid-template-columns:repeat(var(--n,4),minmax(0,290px))}
+.etp.rail{grid-template-columns:repeat(3,minmax(0,300px))}
+.cv2 .rct{font-size:clamp(28px,3.4vw,44px);line-height:1;letter-spacing:-.05em;color:var(--ink);font-weight:800;margin-bottom:clamp(16px,2vw,24px)}
+.cv2 .rcs .row{margin-top:clamp(20px,2.4vw,30px)}
+.rc .sw,.pi .sw{background:var(--paper2)}
+.fe.pa .pi .sw{background:var(--paper)}
+.rc .sw{min-height:clamp(64px,6vw,84px)}
+.rc .sw i{font-size:22px;opacity:.4}
+/* sélection dans le configurateur : fond encre, texte blanc, quel que soit le fond de la feuille */
+.cfg .opt[aria-pressed="true"],.fe.bl .cfg .opt[aria-pressed="true"]{background:var(--ink);color:#fff}
+.cfg .opt[aria-pressed="true"] small,.cfg .opt[aria-pressed="true"] .pq{color:rgba(255,255,255,.75)}
+.cfg .opt.oblig[aria-pressed="true"]{background:var(--paper2);color:var(--ink)}
+.cfg .opt.oblig[aria-pressed="true"] small{color:var(--mu)}
+.cfg .opt.oblig[aria-pressed="true"] .pq{color:var(--ink)}
+@media (max-width:860px){.rail{display:flex}.rail>*{flex:0 0 min(78%,290px)}}

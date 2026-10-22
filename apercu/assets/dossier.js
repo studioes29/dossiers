@@ -69,12 +69,11 @@
 
     /* couverture : le nom, l'accroche, puis les raccourcis vers chaque piste */
     var meta = [d.secteur, d.ville].filter(Boolean).join(", ");
-    var rac = pis.map(function(p, n){ return '<a class="rc ' + teinte(p) + '" href="#piste-' + (n + 1) + '" style="--i:' + n + '"><span class="sw"><em>' + esc(p.palier || "Piste " + (n + 1)) + '</em><i>' + (n + 1) + '</i></span><span class="lb"><b>' + esc(p.titre) + '</b>' + AR + '</span></a>'; });
-    if(a) rac.push('<a class="rc cfgc" href="#prix" style="--i:' + rac.length + '"><span class="sw"><em>Prix</em><i>€</i></span><span class="lb"><b>Composer votre offre</b>' + AR + '</span></a>');
+    var rac = pis.map(function(p, n){ return '<a class="rc" href="#piste-' + (n + 1) + '" style="--i:' + n + '"><span class="sw"><em>' + esc(p.palier || "Piste " + (n + 1)) + '</em><i>' + (n + 1) + '</i></span><span class="lb"><b>' + esc(p.titre) + '</b>' + AR + '</span></a>'; });
     o.push('<section class="cv2"><div class="w"><div class="hd2">' + (meta ? '<p class="meta ap" style="--k:0">' + esc(meta) + '</p>' : '') +
       '<h1 class="' + ((d.nom || "").length > 22 ? "tres" : (d.nom || "").length > 12 ? "long" : "") + '">' + lettres(d.nom || "") + '</h1>' +
       (d.accroche ? '<p class="acc ap" style="--k:2">' + esc(d.accroche) + '</p>' : '') + '</div>' +
-      (rac.length ? '<div class="rcs"><p class="rct ap" style="--k:3">Ce que nous vous proposons</p><div class="rail" style="--n:' + rac.length + '">' + rac.join("") + '</div></div>' : '') +
+      (rac.length ? '<div class="rcs"><h2 class="rct ap" style="--k:3">Ce que nous vous proposons</h2><div class="rail" style="--n:' + rac.length + '">' + rac.join("") + '</div>' + (a ? '<div class="row ap" style="--k:4"><a class="btn" href="#prix">Composer votre offre ' + AR + '</a></div>' : '') + '</div>' : '') +
       (d.date ? '<p class="date ap" style="--k:5">Dossier préparé le ' + esc(dateFr(d.date)) + '</p>' : '') + '</div></section>');
 
     if((d.constats || []).length){ var cs = d.constats.slice(0, 4);
@@ -91,7 +90,7 @@
     if(pis.length){ var aussi = [];
       if((d.pistes || []).length) (d.poles || []).forEach(function(p){ (p.items || []).forEach(function(x){ if(aussi.indexOf(x) < 0) aussi.push(x); }); });
       sec("pistes", d.titrePistes || "Ce que nous proposons", d.sousPistes || (d.titrePistes ? "" : "pour commencer."), d.textePistes || (pis.length > 1 ? "Chaque piste se lance seule, à votre rythme. On peut très bien s'arrêter à la première." : ""),
-        '<ol class="rail pis" style="--n:' + pis.length + '">' + pis.map(function(p, n){ return '<li class="pi gd ' + teinte(p) + '" id="piste-' + (n + 1) + '" style="--i:' + n + '"><span class="sw"><em>' + esc(p.palier || "") + '</em><i>' + (n + 1) + '</i></span><div class="lab"><h3>' + esc(p.titre) + '</h3><p>' + esc(p.texte) + '</p></div></li>'; }).join("") + '</ol>' +
+        '<ol class="rail pis" style="--n:' + pis.length + '">' + pis.map(function(p, n){ return '<li class="pi gd" id="piste-' + (n + 1) + '" style="--i:' + n + '"><span class="sw"><em>' + esc(p.palier || "") + '</em><i>' + (n + 1) + '</i></span><div class="lab"><h3>' + esc(p.titre) + '</h3><p>' + esc(p.texte) + '</p></div></li>'; }).join("") + '</ol>' +
         (aussi.length ? '<div class="aussi rv"><p>Le studio peut aussi prendre en charge</p><ul>' + aussi.slice(0, 12).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>' : '')); }
 
     if(ots.length){ sec("outils", d.titreOutils || "Des outils", d.titreOutils ? "" : "faits pour vos services.", d.texteOutils || "Quelques exemples à essayer : ils fonctionnent. Chaque outil se construit avec les agents qui l'utiliseront, sur téléphone comme sur ordinateur.",
@@ -109,7 +108,7 @@
       '<a class="ca rv" style="--i:1" href="mailto:' + esc(mail) + '?subject=' + encodeURIComponent("Dossier " + (d.nom || "")) + '"><i><svg viewBox="0 0 24 24">' + IC.mail + '</svg></i><span><b>Écrire</b><span>' + esc(mail) + '</span></span>' + AR + '</a></div>' +
       '<ol class="etp rail" style="--n:3">' + etapesFin.map(function(x, n){ return '<li class="gd" style="--i:' + n + '"><i>' + (n + 1) + '</i><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></li>'; }).join("") + '</ol>' +
       '<footer class="pied2"><div class="sg">' + LOGO + '<span><b>Studio ES</b><span>Photographie et web, en Bretagne</span></span></div>' +
-      '<nav aria-label="Sur studioes.fr"><a href="https://studioes.fr/metiers/photographie/">Photographie</a><a href="https://studioes.fr/metiers/sites-et-outils/">Sites et applications</a><a href="https://studioes.fr/projets/pierceval-tattoo/">Étude de cas : Pierceval Tattoo</a><a href="https://studioes.fr/projets/la-soute/">Étude de cas : La Soute</a></nav>' +
+      '<nav aria-label="Sur studioes.fr"><a href="https://studioes.fr/metiers/photographie/">Photographie</a><a href="https://studioes.fr/metiers/sites-et-outils/">Sites et applications</a></nav>' +
       '<div class="lg"><a href="https://studioes.fr">studioes.fr</a><span>Ewen Soupault, entrepreneur individuel · SIRET 834 922 486 00016 · TVA non applicable, art. 293 B du CGI</span></div></footer>', "pa fin");
 
     document.getElementById("app").innerHTML = o.join("");
