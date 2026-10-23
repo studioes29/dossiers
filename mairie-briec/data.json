@@ -1,0 +1,377 @@
+{
+ "secteur": "Collectivité",
+ "date": "2026-10-23",
+ "titrePoles": "Ce que nous pouvons prendre en charge",
+ "textePoles": "Studio ES a connu le fonctionnement d'un service communication de collectivité, sur tout son périmètre. Nous intervenons sur une partie ou sur l'ensemble, selon vos besoins.",
+ "titreOutils": "Des outils faits pour vos services",
+ "texteOutils": "Des exemples à essayer : ils fonctionnent, sur ordinateur comme sur téléphone. Chaque outil se construit ensuite avec les agents qui l'utiliseront, avec vos données.",
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ },
+ "nom": "Commune de Briec-de-l'Odet",
+ "ville": "Briec-de-l'Odet",
+ "accroche": "Une commune active, des actualités suivies, et des salles prêtées aux associations sans planning visible. Voici ce que nous pouvons montrer et simplifier avec vous.",
+ "constats": [
+  {
+   "titre": "Des actualités suivies",
+   "texte": "Fêtes communales, Semaines de la Petite enfance, ateliers du mur immersif pour les seniors, révision du PLU : le site est régulièrement alimenté.",
+   "etat": "bien",
+   "lien": "https://www.briec.bzh/"
+  },
+  {
+   "titre": "Des salles sans planning ni procédure en ligne",
+   "texte": "La page des salles municipales ne donne ni leurs noms, ni leur capacité, ni la façon de les réserver : tout passe par l'accueil.",
+   "etat": "moyen",
+   "lien": "https://www.briec.bzh/salles-municipales/"
+  },
+  {
+   "titre": "Des projets longs à suivre",
+   "texte": "La révision du Plan local d'urbanisme et les travaux font l'objet d'actualités séparées, sans vue d'ensemble de leur avancement.",
+   "etat": "moyen",
+   "lien": "https://www.briec.bzh/actualites/revision-du-plan-local-durbanisme/"
+  }
+ ],
+ "poles": [
+  {
+   "titre": "Photographie",
+   "texte": "La vie de la commune, sur le vif.",
+   "items": [
+    "Vœux, cérémonies, inaugurations",
+    "Fêtes communales, Semaines de la Petite enfance",
+    "Associations, écoles, travaux",
+    "Une photothèque classée, libre de droits pour la commune"
+   ]
+  },
+  {
+   "titre": "Site internet",
+   "texte": "Un site que les habitants consultent sur leur téléphone.",
+   "items": [
+    "Démarches et horaires en premier",
+    "Agenda et actualités faciles à tenir à jour",
+    "Suivi du site au mois"
+   ]
+  },
+  {
+   "titre": "Outils sur mesure",
+   "texte": "Pour les services, pas seulement pour la communication.",
+   "items": [
+    "Réservation des salles et du matériel",
+    "Suivi des demandes et interventions",
+    "Suivi des projets du mandat",
+    "Calendrier de communication partagé"
+   ]
+  }
+ ],
+ "outils": [
+  {
+   "type": "salles",
+   "texte": "Les salles communales prêtées aux associations dans un planning partagé : les associations voient les créneaux libres, l'accueil valide."
+  },
+  {
+   "type": "projets",
+   "texte": "La révision du PLU et les travaux du mandat, avec leurs étapes et leur référent, lisibles par les élus et les services.",
+   "exemples": [
+    {
+     "t": "Révision du Plan local d'urbanisme",
+     "r": "Service urbanisme",
+     "f": "À préciser",
+     "steps": [
+      [
+       "Diagnostic",
+       0
+      ],
+      [
+       "Projet d'aménagement",
+       0
+      ],
+      [
+       "Arrêt du projet",
+       0
+      ],
+      [
+       "Enquête publique",
+       0
+      ],
+      [
+       "Approbation",
+       0
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "type": "com",
+   "texte": "Le site, la page Facebook Ville de Briec et le Dossier d'Information Mairie sur un même calendrier.",
+   "exemples": [
+    {
+     "sem": "Semaine 44",
+     "items": [
+      {
+       "c": "site",
+       "t": "Ateliers du mur immersif pour les seniors",
+       "ok": 1
+      },
+      {
+       "c": "fb",
+       "t": "Photos des Semaines de la Petite enfance",
+       "ok": 0
+      }
+     ]
+    },
+    {
+     "sem": "Semaine 45",
+     "items": [
+      {
+       "c": "site",
+       "t": "Révision du PLU : point d'étape",
+       "ok": 0
+      },
+      {
+       "c": "mag",
+       "t": "Bouclage du Dossier d'Information Mairie",
+       "ok": 0
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "pistes": [
+  {
+   "palier": "Suivi annuel",
+   "titre": "Une année en images",
+   "texte": "Les fêtes communales, la petite enfance, les associations et les travaux photographiés au fil de l'année, pour le site, Facebook et le Dossier d'Information Mairie."
+  },
+  {
+   "palier": "Réservation en ligne",
+   "titre": "Un planning des salles",
+   "texte": "Une application de réservation des salles communales, construite avec l'accueil et les associations."
+  },
+  {
+   "palier": "Application",
+   "titre": "Le suivi des projets",
+   "texte": "Un tableau des projets du mandat, de la révision du PLU aux travaux, pour les élus et les services."
+  }
+ ],
+ "configurateur": {
+  "public": true,
+  "objet": "Photographie, site internet et outils de la Commune de Briec-de-l'Odet",
+  "intro": "Composez votre offre : le prix s'affiche au fur et à mesure et le devis se génère tout de suite. Il peut servir de base à un bon de commande.",
+  "regles": [
+   "Prix nets, TVA non applicable. Règlement sur facture après service fait, par mandat administratif, pour la Commune de Briec-de-l'Odet.",
+   "Les prestations mensuelles démarrent à une date fixée ensemble ; aucune mensualité n'est payée d'avance."
+  ],
+  "etapes": [
+   {
+    "q": "Des photos de la vie de la commune ?",
+    "options": [
+     {
+      "l": "Un événement",
+      "d": "Une demi-journée : vœux, inauguration, commémoration.",
+      "p": 350,
+      "titreDevis": "Reportage photo, une demi-journée",
+      "lignes": [
+       "Environ 4 heures sur place, à une date convenue",
+       "Sur le vif, sans mise en scène",
+       "Sélection retouchée livrée en haute définition et au format web, sous 10 jours"
+      ]
+     },
+     {
+      "l": "4 demi-journées dans l'année",
+      "d": "Vœux, cérémonies, inaugurations, avec une photothèque.",
+      "p": 1390,
+      "titreDevis": "Photographie à l'année, 4 demi-journées",
+      "lignes": [
+       "4 demi-journées réparties sur l'année",
+       "Photothèque classée, droits d'usage pour la commune",
+       "Livraison sous 72 heures"
+      ],
+      "an": true
+     },
+     {
+      "l": "8 demi-journées dans l'année",
+      "d": "Les temps forts et la vie courante, livrées le jour même.",
+      "p": 3490,
+      "titreDevis": "Photographie à l'année, 8 demi-journées",
+      "lignes": [
+       "8 demi-journées réparties sur l'année",
+       "Sélection livrée le jour même",
+       "Photothèque classée, droits d'usage pour la commune"
+      ],
+      "an": true
+     },
+     {
+      "l": "12 demi-journées dans l'année",
+      "d": "Un suivi complet, calé sur votre agenda.",
+      "p": 3990,
+      "titreDevis": "Photographie à l'année, 12 demi-journées",
+      "lignes": [
+       "12 demi-journées réparties sur l'année",
+       "Calendrier établi ensemble",
+       "Photothèque classée, droits d'usage pour la commune"
+      ],
+      "an": true
+     },
+     {
+      "l": "Pas pour l'instant",
+      "aucun": true
+     }
+    ]
+   },
+   {
+    "q": "Le site internet de la commune ?",
+    "options": [
+     {
+      "l": "Un site sur mesure",
+      "d": "6 à 12 pages, actualités et agenda modifiables par vos agents, formation comprise.",
+      "p": 4490,
+      "titreDevis": "Site sur mesure",
+      "lignes": [
+       "Arborescence et contenus construits avec vous",
+       "Actualités et agenda modifiables par le secrétariat",
+       "Pensé pour le téléphone, accessible, formation comprise"
+      ]
+     },
+     {
+      "l": "Un site de 3 à 5 pages",
+      "d": "Mairie, démarches, vie locale, contact.",
+      "p": 1990,
+      "titreDevis": "Site Vitrine, 3 à 5 pages",
+      "lignes": [
+       "Pages dédiées et formulaire de contact",
+       "Pensé pour le téléphone",
+       "Mise en ligne comprise"
+      ]
+     },
+     {
+      "l": "Pas pour l'instant",
+      "aucun": true
+     }
+    ]
+   },
+   {
+    "q": "Un outil pour vos services ?",
+    "aide": "Suivi des demandes, des projets, réservation des salles, calendrier de communication.",
+    "multi": true,
+    "options": [
+     {
+      "l": "Commencer par un cadrage",
+      "d": "Un échange de 2 heures, une note de cadrage et un chiffrage précis.",
+      "p": 210,
+      "titreDevis": "Cadrage d'un outil",
+      "lignes": [
+       "Échange de 2 heures avec les agents concernés",
+       "Note de cadrage et chiffrage"
+      ]
+     },
+     {
+      "l": "Un outil simple",
+      "d": "Un espace partagé : demandes, projets ou planning, avec tableaux et modèles.",
+      "p": 550,
+      "titreDevis": "Espace de travail sur mesure",
+      "lignes": [
+       "Bases et vues adaptées à votre service",
+       "Modèles prêts à l'emploi",
+       "Prise en main avec les agents"
+      ]
+     },
+     {
+      "l": "Une application sur mesure",
+      "d": "Plusieurs vues, accès sur téléphone, plusieurs comptes.",
+      "p": 2790,
+      "titreDevis": "Application web sur mesure",
+      "lignes": [
+       "Conception avec les agents qui l'utiliseront",
+       "Accès sur téléphone et ordinateur, plusieurs comptes",
+       "Mise en service et formation"
+      ]
+     },
+     {
+      "l": "Une application avec automatisations",
+      "d": "Notifications, mails aux habitants, rappels automatiques.",
+      "p": 5490,
+      "titreDevis": "Application avec automatisations",
+      "lignes": [
+       "Tout ce que comprend l'application sur mesure",
+       "Notifications et mails automatiques",
+       "Rapports et rappels programmés"
+      ]
+     },
+     {
+      "l": "Non merci",
+      "aucun": true
+     }
+    ]
+   },
+   {
+    "q": "Et au mois, à la carte ?",
+    "multi": true,
+    "aide": "Rien n'est payé maintenant : on fixe la date de démarrage ensemble.",
+    "options": [
+     {
+      "l": "Les réseaux sociaux",
+      "d": "12 contenus par mois, préparés et publiés.",
+      "p": 410,
+      "titreDevis": "Réseaux sociaux, 12 contenus par mois",
+      "lignes": [
+       "12 contenus par mois, textes et visuels",
+       "Calendrier validé avec vous",
+       "Engagement de 6 mois minimum"
+      ],
+      "mois": true,
+      "min": 6
+     },
+     {
+      "l": "Le suivi de l'outil",
+      "d": "Corrections et petites évolutions, 45 minutes par mois.",
+      "p": 50,
+      "titreDevis": "Suivi et évolutions de l'outil",
+      "lignes": [
+       "Corrections et petites évolutions",
+       "45 minutes par mois"
+      ],
+      "mois": true,
+      "min": 6,
+      "obligatoire": true,
+      "si": [
+       3,
+       [
+        1,
+        2,
+        3
+       ]
+      ],
+      "pourquoi": "Une application achetée a besoin d'un suivi pour rester à jour et sauvegardée."
+     },
+     {
+      "l": "Le suivi du site",
+      "d": "Sécurité, sauvegardes, 30 minutes de modifications par mois.",
+      "p": 35,
+      "titreDevis": "Suivi du site",
+      "lignes": [
+       "Sécurité et sauvegardes",
+       "30 minutes de modifications par mois"
+      ],
+      "mois": true,
+      "min": 12,
+      "obligatoire": true,
+      "si": [
+       2,
+       [
+        0,
+        1
+       ]
+      ],
+      "pourquoi": "Un site a besoin d'un hébergement, de mises à jour et de sauvegardes pour rester en ligne et sûr."
+     },
+     {
+      "l": "Non merci",
+      "aucun": true
+     }
+    ]
+   }
+  ]
+ }
+}
