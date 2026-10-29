@@ -93,7 +93,7 @@
         '</div>' +
         '<div class="bilan rv"><div class="ch"><b data-compte="' + total + '">' + total + '</b><span>unité' + (total > 1 ? 's' : '') + ' ce mois-ci' + (F ? ', sur les ' + F.unites + ' de la formule ' + esc(F.nom) : '') + '</span></div>' +
         (F ? '<div class="jauge" role="img" aria-label="' + total + ' unités sur ' + F.unites + '"><i data-ratio="' + Math.min(1, total / F.unites).toFixed(3) + '"></i></div>' : '') +
-        '<p>' + esc((D.mois && D.mois.note) || "Les unités non utilisées se reportent sur le mois suivant. Rien n’est produit au-delà sans votre accord écrit.") + '</p></div>' +
+        '<p>' + esc((F && total > F.unites) ? "Ce mois dépasse le quota de " + (total - F.unites) + " unité" + (total - F.unites > 1 ? "s" : "") + " : elles sont proposées à " + (O.unite_sup || 55) + " € HT l’unité, ou reportées au mois suivant, toujours avec votre accord écrit." : (D.mois && D.mois.note) || "Les unités non utilisées se reportent sur le mois suivant. Rien n’est produit au-delà sans votre accord écrit.") + '</p></div>' +
         '</div></section>');
     }
 

@@ -54,12 +54,6 @@
     "semaine": 2
    },
    {
-    "type": "page",
-    "titre": "La page du camping mise à jour",
-    "texte": "L'annonce de 2023 remplacée par les informations de la saison 2027.",
-    "semaine": 3
-   },
-   {
     "type": "affiche",
     "titre": "Une affiche pour la mairie",
     "texte": "Les horaires de fin d'année, pour le panneau d'affichage et le site.",
