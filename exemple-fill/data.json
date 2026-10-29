@@ -1,0 +1,31 @@
+{
+ "marque": "fill",
+ "exemple": true,
+ "nom": "Commune de Kerlan",
+ "type": "collectivite",
+ "ville": "Kerlan",
+ "date": "2026-10-29",
+ "accroche": "Kerlan a une vie associative dense et un marché de Noël qui attire au-delà de la commune. En ligne, l'information arrive par à-coups : une actualité en septembre, puis plus rien jusqu'aux vœux.",
+ "constats": [
+  {"titre": "Les actualités du site", "etat": "moyen", "texte": "Trois actualités publiées depuis la rentrée, la dernière le 12 septembre. Le forum des associations n'y figure pas.", "lien": "https://fill.studioes.fr/"},
+  {"titre": "La page Facebook", "etat": "bien", "texte": "Un rythme correct, une publication par semaine en moyenne, et des habitants qui commentent."},
+  {"titre": "L'agenda en ligne", "etat": "absent", "texte": "Aucun agenda sur le site : les dates des associations ne sont visibles que sur leurs propres pages."},
+  {"titre": "Le bulletin", "etat": "moyen", "texte": "Le dernier numéro en ligne date du printemps. Son contenu ne se retrouve ni sur le site, ni sur les réseaux."}
+ ],
+ "mois": {
+  "intro": "Un exemple de décembre, construit avec ce qui est annoncé à Kerlan. Chaque demande a sa valeur en unités, la même dans toutes les formules.",
+  "items": [
+   {"type": "affiche", "titre": "Le marché de Noël du 13 décembre", "texte": "Une affiche en création, déclinée pour les réseaux et l'écran de la mairie.", "semaine": 1},
+   {"type": "actu", "n": 2, "titre": "Le marché de Noël, puis le retour en images", "texte": "Programme, exposants et accès, puis quelques photos le lundi suivant.", "semaine": 1},
+   {"type": "post", "n": 6, "titre": "Six publications sur Facebook et Instagram", "texte": "Marché de Noël, collecte de jouets, horaires de fin d'année, vœux du maire.", "semaine": 2},
+   {"type": "agenda", "n": 2, "titre": "L'agenda des associations en ligne", "texte": "Six dates de décembre saisies sur le site.", "semaine": 3},
+   {"type": "news", "titre": "La lettre de décembre", "texte": "Une newsletter qui reprend le mois et annonce les vœux du 10 janvier.", "semaine": 4}
+  ]
+ },
+ "formule": "regulier",
+ "pourquoi": "Décembre est un mois chargé à Kerlan : 17 unités sur 22. Les mois plus calmes laissent de la place pour le bulletin ou un reportage photo.",
+ "faq": [
+  {"q": "Le bulletin peut-il entrer dans l'abonnement ?", "r": "Oui, jusqu'à 12 pages par numéro, page par page, à partir de vos textes. Au-delà, un devis à part."}
+ ],
+ "contact": {"rdv": "https://cal.eu/studioes/30min", "mail": "contact@studioes.fr"}
+}

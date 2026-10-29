@@ -1,0 +1,20 @@
+{
+ "marque": "fill",
+ "exemple": true,
+ "nom": "Commune de Kerlan",
+ "type": "collectivite",
+ "ville": "Kerlan",
+ "date": "2026-10-29",
+ "titre": "Pendant le recrutement,",
+ "sousTitre": "rien ne s'arrête.",
+ "accroche": "Kerlan recrute un chargé de communication. D'ici l'arrivée de la personne retenue, le site, les réseaux et le bulletin continuent de vivre.",
+ "signal": {"type": "recrutement", "titre": "Chargé de communication (H/F), poste ouvert", "texte": "Annonce publiée le 21 octobre, candidatures jusqu'au 20 novembre. Prise de poste envisagée en janvier.", "lien": "https://fill.studioes.fr/relais/"},
+ "constats": [
+  {"titre": "Les actualités du site", "etat": "moyen", "texte": "Plus d'actualité depuis le 3 octobre, alors que la cérémonie du 11 Novembre et le marché de Noël approchent."},
+  {"titre": "Les réseaux sociaux", "etat": "moyen", "texte": "La page Facebook ralentit depuis septembre : deux publications en un mois."},
+  {"titre": "Le bulletin de janvier", "etat": "absent", "texte": "Le numéro de janvier se prépare habituellement en novembre : il tombe pendant la vacance du poste."}
+ ],
+ "formule": "relais",
+ "pourquoi": "Huit à dix semaines de vacance, de mi-novembre à l'arrivée en janvier : le bulletin, les vœux et les fêtes de fin d'année sont couverts, et la passation est prête pour la personne recrutée.",
+ "contact": {"rdv": "https://cal.eu/studioes/30min", "mail": "contact@studioes.fr"}
+}
