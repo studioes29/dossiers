@@ -1,0 +1,82 @@
+{
+ "marque": "fill",
+ "nom": "Commune de Maël-Carhaix",
+ "type": "collectivite",
+ "ville": "Maël-Carhaix",
+ "date": "2026-10-29",
+ "accroche": "Maël-Carhaix a un site récent, bien rangé, avec ses bulletins municipaux, le mot du maire et ses démarches. Les actualités, elles, s'espacent : la dernière date du 24 août, et une annonce du camping de mai 2023 reste à l'affiche.",
+ "constats": [
+  {
+   "titre": "Le site de la commune",
+   "etat": "bien",
+   "texte": "Un site clair et récent : coordonnées, rubrique des bulletins municipaux, présentation de la commune et formulaire de contact.",
+   "lien": "https://www.mael-carhaix.fr/"
+  },
+  {
+   "titre": "Les actualités",
+   "etat": "moyen",
+   "texte": "Dernière actualité publiée le 24 août 2026, après celles du 23 juillet et du 8 juillet (vérifié le 29 octobre 2026).",
+   "lien": "https://www.mael-carhaix.fr/"
+  },
+  {
+   "titre": "L'agenda",
+   "etat": "moyen",
+   "texte": "Un seul rendez-vous annoncé pour novembre et décembre : la journée de formation sur la facturation électronique du 5 novembre.",
+   "lien": "https://www.mael-carhaix.fr/"
+  },
+  {
+   "titre": "Les informations anciennes",
+   "etat": "moyen",
+   "texte": "L'actualité « Camping de Maël-Carhaix » du 17 mai 2023 figure toujours parmi les articles affichés.",
+   "lien": "https://www.mael-carhaix.fr/"
+  }
+ ],
+ "mois": {
+  "intro": "Un exemple de novembre, construit avec ce qui est annoncé à Maël-Carhaix. Chaque demande a sa valeur en unités, la même dans toutes les formules.",
+  "items": [
+   {
+    "type": "actu",
+    "titre": "La formation sur la facturation électronique du 5 novembre",
+    "texte": "Rappel quelques jours avant, avec le lieu et l'inscription, puis un mot après la journée.",
+    "semaine": 1
+   },
+   {
+    "type": "actu",
+    "titre": "La cérémonie du 11 Novembre",
+    "texte": "Horaires et déroulé sur le site.",
+    "semaine": 1
+   },
+   {
+    "type": "post",
+    "n": 4,
+    "titre": "Quatre publications",
+    "texte": "Formation du 5 novembre, 11 Novembre, appel aux pompiers volontaires, horaires de la mairie pendant les fêtes.",
+    "semaine": 2
+   },
+   {
+    "type": "page",
+    "titre": "La page du camping mise à jour",
+    "texte": "L'annonce de 2023 remplacée par les informations de la saison 2027.",
+    "semaine": 3
+   },
+   {
+    "type": "affiche",
+    "titre": "Une affiche pour la mairie",
+    "texte": "Les horaires de fin d'année, pour le panneau d'affichage et le site.",
+    "semaine": 4
+   }
+  ]
+ },
+ "formule": "essentiel",
+ "pourquoi": "Une commune de 1 500 habitants : Essentiel garde chaque mois le site, l'agenda et les publications à jour, sans recruter.",
+ "faq": [
+  {
+   "q": "Les bulletins municipaux peuvent-ils être repris sur le site ?",
+   "r": "Oui. Les articles du bulletin peuvent être découpés en actualités et en publications, au fil du mois."
+  }
+ ],
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ }
+}
