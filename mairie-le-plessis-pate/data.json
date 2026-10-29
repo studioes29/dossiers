@@ -1,0 +1,39 @@
+{
+ "marque": "fill",
+ "nom": "Commune du Plessis-Pâté",
+ "type": "collectivite",
+ "ville": "Le Plessis-Pâté",
+ "date": "2026-10-29",
+ "titre": "Pendant le recrutement,",
+ "sousTitre": "rien ne s'arrête.",
+ "accroche": "Le Plessis-Pâté recrute un chargé de communication, avec des candidatures ouvertes jusqu'au 28 novembre. Le magazine de la ville et les photos des événements font partie du poste, et ne peuvent pas attendre l'arrivée de la personne retenue.",
+ "signal": {
+  "type": "recrutement",
+  "titre": "Chargé de communication (H/F)",
+  "texte": "Annonce publiée le 6 octobre 2026, candidatures jusqu'au 28 novembre, prise de poste au plus tôt le 28 novembre.",
+  "lien": "https://rdvemploipublic.fr/offres/charge-de-communication-h-f-91-o091261006000808"
+ },
+ "constats": [
+  {
+   "titre": "Le magazine de la ville",
+   "etat": "moyen",
+   "texte": "Sa rédaction est l'une des missions du poste ouvert : le numéro de fin d'année se prépare pendant la vacance."
+  },
+  {
+   "titre": "Les prises de vue",
+   "etat": "moyen",
+   "texte": "Les photos des événements de la ville reposent elles aussi sur ce poste, en pleine période des fêtes de fin d'année."
+  },
+  {
+   "titre": "Le calendrier du recrutement",
+   "etat": "absent",
+   "texte": "Les candidatures restent ouvertes jusqu'au 28 novembre : l'arrivée de la personne retenue ne peut pas intervenir avant la fin du mois, et dépend souvent d'un préavis."
+  }
+ ],
+ "formule": "relais",
+ "pourquoi": "De novembre à l'arrivée de la personne recrutée, Relais soutient la direction de la communication sur le magazine, les publications et les photos, puis prépare la passation.",
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ }
+}

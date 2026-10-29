@@ -1,0 +1,41 @@
+{
+ "marque": "fill",
+ "nom": "Commune de Val d'Isère",
+ "type": "collectivite",
+ "ville": "Val d'Isère",
+ "date": "2026-10-29",
+ "titre": "Pendant le recrutement,",
+ "sousTitre": "rien ne s'arrête.",
+ "accroche": "Val d'Isère recrute un chargé de communication et création de contenus, avec une prise de poste annoncée le 23 novembre. D'ici là, la saison démarre et les rendez-vous de la commune continuent d'arriver chaque semaine.",
+ "signal": {
+  "type": "recrutement",
+  "titre": "Chargé de communication et création de contenus (H/F)",
+  "texte": "Annonce publiée le 19 octobre 2026, candidatures jusqu'au 20 novembre, prise de poste prévue le 23 novembre.",
+  "lien": "https://rdvemploipublic.fr/offres/charge-de-communication-et-creation-de-contenus-h-f-73-o073261019000646"
+ },
+ "constats": [
+  {
+   "titre": "Le site de la mairie",
+   "etat": "bien",
+   "texte": "Une actualité publiée le 28 octobre et un agenda tenu : conseil municipal du 5 novembre, cérémonie du 11 Novembre, collecte du 18 novembre.",
+   "lien": "https://www.mairie-valdisere.fr/"
+  },
+  {
+   "titre": "Les rendez-vous à relayer",
+   "etat": "moyen",
+   "texte": "Inscriptions au forfait saison des enfants avant le 15 novembre, conseil du 3 décembre, initiations e-fat bike dès le 20 décembre, atelier ValKids le 23 décembre : autant de messages à porter pendant la vacance.",
+   "lien": "https://www.mairie-valdisere.fr/"
+  },
+  {
+   "titre": "Le poste de chargé de communication",
+   "etat": "absent",
+   "texte": "Vacant jusqu'à l'arrivée de la personne retenue, dans une équipe communication que l'annonce décrit elle-même comme resserrée."
+  }
+ ],
+ "formule": "relais",
+ "pourquoi": "Quatre semaines environ jusqu'au 23 novembre, prolongeables si l'arrivée glisse : le site, l'agenda et les publications restent à jour, et la passation est prête pour la personne recrutée.",
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ }
+}

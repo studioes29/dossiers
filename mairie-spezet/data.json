@@ -1,0 +1,76 @@
+{
+ "marque": "fill",
+ "nom": "Commune de Spézet",
+ "type": "collectivite",
+ "ville": "Spézet",
+ "date": "2026-10-29",
+ "accroche": "Spézet a un site clair, des coordonnées faciles à trouver et une rubrique pour proposer un événement à l'agenda. Sur la page d'accueil, pourtant, la seule actualité visible date de janvier 2022 et l'agenda de novembre est vide.",
+ "constats": [
+  {
+   "titre": "Les actualités du site",
+   "etat": "moyen",
+   "texte": "La seule actualité affichée en page d'accueil est « Bientôt 16 ans ! Pensez au recensement », publiée le 13 janvier 2022 (vérifié le 29 octobre 2026).",
+   "lien": "https://www.spezet.bzh/"
+  },
+  {
+   "titre": "L'agenda en ligne",
+   "etat": "absent",
+   "texte": "Aucun événement affiché pour novembre et décembre, alors que le Théâtre Puzzle annonce un stage d'improvisation les 14 et 15 novembre au local de Da Lec'h All.",
+   "lien": "https://www.spezet.bzh/"
+  },
+  {
+   "titre": "Les coordonnées et l'agenda participatif",
+   "etat": "bien",
+   "texte": "Téléphone et adresse de la mairie bien visibles, rubrique des bulletins municipaux et formulaire pour proposer un événement.",
+   "lien": "https://www.spezet.bzh/"
+  },
+  {
+   "titre": "Les réseaux sociaux",
+   "etat": "moyen",
+   "texte": "Aucun lien vers une page Facebook ou Instagram depuis le site de la commune."
+  }
+ ],
+ "mois": {
+  "intro": "Un exemple de novembre, construit avec ce qui est annoncé à Spézet. Chaque demande a sa valeur en unités, la même dans toutes les formules.",
+  "items": [
+   {
+    "type": "actu",
+    "titre": "La cérémonie du 11 Novembre",
+    "texte": "Horaires et déroulé sur le site, puis quelques lignes après la cérémonie.",
+    "semaine": 1
+   },
+   {
+    "type": "agenda",
+    "n": 2,
+    "titre": "L'agenda de novembre en ligne",
+    "texte": "Le stage d'improvisation du Théâtre Puzzle des 14 et 15 novembre, et les dates proposées par les associations via le formulaire.",
+    "semaine": 2
+   },
+   {
+    "type": "post",
+    "n": 4,
+    "titre": "Quatre publications",
+    "texte": "11 Novembre, stage du Théâtre Puzzle, horaires de la mairie pendant les fêtes, rappel du recensement à 16 ans.",
+    "semaine": 2
+   },
+   {
+    "type": "affiche",
+    "titre": "Une affiche pour la mairie",
+    "texte": "Les horaires de fin d'année, déclinés pour le panneau d'affichage et le site.",
+    "semaine": 4
+   }
+  ]
+ },
+ "formule": "essentiel",
+ "pourquoi": "Une commune de 1 800 habitants : Essentiel suffit pour garder le site, l'agenda et les publications à jour chaque mois, sans recruter.",
+ "faq": [
+  {
+   "q": "Les associations peuvent-elles continuer à proposer leurs dates ?",
+   "r": "Oui. Les propositions reçues par le formulaire de l'agenda sont reprises et mises en forme sur le site et dans les publications."
+  }
+ ],
+ "contact": {
+  "rdv": "https://cal.eu/studioes/30min",
+  "mail": "contact@studioes.fr"
+ }
+}
