@@ -196,8 +196,8 @@
     }
     function formulaire(){
       var T = totaux(), lien = lienAcompte(T.once), h = '<h3>Votre devis</h3><p class="sm">Il se génère tout de suite, avec les conditions de vente. Rien n\'est engagé tant que vous ne l\'acceptez pas.</p><form class="form" novalidate>';
-      [["struct","Structure", D.nom, "organization"],["rep","Votre nom", "", "name"],["fonction","Votre fonction", cf.public ? "Maire, secrétaire de mairie…" : "Gérant, présidente…", "organization-title"],["adr","Adresse", "", "street-address"],["ville","Code postal et ville", "", "address-level2"],["mail","E-mail", "", "email"]].forEach(function(f){
-        h += '<label><span>' + f[1] + '</span><input name="' + f[0] + '" autocomplete="' + f[3] + '"' + (f[0] === "mail" ? ' type="email" inputmode="email"' : '') + ' value="' + esc(client[f[0]] || (f[0] === "struct" ? D.nom : "")) + '" placeholder="' + esc(f[0] === "struct" ? "" : f[2]) + '" required></label>'; });
+      [["struct","Structure", D.nom, "organization"],["rep","Votre nom", "", "name"],["fonction","Votre fonction", cf.public ? "Maire, secrétaire de mairie…" : "Gérant, présidente…", "organization-title"],["adr","Adresse", "", "street-address"],["ville","Code postal et ville", "", "address-level2"],["mail","E-mail", "", "email"]].concat(cf.public ? [["siret","SIRET de la collectivité", "14 chiffres, pour la facture Chorus Pro", "off"],["opt_refs","Code service et n° d'engagement, si exigés", "Facultatif", "off"]] : []).forEach(function(f){
+        h += '<label><span>' + f[1] + '</span><input name="' + f[0] + '" autocomplete="' + f[3] + '"' + (f[0] === "mail" ? ' type="email" inputmode="email"' : '') + ' value="' + esc(client[f[0]] || (f[0] === "struct" ? D.nom : "")) + '" placeholder="' + esc(f[0] === "struct" ? "" : f[2]) + '"' + (f[0].indexOf("opt_") === 0 ? '' : ' required') + '></label>'; });
       h += '</form><p class="err" aria-live="polite"></p><div class="nav2"><button type="button" class="btn line" data-a="retour">Retour</button><button type="button" class="btn" data-a="pdf">Télécharger le devis</button></div>';
       if(cf.public){
         h += '<p class="sm">Ce devis peut servir de base à votre bon de commande. Pour la suite, choisissez un créneau : nous calons ensemble le démarrage et les modalités.</p><div class="nav2"><span></span><a class="btn" href="' + esc(rdv()) + '" target="_blank" rel="noopener">Choisir un créneau</a></div>';
@@ -207,8 +207,15 @@
       } else h += '<p class="sm">Pour la suite, choisissez un créneau : nous calons ensemble le démarrage.</p><div class="nav2"><span></span><a class="btn" href="' + esc(rdv()) + '" target="_blank" rel="noopener">Choisir un créneau</a></div>';
       dejaN = -1; avance(1, "Votre devis"); stage.innerHTML = h; stage.classList.remove("neuf"); void stage.offsetWidth; stage.classList.add("neuf");
     }
-    function lire(){ var ok = true, f = box.querySelector("form"); Array.prototype.forEach.call(f.elements, function(x){ client[x.name] = x.value.trim(); if(!x.value.trim() || (x.name === "mail" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(x.value.trim()))){ ok = false; x.setAttribute("aria-invalid","true"); } else x.removeAttribute("aria-invalid"); });
+    function lire(){ var ok = true, f = box.querySelector("form"); Array.prototype.forEach.call(f.elements, function(x){ client[x.name] = x.value.trim(); if((!x.value.trim() && x.name.indexOf("opt_") !== 0) || (x.name === "siret" && x.value.replace(/\s/g, "").length !== 14) || (x.name === "mail" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(x.value.trim()))){ ok = false; x.setAttribute("aria-invalid","true"); } else x.removeAttribute("aria-invalid"); });
       box.querySelector(".err").textContent = ok ? "" : "Complétez les champs en rouge pour générer le devis."; return ok; }
+    /* une seule saisie : ce que le client a tapé remonte dans sa fiche Hors-champ (FormSubmit, lu par la tâche de prospection) */
+    function consigne(etat){ try{ var T = totaux(), f = {_subject:"Devis " + num + " : " + (client.struct || D.nom) + " (" + etat + ")", _template:"table", _captcha:"false",
+        source:"dossier", dossier:location.pathname.split("/").filter(Boolean)[0] || "", devis:num, etat:etat, public:cf.public ? "oui" : "non",
+        structure:client.struct, nom:client.rep, fonction:client.fonction, adresse:client.adr, ville:client.ville, mail:client.mail, siret:client.siret || "", references:client.opt_refs || "",
+        lignes:T.lignes.map(function(x){ return x.l + (x.devis ? " (sur devis)" : " : " + x.p + (x.mois ? " €/mois" : " €")); }).join(" ; "), total:T.once + " €", mensuel:T.mois + " €/mois"};
+      fetch("https://formsubmit.co/ajax/contact@studioes.fr", {method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body:JSON.stringify(f), keepalive:true}).catch(function(){}); }catch(e){} }
+    var consigne1 = {};
     function lienAcompte(t){ var a = cf.acompte || {}, u = a[String(Math.round(t))]; return /^https:\/\/(buy\.stripe\.com|checkout\.stripe\.com)\//.test(u || "") ? u : ""; }
     function rdv(){ return (D.contact && /^https:\/\//.test(D.contact.rdv || "")) ? D.contact.rdv : "https://cal.eu/studioes/30min"; }
     function pdf(accepte){
@@ -217,8 +224,8 @@
       var u = URL.createObjectURL(out.blob), a = document.createElement("a"); a.href = u; a.download = out.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(u); }, 60000);
       return out;
     }
-    function charger(fn){ if(dejaTel || window.jspdf){ fn(); return; } dejaTel = true; var s = [["https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"],["../assets/devis-fonts.js"],["../assets/devis.js"]], k = 0;
-      (function un(){ if(k >= s.length) return fn(); var x = document.createElement("script"); x.src = s[k++][0]; x.onload = un; x.onerror = function(){ fn(); }; document.head.appendChild(x); })(); }
+    function charger(fn){ if(dejaTel || window.jspdf){ fn(); return; } dejaTel = true; var s = [["https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"],["https://studioes.fr/conditions/cgv.js"],["../assets/devis-fonts.js"],["../assets/devis.js"]], k = 0;
+      (function un(){ if(k >= s.length) return fn(); var x = document.createElement("script"); x.src = s[k++][0]; x.onload = un; x.onerror = k === 2 ? un : function(){ fn(); }; document.head.appendChild(x); })(); }
 
     box.addEventListener("click", function(ev){
       var b = ev.target.closest("button"); if(!b || b.disabled || !box.contains(b)) return; var n = +box.dataset.n;
@@ -230,10 +237,10 @@
       if(a === "suiv"){ i++; pas(); } else if(a === "prec"){ i--; pas(); } else if(a === "refaire"){ i = 0; pas(); }
       else if(a === "devis"){ formulaire(); charger(function(){}); }
       else if(a === "retour"){ i = etapesVisibles().length; recap(); }
-      else if(a === "pdf"){ if(lire()) charger(function(){ pdf(false); }); }
+      else if(a === "pdf"){ if(lire()){ charger(function(){ pdf(false); }); if(!consigne1.devis){ consigne1.devis = 1; consigne("devis téléchargé"); } } }
       else if(a === "payer"){ if(!lire()) return; var T = totaux(), lien = lienAcompte(T.once); if(!lien) return;
         var u = lien + "?client_reference_id=" + encodeURIComponent((num + "_" + code()).replace(/[^A-Za-z0-9_-]/g, "")) + "&prefilled_email=" + encodeURIComponent(client.mail);
-        var w = window.open(u, "_blank"); charger(function(){ pdf(true); }); if(!w) location.href = u; }
+        var w = window.open(u, "_blank"); consigne("devis accepté, acompte en cours"); charger(function(){ pdf(true); }); if(!w) location.href = u; }
     });
     box.addEventListener("change", function(ev){ if(ev.target.name === "ok"){ var p = box.querySelector('[data-a="payer"]'); if(p) p.disabled = !ev.target.checked; } });
     pas();
