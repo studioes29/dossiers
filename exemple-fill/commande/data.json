@@ -1,0 +1,23 @@
+{
+ "marque": "fill",
+ "titre": "Bon de commande Fill",
+ "ref": "BC-EXEMPLE",
+ "fiche": "",
+ "public": true,
+ "date": "2026-10-29",
+ "client": {"nom": "Commune exemple", "adresse": "Place de la Mairie, 29000 Exemple", "siret": "", "mail": "", "signataire": {"nom": "", "fonction": "Maire"}},
+ "objet": "Service de communication externalisée Fill, formule Régulier",
+ "lignes": [
+  {"l": "Abonnement Régulier", "detail": "22 unités par mois, selon le barème publié sur fill.studioes.fr", "p": 990, "u": "par mois"},
+  {"l": "Mise en place", "detail": "Audit, accès, six gabarits, calendrier trimestriel, fiche de fonctionnement. Offerte avec un engagement de 12 mois.", "p": 0, "u": ""}
+ ],
+ "total": {"ponctuel": 0, "mensuel": 990},
+ "articles": [
+  {"t": "Durée", "texte": "Début le 1er décembre 2026. Engagement de 12 mois, puis reconduction de mois en mois, résiliable avec un préavis d'un mois."},
+  {"t": "Référent", "texte": "Exemple de référent, seul habilité à valider les contenus et à engager des unités hors forfait."},
+  {"t": "Facturation", "texte": "Factures mensuelles à terme échu, payables à 30 jours, déposées sur Chorus Pro."}
+ ],
+ "annexe": {"titre": "Annexe : traitement de données personnelles pour le compte du client", "texte": "Exemple d'accord de sous-traitance des données."},
+ "cgv": "https://fill.studioes.fr/conditions/",
+ "cgvVersion": "28 octobre 2026"
+}
