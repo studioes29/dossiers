@@ -53,7 +53,7 @@
   function lettres(t){ var k = 0; return esc(t).split(" ").map(function(m){ return '<span class="m" style="--k:' + (k++) + '">' + m + '</span>'; }).join(" "); }
   function rendre(d){
     document.title = (d.nom || "Dossier") + " · Studio ES";
-    var ct = d.contact || {}, rdv = url(ct.rdv) || "https://cal.eu/studioes/30min", mail = /^[^@\s]+@[^@\s]+$/.test(ct.mail || "") ? ct.mail : "contact@studioes.fr";
+    var ct = d.contact || {}, rdv = url(ct.rdv) || "https://cal.com/studioes/30min", mail = /^[^@\s]+@[^@\s]+$/.test(ct.mail || "") ? ct.mail : "contact@studioes.fr";
     var a = d.configurateur && (d.configurateur.etapes || []).length, ots = (d.outils || []).filter(function(x){ return OUTILS[x.type]; }).slice(0, 4);
     var cl = d.client && typeof d.client === "object" ? d.client : null;
     var pub = !!(d.configurateur && d.configurateur.public) || ots.length > 0;
@@ -217,7 +217,7 @@
       fetch("https://formsubmit.co/ajax/contact@studioes.fr", {method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body:JSON.stringify(f), keepalive:true}).catch(function(){}); }catch(e){} }
     var consigne1 = {};
     function lienAcompte(t){ var a = cf.acompte || {}, u = a[String(Math.round(t))]; return /^https:\/\/(buy\.stripe\.com|checkout\.stripe\.com)\//.test(u || "") ? u : ""; }
-    function rdv(){ return (D.contact && /^https:\/\//.test(D.contact.rdv || "")) ? D.contact.rdv : "https://cal.eu/studioes/30min"; }
+    function rdv(){ return (D.contact && /^https:\/\//.test(D.contact.rdv || "")) ? D.contact.rdv : "https://cal.com/studioes/30min"; }
     function pdf(accepte){
       if(!window.jspdf || !window.studioDevis || !window.DEVIS_FONTS){ box.querySelector(".err").textContent = "Le devis n'a pas pu se charger. Rechargez la page avec une connexion active."; return null; }
       var out = window.studioDevis({nom:D.nom, objet:cf.objet, public:!!cf.public}, totaux().lignes, client, num, accepte ? {date:new Date().toISOString(), nom:client.rep} : null, cf.regles);

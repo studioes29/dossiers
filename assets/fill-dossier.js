@@ -5,7 +5,7 @@
   "use strict";
   var MOIS = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
   var FILL = "https://fill.studioes.fr";
-  var RDV = "https://cal.eu/studioes/30min";
+  var RDV = "https://cal.com/studioes/30min";
   var app = document.getElementById("app");
   var reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
