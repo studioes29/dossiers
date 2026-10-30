@@ -56,7 +56,7 @@
     var ct = d.contact || {}, rdv = url(ct.rdv) || "https://cal.com/studioes/30min", mail = /^[^@\s]+@[^@\s]+$/.test(ct.mail || "") ? ct.mail : "contact@studioes.fr";
     var a = d.configurateur && (d.configurateur.etapes || []).length, ots = (d.outils || []).filter(function(x){ return OUTILS[x.type]; }).slice(0, 4);
     var cl = d.client && typeof d.client === "object" ? d.client : null;
-    var pub = !!(d.configurateur && d.configurateur.public) || ots.length > 0;
+    var pub = d.configurateur ? !!d.configurateur.public : ots.length > 0;
     /* une maquette ne s'affiche que si elle est faite avec leur vraie matière (photo de leur site) ou validée par Ewen ("valide": true) */
     var mqm = d.maquette || null, vraie = mqm && (mqm.valide === true || url(mqm.image) || (mqm.cases || []).some(function(c){ return url(c && c.image); }));
     var mq = vraie ? maquette(mqm) : null, mtel = mq ? (typeof mq === "string" ? mq : mq.tel) : "", mpc = mq && typeof mq !== "string" ? mq.pc : "";

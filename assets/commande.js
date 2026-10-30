@@ -35,10 +35,10 @@
     h += '<section class="feuille"><div class="parties"><div><b>Prestataire</b>Studio ES' + (fill ? ", pour son service Fill" : "") + '<br>Ewen Soupault, entrepreneur individuel<br>SIRET 834 922 486 00016<br>contact@studioes.fr</div>' +
       '<div><b>Client</b>' + esc(C.nom || "") + (C.adresse ? '<br>' + esc(C.adresse) : "") + (C.siret ? '<br>SIRET ' + esc(C.siret) : "") + (C.signataire && C.signataire.nom ? '<br>Représenté par ' + esc(C.signataire.nom) + (C.signataire.fonction ? ", " + esc(C.signataire.fonction) : "") : "") + '</div></div>';
     if(D.objet) h += '<p><b>Objet :</b> ' + esc(D.objet) + '</p>';
-    if((D.lignes || []).length){ h += '<table><thead><tr><th>Prestation</th><th class="n">Prix HT</th></tr></thead><tbody>';
+    if((D.lignes || []).length){ h += '<table><thead><tr><th>Prestation</th><th class="n">Prix net</th></tr></thead><tbody>';
       D.lignes.forEach(function(l){ h += '<tr><td>' + esc(l.l) + (l.detail ? '<small>' + esc(l.detail) + '</small>' : "") + '</td><td class="n">' + eur(l.p) + (l.u ? ' ' + esc(l.u) : "") + '</td></tr>'; });
       var T = D.total || {}; if(T.ponctuel) h += '<tr class="tot"><td>Total des prestations ponctuelles</td><td class="n">' + eur(T.ponctuel) + '</td></tr>'; if(T.mensuel) h += '<tr class="tot"><td>Abonnement mensuel</td><td class="n">' + eur(T.mensuel) + ' par mois</td></tr>';
-      h += '</tbody></table><p class="aide">Montants hors taxes. TVA non applicable, article 293 B du CGI.</p>'; }
+      h += '</tbody></table><p class="aide">Montants nets. TVA non applicable, article 293 B du CGI.</p>'; }
     if((D.articles || []).length){ h += '<div class="art">'; D.articles.forEach(function(a){ h += '<h3>' + esc(a.t) + '</h3><p>' + esc(a.texte).replace(/\n/g, "<br>") + '</p>'; }); h += '</div>'; }
     h += '<p class="aide">Les conditions générales ' + (fill ? "de service de Fill" : "de vente de Studio ES") + ' font partie de la commande : <a href="' + esc(D.cgv) + '" target="_blank" rel="noopener">' + esc(String(D.cgv || "").replace(/^https?:\/\//, "")) + '</a>' + (D.cgvVersion ? ", version du " + esc(D.cgvVersion) : "") + '.</p>';
     if(D.annexe) h += '<details class="annexe"><summary><b>' + esc(D.annexe.titre) + '</b></summary><pre>' + esc(D.annexe.texte) + '</pre></details>';
