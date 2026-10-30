@@ -1,8 +1,9 @@
 {
  "secteur": "Collectivité",
  "date": "2026-10-23",
+ "expire": "2026-12-07",
  "titrePoles": "Ce que nous pouvons prendre en charge",
- "textePoles": "Studio ES a connu le fonctionnement d'un service communication de collectivité, sur tout son périmètre. Nous intervenons sur une partie ou sur l'ensemble, selon vos besoins.",
+ "textePoles": "Photographie, site internet et outils sur mesure : Studio ES intervient sur une partie ou sur l'ensemble, selon vos besoins.",
  "titreOutils": "Des outils faits pour vos services",
  "texteOutils": "Des exemples à essayer : ils fonctionnent, sur ordinateur comme sur téléphone. Chaque outil se construit ensuite avec les agents qui l'utiliseront, avec vos données.",
  "contact": {
@@ -173,7 +174,7 @@
       "lignes": [
        "Environ 4 heures sur place, à une date convenue",
        "Sur le vif, sans mise en scène",
-       "Sélection retouchée livrée en haute définition et au format web, sous 10 jours"
+       "Sélection retouchée livrée en haute définition et au format web, sous 5 jours"
       ]
      },
      {
@@ -184,7 +185,7 @@
       "lignes": [
        "4 demi-journées réparties sur l'année",
        "Photothèque classée, droits d'usage pour la commune",
-       "Livraison sous 72 heures"
+       "Sélection livrée sous 5 jours"
       ],
       "an": true
      },
@@ -214,7 +215,8 @@
      },
      {
       "l": "Pas pour l'instant",
-      "aucun": true
+      "aucun": true,
+      "lignes": []
      }
     ]
    },
@@ -245,7 +247,8 @@
      },
      {
       "l": "Pas pour l'instant",
-      "aucun": true
+      "aucun": true,
+      "lignes": []
      }
     ]
    },
@@ -299,28 +302,16 @@
      },
      {
       "l": "Non merci",
-      "aucun": true
+      "aucun": true,
+      "lignes": []
      }
     ]
    },
    {
-    "q": "Et au mois, à la carte ?",
+    "q": "Et le suivi, chaque mois ?",
     "multi": true,
-    "aide": "Rien n'est payé maintenant : on fixe la date de démarrage ensemble.",
+    "aide": "Inclus d'office avec un site ou un outil. Rien n'est payé maintenant : le suivi démarre à la mise en service.",
     "options": [
-     {
-      "l": "Les réseaux sociaux",
-      "d": "12 contenus par mois, préparés et publiés.",
-      "p": 410,
-      "titreDevis": "Réseaux sociaux, 12 contenus par mois",
-      "lignes": [
-       "12 contenus par mois, textes et visuels",
-       "Calendrier validé avec vous",
-       "Engagement de 6 mois minimum"
-      ],
-      "mois": true,
-      "min": 6
-     },
      {
       "l": "Le suivi de l'outil",
       "d": "Corrections et petites évolutions, 45 minutes par mois.",
@@ -334,7 +325,7 @@
       "min": 6,
       "obligatoire": true,
       "si": [
-       3,
+       2,
        [
         1,
         2,
@@ -356,17 +347,13 @@
       "min": 12,
       "obligatoire": true,
       "si": [
-       2,
+       1,
        [
         0,
         1
        ]
       ],
       "pourquoi": "Un site a besoin d'un hébergement, de mises à jour et de sauvegardes pour rester en ligne et sûr."
-     },
-     {
-      "l": "Non merci",
-      "aucun": true
      }
     ]
    }

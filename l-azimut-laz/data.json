@@ -3,6 +3,7 @@
  "secteur": "Restaurant",
  "ville": "Laz",
  "date": "2026-10-15",
+ "expire": "2026-11-29",
  "accroche": "Vos clients parlent souvent de la vue depuis votre terrasse. En ligne, elle est difficile à voir, et le restaurant lui-même est difficile à trouver.",
  "constats": [
   {
@@ -26,54 +27,6 @@
    "texte": "C'est ce qui fait choisir votre table. Des photos de la terrasse, de la salle et des assiettes la montreraient avant même la réservation."
   }
  ],
- "maquette": {
-  "type": "site",
-  "accroche": "À quoi cela pourrait ressembler",
-  "explication": "Une page d'accueil sobre, la vue en grand, et les informations qu'on cherche avant de réserver : horaires, accès, téléphone. Couleurs et typographie restent à choisir avec vous.",
-  "titre": "L'Azimut",
-  "logoTexte": "L'Azimut",
-  "sousTitre": "Cuisine maison et vue dégagée depuis la terrasse. Le midi en semaine, le soir en fin de semaine.",
-  "bouton": "Réserver une table",
-  "menu": [
-   "La carte",
-   "Horaires",
-   "Nous trouver"
-  ],
-  "pied": "L'Azimut, Laz",
-  "imageTexte": "Ici, une photo de votre terrasse en fin de journée.",
-  "couleurs": {
-   "fond": "#F3EEE4",
-   "texte": "#1F2A2E",
-   "accent": "#2F4A4F"
-  },
-  "police": "Fraunces",
-  "legende": "Une première piste, faite sans vous. Elle se discute et se corrige.",
-  "surtitre": "Restaurant à Laz",
-  "infos": [
-   {
-    "t": "Horaires",
-    "l": [
-     "Lundi, mardi, jeudi, dimanche : midi",
-     "Vendredi et samedi : midi et soir",
-     "Fermé le mercredi"
-    ]
-   },
-   {
-    "t": "Nous trouver",
-    "l": [
-     "1 lotissement Menez Du",
-     "29520 Laz"
-    ]
-   },
-   {
-    "t": "Réserver",
-    "l": [
-     "06 26 99 36 92",
-     "Par téléphone ou en ligne"
-    ]
-   }
-  ]
- },
  "pistes": [
   {
    "palier": "Reportage photo",
@@ -105,7 +58,7 @@
       "lignes": [
        "Environ 4 heures sur place, à une date convenue ensemble",
        "Terrasse, salle, assiettes et équipe, sur le vif, sans mise en scène",
-       "Sélection retouchée livrée en haute définition et au format web, sous 10 jours"
+       "Sélection retouchée livrée en haute définition et au format web, sous 5 jours"
       ]
      },
      {
@@ -116,12 +69,13 @@
       "lignes": [
        "Environ 8 heures sur place, du service du midi à la lumière du soir",
        "Terrasse, salle, cuisine, assiettes et équipe, sur le vif",
-       "Sélection retouchée livrée en haute définition et au format web, sous 10 jours"
+       "Sélection retouchée livrée en haute définition et au format web, sous 5 jours"
       ]
      },
      {
       "l": "Pas pour l'instant",
-      "aucun": true
+      "aucun": true,
+      "lignes": []
      }
     ]
    },
@@ -154,7 +108,8 @@
      },
      {
       "l": "Pas pour l'instant",
-      "aucun": true
+      "aucun": true,
+      "lignes": []
      }
     ]
    },
@@ -187,7 +142,8 @@
         0,
         1
        ]
-      ]
+      ],
+      "lignes": []
      }
     ]
    },
@@ -239,35 +195,20 @@
       "titreDevis": "Suivi photo mensuel",
       "lignes": [
        "Une demi-journée de reportage par mois, à une date convenue ensemble",
-       "Sélection retouchée livrée sous 10 jours"
+       "Sélection retouchée livrée sous 5 jours"
       ]
      },
      {
       "l": "Rien d'autre",
-      "aucun": true
+      "aucun": true,
+      "lignes": []
      }
     ]
    }
   ],
   "regles": [
    "Les contenus de base (carte, horaires, informations pratiques) sont fournis par le client. Les photographies du site sont celles du reportage lorsqu'il est commandé."
-  ],
-  "acompte": {
-   "350": "https://buy.stripe.com/cNidR99nI9Duejd4z0bQY0N",
-   "440": "https://buy.stripe.com/7sY5kDdDY02U0sn5D4bQY0O",
-   "550": "https://buy.stripe.com/7sY9AT57s3f66QL4z0bQY0v",
-   "640": "https://buy.stripe.com/4gM28rarM4jaejde9AbQY0x",
-   "990": "https://buy.stripe.com/dRm4gzdDYbLCa2X1mObQY0y",
-   "1340": "https://buy.stripe.com/dRm3cvgQa02Ua2X8PgbQY0P",
-   "1430": "https://buy.stripe.com/3cI6oHdDYbLCgrlghIbQY0Q",
-   "1540": "https://buy.stripe.com/bJecN50Rc16Y1wrfdEbQY0B",
-   "1630": "https://buy.stripe.com/eVq9ATeI25nefnh1mObQY0F",
-   "1990": "https://buy.stripe.com/6oU00j8jE16Y3Ez9TkbQY0R",
-   "2340": "https://buy.stripe.com/dRm7sLfM69Du2Av5D4bQY0S",
-   "2430": "https://buy.stripe.com/fZu6oH8jE02U6QL4z0bQY0T",
-   "2540": "https://buy.stripe.com/00w8wP1Vg7vmdf9d5wbQY0U",
-   "2630": "https://buy.stripe.com/aFa28rbvQ02U7UPd5wbQY0V"
-  }
+  ]
  },
  "contact": {
   "rdv": "https://cal.com/studioes/30min",

@@ -3,6 +3,7 @@
  "secteur": "Festival de musique",
  "ville": "Rostrenen",
  "date": "2026-10-15",
+ "expire": "2026-11-29",
  "accroche": "Votre 13e édition est en cours, une dizaine de rendez-vous éparpillés dans le Kreiz Breizh jusqu'à fin novembre. C'est exactement le genre de festival que nous aimons photographier, et la question est de savoir ce qu'il en restera en images.",
  "constats": [
   {
@@ -27,56 +28,11 @@
    "lien": "https://www.facebook.com/festivalklasik"
   }
  ],
- "maquette": {
-  "type": "insta",
-  "accroche": "À quoi cela pourrait ressembler",
-  "compte": "festivalklasik",
-  "titre": "Klasik",
-  "statsTexte": "Kreiz Breizh · octobre et novembre",
-  "bio": "Musiques classiques et contemporaines en Centre-Bretagne, chaque automne depuis 2012.",
-  "cases": [
-   {
-    "texte": "Ce soir à Lanrivain"
-   },
-   {
-    "texte": "Les mains du pianiste"
-   },
-   {
-    "texte": "Balade chantée"
-   },
-   {
-    "texte": "En résidence"
-   },
-   {
-    "texte": "La chapelle avant le concert"
-   },
-   {
-    "texte": "Jeune public"
-   },
-   {
-    "texte": "Les musiciens"
-   },
-   {
-    "texte": "Le public de Bon-Repos"
-   },
-   {
-    "texte": "Prochain rendez-vous"
-   }
-  ],
-  "couleurs": {
-   "fond": "#F4F1EC",
-   "texte": "#1D1F2A",
-   "accent": "#3C4A7A"
-  },
-  "police": "Libre Baskerville",
-  "explication": "Une grille sobre qui suit le festival lieu par lieu et annonce chaque rendez-vous avec une vraie photo plutôt qu'une affiche seule.",
-  "legende": "Une première piste, faite sans vous. Elle se discute et se corrige."
- },
  "pistes": [
   {
    "palier": "Reportage photo",
    "titre": "Les concerts de l'édition",
-   "texte": "Une série de rendez-vous photographiés sur le vif, sans flash, avec une sélection livrée sous 72 heures."
+   "texte": "Une série de rendez-vous photographiés sur le vif, sans flash, avec une sélection livrée sous 5 jours."
   },
   {
    "palier": "Programme de saison",

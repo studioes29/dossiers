@@ -3,6 +3,7 @@
  "secteur": "Fête bretonne",
  "ville": "Châteauneuf-du-Faou",
  "date": "2026-10-15",
+ "expire": "2026-11-29",
  "accroche": "Une fête née en 1976, une centaine d'artistes et 2 000 personnes à Ar Sterenn chaque dimanche de Pâques : c'est un morceau de la vie de Châteauneuf. Pourtant, elle est difficile à trouver en ligne.",
  "constats": [
   {
@@ -26,54 +27,6 @@
    "texte": "Aucune photo récente de la fête que l'on puisse partager facilement pour donner envie de venir à l'édition suivante."
   }
  ],
- "maquette": {
-  "type": "site",
-  "accroche": "À quoi cela pourrait ressembler",
-  "titre": "Printemps de Châteauneuf",
-  "logoTexte": "Printemps de Châteauneuf",
-  "surtitre": "Fête bretonne à Châteauneuf-du-Faou",
-  "sousTitre": "Chaque dimanche de Pâques depuis 1976, de 15 h 30 à minuit : fest-deiz, concerts et fest-noz à la salle Ar Sterenn.",
-  "bouton": "Voir le programme",
-  "menu": [
-   "Le programme",
-   "Infos pratiques",
-   "Les bénévoles"
-  ],
-  "infos": [
-   {
-    "t": "Quand",
-    "l": [
-     "Le dimanche de Pâques",
-     "De 15 h 30 à minuit"
-    ]
-   },
-   {
-    "t": "Où",
-    "l": [
-     "Salle Ar Sterenn",
-     "Châteauneuf-du-Faou"
-    ]
-   },
-   {
-    "t": "Entrée",
-    "l": [
-     "10 €",
-     "Une centaine d'artistes, un fest-noz"
-    ]
-   }
-  ],
-  "pied": "Association Nevezamzer, Châteauneuf-du-Faou",
-  "domaine": "printemps-chateauneuf.bzh",
-  "imageTexte": "Ici, une photo du fest-noz en pleine soirée à Ar Sterenn.",
-  "couleurs": {
-   "fond": "#F2F4EE",
-   "texte": "#1E2A22",
-   "accent": "#3E6B48"
-  },
-  "police": "Fraunces",
-  "explication": "Une page simple qui dit l'essentiel en un coup d'œil : la date, le lieu, le prix, et une grande photo de la fête. Le nom de Châteauneuf-du-Faou y figure pour qu'on ne vous confonde plus.",
-  "legende": "Une première piste, faite sans vous. Elle se discute et se corrige."
- },
  "pistes": [
   {
    "palier": "Reportage photo",

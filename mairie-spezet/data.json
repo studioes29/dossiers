@@ -4,6 +4,7 @@
  "type": "collectivite",
  "ville": "Spézet",
  "date": "2026-10-29",
+ "expire": "2026-12-13",
  "accroche": "Spézet a un site clair, des coordonnées faciles à trouver et une rubrique pour proposer un événement à l'agenda. Sur la page d'accueil, pourtant, la seule actualité visible date de janvier 2022 et l'agenda de novembre est vide.",
  "constats": [
   {

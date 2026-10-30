@@ -26,56 +26,8 @@
    "etat": "moyen"
   }
  ],
- "maquette": {
-  "type": "site",
-  "accroche": "À quoi cela pourrait ressembler",
-  "explication": "Une page d'accueil qui répond d'abord aux questions des habitants : horaires de la mairie, démarches, agenda. Le reste se trouve en deux gestes.",
-  "titre": "Kerlouan-sur-Aulne",
-  "logoTexte": "Kerlouan-sur-Aulne",
-  "surtitre": "Commune du Finistère",
-  "sousTitre": "Mairie ouverte du lundi au vendredi, 9 h à 12 h. Démarches, agenda, vie associative.",
-  "bouton": "Faire une démarche",
-  "menu": [
-   "Mairie",
-   "Vivre ici",
-   "Agenda"
-  ],
-  "infos": [
-   {
-    "t": "Mairie",
-    "l": [
-     "Lundi au vendredi, 9 h à 12 h",
-     "02 98 00 00 00"
-    ]
-   },
-   {
-    "t": "Cette semaine",
-    "l": [
-     "Conseil municipal mardi 20 h",
-     "Collecte des encombrants jeudi"
-    ]
-   },
-   {
-    "t": "Démarches",
-    "l": [
-     "État civil",
-     "Urbanisme",
-     "Location de salles"
-    ]
-   }
-  ],
-  "pied": "Mairie de Kerlouan-sur-Aulne",
-  "imageTexte": "Ici, une photo du bourg un jour de marché.",
-  "couleurs": {
-   "fond": "#f5f3ee",
-   "texte": "#1c2433",
-   "accent": "#1f4e79"
-  },
-  "police": "Outfit",
-  "legende": "Une première piste. Les couleurs et le blason de la commune restent à intégrer."
- },
  "titrePoles": "Ce que nous pouvons prendre en charge",
- "textePoles": "Studio ES a connu le fonctionnement d'un service communication de collectivité, sur tout son périmètre. Nous intervenons sur une partie ou sur l'ensemble, selon vos besoins.",
+ "textePoles": "Photographie, site internet et outils sur mesure : Studio ES intervient sur une partie ou sur l'ensemble, selon vos besoins.",
  "poles": [
   {
    "titre": "Photographie",
@@ -88,13 +40,12 @@
    ]
   },
   {
-   "titre": "Communication",
-   "texte": "De l'idée au support imprimé ou publié.",
+   "titre": "Site internet",
+   "texte": "Un site que les habitants consultent sur leur téléphone.",
    "items": [
-    "Bulletin municipal et programmes",
-    "Affiches, invitations, campagnes",
-    "Site internet et réseaux sociaux",
-    "Relations presse et suivi des imprimeurs"
+    "Démarches et horaires en premier",
+    "Agenda et actualités faciles à tenir à jour",
+    "Suivi du site au mois"
    ]
   },
   {
@@ -136,18 +87,18 @@
   },
   {
    "palier": "Site internet",
-   "titre": "Un site clair et un bulletin repensé",
-   "texte": "Un site pensé pour le téléphone, que le secrétariat met à jour facilement, et un bulletin plus lisible."
+   "titre": "Un site clair",
+   "texte": "Un site pensé pour le téléphone, que le secrétariat met à jour facilement."
   },
   {
-   "palier": "Appui à la communication",
-   "titre": "Un service communication à vos côtés",
-   "texte": "Un à quatre jours par mois pour tenir le site, les réseaux et les supports, et un outil pour suivre les demandes des habitants."
+   "palier": "Application",
+   "titre": "Un suivi des demandes",
+   "texte": "Un outil simple pour suivre les demandes des habitants, de l'accueil jusqu'à l'intervention, sur téléphone comme sur ordinateur."
   }
  ],
  "configurateur": {
   "public": true,
-  "objet": "Communication, photographie et outils de la Commune de Kerlouan-sur-Aulne",
+  "objet": "Photographie, site internet et outils de la Commune de Kerlouan-sur-Aulne",
   "intro": "Composez votre offre : le prix s'affiche au fur et à mesure et le devis se génère tout de suite. Il peut servir de base à un bon de commande.",
   "regles": [
    "Prix nets, TVA non applicable. Règlement sur facture après service fait, par mandat administratif.",
@@ -165,7 +116,7 @@
       "lignes": [
        "Environ 4 heures sur place, à une date convenue",
        "Sur le vif, sans mise en scène",
-       "Sélection retouchée livrée en haute définition et au format web, sous 10 jours"
+       "Sélection retouchée livrée en haute définition et au format web, sous 5 jours"
       ]
      },
      {
@@ -176,7 +127,7 @@
       "lignes": [
        "4 demi-journées réparties sur l'année",
        "Photothèque classée, droits d'usage pour la commune",
-       "Livraison sous 72 heures"
+       "Sélection livrée sous 5 jours"
       ],
       "an": true
      },
@@ -206,60 +157,8 @@
      },
      {
       "l": "Pas pour l'instant",
-      "aucun": true
-     }
-    ]
-   },
-   {
-    "q": "Des supports imprimés ?",
-    "multi": true,
-    "options": [
-     {
-      "l": "Le bulletin municipal",
-      "d": "16 à 24 pages : chemin de fer, coordination des contenus, mise en page.",
-      "p": 1690,
-      "titreDevis": "Bulletin municipal, 16 à 24 pages",
-      "lignes": [
-       "Chemin de fer et coordination des contenus",
-       "Rédaction partielle, mise en page, corrections",
-       "Fichiers imprimeur et suivi du bon à tirer"
-      ]
-     },
-     {
-      "l": "Un pack événement",
-      "d": "Affiche, formats réseaux, communiqué et une demi-journée photo.",
-      "p": 790,
-      "titreDevis": "Pack événement",
-      "lignes": [
-       "Affiche et formats réseaux",
-       "Communiqué de presse",
-       "Une demi-journée de photo le jour même"
-      ]
-     },
-     {
-      "l": "Une campagne de recrutement",
-      "d": "Pour un poste difficile à pourvoir : accroche, visuel, annonce.",
-      "p": 830,
-      "titreDevis": "Campagne de recrutement",
-      "lignes": [
-       "Accroche et visuel",
-       "Rédaction de l'annonce",
-       "4 déclinaisons aux formats utiles"
-      ]
-     },
-     {
-      "l": "Un programme d'activités",
-      "d": "Vacances, saison culturelle ou sportive, 4 pages.",
-      "p": 210,
-      "titreDevis": "Programme d'activités, 4 pages",
-      "lignes": [
-       "Mise en page à partir des contenus fournis",
-       "Fichiers impression et web"
-      ]
-     },
-     {
-      "l": "Non merci",
-      "aucun": true
+      "aucun": true,
+      "lignes": []
      }
     ]
    },
@@ -300,7 +199,8 @@
      },
      {
       "l": "Pas pour l'instant",
-      "aucun": true
+      "aucun": true,
+      "lignes": []
      }
     ]
    },
@@ -354,95 +254,16 @@
      },
      {
       "l": "Non merci",
-      "aucun": true
+      "aucun": true,
+      "lignes": []
      }
     ]
    },
    {
-    "q": "Un service communication à vos côtés ?",
-    "aide": "Rien n'est payé maintenant : on fixe la date de démarrage ensemble.",
-    "options": [
-     {
-      "l": "Un jour par mois",
-      "d": "Appui ponctuel : site, réseaux et un support.",
-      "p": 550,
-      "titreDevis": "Appui communication, 1 jour par mois",
-      "lignes": [
-       "Mise à jour du site et des réseaux",
-       "Un support par mois",
-       "Point mensuel avec la mairie"
-      ],
-      "mois": true
-     },
-     {
-      "l": "Deux jours par mois",
-      "d": "Plan, site, réseaux, supports et presse.",
-      "p": 1090,
-      "titreDevis": "Service communication régulier, 2 jours par mois",
-      "lignes": [
-       "Plan de communication suivi",
-       "Site, réseaux, supports et relations presse",
-       "Point mensuel avec les élus"
-      ],
-      "mois": true
-     },
-     {
-      "l": "Un jour par semaine",
-      "d": "Tout le périmètre, coordination comprise.",
-      "p": 2290,
-      "titreDevis": "Service communication externalisé, 1 jour par semaine",
-      "lignes": [
-       "Tout le périmètre de la communication",
-       "Coordination des prestataires et des imprimeurs",
-       "Présence régulière en mairie"
-      ],
-      "mois": true
-     },
-     {
-      "l": "Pas pour l'instant",
-      "aucun": true
-     }
-    ]
-   },
-   {
-    "q": "Et au mois, à la carte ?",
+    "q": "Et le suivi, chaque mois ?",
     "multi": true,
-    "aide": "Rien n'est payé maintenant : on fixe la date de démarrage ensemble.",
+    "aide": "Inclus d'office avec un site ou un outil. Rien n'est payé maintenant : le suivi démarre à la mise en service.",
     "options": [
-     {
-      "l": "Les actualités du site",
-      "d": "Articles, agenda, pages et référencement.",
-      "p": 280,
-      "titreDevis": "Site : actualités et mises à jour",
-      "lignes": [
-       "Articles et agenda tenus à jour",
-       "Pages et référencement"
-      ],
-      "mois": true
-     },
-     {
-      "l": "Les réseaux sociaux",
-      "d": "12 contenus par mois et leur publication.",
-      "p": 550,
-      "titreDevis": "Réseaux sociaux de la commune",
-      "lignes": [
-       "12 contenus par mois",
-       "Publication et suivi"
-      ],
-      "mois": true,
-      "min": 6
-     },
-     {
-      "l": "Les relations presse",
-      "d": "Communiqués, dossiers de presse, contacts journalistes.",
-      "p": 140,
-      "titreDevis": "Relations presse",
-      "lignes": [
-       "Communiqués et dossiers de presse",
-       "Suivi des contacts presse"
-      ],
-      "mois": true
-     },
      {
       "l": "Le suivi de l'outil",
       "d": "Corrections et petites évolutions, 45 minutes par mois.",
@@ -456,7 +277,7 @@
       "min": 6,
       "obligatoire": true,
       "si": [
-       3,
+       2,
        [
         1,
         2,
@@ -478,17 +299,13 @@
       "min": 12,
       "obligatoire": true,
       "si": [
-       2,
+       1,
        [
         0,
         1
        ]
       ],
       "pourquoi": "un site a besoin d'un hébergement, des mises à jour de sécurité et d'une sauvegarde pour rester en ligne."
-     },
-     {
-      "l": "Non merci",
-      "aucun": true
      }
     ]
    }

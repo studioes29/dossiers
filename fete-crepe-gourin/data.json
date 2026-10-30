@@ -3,6 +3,7 @@
  "secteur": "Festival",
  "ville": "Gourin",
  "date": "2026-10-15",
+ "expire": "2026-11-29",
  "accroche": "Le studio est à Leuhan, à quelques kilomètres de Tronjoly, et la Fête de la Crêpe fait partie du paysage. La question est de savoir comment on la retrouve en ligne le reste de l'année, quand le parc est vide.",
  "constats": [
   {
@@ -27,51 +28,6 @@
    "lien": "https://www.facebook.com/fetedelacrepegourin"
   }
  ],
- "maquette": {
-  "type": "insta",
-  "accroche": "À quoi cela pourrait ressembler",
-  "compte": "fetedelacrepegourin",
-  "titre": "Fête de la Crêpe",
-  "statsTexte": "Gourin · dernier week-end de juillet",
-  "bio": "Crêpes Mod Gourin, musique et danse bretonnes au château de Tronjoly depuis 1991. Rendez-vous fin juillet.",
-  "cases": [
-   {
-    "texte": "La plus grande crêpe"
-   },
-   {
-    "texte": "Fest-noz sous les arbres"
-   },
-   {
-    "texte": "Les battages"
-   },
-   {
-    "texte": "Les bilig en cuisine"
-   },
-   {
-    "texte": "Les bénévoles"
-   },
-   {
-    "texte": "Bagad dans le parc"
-   },
-   {
-    "texte": "J-30"
-   },
-   {
-    "texte": "Les artisans"
-   },
-   {
-    "texte": "Merci et à l'an prochain"
-   }
-  ],
-  "couleurs": {
-   "fond": "#FBF5EA",
-   "texte": "#2B1E14",
-   "accent": "#B5572A"
-  },
-  "police": "Bitter",
-  "explication": "Une grille qui raconte la fête de bout en bout, de la préparation au fest-noz, pour garder le lien avec le public toute l'année.",
-  "legende": "Une première piste, faite sans vous. Elle se discute et se corrige."
- },
  "pistes": [
   {
    "palier": "Reportage photo",
