@@ -20,7 +20,8 @@
   function lienExt(){ return '<svg viewBox="0 0 14 14"><path d="M5 2h7v7M12 2L4.5 9.5"/></svg>'; }
   var LOGO = '<svg viewBox="0 0 1376 720" role="img" aria-label="Fill"><g class="lg-fi"><path d="M100 700V262C100 158 168 90 274 90H300V214H282C246 214 224 236 224 274V700Z"/><rect x="18" y="330" width="282" height="104" rx="8"/><rect x="360" y="330" width="124" height="370" rx="8"/><circle cx="422" cy="178" r="72"/></g><g stroke-width="96"><path class="lg-l1" pathLength="1" d="M560 655C590 540 672 260 732 144C762 74 854 59 860 120C866 234 800 400 660 570C630 620 640 668 710 664C750 662 763 640 788 600"/><path class="lg-l2" pathLength="1" d="M788 600C818 540 900 260 960 144C990 74 1082 59 1088 120C1094 234 1028 400 888 570C858 620 868 668 938 664C1038 660 1088 615 1188 612C1258 610 1288 600 1318 575"/></g></svg>';
 
-  /* Repli si fill.studioes.fr ne répond pas : mêmes valeurs que l'offre publiée le 27 octobre 2026. */
+  /* Repli si fill.studioes.fr ne répond pas : prix publics confirmés le 30 octobre 2026 (Essentiel 490 €/mois, 10 unités ; Régulier 990, 22 ; Soutenu 1 890, 45 ;
+     mise en place 490 ou 990 ; Relais 690 € par semaine ou 2 490 € par mois). */
   var REPLI = {formules:[
     {id:"essentiel", nom:"Essentiel", prix:490, unites:10, court:"présence entretenue", mise_en_place:490, suivi:"Point de 30 minutes chaque trimestre", points:["Site et réseaux entretenus","Demandes courantes en 2 jours ouvrés","Un point de suivi par trimestre"]},
     {id:"regulier", nom:"Régulier", prix:990, unites:22, court:"présence chaque semaine", mise_en_place:990, suivi:"Point de 30 minutes chaque mois", points:["Site, réseaux et newsletter","Demandes courantes en 2 jours ouvrés","Un point de suivi par mois"]},
@@ -33,10 +34,23 @@
   function unitesDe(type, O){ var c = (O.catalogue || []).filter(function(x){ return x.id === type; })[0]; if(c) return c.u; return {post:1, actu:1, agenda:1, presse:2, news:3, page:3, gabarit:1, affiche:4, flyer:5, bulletin:2, photo:10, point:1, moder:4}[type] || 1; }
   function nomType(type, O){ var c = (O.catalogue || []).filter(function(x){ return x.id === type; })[0]; return NOMS[type] || (c && c.nom) || "Demande"; }
 
+  /* dossier chiffré : data.json est une enveloppe AES-GCM, la clé suit le #k= du lien envoyé (elle ne quitte jamais le navigateur) */
+  var CLE = (/[#&]k=([A-Za-z0-9_-]{16,})/.exec(location.hash) || [])[1] || "";
+  function b64(s){ s = s.replace(/-/g, "+").replace(/_/g, "/"); while(s.length % 4) s += "="; var t = atob(s), a = new Uint8Array(t.length); for(var i = 0; i < t.length; i++) a[i] = t.charCodeAt(i); return a; }
+  function ouvrir(u){ return fetch(u, {cache:"no-store"}).then(function(r){ if(!r.ok) throw new Error("absent"); return r.json(); }).then(function(j){
+    if(!j || !j.enc) return j;
+    if(!CLE || !(window.crypto && crypto.subtle)) throw new Error("cle");
+    return crypto.subtle.importKey("raw", b64(CLE), "AES-GCM", false, ["decrypt"]).then(function(k){ return crypto.subtle.decrypt({name:"AES-GCM", iv:b64(j.iv)}, k, b64(j.ct)); })
+      .then(function(p){ return JSON.parse(new TextDecoder().decode(p)); }, function(){ throw new Error("cle"); }); }); }
+  /* ancres internes : la page défile sans réécrire le # de l'adresse, qui peut porter la clé du dossier */
+  function ancres(r){ r.addEventListener("click", function(ev){ var a = ev.target.closest('a[href^="#"]'); if(!a || ev.defaultPrevented) return; var t = document.getElementById(a.getAttribute("href").slice(1)); if(!t) return;
+    ev.preventDefault(); t.scrollIntoView({behavior:reduit ? "auto" : "smooth", block:"start"}); }); }
+
   function charger(){
-    fetch("data.json", {cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    ouvrir("data.json")
       .then(function(d){ rendre(d); })
-      .catch(function(){ app.innerHTML = '<div class="erreur"><h2>Ce dossier n’est plus disponible.</h2><p class="lead">Écrivez à <a href="mailto:contact@studioes.fr">contact@studioes.fr</a> ou retrouvez Fill sur <a href="' + FILL + '">fill.studioes.fr</a>.</p></div>'; });
+      .catch(function(e){ if(e && e.message === "cle"){ app.innerHTML = '<div class="erreur"><h2>Lien incomplet.</h2><p class="lead">Lien incomplet : utilisez le lien reçu par e-mail.</p></div>'; return; }
+        app.innerHTML = '<div class="erreur"><h2>Ce dossier n’est plus disponible.</h2><p class="lead">Écrivez à <a href="mailto:contact@studioes.fr">contact@studioes.fr</a> ou retrouvez Fill sur <a href="' + FILL + '">fill.studioes.fr</a>.</p></div>'; });
   }
 
   function rendre(D){
@@ -93,7 +107,7 @@
         '</div>' +
         '<div class="bilan rv"><div class="ch"><b data-compte="' + total + '">' + total + '</b><span>unité' + (total > 1 ? 's' : '') + ' ce mois-ci' + (F ? ', sur les ' + F.unites + ' de la formule ' + esc(F.nom) : '') + '</span></div>' +
         (F ? '<div class="jauge" role="img" aria-label="' + total + ' unités sur ' + F.unites + '"><i data-ratio="' + Math.min(1, total / F.unites).toFixed(3) + '"></i></div>' : '') +
-        '<p>' + esc((F && total > F.unites) ? "Ce mois dépasse le quota de " + (total - F.unites) + " unité" + (total - F.unites > 1 ? "s" : "") + " : elles sont proposées à " + (O.unite_sup || 55) + " € HT l’unité, ou reportées au mois suivant, toujours avec votre accord écrit." : (D.mois && D.mois.note) || "Les unités non utilisées se reportent sur le mois suivant. Rien n’est produit au-delà sans votre accord écrit.") + '</p></div>' +
+        '<p>' + esc((F && total > F.unites) ? "Ce mois dépasse le quota de " + (total - F.unites) + " unité" + (total - F.unites > 1 ? "s" : "") + " : elles sont proposées à " + (O.unite_sup || 55) + " € l’unité, ou reportées au mois suivant, toujours avec votre accord écrit." : (D.mois && D.mois.note) || "Les unités non utilisées se reportent sur le mois suivant. Rien n’est produit au-delà sans votre accord écrit.") + '</p></div>' +
         '</div></section>');
     }
 
@@ -101,29 +115,29 @@
     var carte, cote;
     if(fid === "relais"){
       carte = '<div class="fo-c rv"><span class="rec">Pendant le recrutement</span><p class="nom">Relais</p><p class="court">' + esc(R.promesse || "Le poste est vide, la communication continue.") + '</p>' +
-        '<div class="prix"><b>' + nb(R.prix_semaine) + '</b><sup>€</sup><span>HT par semaine, ' + (R.semaines_min || 2) + ' semaines minimum</span></div>' +
+        '<div class="prix"><b>' + nb(R.prix_semaine) + '</b><sup>€</sup><span>par semaine, ' + (R.semaines_min || 2) + ' semaines minimum</span></div>' +
         '<ul>' + (R.points || []).map(function(p){ return '<li>' + coche() + esc(p) + '</li>'; }).join("") + '<li>' + coche() + (R.unites_semaine || 12) + ' unités par semaine</li></ul>' +
         (D.pourquoi ? '<p class="pq">' + esc(D.pourquoi) + '</p>' : '') +
         '<div class="bts"><a class="bt" href="' + esc(rdv) + '" target="_blank" rel="noopener">Prendre rendez-vous' + ar() + '</a><a class="bt clair" href="' + FILL + '/relais/" target="_blank" rel="noopener">Relais en détail' + ar() + '</a></div></div>';
-      cote = '<div><div class="eng rv" style="--k:1"><div><b>' + nb(R.prix_mois || 2490) + ' €</b><span>HT par mois, au-delà d’un mois</span></div><div><b>10 jours</b><span>ouvrés pour démarrer</span></div></div>' +
-        '<p class="note rv" style="--k:2">Si le poste reste ouvert ou n’est finalement pas pourvu, l’abonnement Régulier prend le relais à partir de ' + nb((O.formules[1] || REPLI.formules[1]).prix) + ' € HT par mois.</p></div>';
+      cote = '<div><div class="eng rv" style="--k:1"><div><b>' + nb(R.prix_mois || 2490) + ' €</b><span>par mois, au-delà d’un mois</span></div><div><b>10 jours</b><span>ouvrés pour démarrer</span></div></div>' +
+        '<p class="note rv" style="--k:2">Si le poste reste ouvert ou n’est finalement pas pourvu, l’abonnement Régulier prend le relais à partir de ' + nb((O.formules[1] || REPLI.formules[1]).prix) + ' € par mois. TVA non applicable, art. 293 B du CGI.</p></div>';
     } else {
       carte = '<div class="fo-c rv"><span class="rec">La formule qui vous correspond</span><p class="nom">' + esc(F.nom) + '</p><p class="court">' + esc(F.court || "") + '</p>' +
-        '<div class="prix"><b>' + nb(F.prix) + '</b><sup>€</sup><span>HT par mois</span></div>' +
+        '<div class="prix"><b>' + nb(F.prix) + '</b><sup>€</sup><span>par mois</span></div>' +
         '<ul><li>' + coche() + '<span><b>' + F.unites + ' unités</b> par mois</span></li>' + (F.points || []).map(function(p){ return '<li>' + coche() + esc(p) + '</li>'; }).join("") + '</ul>' +
         (D.pourquoi ? '<p class="pq">' + esc(D.pourquoi) + '</p>' : '') +
         '<div class="bts"><a class="bt" href="' + esc(rdv) + '" target="_blank" rel="noopener">Prendre rendez-vous' + ar() + '</a><a class="bt clair" href="' + FILL + '/simulateur/?profil=' + profil + '" target="_blank" rel="noopener">Ajuster dans le simulateur' + ar() + '</a></div></div>';
-      cote = '<div><div class="eng rv" style="--k:1"><div><b>6 mois</b><span>Mise en place facturée une fois</span><em>' + nb(F.mise_en_place) + ' € HT</em></div><div><b>12 mois</b><span>Mise en place offerte</span><em>' + nb(F.mise_en_place) + ' € HT économisés</em></div></div>' +
-        '<p class="note rv" style="--k:2">Ensuite, résiliable chaque mois avec un mois de préavis. Unité supplémentaire : ' + (O.unite_sup || 55) + ' € HT, jamais sans accord écrit. TVA non applicable, article 293 B du CGI.</p></div>';
+      cote = '<div><div class="eng rv" style="--k:1"><div><b>6 mois</b><span>Mise en place facturée une fois</span><em>' + nb(F.mise_en_place) + ' €</em></div><div><b>12 mois</b><span>Mise en place offerte</span><em>' + nb(F.mise_en_place) + ' € économisés</em></div></div>' +
+        '<p class="note rv" style="--k:2">Ensuite, résiliable chaque mois avec un mois de préavis. Unité supplémentaire : ' + (O.unite_sup || 55) + ' €, jamais sans accord écrit. ' + (coll ? "Facture mensuelle à terme échu, déposée sur Chorus Pro." : "L’abonnement se règle chaque mois à l’avance, par carte, depuis l’Espace Fill : les unités sont créditées au paiement.") + ' TVA non applicable, art. 293 B du CGI.</p></div>';
     }
     h.push('<section class="fe blanc" id="formule"><div class="w"><h2 class="rv">' + (fid === "relais" ? 'Le poste attend,<span class="it">la <u>communication</u> continue.</span>' : 'Un prix fixe,<span class="it">chaque <u>mois</u>.</span>') + '</h2>' +
-      '<p class="lead rv">' + (fid === "relais" ? "Le temps de recruter, puis de former la personne recrutée : publications, site, affiches et presse continuent, et la passation est préparée." : "Une seule adresse pour vos demandes, une épreuve à valider avant chaque publication, les fichiers sources qui restent à vous.") + '</p>' +
+      '<p class="lead rv">' + (fid === "relais" ? "Le temps de recruter, puis de former la personne recrutée : publications, site, affiches et presse continuent, et la passation est préparée." : "Une seule adresse pour vos demandes, une épreuve à valider avant chaque publication, les fichiers sources qui restent à vous.") + ' Demandes, épreuves et unités se suivent dans l’<a href="' + FILL + '/espace/" target="_blank" rel="noopener">Espace Fill</a>.</p>' +
       '<div class="fo">' + carte + cote + '</div></div></section>');
 
     /* secteur public ou entreprise */
     var pts = coll ? [
       ["Neutralité et périodes électorales", "Les règles de communication des collectivités sont appliquées, y compris en période préélectorale."],
-      ["Un achat simple", "Une année d’abonnement reste sous le seuil de dispense de procédure : pas d’appel d’offres à lancer."],
+      ["Un achat simple", "Une année d’abonnement reste en principe sous le seuil de dispense de procédure (60 000 € HT) : pas d’appel d’offres à lancer."],
       ["Chorus Pro", "Facturation mensuelle déposée sur Chorus Pro, sans avance demandée."],
       ["Vos accès restent à vous", "Comptes, site et fichiers sources restent la propriété de la collectivité."]
     ] : [
@@ -157,9 +171,10 @@
     h.push('<section class="fe encre" id="echange"><div class="w ech"><div><h2 class="rv">On en parle<span class="it"><u>quinze minutes</u> ?</span></h2>' +
       '<div class="qui rv" style="--k:1"><img src="' + FILL + '/assets/img/ewen-s.webp" alt="" width="64" height="64" loading="lazy"><p><b>Ewen Soupault</b> traite chaque demande. Fill est un service de Studio ES, en Bretagne.</p></div></div>' +
       '<div class="bts rv" style="--k:2"><a class="bt clair" href="' + esc(rdv) + '" target="_blank" rel="noopener">Prendre rendez-vous' + ar() + '</a><a class="bt clair" href="mailto:' + esc(mail) + '?subject=' + encodeURIComponent("Fill, " + (D.nom || "")) + '">Écrire un message' + ar() + '</a></div></div></section>');
-    h.push('<footer class="pied"><div class="w"><span>Fill · un service <a href="https://studioes.fr">Studio ES</a> · TVA non applicable, art. 293 B du CGI</span><span><a href="' + FILL + '">fill.studioes.fr</a> · <a href="' + FILL + '/conditions/">Conditions</a></span></div></footer>');
+    h.push('<footer class="pied"><div class="w"><span>Fill · un service <a href="https://studioes.fr">Studio ES</a> · TVA non applicable, art. 293 B du CGI</span><span><a href="' + FILL + '">fill.studioes.fr</a> · <a href="' + FILL + '/conditions/">Conditions</a> · <a href="https://studioes.fr/conditions/">Mentions légales</a></span></div></footer>');
 
     app.innerHTML = h.join("");
+    ancres(app);
     typo(app);
     animer();
   }
