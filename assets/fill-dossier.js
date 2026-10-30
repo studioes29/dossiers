@@ -133,6 +133,14 @@
     h.push('<section class="fe blanc" id="formule"><div class="w"><h2 class="rv">' + (fid === "relais" ? 'Le poste attend,<span class="it">la <u>communication</u> continue.</span>' : 'Un prix fixe,<span class="it">chaque <u>mois</u>.</span>') + '</h2>' +
       '<p class="lead rv">' + (fid === "relais" ? "Le temps de recruter, puis de former la personne recrutée : publications, site, affiches et presse continuent, et la passation est préparée." : "Une seule adresse pour vos demandes, une épreuve à valider avant chaque publication, les fichiers sources qui restent à vous.") + ' Demandes, épreuves et unités se suivent dans l’<a href="' + FILL + '/espace/" target="_blank" rel="noopener">Espace Fill</a>.</p>' +
       '<div class="fo">' + carte + cote + '</div></div></section>');
+    /* recrutement : les formules d'abonnement restent visibles, pour qui voudrait plus léger ou plus durable */
+    if(fid === "relais"){
+      h.push('<section class="fe" id="autres"><div class="w"><h2 class="rv">Plus léger,<span class="it">ou <u>plus durable</u>.</span></h2>' +
+        '<p class="lead rv">Relais couvre toute la communication courante pendant la vacance. Si vous préférez ne confier qu’une partie du travail, ou garder un appui une fois la personne recrutée, les abonnements Fill fonctionnent de la même façon, au mois.</p>' +
+        '<div class="aut">' + O.formules.map(function(f, i){ return '<div class="aut-c rv" style="--k:' + i + '"><p class="nom">' + esc(f.nom) + '</p>' + (f.court ? '<p class="court">' + esc(f.court) + '</p>' : '') +
+          '<p class="px"><b>' + nb(f.prix) + '&nbsp;€</b><span>par mois, ' + f.unites + '&nbsp;unités</span></p></div>'; }).join("") + '</div>' +
+        '<div class="bts rv"><a class="bt clair" href="' + FILL + '/formules/" target="_blank" rel="noopener">Comparer les formules' + ar() + '</a><a class="bt clair" href="' + FILL + '/simulateur/?profil=' + profil + '" target="_blank" rel="noopener">Estimer dans le simulateur' + ar() + '</a></div></div></section>');
+    }
 
     /* secteur public ou entreprise */
     var pts = coll ? [

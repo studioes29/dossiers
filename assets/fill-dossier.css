@@ -215,3 +215,14 @@ h1 .m{display:inline-block;opacity:0;transform:translateY(.4em);animation:roule 
   .rv{opacity:1;transform:none}
 }
 .fe.blanc .eng>div,.fe.blanc .etp,.fe.blanc .faq details{background:var(--sable);box-shadow:none}
+
+/* recrutement : les autres formules */
+.aut{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:26px 0 22px}
+.aut-c{background:var(--blanc);border-radius:var(--r);padding:22px 20px;box-shadow:0 1px 0 var(--ln)}
+.aut-c .nom{font:800 26px/1 var(--d);letter-spacing:-.035em;margin:0}
+.aut-c .court{font:italic 400 16px/1.3 var(--sf);color:var(--mu);margin:6px 0 0}
+.aut-c .px{margin:18px 0 0;padding-top:14px;border-top:1px solid var(--ln)}
+.aut-c .px b{display:block;font:800 30px/1 var(--d);letter-spacing:-.04em;white-space:nowrap}
+.aut-c .px span{display:block;font:500 13px/1.4 var(--f);color:var(--mu);margin-top:6px}
+#autres .bts{display:flex;flex-wrap:wrap;gap:10px}
+@media (max-width:760px){.aut{grid-template-columns:1fr}}
