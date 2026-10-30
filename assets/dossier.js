@@ -156,7 +156,7 @@
   /* ---------- configurateur : prix réels, devis PDF, acceptation, acompte par carte ou par virement ---------- */
   var ACOMPTE = "https://nfnbseonwgmtouxsaajd.supabase.co/functions/v1/acompte";
   var ANTICIPE = "Je demande que la prestation commence avant la fin du délai de rétractation et reconnais que, une fois la prestation pleinement exécutée, je ne pourrai plus me rétracter.";
-  var RGPD = "Ces informations servent à établir votre devis et à vous recontacter. Elles transitent par FormSubmit (États-Unis) puis par la messagerie de Studio ES. Détails et droits : ";
+  var RGPD = "Ces informations servent à établir votre devis et à vous recontacter. Elles sont transmises par e-mail via un service hébergé chez Supabase (serveurs à Paris) et l’envoi d’e-mails Brevo (France), puis arrivent dans la messagerie de Studio ES. Détails et droits : ";
   function eurc(n){ n = Math.round(n * 100) / 100; return n % 1 ? n.toLocaleString("fr-FR", {minimumFractionDigits:2, maximumFractionDigits:2}).replace(/ | /g, " ") + " €" : eur(n); }
   function slugDossier(){ return location.pathname.split("/").filter(Boolean)[0] || ""; }
   /* remise négociée : {"taux": 10} ou {"montant": 150}, avec un libellé facultatif */
@@ -239,7 +239,7 @@
       box.querySelector(".err").textContent = ok ? "" : "Complétez les champs en rouge pour générer le devis."; return ok; }
     function boutons(){ var ok = box.querySelector('[name="ok"]'), an = box.querySelector('[name="anticipe"]'), on = ok && ok.checked && (!part || (an && an.checked));
       box.querySelectorAll('[data-a="payer"],[data-a="virement"]').forEach(function(b){ b.disabled = !on; }); }
-    /* une seule saisie : ce que le client a tapé remonte dans sa fiche Hors-champ (FormSubmit, lu par la tâche de prospection) ; une consigne par devis différent */
+    /* une seule saisie : ce que le client a tapé remonte dans sa fiche Hors-champ (service « formulaire », lu par la tâche de prospection) ; une consigne par devis différent */
     function consigne(etat, paiement, anticipe){ var cle = etat + ":" + code() + (part ? ":p" : ""); if(envoyes[cle]) return; envoyes[cle] = 1;
       try{ var T = totaux(), f = {_subject:"Devis " + num + " : " + (client.struct || client.rep || D.nom) + " (" + etat + ")", _template:"table", _captcha:"false",
         source:"dossier", dossier:slugDossier(), devis:num, code:code(), etat:etat, public:cf.public ? "oui" : "non", particulier:part ? "oui" : "non",
@@ -248,7 +248,7 @@
         remise:T.remise ? T.remise + " € (" + RM.libelle + ")" : "", total:T.once + " €", mensuel:T.mois + " €/mois"};
         if(paiement){ f.paiement = paiement; f.acompte = Math.round(T.once * 30) / 100 + " €"; }
         if(part && paiement) f.demarrage_anticipe = anticipe ? "oui" : "non";
-        fetch("https://formsubmit.co/ajax/contact@studioes.fr", {method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body:JSON.stringify(f), keepalive:true}).catch(function(){}); }catch(e){} }
+        fetch("https://nfnbseonwgmtouxsaajd.supabase.co/functions/v1/formulaire", {method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body:JSON.stringify(f), keepalive:true}).catch(function(){}); }catch(e){} }
     function rdv(){ return (D.contact && /^https:\/\//.test(D.contact.rdv || "")) ? D.contact.rdv : "https://cal.com/studioes/30min"; }
     function pdf(accepte, mode, anticipe){
       if(!window.jspdf || !window.studioDevis || !window.DEVIS_FONTS){ box.querySelector(".err").textContent = "Le devis n'a pas pu se charger. Rechargez la page avec une connexion active."; return null; }

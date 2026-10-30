@@ -72,7 +72,7 @@
         '<label class="c">E-mail, pour recevoir votre confirmation<input name="email" type="email" inputmode="email" autocomplete="email" value="' + esc(C.mail || "") + '" required></label></div>' +
         '<label class="ok"><input type="checkbox" name="ok"><span>Lu et approuvé, bon pour commande. J’ai lu ' + (D.annexe ? "le bon de commande, son annexe et " : "le bon de commande et ") + 'les conditions générales, et je suis habilité' + '(e) à engager ' + esc(C.nom || "la structure") + '.</span></label>' +
         '<p class="err" aria-live="polite"></p><div class="ligne"><button class="bt" type="submit" disabled>Signer la commande</button></div>' +
-        '<p class="aide">Ces informations servent à enregistrer votre commande et à vous recontacter. Elles transitent par FormSubmit (États-Unis) puis par la messagerie de Studio ES. Détails et droits : <a href="' + (fill ? "https://fill.studioes.fr/conditions/" : "https://studioes.fr/conditions/") + '" target="_blank" rel="noopener">' + (fill ? "fill.studioes.fr/conditions" : "studioes.fr/conditions") + '</a>.</p></form>';
+        '<p class="aide">Ces informations servent à enregistrer votre commande et à vous recontacter. Elles sont transmises par e-mail via un service hébergé chez Supabase (serveurs à Paris) et l’envoi d’e-mails Brevo (France), puis arrivent dans la messagerie de Studio ES. Détails et droits : <a href="' + (fill ? "https://fill.studioes.fr/conditions/" : "https://studioes.fr/conditions/") + '" target="_blank" rel="noopener">' + (fill ? "fill.studioes.fr/conditions" : "studioes.fr/conditions") + '</a>.</p></form>';
     }
     h += '</section><footer class="np">Studio ES, Ewen Soupault, EI · SIRET 834 922 486 00016 · contact@studioes.fr · <a href="https://studioes.fr/conditions/">Mentions légales</a></footer></div>';
     app.innerHTML = h;
@@ -90,7 +90,7 @@
         var corps = {_subject:"Commande signée : " + (C.nom || "") + " (réf. " + (D.ref || "") + ")", _template:"table", _captcha:"false",
           _autoresponse:"Bonjour,\n\nNous avons bien reçu votre commande « " + (D.objet || D.titre || "") + " » (réf. " + (D.ref || "") + "), signée le " + dateFr(quand) + ". Votre exemplaire reste consultable ici : " + location.href + "\n\nBien cordialement\nEwen Soupault, " + (fill ? "Fill" : "Studio ES"),
           source:"commande", marque:D.marque || "studio", reference:D.ref || "", fiche:D.fiche || "", structure:C.nom || "", nom:nom, fonction:fo, email:ml, signee_le:quand, cgv:D.cgv || "", cgv_version:D.cgvVersion || "", page:location.href, empreinte:hash, navigateur:navigator.userAgent};
-        return fetch("https://formsubmit.co/ajax/contact@studioes.fr", {method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body:JSON.stringify(corps)}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(){ return hash; });
+        return fetch("https://nfnbseonwgmtouxsaajd.supabase.co/functions/v1/formulaire", {method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body:JSON.stringify(corps)}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(){ return hash; });
       }).then(function(hash){ garder({date:quand, nom:nom, fonction:fo, email:ml, empreinte:hash}); rendre(); document.getElementById("sig").scrollIntoView({behavior:"smooth"}); }, function(){
         b.disabled = false; b.textContent = "Signer la commande"; err.textContent = "La signature n’est pas partie. Vérifiez votre connexion et réessayez, ou écrivez à contact@studioes.fr."; });
     });
