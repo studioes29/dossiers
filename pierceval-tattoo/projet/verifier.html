@@ -28,11 +28,12 @@ if(!/piercevaltattoo\.fr$|netlify\.app$/.test(location.hostname)){(function(){
 </script>
 <script>
 const $=s=>document.querySelector(s),out=$('#out');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 $('#f').onsubmit=async e=>{e.preventDefault();const code=$('#c').value.trim().toUpperCase();out.innerHTML='<p class="muted">Recherche…</p>';
  try{const r=await fetch('/.netlify/functions/gift-check?code='+encodeURIComponent(code));const v=await r.json();
   if(!v.found){out.innerHTML='<div class="card"><b class="ko">Numéro introuvable</b><span class="muted">Aucun paiement ne correspond à ce numéro.</span></div>';return}
   const d=new Date(v.date*1000).toLocaleDateString('fr-FR');
-  out.innerHTML=`<div class="card"><b class="${v.paid&&!v.used?'ok':'ko'}">${!v.paid?'Paiement non abouti':v.used?'Déjà utilisée le '+v.used:'Carte valable'}</b><span>${v.amount} € · pour ${v.pour||'?'}</span><span class="muted">Payée le ${d}</span>${v.paid&&!v.used?'<button id="use" style="margin-top:10px">Marquer comme utilisée</button>':''}</div>`;
+  out.innerHTML=`<div class="card"><b class="${v.paid&&!v.used?'ok':'ko'}">${!v.paid?'Paiement non abouti':v.used?'Déjà utilisée le '+esc(v.used):'Carte valable'}</b><span>${esc(v.amount)} € · pour ${esc(v.pour||'?')}</span><span class="muted">Payée le ${d}</span>${v.paid&&!v.used?'<button id="use" style="margin-top:10px">Marquer comme utilisée</button>':''}</div>`;
   const u=$('#use');if(u)u.onclick=async()=>{const p=document.createElement('input');p.type='password';p.placeholder='Code du studio';u.replaceWith(p);const b=document.createElement('button');b.textContent='Confirmer';p.after(b);b.onclick=async()=>{const r=await fetch('/.netlify/functions/gift-check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,pin:p.value})});const j=await r.json();out.insertAdjacentHTML('beforeend',j.ok?'<p class="ok">Carte marquée comme utilisée.</p>':'<p class="ko">Code du studio incorrect.</p>')}}
  }catch(err){out.innerHTML='<p class="ko">Vérification impossible pour le moment.</p>'}};
 </script></body></html>
