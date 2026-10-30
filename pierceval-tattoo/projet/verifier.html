@@ -15,7 +15,7 @@ button{font:inherit;font-weight:600;border:0;border-radius:999px;padding:14px 22
 <div id="out"></div>
 </main><script>
 /* Démonstration hors ligne : sur piercevaltattoo.fr, la page lit les vrais paiements. */
-if(!/piercevaltattoo\.fr$|netlify\.app$/.test(location.hostname)){(function(){
+if(!/piercevaltattoo\.fr$/.test(location.hostname)){(function(){
  const K='pt-demo-used',get=()=>{try{return JSON.parse(localStorage.getItem(K))||{}}catch(e){return {}}},put=o=>{try{localStorage.setItem(K,JSON.stringify(o))}catch(e){}};
  const ok=c=>/^PT-[A-HJKMNP-Z2-9]{4}-[A-HJKMNP-Z2-9]{4}$/.test(c);
  const J=o=>Promise.resolve(new Response(JSON.stringify(o),{headers:{'Content-Type':'application/json'}}));

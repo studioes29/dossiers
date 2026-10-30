@@ -1,0 +1,32 @@
+# Retire chaque nuit les dossiers dont la date "expire" est dépassée (voir README.md, « Expiration »).
+name: Expiration des dossiers
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: expiration
+  cancel-in-progress: false
+
+jobs:
+  retirer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retirer les dossiers expirés
+        run: |
+          set -eu
+          noms=$(python3 outils/expiration.py .)
+          if [ -z "$noms" ]; then echo "Aucun dossier expiré."; exit 0; fi
+          for n in $noms; do git rm -r -q -- "$n"; done
+          liste=$(echo $noms | sed 's/ /, /g')
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -q -m "Dossiers expirés retirés ($liste)"
+          for i in 1 2 3; do git pull -q --rebase && git push -q && exit 0; sleep 5; done
+          exit 1
