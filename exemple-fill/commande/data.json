@@ -13,7 +13,7 @@
  ],
  "total": {"ponctuel": 0, "mensuel": 990},
  "articles": [
-  {"t": "Durée", "texte": "Début le 1er décembre 2026. Engagement de 12 mois, puis reconduction de mois en mois, résiliable avec un préavis d'un mois."},
+  {"t": "Durée", "texte": "Début à la validation du bon de commande signé : ce jour fixe la date anniversaire de l’abonnement, et chaque période mensuelle court de ce jour au jour précédent du mois suivant. Engagement de 12 mois, puis reconduction de mois en mois, résiliable avec un préavis d'un mois."},
   {"t": "Référent", "texte": "Exemple de référent, seul habilité à valider les contenus et à engager des unités hors forfait."},
   {"t": "Facturation", "texte": "Factures mensuelles à terme échu, payables à 30 jours, déposées sur Chorus Pro."}
  ],
