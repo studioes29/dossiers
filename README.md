@@ -41,6 +41,11 @@ Enveloppe écrite dans `data.json` :
 
 `expire` reste en clair pour la suppression automatique. Les pages (`dossier.js`, `fill-dossier.js`, `commande.js`) lisent la clé après `#k=` au chargement, la gardent en mémoire et déchiffrent avec WebCrypto ; sans clé ou avec une mauvaise clé, elles affichent « Lien incomplet : utilisez le lien reçu par e-mail. ». Un `data.json` en clair continue de s'afficher. Les raccourcis internes (pistes, « Composer votre offre ») font défiler la page sans réécrire le `#`.
 
+## Pages hébergées ici (anciens sites Netlify)
+
+- `declic/` : le jeu Déclic (anciennement declic.studioes.fr sur Netlify). Une adresse `declic/#<id d'artifact>` ou `declic/?go#<id>` est renvoyée vers `raccourci.html`, le raccourci d'écran d'accueil vers un artifact claude.ai (ancien `declic/index.html`).
+- `cocoon/` : proposition interactive Le Cocoon Studio (anciennement cocoon.studioes.fr sur Netlify). Page HTML seule, sans `data.json` : le script d'expiration ne la retire pas.
+
 ## Expiration
 
 - Chaque `data.json` porte `"expire": "AAAA-MM-JJ"` : dossier Studio ES ou Fill abonnement, date du dossier plus 45 jours ; Fill Relais, date de prise de poste ou de vacance indiquée dans `signal`. Les exemples n'en ont pas.
