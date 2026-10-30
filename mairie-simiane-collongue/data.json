@@ -4,14 +4,14 @@
   "type": "collectivite",
   "ville": "Simiane-Collongue",
   "date": "2026-10-30",
-  "expire": "2026-11-28",
+  "expire": "2026-12-14",
   "titre": "Pendant le recrutement,",
   "sousTitre": "rien ne s'arrête.",
-  "accroche": "Simiane-Collongue recrute un ou une chargé(e) de communication, avec un poste vacant à partir du 28 novembre. Le bulletin Simiane Infos, le site, la page Facebook et l'agenda du village continuent d'avoir besoin de quelqu'un chaque semaine.",
+  "accroche": "Simiane-Collongue recrute un ou une chargé(e) de communication, avec des candidatures ouvertes jusqu'au 28 novembre. Le bulletin Simiane Infos, le site, la page Facebook et l'agenda du village continuent d'avoir besoin de quelqu'un chaque semaine.",
   "signal": {
     "type": "recrutement",
     "titre": "Chargé(e) de communication",
-    "texte": "Annonce publiée le 29 septembre 2026 (référence O013260929001135), candidatures jusqu'au 28 novembre, poste vacant à partir du 28 novembre, temps complet.",
+    "texte": "Annonce publiée le 29 septembre 2026 (référence O013260929001135), candidatures jusqu'au 28 novembre, temps complet.",
     "lien": "https://choisirleservicepublic.gouv.fr/offre-emploi/chargee-de-communication---commune-de-simiane-collongue-reference-O013260929001135/"
   },
   "constats": [
@@ -30,17 +30,17 @@
     {
       "titre": "Décembre et janvier",
       "etat": "moyen",
-      "texte": "Aucun rendez-vous encore annoncé après le 11 novembre, alors que le poste sera vacant à partir du 28 novembre.",
+      "texte": "Aucun rendez-vous encore annoncé après le 11 novembre, en plein recrutement.",
       "lien": "https://www.simiane-collongue.fr/mes-loisirs/culture/agenda-culturel/"
     },
     {
       "titre": "Le poste de chargé(e) de communication",
       "etat": "absent",
-      "texte": "Vacant à partir du 28 novembre, le temps du recrutement et de l'arrivée de la personne retenue."
+      "texte": "En cours de recrutement : site, agenda, Facebook et bulletin à tenir dès maintenant, jusqu'à l'arrivée et la prise en main de la personne retenue."
     }
   ],
   "formule": "relais",
-  "pourquoi": "Quelques semaines à partir du 28 novembre, prolongeables si l'arrivée glisse : site, agenda, Facebook et pages du bulletin tenus, et passation prête pour la personne recrutée.",
+  "pourquoi": "Dès maintenant, pendant tout le recrutement et jusqu'à la prise en main par la personne recrutée : site, agenda, Facebook et pages du bulletin tenus, et passation prête à son arrivée.",
   "contact": {
     "rdv": "https://cal.com/studioes/30min",
     "mail": "contact@studioes.fr"

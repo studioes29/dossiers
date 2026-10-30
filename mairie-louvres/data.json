@@ -7,11 +7,11 @@
   "expire": "2026-12-15",
   "titre": "Pendant le recrutement,",
   "sousTitre": "rien ne s'arrête.",
-  "accroche": "Louvres recrute un ou une chargé(e) de communication, avec un poste vacant à partir du 15 décembre. Le magazine municipal, le site, les panneaux lumineux, les réseaux et la saison de l'Espace culturel Bernard-Dagué ne s'arrêtent pas pour autant.",
+  "accroche": "Louvres recrute un ou une chargé(e) de communication, avec des candidatures ouvertes jusqu'au 15 décembre. Le magazine municipal, le site, les panneaux lumineux, les réseaux et la saison de l'Espace culturel Bernard-Dagué ne s'arrêtent pas pour autant, ni pendant le recrutement, ni le temps que la personne retenue prenne ses marques.",
   "signal": {
     "type": "recrutement",
     "titre": "Chargé(e) de communication",
-    "texte": "Annonce publiée le 16 octobre 2026 (référence O095261016000661), candidatures jusqu'au 15 décembre, poste vacant à partir du 15 décembre, temps complet.",
+    "texte": "Annonce publiée le 16 octobre 2026 (référence O095261016000661), candidatures jusqu'au 15 décembre, temps complet.",
     "lien": "https://choisirleservicepublic.gouv.fr/offre-emploi/chargee-de-communication---mairie-de-louvres-reference-O095261016000661/"
   },
   "constats": [
@@ -30,17 +30,17 @@
     {
       "titre": "Janvier",
       "etat": "moyen",
-      "texte": "Aucun rendez-vous encore annoncé en janvier, au moment où le poste sera vacant.",
+      "texte": "Aucun rendez-vous encore annoncé en janvier, alors que la personne recrutée ne sera sans doute pas encore en poste.",
       "lien": "https://www.ville-louvres.fr/"
     },
     {
       "titre": "Le poste de chargé(e) de communication",
       "etat": "absent",
-      "texte": "Vacant à partir du 15 décembre : magazine, site, panneaux lumineux et réseaux à tenir jusqu'à l'arrivée de la personne retenue."
+      "texte": "En cours de recrutement : magazine, site, panneaux lumineux et réseaux à tenir dès maintenant, jusqu'à l'arrivée et la prise en main de la personne retenue."
     }
   ],
   "formule": "relais",
-  "pourquoi": "Quelques semaines à partir du 15 décembre, prolongeables si l'arrivée glisse : site, panneaux, réseaux et pages du magazine tenus, et passation prête pour la personne recrutée.",
+  "pourquoi": "Dès maintenant, pendant tout le recrutement et jusqu'à la prise en main par la personne recrutée : site, panneaux, réseaux et pages du magazine tenus, et passation prête à son arrivée.",
   "contact": {
     "rdv": "https://cal.com/studioes/30min",
     "mail": "contact@studioes.fr"

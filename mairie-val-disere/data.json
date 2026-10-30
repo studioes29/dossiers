@@ -4,14 +4,14 @@
  "type": "collectivite",
  "ville": "Val d'Isère",
  "date": "2026-10-29",
- "expire": "2026-11-23",
+ "expire": "2026-12-13",
  "titre": "Pendant le recrutement,",
  "sousTitre": "rien ne s'arrête.",
- "accroche": "Val d'Isère recrute un chargé de communication et création de contenus, avec une prise de poste annoncée le 23 novembre. D'ici là, la saison démarre et les rendez-vous de la commune continuent d'arriver chaque semaine.",
+ "accroche": "Val d'Isère recrute un chargé de communication et création de contenus, avec des candidatures ouvertes jusqu'au 20 novembre. Pendant ce temps, la saison démarre et les rendez-vous de la commune continuent d'arriver chaque semaine.",
  "signal": {
   "type": "recrutement",
   "titre": "Chargé de communication et création de contenus (H/F)",
-  "texte": "Annonce publiée le 19 octobre 2026, candidatures jusqu'au 20 novembre, prise de poste prévue le 23 novembre.",
+  "texte": "Annonce publiée le 19 octobre 2026, candidatures jusqu'au 20 novembre.",
   "lien": "https://rdvemploipublic.fr/offres/charge-de-communication-et-creation-de-contenus-h-f-73-o073261019000646"
  },
  "constats": [
@@ -24,7 +24,7 @@
   {
    "titre": "Les rendez-vous à relayer",
    "etat": "moyen",
-   "texte": "Inscriptions au forfait saison des enfants avant le 15 novembre, conseil du 3 décembre, initiations e-fat bike dès le 20 décembre, atelier ValKids le 23 décembre : autant de messages à porter pendant la vacance.",
+   "texte": "Inscriptions au forfait saison des enfants avant le 15 novembre, conseil du 3 décembre, initiations e-fat bike dès le 20 décembre, atelier ValKids le 23 décembre : autant de messages à porter pendant le recrutement.",
    "lien": "https://www.mairie-valdisere.fr/"
   },
   {
@@ -34,7 +34,7 @@
   }
  ],
  "formule": "relais",
- "pourquoi": "Quatre semaines environ jusqu'au 23 novembre, prolongeables si l'arrivée glisse : le site, l'agenda et les publications restent à jour, et la passation est prête pour la personne recrutée.",
+ "pourquoi": "Dès maintenant, pendant tout le recrutement et jusqu'à la prise en main par la personne recrutée : le site, l'agenda et les publications restent à jour, et la passation est prête à son arrivée.",
  "contact": {
   "rdv": "https://cal.com/studioes/30min",
   "mail": "contact@studioes.fr"
