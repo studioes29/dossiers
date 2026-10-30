@@ -1,0 +1,77 @@
+{
+  "marque": "fill",
+  "nom": "Commune de Huelgoat",
+  "type": "collectivite",
+  "ville": "Huelgoat",
+  "date": "2026-10-30",
+  "accroche": "Huelgoat a un site organisé, un menu mobile qui fonctionne et une page Facebook reliée depuis l'accueil. L'agenda, lui, n'annonce aucun événement pour les semaines à venir et le dernier bulletin municipal en ligne date d'octobre 2020.",
+  "constats": [
+    {
+      "titre": "L'agenda du site",
+      "etat": "absent",
+      "texte": "« Aucun évènement » affiché pour les semaines à venir (vérifié le 30 octobre 2026).",
+      "lien": "https://mairie-huelgoat.fr/"
+    },
+    {
+      "titre": "Le bulletin municipal en ligne",
+      "etat": "absent",
+      "texte": "Dernier numéro en ligne : Bulletin Octobre 2020, après ceux de mars et juin 2019.",
+      "lien": "https://mairie-huelgoat.fr/mairie/bulletins-municipaux"
+    },
+    {
+      "titre": "Les actualités",
+      "etat": "moyen",
+      "texte": "Comité des Anciens, risques majeurs, France Services, Point Cyber : des sujets utiles, publiés sans date visible.",
+      "lien": "https://mairie-huelgoat.fr/"
+    },
+    {
+      "titre": "L'organisation du site",
+      "etat": "bien",
+      "texte": "Navigation par rubriques, menu mobile et page Facebook reliée depuis l'accueil.",
+      "lien": "https://mairie-huelgoat.fr/"
+    }
+  ],
+  "mois": {
+    "intro": "Un exemple de novembre, construit avec ce qui est en ligne à Huelgoat. Chaque demande a sa valeur en unités, la même dans toutes les formules.",
+    "items": [
+      {
+        "type": "actu",
+        "titre": "La cérémonie du 11 Novembre",
+        "texte": "Horaires et déroulé sur le site, puis quelques lignes après la cérémonie.",
+        "semaine": 1
+      },
+      {
+        "type": "agenda",
+        "n": 2,
+        "titre": "L'agenda remis à jour",
+        "texte": "Le marché du jeudi matin et les dates transmises par les associations.",
+        "semaine": 1
+      },
+      {
+        "type": "page",
+        "titre": "La page du Comité des Anciens",
+        "texte": "Le dossier de candidature présenté clairement, avec sa date limite.",
+        "semaine": 2
+      },
+      {
+        "type": "post",
+        "n": 3,
+        "titre": "Trois publications Facebook",
+        "texte": "11 Novembre, Comité des Anciens, France Services et Point Cyber.",
+        "semaine": 3
+      }
+    ]
+  },
+  "formule": "essentiel",
+  "pourquoi": "Une commune d'environ 1 450 habitants : Essentiel suffit pour garder l'agenda, les actualités et la page Facebook à jour chaque mois, sans recruter.",
+  "faq": [
+    {
+      "q": "Pouvez-vous aussi remettre le bulletin en ligne ?",
+      "r": "Oui. La mise en ligne des numéros et, si vous le souhaitez, des pages de bulletin font partie des demandes possibles chaque mois."
+    }
+  ],
+  "contact": {
+    "rdv": "https://cal.com/studioes/30min",
+    "mail": "contact@studioes.fr"
+  }
+}

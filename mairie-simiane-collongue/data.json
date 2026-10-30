@@ -1,0 +1,47 @@
+{
+  "marque": "fill",
+  "nom": "Commune de Simiane-Collongue",
+  "type": "collectivite",
+  "ville": "Simiane-Collongue",
+  "date": "2026-10-30",
+  "titre": "Pendant le recrutement,",
+  "sousTitre": "rien ne s'arrête.",
+  "accroche": "Simiane-Collongue recrute un ou une chargé(e) de communication, avec un poste vacant à partir du 28 novembre. Le bulletin Simiane Infos, le site, la page Facebook et l'agenda du village continuent d'avoir besoin de quelqu'un chaque semaine.",
+  "signal": {
+    "type": "recrutement",
+    "titre": "Chargé(e) de communication",
+    "texte": "Annonce publiée le 29 septembre 2026 (référence O013260929001135), candidatures jusqu'au 28 novembre, poste vacant à partir du 28 novembre, temps complet.",
+    "lien": "https://choisirleservicepublic.gouv.fr/offre-emploi/chargee-de-communication---commune-de-simiane-collongue-reference-O013260929001135/"
+  },
+  "constats": [
+    {
+      "titre": "L'agenda du site",
+      "etat": "bien",
+      "texte": "Rendez-vous annoncés avec date, heure et lieu : cueillette des olives au Domaine des Marres et « Un air de famille » au Complexe sportif le 7 novembre, commémoration du 11 Novembre à l'Hôtel de Ville (vérifié le 30 octobre 2026).",
+      "lien": "https://www.simiane-collongue.fr/"
+    },
+    {
+      "titre": "Les informations aux habitants",
+      "etat": "bien",
+      "texte": "Reconnaissance de catastrophe naturelle pour les inondations des 19 et 20 octobre, coupure de courant du 30 octobre, travaux du futur groupe scolaire : le site relaie l'actualité utile.",
+      "lien": "https://www.simiane-collongue.fr/"
+    },
+    {
+      "titre": "Décembre et janvier",
+      "etat": "moyen",
+      "texte": "Aucun rendez-vous encore annoncé après le 11 novembre, alors que le poste sera vacant à partir du 28 novembre.",
+      "lien": "https://www.simiane-collongue.fr/mes-loisirs/culture/agenda-culturel/"
+    },
+    {
+      "titre": "Le poste de chargé(e) de communication",
+      "etat": "absent",
+      "texte": "Vacant à partir du 28 novembre, le temps du recrutement et de l'arrivée de la personne retenue."
+    }
+  ],
+  "formule": "relais",
+  "pourquoi": "Quelques semaines à partir du 28 novembre, prolongeables si l'arrivée glisse : site, agenda, Facebook et pages du bulletin tenus, et passation prête pour la personne recrutée.",
+  "contact": {
+    "rdv": "https://cal.com/studioes/30min",
+    "mail": "contact@studioes.fr"
+  }
+}

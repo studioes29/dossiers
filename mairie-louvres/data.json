@@ -1,0 +1,47 @@
+{
+  "marque": "fill",
+  "nom": "Commune de Louvres",
+  "type": "collectivite",
+  "ville": "Louvres",
+  "date": "2026-10-30",
+  "titre": "Pendant le recrutement,",
+  "sousTitre": "rien ne s'arrête.",
+  "accroche": "Louvres recrute un ou une chargé(e) de communication, avec un poste vacant à partir du 15 décembre. Le magazine municipal, le site, les panneaux lumineux, les réseaux et la saison de l'Espace culturel Bernard-Dagué ne s'arrêtent pas pour autant.",
+  "signal": {
+    "type": "recrutement",
+    "titre": "Chargé(e) de communication",
+    "texte": "Annonce publiée le 16 octobre 2026 (référence O095261016000661), candidatures jusqu'au 15 décembre, poste vacant à partir du 15 décembre, temps complet.",
+    "lien": "https://choisirleservicepublic.gouv.fr/offre-emploi/chargee-de-communication---mairie-de-louvres-reference-O095261016000661/"
+  },
+  "constats": [
+    {
+      "titre": "Les réseaux de la ville",
+      "etat": "bien",
+      "texte": "Facebook, Instagram et LinkedIn reliés depuis le site de la mairie (vérifié le 30 octobre 2026).",
+      "lien": "https://www.ville-louvres.fr/"
+    },
+    {
+      "titre": "L'agenda culturel",
+      "etat": "bien",
+      "texte": "Hoppy Music Session le 21 novembre, « Orgueil et préjugés... ou presque » le 11 décembre, troc jouets, sortie au marché de Noël de Janvry : l'agenda est tenu.",
+      "lien": "https://www.ville-louvres.fr/"
+    },
+    {
+      "titre": "Janvier",
+      "etat": "moyen",
+      "texte": "Aucun rendez-vous encore annoncé en janvier, au moment où le poste sera vacant.",
+      "lien": "https://www.ville-louvres.fr/"
+    },
+    {
+      "titre": "Le poste de chargé(e) de communication",
+      "etat": "absent",
+      "texte": "Vacant à partir du 15 décembre : magazine, site, panneaux lumineux et réseaux à tenir jusqu'à l'arrivée de la personne retenue."
+    }
+  ],
+  "formule": "relais",
+  "pourquoi": "Quelques semaines à partir du 15 décembre, prolongeables si l'arrivée glisse : site, panneaux, réseaux et pages du magazine tenus, et passation prête pour la personne recrutée.",
+  "contact": {
+    "rdv": "https://cal.com/studioes/30min",
+    "mail": "contact@studioes.fr"
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "marque": "fill",
+  "nom": "Commune de Plonévez-du-Faou",
+  "type": "collectivite",
+  "ville": "Plonévez-du-Faou",
+  "date": "2026-10-30",
+  "accroche": "Plonévez-du-Faou a un site clair, une adresse de mairie bien visible et une deuxième place au concours national Golden Street-Art à mettre en avant. Sur le site, pourtant, la dernière actualité date du 7 juillet et aucun rendez-vous n'est annoncé pour la fin de l'année.",
+  "constats": [
+    {
+      "titre": "Les actualités du site",
+      "etat": "moyen",
+      "texte": "Dernière actualité publiée le 7 juillet 2026 (alerte sécheresse), la précédente le 27 juin (registre des personnes vulnérables), vérifié le 30 octobre 2026.",
+      "lien": "https://www.plonevezdufaou.bzh/news/"
+    },
+    {
+      "titre": "L'agenda en ligne",
+      "etat": "absent",
+      "texte": "Aucun événement annoncé pour novembre et décembre, alors que l'Espace Ar Veilh et la mairie figurent comme lieux d'événements sur le site.",
+      "lien": "https://www.plonevezdufaou.bzh/evenements-lieu/espace-ar-veilh/"
+    },
+    {
+      "titre": "Le contact et les réseaux",
+      "etat": "bien",
+      "texte": "Adresse mail de l'accueil affichée et page Facebook de la commune reliée depuis le site.",
+      "lien": "https://www.plonevezdufaou.bzh/"
+    }
+  ],
+  "mois": {
+    "intro": "Un exemple de novembre, construit avec ce qui est en ligne à Plonévez-du-Faou. Chaque demande a sa valeur en unités, la même dans toutes les formules.",
+    "items": [
+      {
+        "type": "actu",
+        "titre": "La cérémonie du 11 Novembre",
+        "texte": "Horaires et déroulé sur le site, puis quelques lignes après la cérémonie.",
+        "semaine": 1
+      },
+      {
+        "type": "actu",
+        "titre": "Le registre des personnes vulnérables avant l'hiver",
+        "texte": "Rappel de l'inscription ouverte en juin, mis à jour pour la saison froide.",
+        "semaine": 2
+      },
+      {
+        "type": "agenda",
+        "n": 2,
+        "titre": "L'agenda de novembre et décembre",
+        "texte": "Les dates transmises par les associations à la mairie, à l'Espace Ar Veilh et ailleurs dans la commune.",
+        "semaine": 2
+      },
+      {
+        "type": "gabarit",
+        "titre": "Un modèle pour les associations",
+        "texte": "Un gabarit simple pour qu'elles envoient leurs dates au bon format.",
+        "semaine": 2
+      },
+      {
+        "type": "post",
+        "n": 3,
+        "titre": "Trois publications Facebook",
+        "texte": "11 Novembre, registre des personnes vulnérables, agenda de décembre.",
+        "semaine": 3
+      }
+    ]
+  },
+  "formule": "essentiel",
+  "pourquoi": "Une commune d'environ 2 000 habitants : Essentiel suffit pour garder le site, l'agenda et la page Facebook à jour chaque mois, sans recruter.",
+  "faq": [
+    {
+      "q": "Les associations peuvent-elles continuer à envoyer leurs dates à la mairie ?",
+      "r": "Oui. Les dates reçues par la mairie sont reprises et mises en forme sur le site et sur Facebook."
+    }
+  ],
+  "contact": {
+    "rdv": "https://cal.com/studioes/30min",
+    "mail": "contact@studioes.fr"
+  }
+}
