@@ -42,6 +42,7 @@
 
   /* Trame 2027 v2 des dossiers (comme studioes.fr, en clair) : couverture papier avec le nom en grand et des raccourcis
      vers ce qui est proposé, puis des feuilles fixes qui alternent blanc et papier ; cartes alignées qui entrent de gauche à droite. */
+  var FILL = "https://fill.studioes.fr";
   var AR = '<span class="ar"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>';
   var IC = {cal:'<path d="M4 6h16v14H4zM4 10h16M9 3v4M15 3v4"/>', mail:'<path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/>', ok:'<path d="M5 12.5l4.5 4.5L19 7.5"/>'};
   /* couleur d'une piste selon son métier : pêche pour la photo, lavande pour le web, menthe pour les outils, rose pour les réseaux */
@@ -107,7 +108,8 @@
         '<div class="otabs rv" role="tablist">' + ots.map(function(x, n){ return '<button type="button" role="tab" data-t="' + n + '" aria-selected="' + (n === 0) + '">' + esc(x.titre || OUTILS[x.type].titre) + '</button>'; }).join("") + '</div><div class="odemo rv" id="odemo"></div>');
       d.__outils = ots; }
 
-    if(a && !cl) sec("prix", "Votre projet", "chiffré en direct.", d.configurateur.intro || "Composez votre offre : le prix s'affiche au fur et à mesure, et le devis se génère tout de suite.", '<div class="cfg rv" id="cfg"></div>');
+    if(a && !cl) sec("prix", "Votre projet", "chiffré en direct.", d.configurateur.intro || "Composez votre offre : le prix s'affiche au fur et à mesure, et le devis se génère tout de suite.", '<div class="cfg rv" id="cfg"></div>' +
+      (pub ? '<p class="leg rv renvoi">Pour la communication courante (actualités, réseaux, newsletter, affiches, bulletin), Studio ES a conçu Fill : <a href="' + FILL + '/" target="_blank" rel="noopener">' + FILL + '/</a></p>' : ''));
 
 
     /* références : les études de cas les plus proches de ce qui est proposé */
@@ -121,10 +123,11 @@
 
     /* questions fréquentes : délais, paiement, suivi */
     var FAQ = cl ? [] : [["Combien de temps cela prend-il ?", "Un reportage se cale dans les semaines qui viennent, et la sélection est livrée sous 5 jours. Un site d'une page est en ligne sous 10 jours après l'appel de cadrage ; pour un site plus complet, le délai est fixé dans le devis."],
-      pub ? ["Comment se passe le paiement ?", "Sur facture après service fait, par mandat administratif. Un devis détaillé est envoyé avant toute commande, avec chaque ligne chiffrée."] : ["Comment se passe le paiement ?", "Un acompte de 30 % à la commande, le solde à la livraison. Les abonnements démarrent à la date choisie ensemble, sans mensualité payée d'avance."],
+      pub ? ["Comment se passe le paiement ?", "Sur facture après service fait, par mandat administratif. Un devis détaillé est envoyé avant toute commande, avec chaque ligne chiffrée."] : ["Comment se passe le paiement ?", "Un acompte de 30 % à la commande, par carte ou par virement, le solde à la livraison. Les abonnements démarrent à la date choisie ensemble, sans mensualité payée d'avance."],
       ["Et après la livraison ?", "Un site reste suivi au mois : hébergement, mises à jour, sauvegardes et petites modifications. Les photos sont livrées en haute définition avec les droits d'usage pour votre communication."],
       ["Faut-il s'engager sur tout ?", "Non. Chaque piste se lance seule. On peut commencer par la plus simple et décider de la suite une fois le résultat visible."],
       ["Où intervenez-vous ?", "Basé en Bretagne, déplacements possibles selon le projet. Les sites et les outils se font aussi à distance."]];
+    if(pub && !cl) FAQ.splice(3, 0, ["Et la communication courante ?", "Pour la communication courante (actualités, réseaux, newsletter, affiches, bulletin), Studio ES a conçu Fill : " + FILL + "/. Studio ES garde la photographie, les sites et les outils."]);
     (d.faq || []).forEach(function(x){ if(x && x.q && x.r) FAQ.push([x.q, x.r]); });
     if(FAQ.length) sec("questions", "Questions fréquentes", "avant de se lancer.", "",
       '<div class="faq">' + FAQ.map(function(x, n){ return '<details class="rv" style="--i:' + n + '"><summary><span>' + esc(x[0]) + '</span><i aria-hidden="true"></i></summary><p>' + esc(x[1]) + '</p></details>'; }).join("") + '</div>');
@@ -140,18 +143,29 @@
       '<ol class="etp rail" style="--n:3">' + etapesFin.map(function(x, n){ return '<li class="gd" style="--i:' + n + '"><i>' + (n + 1) + '</i><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></li>'; }).join("") + '</ol>' +
       '<footer class="pied2"><div class="sg">' + LOGO + '<span><b>Studio ES</b><span>Photographie et web, en Bretagne</span></span></div>' +
       '<nav aria-label="Sur studioes.fr"><a href="https://studioes.fr/metiers/photographie/">Photographie</a><a href="https://studioes.fr/metiers/sites-et-outils/">Sites et applications</a></nav>' +
-      '<div class="lg"><a href="https://studioes.fr">studioes.fr</a><span>Ewen Soupault, entrepreneur individuel · SIRET 834 922 486 00016 · TVA non applicable, art. 293 B du CGI</span></div></footer>', "pa fin");
+      '<div class="lg"><span class="lgl"><a href="https://studioes.fr">studioes.fr</a><a href="https://studioes.fr/conditions/">Mentions légales</a></span><span>Ewen Soupault, entrepreneur individuel · SIRET 834 922 486 00016 · TVA non applicable, art. 293 B du CGI</span></div></footer>', "pa fin");
 
     document.getElementById("app").innerHTML = o.join("");
+    ancres(document.getElementById("app"));
+    var ses = new URLSearchParams(location.search).get("paye"); if(ses && !cl) retourPaiement(ses);
     if(a) configurateur(d.configurateur, d);
     if(d.__outils) demos(d.__outils, d);
     typo(document.getElementById("app") || document.body); apparition();
   }
 
-  /* ---------- configurateur : prix réels, devis PDF, acceptation, acompte ---------- */
+  /* ---------- configurateur : prix réels, devis PDF, acceptation, acompte par carte ou par virement ---------- */
+  var ACOMPTE = "https://nfnbseonwgmtouxsaajd.supabase.co/functions/v1/acompte";
+  var ANTICIPE = "Je demande que la prestation commence avant la fin du délai de rétractation et reconnais que, une fois la prestation pleinement exécutée, je ne pourrai plus me rétracter.";
+  var RGPD = "Ces informations servent à établir votre devis et à vous recontacter. Elles transitent par FormSubmit (États-Unis) puis par la messagerie de Studio ES. Détails et droits : ";
+  function eurc(n){ n = Math.round(n * 100) / 100; return n % 1 ? n.toLocaleString("fr-FR", {minimumFractionDigits:2, maximumFractionDigits:2}).replace(/ | /g, " ") + " €" : eur(n); }
+  function slugDossier(){ return location.pathname.split("/").filter(Boolean)[0] || ""; }
+  /* remise négociée : {"taux": 10} ou {"montant": 150}, avec un libellé facultatif */
+  function remiseDe(r){ if(!r || typeof r !== "object") return null; var t = +r.taux || 0, m = +r.montant || 0; if(t <= 0 && m <= 0) return null;
+    return t > 0 ? {taux:Math.min(100, t), libelle:String(r.libelle || "Remise accordée")} : {montant:m, libelle:String(r.libelle || "Remise accordée")}; }
   function configurateur(cf, D){
     var box = document.getElementById("cfg"); if(!box) return;
-    var etapes = cf.etapes, choix = etapes.map(function(e){ return []; }), i = 0, client = {}, num = numero(), dejaTel = false;
+    var etapes = cf.etapes, choix = etapes.map(function(e){ return []; }), i = 0, client = {}, num = numero(), attente = null, envoyes = {};
+    var pm = cf.public ? false : (D.particulier != null ? D.particulier : cf.particulier), part = pm === true, RM = remiseDe(D.remise || cf.remise);
     function numero(){ var t = new Date(), a = "ABCDEFGHJKMNPQRSTUVWXYZ23456789", s = ""; for(var k = 0; k < 4; k++) s += a.charAt(Math.floor(Math.random() * a.length)); return String(t.getFullYear()).slice(2) + ("0" + (t.getMonth() + 1)).slice(-2) + ("0" + t.getDate()).slice(-2) + "-" + s; }
     function visible(e, k){ var o = etapes[e].options[k]; if(!o.si) return true; var c = choix[o.si[0]]; return o.si[1].some(function(x){ return c.indexOf(x) >= 0; }); }
     /* ce qui est obligatoire (hébergement et suivi d'un site, par exemple) est coché d'office dès que l'étape s'applique */
@@ -159,9 +173,13 @@
       e.options.forEach(function(o, k){ if(o.obligatoire && visible(n, k) && choix[n].indexOf(k) < 0){ if(!e.multi) choix[n] = []; choix[n].push(k); } }); }); }
     function etapesVisibles(){ return etapes.map(function(e, n){ return n; }).filter(function(n){ return etapes[n].options.some(function(o, k){ return visible(n, k) && !o.aucun; }); }); }
     function lignes(){ var r = []; etapes.forEach(function(e, n){ choix[n].forEach(function(k){ var o = e.options[k]; if(o.aucun) return; r.push({n:(o.titreDevis || o.l) + (o.an ? ", par an" : ""), l:o.lignes || (o.d ? [o.d] : []), p:o.p || 0, mois:!!o.mois, min:o.min, devis:!!o.devis}); }); }); return r; }
-    function totaux(){ var L = lignes(), a = 0, m = 0, dv = 0; L.forEach(function(x){ if(x.devis) dv++; else if(x.mois) m += x.p; else a += x.p; }); return {once:a, mois:m, devis:dv, lignes:L}; }
+    /* le même calcul que devis.js : la remise porte sur les prestations réglées une fois */
+    function totaux(){ var L = lignes(), a = 0, m = 0, dv = 0; L.forEach(function(x){ if(x.devis) dv++; else if(x.mois) m += x.p; else a += x.p; });
+      var r = !RM || !a ? 0 : Math.round((RM.taux ? a * RM.taux / 100 : Math.min(a, RM.montant)) * 100) / 100;
+      return {brut:a, remise:r, once:Math.round((a - r) * 100) / 100, mois:m, devis:dv, lignes:L}; }
     function prix(o){ return o.aucun ? "" : o.devis ? "sur devis" : eur(o.p) + (o.mois ? " / mois" : o.an ? " / an" : ""); }
     function code(){ return choix.map(function(c){ return c.length ? c.join("") : "x"; }).join("-"); }
+    function prive(T){ return !cf.public && T.once > 0; }
 
     /* une barre de progression continue, construite une fois : elle avance sans se redessiner ni sauter */
     box.innerHTML = '<div class="prog"><span class="pt"></span><span class="pb"><i></i></span></div><div class="stage"></div>';
@@ -169,7 +187,7 @@
     function avance(f, t){ fill.style.transform = "scaleX(" + Math.max(.04, Math.min(1, f)) + ")"; ptx.textContent = t; }
     function opt(n, o, k){ var on = choix[n].indexOf(k) >= 0;
       return '<button type="button" class="opt' + (o.obligatoire ? " oblig" : "") + '" data-k="' + k + '" aria-pressed="' + on + '"' + (o.obligatoire ? ' aria-disabled="true"' : '') + '><span class="ck"></span><b>' + esc(o.l) + '</b><span class="px">' + esc(prix(o)) + '</span>' +
-        ((o.d || o.min || o.obligatoire) ? '<small>' + esc(o.d || "") + (o.min ? " Engagement de " + o.min + " mois minimum." : "") + (o.obligatoire ? '<span class="pq">Inclus d\'office' + (o.pourquoi ? " : " + esc(o.pourquoi) : ".") + '</span>' : '') + '</small>' : '') + '</button>'; }
+        ((o.d || o.min || o.obligatoire) ? '<small>' + esc(o.d || "") + (o.min ? " Engagement de " + o.min + " mois minimum." : "") + (o.obligatoire ? '<span class="pq">Inclus d\'office' + (o.pourquoi ? " : " + esc(o.pourquoi) : ".") + '</span><span class="vh"> Cette ligne ne peut pas être retirée.</span>' : '') + '</small>' : '') + '</button>'; }
     function pas(){
       nettoyer(); var V = etapesVisibles(); if(i >= V.length) return recap();
       var n = V[i], e = etapes[n];
@@ -180,69 +198,113 @@
       dejaN = n;
       var h = '<div class="q"><h3>' + esc(e.q) + '</h3>' + (e.aide ? '<p class="sm">' + esc(e.aide) + '</p>' : e.multi ? '<p class="sm">Plusieurs choix possibles.</p>' : '') + '</div><div class="opts">';
       e.options.forEach(function(o, k){ if(visible(n, k)) h += opt(n, o, k); });
-      h += '</div><div class="nav2">' + (i ? '<button type="button" class="btn line" data-a="prec">Retour</button>' : '<span></span>') + '<button type="button" class="btn" data-a="suiv"' + (choix[n].length ? '' : ' disabled') + '>' + (i === V.length - 1 ? "Voir mon offre" : "Suivant") + '</button></div>';
+      h += '</div><p class="vh" aria-live="polite" data-vh></p><div class="nav2">' + (i ? '<button type="button" class="btn line" data-a="prec">Retour</button>' : '<span></span>') + '<button type="button" class="btn" data-a="suiv"' + (choix[n].length ? '' : ' disabled') + '>' + (i === V.length - 1 ? "Voir mon offre" : "Suivant") + '</button></div>';
       stage.innerHTML = h; stage.classList.remove("neuf"); void stage.offsetWidth; stage.classList.add("neuf"); box.dataset.n = n;
     }
     function recap(){
       var T = totaux(), h = '<h3>Votre offre</h3><ul class="recap">';
       T.lignes.forEach(function(x){ h += '<li><span>' + esc(x.n) + '</span><span>' + (x.devis ? "sur devis" : eur(x.p) + (x.mois ? " / mois" : "")) + '</span></li>'; });
+      if(T.remise) h += '<li><span>' + esc(RM.libelle) + (RM.taux ? " (" + String(RM.taux).replace(".", ",") + " %)" : "") + '</span><span>-' + eurc(T.remise) + '</span></li>';
       if(!T.lignes.length) h += '<li><span>Rien de sélectionné pour l\'instant</span><span></span></li>';
       h += '</ul><div class="total">';
-      if(T.once){ h += '<b>' + eur(T.once) + '</b><span>' + (cf.public ? "hors abonnements, réglé sur facture après service fait (mandat administratif)" : "en une fois, dont un acompte de " + eur(T.once * .3) + " à la commande") + '</span>'; }
+      if(T.once){ h += (T.remise ? '<span><s>' + eurc(T.brut) + '</s> avant remise</span>' : '') + '<b>' + eurc(T.once) + '</b><span>' + (cf.public ? "hors abonnements, réglé sur facture après service fait (mandat administratif)" : "en une fois, dont un acompte de " + eurc(T.once * .3) + " à la commande") + '</span>'; }
       if(T.mois) h += (T.once ? '<span class="plus">+ ' + eur(T.mois) + ' par mois' : '<b>' + eur(T.mois) + ' <small>/ mois</small></b><span>') + ', à partir d\'une date que l\'on fixe ensemble</span>';
       if(T.devis) h += '<span>' + (T.devis > 1 ? "Certains éléments sont" : "Un élément est") + ' chiffré' + (T.devis > 1 ? "s" : "") + ' après notre échange.</span>';
       h += '<span>TVA non applicable, art. 293 B du CGI.</span></div><div class="nav2"><button type="button" class="btn line" data-a="refaire">Modifier</button>' + (T.lignes.length ? '<button type="button" class="btn" data-a="devis">Recevoir le devis</button>' : '') + '</div>';
       dejaN = -1; avance(1, "Votre offre"); stage.innerHTML = h; stage.classList.remove("neuf"); void stage.offsetWidth; stage.classList.add("neuf");
     }
+    function champs(){ if(part) return [["rep","Nom et prénom", "", "name"],["adr","Adresse", "", "street-address"],["ville","Code postal et ville", "", "address-level2"],["mail","E-mail", "", "email"]];
+      return [["struct","Structure", D.nom, "organization"],["rep","Votre nom", "", "name"],["fonction","Votre fonction", cf.public ? "Maire, secrétaire de mairie…" : "Gérant, présidente…", "organization-title"],["adr","Adresse", "", "street-address"],["ville","Code postal et ville", "", "address-level2"],["mail","E-mail", "", "email"]].concat(cf.public ? [["siret","SIRET de la collectivité", "14 chiffres, pour la facture Chorus Pro", "off"],["opt_refs","Code service et n° d'engagement, si exigés", "Facultatif", "off"]] : []); }
     function formulaire(){
-      var T = totaux(), lien = lienAcompte(T.once), h = '<h3>Votre devis</h3><p class="sm">Il se génère tout de suite, avec les conditions de vente. Rien n\'est engagé tant que vous ne l\'acceptez pas.</p><form class="form" novalidate>';
-      [["struct","Structure", D.nom, "organization"],["rep","Votre nom", "", "name"],["fonction","Votre fonction", cf.public ? "Maire, secrétaire de mairie…" : "Gérant, présidente…", "organization-title"],["adr","Adresse", "", "street-address"],["ville","Code postal et ville", "", "address-level2"],["mail","E-mail", "", "email"]].concat(cf.public ? [["siret","SIRET de la collectivité", "14 chiffres, pour la facture Chorus Pro", "off"],["opt_refs","Code service et n° d'engagement, si exigés", "Facultatif", "off"]] : []).forEach(function(f){
+      var T = totaux(), h = '<h3>Votre devis</h3><p class="sm">Il se génère tout de suite, avec les conditions de vente. Rien n\'est engagé tant que vous ne l\'acceptez pas.</p>';
+      if(pm === "choix") h += '<label class="accord"><input type="checkbox" name="part"' + (part ? " checked" : "") + '><span>Je suis un particulier</span></label>';
+      h += '<form class="form" novalidate>';
+      champs().forEach(function(f){
         h += '<label><span>' + f[1] + '</span><input name="' + f[0] + '" autocomplete="' + f[3] + '"' + (f[0] === "mail" ? ' type="email" inputmode="email"' : '') + ' value="' + esc(client[f[0]] || (f[0] === "struct" ? D.nom : "")) + '" placeholder="' + esc(f[0] === "struct" ? "" : f[2]) + '"' + (f[0].indexOf("opt_") === 0 ? '' : ' required') + '></label>'; });
       h += '</form><p class="err" aria-live="polite"></p><div class="nav2"><button type="button" class="btn line" data-a="retour">Retour</button><button type="button" class="btn" data-a="pdf">Télécharger le devis</button></div>';
       if(cf.public){
         h += '<p class="sm">Ce devis peut servir de base à votre bon de commande. Pour la suite, choisissez un créneau : nous calons ensemble le démarrage et les modalités.</p><div class="nav2"><span></span><a class="btn" href="' + esc(rdv()) + '" target="_blank" rel="noopener">Choisir un créneau</a></div>';
-      } else if(T.once && lien){
+      } else if(prive(T)){
         h += '<div class="engage"><label class="accord"><input type="checkbox" name="ok"><span>J\'ai lu le devis n° ' + num + ' et ses <a href="https://studioes.fr/conditions/" target="_blank" rel="noopener">conditions générales de vente</a>, et je l\'accepte. Le paiement de l\'acompte vaut commande ferme.</span></label>' +
-          '<button type="button" class="btn" data-a="payer" disabled>Payer l\'acompte de ' + eur(T.once * .3) + '</button><p class="sm">Paiement sécurisé par Stripe. Vous recevez le devis accepté, puis vous choisissez un créneau de 30 minutes pour lancer le projet.</p></div>';
+          (part ? '<p class="sm">Vous disposez d\'un délai de rétractation de 14 jours à compter de l\'acceptation du devis : conditions sur <a href="https://studioes.fr/conditions/" target="_blank" rel="noopener">studioes.fr/conditions</a>, formulaire type de rétractation en annexe des conditions générales.</p><label class="accord"><input type="checkbox" name="anticipe"><span>' + esc(ANTICIPE) + '</span></label>' : '') +
+          '<div class="nav2"><button type="button" class="btn" data-a="payer" disabled>Payer l\'acompte de ' + eurc(T.once * .3) + '</button><button type="button" class="btn line" data-a="virement" disabled>Payer l\'acompte par virement</button></div>' +
+          '<p class="sm">Le devis accepté se télécharge d\'abord. Paiement par carte sécurisé par Stripe ; par virement, la facture d\'acompte vous est envoyée par e-mail.</p><p class="sm etat" aria-live="polite"></p></div>';
       } else h += '<p class="sm">Pour la suite, choisissez un créneau : nous calons ensemble le démarrage.</p><div class="nav2"><span></span><a class="btn" href="' + esc(rdv()) + '" target="_blank" rel="noopener">Choisir un créneau</a></div>';
+      h += '<p class="sm rgpd">' + RGPD + '<a href="https://studioes.fr/conditions/" target="_blank" rel="noopener">studioes.fr/conditions</a>.</p>';
       dejaN = -1; avance(1, "Votre devis"); stage.innerHTML = h; stage.classList.remove("neuf"); void stage.offsetWidth; stage.classList.add("neuf");
     }
-    function lire(){ var ok = true, f = box.querySelector("form"); Array.prototype.forEach.call(f.elements, function(x){ client[x.name] = x.value.trim(); if((!x.value.trim() && x.name.indexOf("opt_") !== 0) || (x.name === "siret" && x.value.replace(/\s/g, "").length !== 14) || (x.name === "mail" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(x.value.trim()))){ ok = false; x.setAttribute("aria-invalid","true"); } else x.removeAttribute("aria-invalid"); });
+    function garder(){ var f = box.querySelector("form"); if(f) Array.prototype.forEach.call(f.elements, function(x){ client[x.name] = x.value.trim(); }); }
+    function lire(){ var ok = true, f = box.querySelector("form"); if(part) client.struct = ""; client.fonction = part ? "" : client.fonction;
+      Array.prototype.forEach.call(f.elements, function(x){ client[x.name] = x.value.trim(); if((!x.value.trim() && x.name.indexOf("opt_") !== 0) || (x.name === "siret" && x.value.replace(/\s/g, "").length !== 14) || (x.name === "mail" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(x.value.trim()))){ ok = false; x.setAttribute("aria-invalid","true"); } else x.removeAttribute("aria-invalid"); });
       box.querySelector(".err").textContent = ok ? "" : "Complétez les champs en rouge pour générer le devis."; return ok; }
-    /* une seule saisie : ce que le client a tapé remonte dans sa fiche Hors-champ (FormSubmit, lu par la tâche de prospection) */
-    function consigne(etat){ try{ var T = totaux(), f = {_subject:"Devis " + num + " : " + (client.struct || D.nom) + " (" + etat + ")", _template:"table", _captcha:"false",
-        source:"dossier", dossier:location.pathname.split("/").filter(Boolean)[0] || "", devis:num, etat:etat, public:cf.public ? "oui" : "non",
-        structure:client.struct, nom:client.rep, fonction:client.fonction, adresse:client.adr, ville:client.ville, mail:client.mail, siret:client.siret || "", references:client.opt_refs || "",
-        lignes:T.lignes.map(function(x){ return x.l + (x.devis ? " (sur devis)" : " : " + x.p + (x.mois ? " €/mois" : " €")); }).join(" ; "), total:T.once + " €", mensuel:T.mois + " €/mois"};
-      fetch("https://formsubmit.co/ajax/contact@studioes.fr", {method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body:JSON.stringify(f), keepalive:true}).catch(function(){}); }catch(e){} }
-    var consigne1 = {};
-    function lienAcompte(t){ var a = cf.acompte || {}, u = a[String(Math.round(t))]; return /^https:\/\/(buy\.stripe\.com|checkout\.stripe\.com)\//.test(u || "") ? u : ""; }
+    function boutons(){ var ok = box.querySelector('[name="ok"]'), an = box.querySelector('[name="anticipe"]'), on = ok && ok.checked && (!part || (an && an.checked));
+      box.querySelectorAll('[data-a="payer"],[data-a="virement"]').forEach(function(b){ b.disabled = !on; }); }
+    /* une seule saisie : ce que le client a tapé remonte dans sa fiche Hors-champ (FormSubmit, lu par la tâche de prospection) ; une consigne par devis différent */
+    function consigne(etat, paiement, anticipe){ var cle = etat + ":" + code() + (part ? ":p" : ""); if(envoyes[cle]) return; envoyes[cle] = 1;
+      try{ var T = totaux(), f = {_subject:"Devis " + num + " : " + (client.struct || client.rep || D.nom) + " (" + etat + ")", _template:"table", _captcha:"false",
+        source:"dossier", dossier:slugDossier(), devis:num, code:code(), etat:etat, public:cf.public ? "oui" : "non", particulier:part ? "oui" : "non",
+        structure:client.struct || "", nom:client.rep, fonction:client.fonction || "", adresse:client.adr, ville:client.ville, mail:client.mail, siret:client.siret || "", references:client.opt_refs || "",
+        lignes:T.lignes.map(function(x){ return x.n + (x.devis ? " (sur devis)" : " : " + x.p + (x.mois ? " €/mois" : " €")); }).join(" ; "),
+        remise:T.remise ? T.remise + " € (" + RM.libelle + ")" : "", total:T.once + " €", mensuel:T.mois + " €/mois"};
+        if(paiement){ f.paiement = paiement; f.acompte = Math.round(T.once * 30) / 100 + " €"; }
+        if(part && paiement) f.demarrage_anticipe = anticipe ? "oui" : "non";
+        fetch("https://formsubmit.co/ajax/contact@studioes.fr", {method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body:JSON.stringify(f), keepalive:true}).catch(function(){}); }catch(e){} }
     function rdv(){ return (D.contact && /^https:\/\//.test(D.contact.rdv || "")) ? D.contact.rdv : "https://cal.com/studioes/30min"; }
-    function pdf(accepte){
+    function pdf(accepte, mode, anticipe){
       if(!window.jspdf || !window.studioDevis || !window.DEVIS_FONTS){ box.querySelector(".err").textContent = "Le devis n'a pas pu se charger. Rechargez la page avec une connexion active."; return null; }
-      var out = window.studioDevis({nom:D.nom, objet:cf.objet, public:!!cf.public}, totaux().lignes, client, num, accepte ? {date:new Date().toISOString(), nom:client.rep} : null, cf.regles);
+      var out = window.studioDevis({nom:D.nom, objet:cf.objet, public:!!cf.public, particulier:part, remise:RM}, totaux().lignes, client, num, accepte ? {date:new Date().toISOString(), nom:client.rep, mode:mode, anticipe:!!anticipe} : null, cf.regles);
       var u = URL.createObjectURL(out.blob), a = document.createElement("a"); a.href = u; a.download = out.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){ URL.revokeObjectURL(u); }, 60000);
       return out;
     }
-    function charger(fn){ if(dejaTel || window.jspdf){ fn(); return; } dejaTel = true; var s = [["https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"],["https://studioes.fr/conditions/cgv.js"],["../assets/devis-fonts.js"],["../assets/devis.js"]], k = 0;
-      (function un(){ if(k >= s.length) return fn(); var x = document.createElement("script"); x.src = s[k++][0]; x.onload = un; x.onerror = k === 2 ? un : function(){ fn(); }; document.head.appendChild(x); })(); }
+    /* chargement unique de jsPDF, des CGV et du gabarit ; les demandes faites pendant le chargement attendent leur tour */
+    function charger(fn){ if(window.jspdf && window.studioDevis && window.DEVIS_FONTS){ fn(); return; } if(attente){ attente.push(fn); return; } attente = [fn];
+      var s = ["https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js","https://studioes.fr/conditions/cgv.js","../assets/devis-fonts.js","../assets/devis.js"], k = 0;
+      function fin(){ var a = attente; attente = null; a.forEach(function(f){ f(); }); }
+      (function un(){ if(k >= s.length) return fin(); var x = document.createElement("script"); x.src = s[k++]; x.onload = un; x.onerror = k === 2 ? un : fin; document.head.appendChild(x); })(); }
+    function retourUrl(){ return location.href; }
+    /* paiement : le devis accepté est généré et téléchargé d'abord, puis le serveur crée la session de paiement (carte) ou prévient Studio ES (virement) */
+    function payer(vir){
+      if(!lire()) return; var T = totaux(); if(!prive(T)) return;
+      var an = box.querySelector('[name="anticipe"]'), anticipe = part ? !!(an && an.checked) : false, et = box.querySelector(".etat"), w = null;
+      if(part && !anticipe) return;
+      box.querySelectorAll('[data-a="payer"],[data-a="virement"]').forEach(function(b){ b.disabled = true; });
+      if(!vir){ try{ w = window.open("", "_blank"); if(w){ w.opener = null; w.document.write('<!doctype html><meta charset="utf-8"><title>Paiement</title><p style="font:16px/1.5 sans-serif;padding:32px">Préparation du paiement sécurisé…</p>'); } }catch(e){ w = null; } }
+      et.textContent = vir ? "Envoi de votre demande…" : "Préparation du paiement…";
+      consigne(vir ? "devis accepté, acompte par virement" : "devis accepté, acompte en cours", vir ? "virement" : "carte", anticipe);
+      function echec(m){ if(w && !w.closed) w.close(); et.textContent = m; boutons(); }
+      charger(function(){
+        if(!pdf(true, vir ? "virement" : "carte", anticipe)) return echec("Le devis accepté n'a pas pu être généré : le paiement n'est pas lancé. Rechargez la page, ou écrivez à contact@studioes.fr.");
+        var corps = {action:vir ? "virement" : "creer", dossier:slugDossier(), devis:num, structure:client.struct || client.rep, nom:client.rep, email:client.mail, total:T.once, particulier:part, demarrage_anticipe:anticipe};
+        if(!vir) corps.retour = retourUrl();
+        fetch(ACOMPTE, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(corps)})
+          .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ if(!r.ok || j.erreur) throw {m:j.erreur || "Le paiement n'a pas pu être préparé."}; return j; }); })
+          .then(function(j){
+            if(vir){ et.textContent = "La facture d'acompte, avec nos coordonnées bancaires, vous est envoyée sous 24 h. La commande est ferme à réception du virement."; return; }
+            if(!/^https:\/\//.test(j.url || "")) throw {m:"Le paiement n'a pas pu être préparé."};
+            if(w && !w.closed){ w.location.href = j.url; et.textContent = "La page de paiement s'est ouverte dans un nouvel onglet. Le devis accepté est dans vos téléchargements."; boutons(); }
+            else { et.textContent = "Redirection vers le paiement sécurisé…"; setTimeout(function(){ location.href = j.url; }, 700); }
+          })
+          .catch(function(e){ echec((e && e.m ? e.m + " " : "La connexion au service de paiement a échoué. ") + "Vous pouvez réessayer, ou écrire à contact@studioes.fr en indiquant le devis n° " + num + "."); });
+      });
+    }
 
     box.addEventListener("click", function(ev){
       var b = ev.target.closest("button"); if(!b || b.disabled || !box.contains(b)) return; var n = +box.dataset.n;
       if(b.dataset.k != null){ var k = +b.dataset.k, c = choix[n], o = etapes[n].options[k];
-        if(o.obligatoire){ b.classList.remove("non"); void b.offsetWidth; b.classList.add("non"); return; }
+        if(o.obligatoire){ b.classList.remove("non"); void b.offsetWidth; b.classList.add("non"); var vh = stage.querySelector("[data-vh]"); if(vh) vh.textContent = o.l + " : inclus d'office, cette ligne ne peut pas être retirée."; return; }
         if(etapes[n].multi && !o.aucun){ c = c.filter(function(x){ return !etapes[n].options[x].aucun; }); var p = c.indexOf(k); if(p >= 0) c.splice(p, 1); else c.push(k); choix[n] = c; }
         else choix[n] = o.aucun ? [k].concat(c.filter(function(x){ return etapes[n].options[x].obligatoire; })) : [k]; return pas(); }
       var a = b.dataset.a;
       if(a === "suiv"){ i++; pas(); } else if(a === "prec"){ i--; pas(); } else if(a === "refaire"){ i = 0; pas(); }
       else if(a === "devis"){ formulaire(); charger(function(){}); }
-      else if(a === "retour"){ i = etapesVisibles().length; recap(); }
-      else if(a === "pdf"){ if(lire()){ charger(function(){ pdf(false); }); if(!consigne1.devis){ consigne1.devis = 1; consigne("devis téléchargé"); } } }
-      else if(a === "payer"){ if(!lire()) return; var T = totaux(), lien = lienAcompte(T.once); if(!lien) return;
-        var u = lien + "?client_reference_id=" + encodeURIComponent((num + "_" + code()).replace(/[^A-Za-z0-9_-]/g, "")) + "&prefilled_email=" + encodeURIComponent(client.mail);
-        var w = window.open(u, "_blank"); consigne("devis accepté, acompte en cours"); charger(function(){ pdf(true); }); if(!w) location.href = u; }
+      else if(a === "retour"){ garder(); i = etapesVisibles().length; recap(); }
+      else if(a === "pdf"){ if(lire()){ charger(function(){ pdf(false); }); consigne("devis téléchargé"); } }
+      else if(a === "payer") payer(false);
+      else if(a === "virement") payer(true);
     });
-    box.addEventListener("change", function(ev){ if(ev.target.name === "ok"){ var p = box.querySelector('[data-a="payer"]'); if(p) p.disabled = !ev.target.checked; } });
+    box.addEventListener("change", function(ev){ var t = ev.target;
+      if(t.name === "ok" || t.name === "anticipe") boutons();
+      else if(t.name === "part"){ garder(); part = t.checked; formulaire(); } });
     pas();
   }
 
@@ -335,6 +397,33 @@
     rendreD();
   }
 
+  /* ancres internes : la page défile sans réécrire le # de l'adresse, qui peut porter la clé du dossier */
+  function ancres(r){ r.addEventListener("click", function(ev){ var a = ev.target.closest('a[href^="#"]'); if(!a || ev.defaultPrevented) return; var t = document.getElementById(a.getAttribute("href").slice(1)); if(!t) return;
+    ev.preventDefault(); t.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"});
+    r.querySelectorAll(".cible").forEach(function(x){ x.classList.remove("cible"); }); t.classList.add("cible"); }); }
+
+  /* retour de paiement : ?paye=<session> ; le serveur dit si l'acompte est reçu, puis l'adresse est nettoyée (le # est gardé) */
+  function retourPaiement(ses){
+    var cv = document.querySelector(".cv2 .w"); if(!cv) return; var bx = document.createElement("div"); bx.className = "paye"; bx.setAttribute("role", "status");
+    bx.innerHTML = '<b>Vérification du paiement…</b>'; cv.insertBefore(bx, cv.firstChild);
+    try{ var u = new URL(location.href); u.searchParams.delete("paye"); history.replaceState(null, "", u.pathname + u.search + u.hash); }catch(e){}
+    var essais = 0;
+    function attendre(){ bx.innerHTML = '<b>Paiement en cours de confirmation</b><p>Vous recevrez un e-mail dès qu\'il est confirmé.</p>'; }
+    (function lire(){ fetch(ACOMPTE + "?session=" + encodeURIComponent(ses), {cache:"no-store"}).then(function(r){ return r.json(); }).then(function(j){
+      if(j && j.statut === "paye"){ bx.innerHTML = '<b>Acompte reçu, commande ferme</b><p>' + (j.montant != null ? "Acompte de " + esc(eurc(+j.montant)) + " reçu" : "Acompte reçu") + (j.devis ? " pour le devis n° " + esc(j.devis) : "") + '. La facture d\'acompte vous parvient sous 24 h.</p><a class="btn" href="https://cal.com/studioes/30min" target="_blank" rel="noopener">Choisir un créneau ' + AR + '</a>'; return; }
+      if(j && j.statut === "en_attente" && ++essais <= 5){ setTimeout(lire, 2000); return; }
+      if(j && j.statut === "inconnu"){ bx.innerHTML = '<b>Paiement introuvable</b><p>Ce paiement n\'a pas été retrouvé. Écrivez à <a href="mailto:contact@studioes.fr">contact@studioes.fr</a>.</p>'; return; }
+      attendre(); }).catch(function(){ if(++essais <= 5) setTimeout(lire, 2000); else attendre(); }); })(); }
+
+  /* dossier chiffré : data.json est une enveloppe AES-GCM, la clé suit le #k= du lien envoyé (elle ne quitte jamais le navigateur) */
+  var CLE = (/[#&]k=([A-Za-z0-9_-]{16,})/.exec(location.hash) || [])[1] || "";
+  function b64(s){ s = s.replace(/-/g, "+").replace(/_/g, "/"); while(s.length % 4) s += "="; var t = atob(s), a = new Uint8Array(t.length); for(var i = 0; i < t.length; i++) a[i] = t.charCodeAt(i); return a; }
+  function ouvrir(u){ return fetch(u, {cache:"no-cache"}).then(function(r){ if(!r.ok) throw new Error("absent"); return r.json(); }).then(function(j){
+    if(!j || !j.enc) return j;
+    if(!CLE || !(window.crypto && crypto.subtle)) throw new Error("cle");
+    return crypto.subtle.importKey("raw", b64(CLE), "AES-GCM", false, ["decrypt"]).then(function(k){ return crypto.subtle.decrypt({name:"AES-GCM", iv:b64(j.iv)}, k, b64(j.ct)); })
+      .then(function(p){ return JSON.parse(new TextDecoder().decode(p)); }, function(){ throw new Error("cle"); }); }); }
+
   /* espaces insécables avant : ; ? ! » et après « */
   function typo(r){ var w = document.createTreeWalker(r, NodeFilter.SHOW_TEXT), n;
     while((n = w.nextNode())){ var t = n.nodeValue, u = t.replace(/ ([:;?!»])/g, "\u00a0$1").replace(/« /g, "«\u00a0"); if(u !== t) n.nodeValue = u; } }
@@ -350,7 +439,7 @@
     addEventListener("scroll", function(){ if(!tic){ tic = true; requestAnimationFrame(etat); } }, {passive:true}); etat();
   }
 
-  fetch("data.json", {cache:"no-cache"}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(rendre).catch(function(){
-    document.getElementById("app").innerHTML = '<section class="cv2"><div class="w"><div class="hd2"><h1>Dossier introuvable.</h1><p class="acc">Écrivez à <a href="mailto:contact@studioes.fr">contact@studioes.fr</a>.</p></div></div></section>';
+  ouvrir("data.json").then(rendre).catch(function(e){ var cle = e && e.message === "cle";
+    document.getElementById("app").innerHTML = '<section class="cv2"><div class="w"><div class="hd2"><h1>' + (cle ? "Lien incomplet." : "Dossier introuvable.") + '</h1><p class="acc">' + (cle ? "Lien incomplet : utilisez le lien reçu par e-mail." : 'Écrivez à <a href="mailto:contact@studioes.fr">contact@studioes.fr</a>.') + '</p></div></div></section>';
   });
 })();

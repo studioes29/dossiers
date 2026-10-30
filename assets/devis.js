@@ -9,11 +9,14 @@
   function p2(n){ return ("0" + n).slice(-2); }
   function dmy(x){ return p2(x.getDate()) + "/" + p2(x.getMonth() + 1) + "/" + x.getFullYear(); }
 
-  /* D : {nom, objet, public}, lignes : [{n, l:[...], p, mois, min, devis, remise}], client : {struct, rep, fonction, adr, ville, mail}, num, accept : {date, nom} ou null */
+  /* D : {nom, objet, public, particulier, remise:{libelle, taux | montant}}, lignes : [{n, l:[...], p, mois, min, devis, remise}],
+     client : {struct, rep, fonction, adr, ville, mail}, num, accept : {date, nom, mode:"carte"|"virement", anticipe} ou null.
+     Particulier : rétractation de 14 jours et demande expresse de démarrage anticipé ; pas de déclaration professionnelle ni d'acompte acquis. */
+  var ANTICIPE = "Je demande que la prestation commence avant la fin du délai de rétractation et reconnais que, une fois la prestation pleinement exécutée, je ne pourrai plus me rétracter.";
   window.studioDevis = function(D, lignes, client, num, accept, regles){
     var J = window.jspdf.jsPDF, d = new J({unit:"pt", format:"a4"}), W = 595.28, H = 841.89, L = 50, R = W - 50, y = 0;
     [["BricoXB","Brico"],["InterL","JostL"],["InterM","JostM"]].forEach(function(f){ d.addFileToVFS(f[0] + ".ttf", window.DEVIS_FONTS[f[0]]); d.addFont(f[0] + ".ttf", f[1], "normal"); });
-    var now = accept && accept.date ? new Date(accept.date) : new Date(), lim = new Date(now.getTime() + 30 * 864e5), PUB = !!(D && D.public);
+    var now = accept && accept.date ? new Date(accept.date) : new Date(), lim = new Date(now.getTime() + 30 * 864e5), PUB = !!(D && D.public), PART = !PUB && !!(D && D.particulier), MODE = accept && accept.mode === "virement" ? "virement" : accept ? "carte" : "";
     function F(f, s, c){ d.setFont(f, "normal"); d.setFontSize(s); d.setTextColor(c || INK); }
     function logo(x, y0, h, col){ var s = h / 186, P = [179.42,76.92,179.42,158.43,136.95,158.43,136.95,174.56,179.42,174.56,179.42,223.32,120.58,223.32,120.58,207.07,163.05,207.07,163.05,190.93,120.58,190.93,120.58,142.05,163.05,142.05,163.05,125.92,120.7,125.92,120.58,109.55,163.05,109.55,163.05,93.3,120.58,93.3,120.58,76.92], DD = [];
       for(var i = 2; i < P.length; i += 2) DD.push([(P[i] - P[i-2]) * s, (P[i+1] - P[i-1]) * s]);
@@ -35,28 +38,31 @@
     /* De, Pour, puis l'objet */
     y = 176; var yc = y, C2 = 318;
     F("Brico", 11); d.text("De", L, y); d.text("Pour", C2, y); y += 17;
-    F("JostM", 10.5); d.text("Studio ES", L, y); d.text(client.struct || D.nom || "", C2, y); y += 14;
+    F("JostM", 10.5); d.text("Studio ES", L, y); d.text((PART ? client.rep : client.struct) || D.nom || "", C2, y); y += 14;
     var yL = y; F("JostL", 9.5, MU); EMETTEUR.forEach(function(l){ d.text(l, L, yL); yL += 12.8; });
-    var yR = y; [client.rep ? "Représentée par " + client.rep + (client.fonction ? ", " + client.fonction : "") : "", client.adr, client.ville, client.mail, client.siret ? "SIRET " + client.siret : "", client.opt_refs ? "Réf. " + client.opt_refs : ""].forEach(function(l){ if(l){ d.text(l, C2, yR); yR += 12.8; } });
+    var yR = y; [client.rep && !PART ? "Représentée par " + client.rep + (client.fonction ? ", " + client.fonction : "") : "", client.adr, client.ville, client.mail, client.siret ? "SIRET " + client.siret : "", client.opt_refs ? "Réf. " + client.opt_refs : ""].forEach(function(l){ if(l){ d.text(l, C2, yR); yR += 12.8; } });
     y = Math.max(yL, yR) + 18; hr(y - 6);
     y += 12; F("Brico", 11); d.text("Objet", L, y); F("JostL", 10.5, INK); para(D.objet || ("Prestations pour " + D.nom), L + 46, R - L - 46, 14); y += 12;
 
     /* les postes, regroupés par échéance ; aucun total intermédiaire */
     var once = lignes.filter(function(x){ return !x.mois && !x.devis; }), mois = lignes.filter(function(x){ return x.mois; }), devis = lignes.filter(function(x){ return x.devis; });
-    var tOnce = once.reduce(function(a, x){ return a + x.p; }, 0), tMois = mois.reduce(function(a, x){ return a + x.p; }, 0), n = 1;
+    var tBrut = once.reduce(function(a, x){ return a + x.p; }, 0), RM = D && D.remise && typeof D.remise === "object" ? D.remise : null,
+      rem = !RM || !tBrut ? 0 : Math.round((RM.taux ? tBrut * Math.min(100, Math.max(0, +RM.taux)) / 100 : Math.min(tBrut, Math.max(0, +RM.montant || 0))) * 100) / 100,
+      tOnce = Math.round((tBrut - rem) * 100) / 100, tMois = mois.reduce(function(a, x){ return a + x.p; }, 0), n = 1;
     function section(t, sub){ need(70); y += 8; F("Brico", 13); d.text(t, L, y, {charSpace:-.3}); var tw = d.getTextWidth(t); F("JostL", 9.5, MU); d.text(sub, L + tw + 8, y); d.text("Montant", R, y, {align:"right"}); y += 8; hr(y, INK); y += 17; }
     function poste(t, ls, amt, rem){ F("JostL", 9); var h = 15; ls.forEach(function(l){ h += d.splitTextToSize(l, 330).length * 11.6; }); need(h + 10);
       F("JostM", 10.5); d.text(t, L, y); F("JostM", 10.5); d.text(amt, R, y, {align:"right"});
       if(rem){ F("JostL", 9, MU); d.text(rem, R, y + 12, {align:"right"}); }
       y += 14; ls.forEach(function(l){ F("JostL", 9, MU); d.text("·", L + 1, y); para(l, L + 10, 330, 11.6); }); y += 8; hr(y - 4); y += 10; }
     function remise(x){ return x.remise ? "dont remise " + eur(x.remise) : ""; }
-    if(once.length){ section(n++ + ". Réglé une fois", ""); once.forEach(function(x){ poste(x.n, x.l || [], eur(x.p), remise(x)); }); }
+    if(once.length){ section(n++ + ". Réglé une fois", ""); once.forEach(function(x){ poste(x.n, x.l || [], eur(x.p), remise(x)); });
+      if(rem) poste((RM.libelle || "Remise accordée") + (RM.taux ? " (" + fr(+RM.taux) + " %)" : ""), ["Sur les prestations réglées une fois, soit " + eur(tBrut) + " avant remise"], "-" + eur(rem)); }
     if(mois.length){ section(n++ + ". Chaque mois", ""); mois.forEach(function(x){ poste(x.n, (x.l || []).filter(function(t){ return !/^Engagement de/.test(t); }).concat(x.min ? ["Engagement de " + x.min + " mois minimum"] : []), eur(x.p) + " / mois", remise(x)); }); }
     if(devis.length){ section(n++ + ". À chiffrer ensemble", ""); devis.forEach(function(x){ poste(x.n, (x.l || []).concat(["Chiffré après notre échange, sur devis séparé"]), "à chiffrer"); }); }
 
     /* ce que vous réglez, et quand : le seul endroit où figurent les totaux */
     var E = [];
-    if(tOnce){ if(PUB) E.push(["Après service fait", "Sur facture, par mandat administratif", eur(tOnce)]); else { E.push(["À la commande", "Acompte de 30 %, réglé en ligne", eur(tOnce * .3)]); E.push(["À la livraison", "Solde de 70 %, par virement", eur(tOnce * .7)]); } }
+    if(tOnce){ if(PUB) E.push(["Après service fait", "Sur facture, par mandat administratif", eur(tOnce)]); else { E.push(["À la commande", "Acompte de 30 %, " + (MODE === "virement" ? "par virement" : MODE === "carte" ? "réglé en ligne par carte" : "par carte ou par virement"), eur(tOnce * .3)]); E.push(["À la livraison", "Solde de 70 %, par virement", eur(tOnce * .7)]); } }
     if(tMois) E.push(["Chaque mois", "À partir de la date convenue ensemble", eur(tMois) + " / mois"]);
     if(E.length){ var bh = 50 + E.length * 22 + (tOnce && !PUB ? 30 : 0) + 22; need(bh + 10); y += 6;
       d.setFillColor(PAPER); d.roundedRect(L - 14, y, R - L + 28, bh, 14, 14, "F"); var y0 = y; y += 26;
@@ -69,16 +75,21 @@
     suite(); F("Brico", 24); d.text("Conditions particulières", L, y, {charSpace:-.9}); y += 30;
     function bloc(t, ls){ F("JostL", 9); var h = 16; ls.forEach(function(l){ h += d.splitTextToSize(l, R - L).length * 12 + 1; }); need(h + 8); F("Brico", 10.5); d.text(t, L, y); y += 14; ls.forEach(function(l){ F("JostL", 9, MU); para(l, L, R - L, 12); y += 1; }); y += 9; }
     bloc("Validité", ["Ce devis est gratuit et valable 30 jours à compter de sa date d'émission."]);
-    if(PUB) bloc("Commande", ["La commande est ferme à réception du devis signé par une personne habilitée ou d'un bon de commande qui y fait référence."]); else bloc("Commande", ["La commande est ferme et définitive dès l'acceptation en ligne du présent devis et le paiement de l'acompte. L'acceptation en ligne a la même valeur qu'une signature manuscrite.", "Les sommes versées à la commande sont un acompte et non des arrhes : elles restent acquises au prestataire et engagent les deux parties sur la totalité de la commande.", "Le client déclare commander pour les besoins de son activité professionnelle ou associative."]);
-    bloc("Règlement", [PUB ? (tOnce ? "Prestations facturées après service fait, réglées par mandat administratif dans le délai légal de paiement. Facture déposée sur Chorus Pro. " : "") + (tMois ? "Suivi mensuel : démarrage fixé d'un commun accord, facturé à terme échu chaque mois. " : "") : (tOnce ? "Prestations : acompte de 30 % à la commande, réglé en ligne par carte bancaire ; solde de 70 % à la livraison, par virement, à réception de facture. " : "") + (tMois ? "Suivi mensuel : la date de démarrage est fixée d'un commun accord lors de notre premier échange ; il est facturé chaque mois à terme échu, sans mensualité payée d'avance. " : "") + "Pas d'escompte pour paiement anticipé."]);
+    if(PUB) bloc("Commande", ["La commande est ferme à réception du devis signé par une personne habilitée ou d'un bon de commande qui y fait référence."]); else if(PART){ bloc("Commande", ["La commande est ferme dès l'acceptation en ligne du présent devis et le paiement de l'acompte. L'acceptation en ligne a la même valeur qu'une signature manuscrite."]);
+      bloc("Droit de rétractation", ["Le client, consommateur, dispose d'un délai de 14 jours à compter de l'acceptation du devis pour se rétracter, sans avoir à donner de motif, par tout écrit adressé à contact@studioes.fr ou au moyen du formulaire type de rétractation joint en annexe des conditions générales de vente (studioes.fr/conditions).", "En cas de rétractation, les sommes versées sont remboursées dans les 14 jours. Si la prestation a commencé à la demande expresse du client avant la fin du délai, le montant correspondant au service déjà fourni reste dû. Ces conditions prévalent sur l'article 10 des conditions générales.",
+        "Demande de démarrage anticipé : " + (accept ? (accept.anticipe ? "case cochée par le client lors de l'acceptation : « " + ANTICIPE + " »" : "non demandée.") : "à confirmer par le client au moment de l'acceptation en ligne.")]); }
+    else bloc("Commande", ["La commande est ferme et définitive dès l'acceptation en ligne du présent devis et le paiement de l'acompte. L'acceptation en ligne a la même valeur qu'une signature manuscrite.", "Les sommes versées à la commande sont un acompte et non des arrhes : elles restent acquises au prestataire et engagent les deux parties sur la totalité de la commande.", "Le client déclare commander pour les besoins de son activité professionnelle ou associative."]);
+    bloc("Règlement", [PUB ? (tOnce ? "Prestations facturées après service fait, réglées par mandat administratif dans le délai légal de paiement. Facture déposée sur Chorus Pro. " : "") + (tMois ? "Suivi mensuel : démarrage fixé d'un commun accord, facturé à terme échu chaque mois. " : "") : (tOnce ? "Prestations : acompte de 30 % à la commande, réglé en ligne par carte bancaire ou par virement à réception de la facture d'acompte ; solde de 70 % à la livraison, par virement, à réception de facture. " : "") + (tMois ? "Suivi mensuel : la date de démarrage est fixée d'un commun accord lors de notre premier échange ; il est facturé chaque mois à terme échu, sans mensualité payée d'avance. " : "") + "Pas d'escompte pour paiement anticipé."]);
     if(tMois) bloc("Durée du suivi", ["Le suivi mensuel est conclu pour une durée indéterminée, avec la durée minimale indiquée pour chaque ligne à compter de son démarrage. Passé cette durée, chaque partie peut y mettre fin à tout moment, par écrit (un e-mail suffit), avec un préavis d'un mois."]);
     bloc("Périmètre", (regles && regles.length ? regles : []).concat(["Deux allers-retours de corrections sont compris par livrable. Toute demande hors du périmètre décrit fait l'objet d'un devis complémentaire.", "Les déplacements sont compris dans un rayon de 50 km autour de Leuhan."]));
     bloc("Droits sur les créations", ["Après paiement complet, le prestataire concède au client, à titre non exclusif, le droit de reproduire et de représenter les créations et photographies livrées pour sa communication (site internet, réseaux sociaux, supports imprimés), sans limite de territoire et pour toute la durée de protection des droits. Toute cession à un tiers ou tout autre usage fait l'objet d'un accord écrit.", "Les photographies sont créditées « Studio ES » lorsque le support le permet."]);
 
-    need(130); y += 4; var bh2 = accept ? 80 : 104; d.setFillColor(PAPER); d.roundedRect(L - 14, y, R - L + 28, bh2, 14, 14, "F"); y += 24;
+    need(130); y += 4; var bh2 = accept ? (PART ? 95 : 80) : 104; d.setFillColor(PAPER); d.roundedRect(L - 14, y, R - L + 28, bh2, 14, 14, "F"); y += 24;
     F("Brico", 11.5); d.text(accept ? "Devis accepté en ligne" : "Bon pour accord", L, y); F("JostL", 9, MU);
     if(accept){ d.text("Accepté le " + dmy(now) + " à " + p2(now.getHours()) + " h " + p2(now.getMinutes()) + " par " + (accept.nom || client.rep || "") + (client.mail ? " (" + client.mail + ")" : "") + ".", L, y + 18);
-      d.text("Commande ferme dès réception de l'acompte. Référence de paiement : " + num + ".", L, y + 33); y += bh2; }
+      d.text(MODE === "virement" ? "Statut : accepté, acompte par virement. Commande ferme à réception du virement. Référence : " + num + "." : "Commande ferme dès réception de l'acompte. Référence de paiement : " + num + ".", L, y + 33);
+      if(PART) d.text(accept.anticipe ? "Démarrage avant la fin du délai de rétractation demandé expressément (case cochée)." : "Démarrage avant la fin du délai de rétractation : non demandé.", L, y + 48);
+      y += bh2; }
     else { d.text("Accepté en ligne, ou daté et signé avec la mention « Lu et approuvé, bon pour commande ».", L, y + 17);
       d.setDrawColor(INK); d.setLineWidth(.6); d.line(L, y + 60, L + 170, y + 60); d.line(L + 210, y + 60, R, y + 60); F("JostL", 8, MU); d.text("Date et lieu", L, y + 71); d.text("Signature", L + 210, y + 71); y += bh2; }
     y += 14; ["Ewen Soupault, entrepreneur individuel (EI), Studio ES. Siret 834 922 486 00016. TVA non applicable, art. 293 B du CGI.", "Les conditions générales de vente ci-après font partie intégrante du présent devis. En cas de divergence, les conditions particulières prévalent."].forEach(function(l){ F("JostL", 8, MU); para(l, L, R - L, 10.4); });
