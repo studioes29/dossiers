@@ -25,10 +25,10 @@
   ouvrir("data.json").then(function(x){ D = x; rendre(); }, function(e){
     app.innerHTML = '<div class="w"><header><div class="marque">Studio ES</div><h1>' + (e && e.message === "cle" ? "Lien incomplet." : "Ce bon de commande n’est pas disponible.") + '</h1></header><p>' + (e && e.message === "cle" ? "Lien incomplet : utilisez le lien reçu par e-mail." : "Écrivez à contact@studioes.fr.") + '</p></div>'; });
 
-  /* règlement d'un abonnement Fill : collectivité sur Chorus Pro à terme échu, entreprise par carte depuis l'Espace Fill */
+  /* règlement d'un abonnement Fill : collectivité sur Chorus Pro à terme échu, entreprise chaque mois à l'avance par virement automatique ou par carte (aucun prélèvement) */
   function reglement(){ if(D.marque !== "fill") return null;
     if((D.articles || []).some(function(a){ return /factur|r[èe]glement|paiement/i.test(a.t || ""); })) return null;
-    return {t:"Règlement", texte:D.public ? "Factures mensuelles à terme échu, payables à 30 jours, déposées sur Chorus Pro." : "L’abonnement se règle chaque mois à l’avance, par carte, depuis l’Espace Fill (fill.studioes.fr/espace) : les unités du mois sont créditées au paiement."}; }
+    return {t:"Règlement", texte:D.public ? "Factures mensuelles à terme échu, payables à 30 jours, déposées sur Chorus Pro." : "L’abonnement se règle chaque mois à l’avance, au choix par virement automatique (virement permanent que le client programme depuis sa banque, d’après la facture ou l’échéancier envoyé par Fill, qui portent l’IBAN) ou par carte depuis l’Espace Fill (fill.studioes.fr/espace). Aucun prélèvement n’est effectué. Les unités du premier mois sont créditées au premier règlement (dès le paiement par carte, ou à réception du virement), puis le premier jour de chaque mois."}; }
   function articles(){ var r = reglement(); return (D.articles || []).concat(r ? [r] : []); }
   /* signature enregistrée par Studio ES dans data.json : {"date": "AAAA-MM-JJ" ou ISO, "nom", "fonction"} */
   function signeeD(){ var s = D.signee; if(!s) return null; if(typeof s === "string") s = {date:s}; return s.date ? s : null; }
