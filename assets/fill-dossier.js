@@ -178,7 +178,7 @@
       faq.map(function(x, n){ return '<details class="rv" style="--k:' + (n % 4) + '"><summary>' + esc(x.q) + '<i aria-hidden="true"></i></summary><div class="r">' + esc(x.r) + '</div></details>'; }).join("") + '</div></div></section>');
 
     /* échange */
-    h.push('<section class="fe encre" id="echange"><div class="w ech"><div><h2 class="rv">On en parle<span class="it"><u>quinze minutes</u> ?</span></h2>' +
+    h.push('<section class="fe encre" id="echange"><div class="w ech"><div><h2 class="rv">On en parle<span class="it"><u>trente minutes</u> ?</span></h2>' +
       '<div class="qui rv" style="--k:1"><img src="' + FILL + '/assets/img/ewen-s.webp" alt="" width="64" height="64" loading="lazy"><p><b>Ewen Soupault</b> traite chaque demande. Fill est un service de Studio ES, en Bretagne.</p></div></div>' +
       '<div class="bts rv" style="--k:2"><a class="bt clair" href="' + esc(rdv) + '" target="_blank" rel="noopener">Prendre rendez-vous' + ar() + '</a><a class="bt clair" href="mailto:' + esc(mail) + '?subject=' + encodeURIComponent("Fill, " + (D.nom || "")) + '">Écrire un message' + ar() + '</a></div></div></section>');
     h.push('<footer class="pied"><div class="w"><span>Fill · un service <a href="https://studioes.fr">Studio ES</a> · TVA non applicable, art. 293 B du CGI</span><span><a href="' + FILL + '">fill.studioes.fr</a> · <a href="' + FILL + '/conditions/">Conditions</a> · <a href="https://studioes.fr/conditions/">Mentions légales</a></span></div></footer>');
