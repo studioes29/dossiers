@@ -31,6 +31,10 @@
     return {t:"Règlement", texte:D.public ? "L’abonnement démarre à la validation du bon de commande, qui fixe sa date anniversaire. Factures mensuelles à terme échu, à la fin de chaque période, payables à 30 jours, déposées sur Chorus Pro." : "L’abonnement se règle chaque mois à l’avance, au choix par virement automatique (virement permanent que le client programme depuis sa banque, d’après la facture ou l’échéancier envoyé par Fill, qui portent l’IBAN) ou par carte en ligne, avec le lien de paiement personnel indiqué sur chaque facture. Aucun prélèvement n’est effectué. L’abonnement démarre le jour du premier règlement (dès le paiement par carte, ou à réception du virement), qui fixe sa date anniversaire : chaque période mensuelle court de ce jour au jour précédent du mois suivant. Les unités de la première période sont créditées à ce règlement, puis celles de chaque période à la même date, une fois la mensualité réglée."}; }
   function articles(){ var r = reglement(); return (D.articles || []).concat(r ? [r] : []); }
   /* signature enregistrée par Studio ES dans data.json : {"date": "AAAA-MM-JJ" ou ISO, "nom", "fonction"} */
+  // espace Fill prérempli avec la formule et le type de la commande
+  function lienEspace(){ var t = String((D.objet || "") + " " + (D.titre || "")), f = /soutenu/i.test(t) ? "soutenu" : /essentiel/i.test(t) ? "essentiel" : /r[ée]gulier/i.test(t) ? "regulier" : "";
+    var ty = D.client && D.client.siret && /^2/.test(String(D.client.siret).replace(/\D/g, "")) ? "collectivite" : (D.public ? "collectivite" : "entreprise");
+    return "https://fill.studioes.fr/espace/?" + (f ? "formule=" + f + "&" : "") + "type=" + ty + "#ouverture"; }
   function signeeD(){ var s = D.signee; if(!s) return null; if(typeof s === "string") s = {date:s}; return s.date ? s : null; }
 
   function texteSigne(){
@@ -63,7 +67,8 @@
 
     h += '<section class="feuille" id="sig">';
     if(s){ var heure = /T\d/.test(String(s.date)) ? ' à ' + heureFr(s.date) : ''; h += '<div class="signe"><b>Commande signée</b>Signée ' + (sD && !s.empreinte ? '' : 'en ligne ') + 'le ' + dateFr(s.date) + heure + (s.nom ? ' par ' + esc(s.nom) + (s.fonction ? ", " + esc(s.fonction) : "") : "") + '.' + (s.empreinte ? '<br><span class="aide">Empreinte du texte signé : ' + esc(s.empreinte.slice(0, 16)) + '…</span>' : "") + '</div>' +
-        '<div class="ligne np"><button class="bt" type="button" id="imp">Enregistrer mon exemplaire en PDF</button></div><p class="aide np">Votre navigateur propose « Enregistrer au format PDF » dans la fenêtre d’impression.</p>'; }
+        '<div class="ligne np"><button class="bt" type="button" id="imp">Enregistrer mon exemplaire en PDF</button></div><p class="aide np">Votre navigateur propose « Enregistrer au format PDF » dans la fenêtre d’impression.</p>' +
+        (fill ? '<div class="suite-f np"><b>Prochaine étape</b><p>Ouvrez votre espace Fill : vos collègues y déposent leurs demandes, et vous suivez chaque livraison.</p><a class="bt" href="' + esc(lienEspace()) + '">Ouvrir mon espace Fill</a></div>' : ''); }
     else {
       var pre = !!(C.signataire && C.signataire.nom && C.mail);
       h += '<h2>Signer la commande</h2>' + (pre ? '<p class="aide">Vos informations sont déjà renseignées : vérifiez-les, puis cochez la case.</p>' : '') + (D.public ? '<p class="aide">Vous pouvez signer ici, ou nous adresser votre propre bon de commande en y faisant référence (réf. ' + esc(D.ref) + ').</p>' : "") +
@@ -88,7 +93,7 @@
       var quand = new Date().toISOString();
       empreinte(texteSigne()).then(function(hash){
         var corps = {_subject:"Commande signée : " + (C.nom || "") + " (réf. " + (D.ref || "") + ")", _template:"table", _captcha:"false",
-          _autoresponse:"Bonjour,\n\nNous avons bien reçu votre commande « " + (D.objet || D.titre || "") + " » (réf. " + (D.ref || "") + "), signée le " + dateFr(quand) + ". Votre exemplaire reste consultable ici : " + location.href + "\n\nBien cordialement\nEwen Soupault, " + (fill ? "Fill" : "Studio ES"),
+          _autoresponse:"Bonjour,\n\nNous avons bien reçu votre commande « " + (D.objet || D.titre || "") + " » (réf. " + (D.ref || "") + "), signée le " + dateFr(quand) + ". Votre exemplaire reste consultable ici : " + location.href + (fill ? "\n\nProchaine étape : ouvrez votre espace Fill pour inviter vos collègues et préparer vos premières demandes : " + lienEspace() : "") + "\n\nBien cordialement\nEwen Soupault, " + (fill ? "Fill" : "Studio ES"),
           source:"commande", marque:D.marque || "studio", reference:D.ref || "", fiche:D.fiche || "", structure:C.nom || "", nom:nom, fonction:fo, email:ml, signee_le:quand, cgv:D.cgv || "", cgv_version:D.cgvVersion || "", page:location.href, empreinte:hash, navigateur:navigator.userAgent};
         return fetch("https://nfnbseonwgmtouxsaajd.supabase.co/functions/v1/formulaire", {method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body:JSON.stringify(corps)}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(){ return hash; });
       }).then(function(hash){ garder({date:quand, nom:nom, fonction:fo, email:ml, empreinte:hash}); rendre(); document.getElementById("sig").scrollIntoView({behavior:"smooth"}); }, function(){

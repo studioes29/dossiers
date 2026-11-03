@@ -51,3 +51,4 @@ label.ok input{width:20px;height:20px;margin-top:3px;accent-color:var(--ac);flex
 footer{padding-block:10px 50px;font-size:13px;color:var(--mu)}
 @media (max-width:620px){.parties,.champs{grid-template-columns:1fr}}
 @media print{body{background:#fff}.feuille{box-shadow:none;padding:0;border-radius:0}.np{display:none!important}header{padding-top:0}}
+.suite-f a{text-decoration:none}.suite-f{margin-top:16px;display:grid;gap:8px;justify-items:start;background:var(--sable,#F3F0EA);border-radius:16px;padding:16px 18px}.suite-f p{margin:0}

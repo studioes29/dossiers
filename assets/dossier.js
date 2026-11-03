@@ -89,7 +89,7 @@
 
     if(!cl && (d.constats || []).length){ var cs = d.constats.slice(0, 4);
       sec("constats", d.titreConstats || "Ce que nous avons relevé", d.sousConstats || (d.titreConstats ? "" : "en vous cherchant."), d.texteConstats || "Votre site, vos réseaux, et ce que l'on trouve en tapant votre nom : ce qui fonctionne, ce qui manque.",
-        '<div class="rail cts" style="--n:' + cs.length + '">' + cs.map(function(c, n){ var e = ICONES[c.etat] ? c.etat : "moyen", lien = url(c.lien);
+        '<div class="rail cts" tabindex="0" role="region" aria-label="Constats" style="--n:' + cs.length + '">' + cs.map(function(c, n){ var e = ICONES[c.etat] ? c.etat : "moyen", lien = url(c.lien);
           return '<article class="ct gd ' + e + '" style="--i:' + n + '"><div class="sw"><svg viewBox="0 0 24 24" aria-hidden="true">' + ICONES[e] + '</svg><em>' + ({bien:"Acquis",moyen:"À renforcer",absent:"Absent"})[e] + '</em></div><div class="lab"><h3>' + esc(c.titre) + '</h3><p>' + esc(c.texte) + (lien ? ' <a href="' + lien + '" target="_blank" rel="noopener">Voir</a>' : '') + '</p></div></article>'; }).join("") + '</div>'); }
 
     if(mq && !cl){ var pts = (d.maquette.points || []).slice(0, 4);
