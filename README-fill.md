@@ -17,7 +17,7 @@ Exemples fictifs : `exemple-fill/` (abonnement, avec `commande/`), `exemple-fill
 - `accroche` : 2 phrases, constat sur eux, sans « je »
 - `signal` (facultatif) : {`type`: "recrutement" | "autre", `titre`, `texte`, `lien`}
 - `introConstats` (facultatif) ; `constats` : 3 ou 4 {`titre`, `etat`: bien | moyen | absent, `texte`, `lien`}
-- `mois` (facultatif, absent pour Relais) : {`intro`, `note`, `items`: [{`type`, `n`, `titre`, `texte`, `semaine`}]}
+- `mois` (facultatif, absent pour Relais) : {`intro` (une phrase sur leur actualité, sans parler d'unités : le dossier traduit le mois en formule), `note`, `items`: [{`type`, `n`, `titre`, `texte`, `semaine`}]}
   types : post, actu, agenda, presse, news, page, gabarit, affiche, flyer, bulletin, photo, point, moder (jamais video)
 - `formule` : essentiel | regulier | soutenu | relais (sinon calculée sur les unités du mois) ; `pourquoi` : 1 à 2 phrases
 - `faq` (facultatif) : [{`q`, `r`}] ; `contact` : {`rdv`, `mail`}

@@ -56,6 +56,7 @@
   function rendre(D){
     var O = offre();
     var coll = D.type !== "entreprise";
+    var CONCRET = { essentiel: "7 publications et 1 newsletter", regulier: "12 publications, 2 newsletters et 1 affiche", soutenu: "20 publications, 2 newsletters, 2 affiches, 1 reportage et 1 actualité" };
     var profil = coll ? "collectivite" : "entreprise";
     document.title = (D.nom || "Votre dossier") + " · Fill";
     var items = (D.mois && D.mois.items) || [];
@@ -71,13 +72,14 @@
     h.push('<header class="hd" id="hd"><div class="w"><a class="lg" href="' + FILL + '" aria-label="Fill">' + LOGO + '</a><a class="bt sm" href="' + esc(rdv) + '" target="_blank" rel="noopener">Rendez-vous' + ar() + '</a></div><div class="hd-prog" aria-hidden="true"><i></i></div></header>');
 
     /* couverture */
-    var rac = [["vu","Ce que nous avons vu"]];
+    var rac = [["vu","Ce que nous avons vu"], ["fonctionnement","Comment ça marche"]];
     if(items.length) rac.push(["mois","Un mois avec Fill"]);
     rac.push(["formule", fid === "relais" ? "Relais" : "La formule"], ["echange","En parler"]);
     h.push('<section class="couv"><svg class="fil-fond" viewBox="0 0 900 700" aria-hidden="true"><path pathLength="1" d="M60 640C150 460 260 120 360 90C470 58 520 190 430 330C360 440 300 560 390 600C500 650 610 470 700 330C760 240 820 220 860 260"/></svg><div class="w">' +
       '<p class="pour"><i></i>Préparé pour ' + esc(D.nom) + '</p>' +
       '<h1>' + lettres(D.titre || "Votre communication,") + '<span class="it">' + (D.sousTitre ? esc(D.sousTitre) : 'sans perdre le <u>fil</u>.') + '</span></h1>' +
       '<p class="accroche rv">' + esc(D.accroche) + '</p>' +
+      '<p class="quoi rv">' + (fid === "relais" ? "Fill tient la communication courante pendant l’absence (site, réseaux, affiches, presse) et prépare la passation." : "Fill prend en charge la communication courante " + (coll ? "de la commune" : "de votre structure") + " (site, réseaux, newsletter, affiches) chaque mois, à prix fixe.") + '</p>' +
       '<ul class="raccourcis rv" style="--k:1">' + rac.map(function(r, n){ return '<li><a href="#' + r[0] + '"><b>' + (n + 1) + '</b>' + esc(r[1]) + '</a></li>'; }).join("") + '</ul>' +
       '<p class="prepare rv" style="--k:2">Dossier préparé le ' + dateFr(D.date) + (D.ville ? ', pour ' + esc(D.ville) : '') + '.</p>' +
       '</div></section>');
@@ -96,16 +98,25 @@
         return '<article class="cs ' + esc(c.etat || "moyen") + ' rv" style="--k:' + n + '"><span class="et"><i></i>' + et + '</span><h3>' + esc(c.titre) + '</h3><p>' + esc(c.texte) + '</p>' + (url(c.lien) ? '<a class="voir" href="' + esc(url(c.lien)) + '" target="_blank" rel="noopener">Voir la page ' + lienExt() + '</a>' : '') + '</article>';
       }).join("") + '</div></div></section>');
 
+    /* fonctionnement */
+    h.push('<section class="fe sable" id="fonctionnement"><div class="w"><h2 class="rv">Vous demandez,<span class="it">Fill s’occupe <u>du reste</u>.</span></h2>' +
+      '<div class="etapes">' + [
+        ["Vous demandez", "Quelques lignes et une photo, à une seule adresse. Pas de brief à rédiger.", "Confirmation sous 24 h ouvrées"],
+        ["Fill produit", "La même annonce, mise en forme pour chaque canal.", "Courant : 1 à 2 jours ouvrés"],
+        ["Vous validez", "Une épreuve à relire : rien ne part sans votre accord.", "Deux allers-retours compris"],
+        ["C’est publié", "Sur vos canaux, ou en fichiers prêts à imprimer.", "Les fichiers sources vous restent"]
+      ].map(function(e, n){ return '<div class="etp rv" style="--k:' + n + '"><b>' + e[0] + '</b><span>' + e[1] + '</span><em>' + e[2] + '</em></div>'; }).join("") + '</div></div></section>');
+
     /* un mois avec Fill */
     if(items.length){
       h.push('<section class="fe lav" id="mois"><div class="w">' +
         '<h2 class="rv">Un mois avec Fill<span class="it">à partir de <u>votre actualité</u>.</span></h2>' +
-        '<p class="lead rv">' + esc((D.mois && D.mois.intro) || "Un exemple construit avec ce qui est réellement annoncé chez vous. Chaque demande a sa valeur en unités, la même dans toutes les formules.") + '</p>' +
+        '<p class="lead rv">' + esc(((D.mois && D.mois.intro) || "Un exemple construit avec ce qui est réellement annoncé chez vous.").replace(/\s*Chaque demande a sa valeur en unités, la même dans toutes les formules\./, "")) + '</p>' +
         '<div class="mois" id="moisL"><svg class="fil" aria-hidden="true"><defs><linearGradient id="gfil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B8A4FF"/><stop offset="1" stop-color="#FF8A6B"/></linearGradient></defs><path class="base"/><path class="trace"/></svg>' +
         items.map(function(x, n){ var u = unitesDe(x.type, O) * (x.n || 1);
           return '<article class="it-m rv" style="--k:' + (n % 4) + '"><span class="ty">' + esc(nomType(x.type, O)) + (x.n > 1 ? ' × ' + x.n : '') + (x.semaine ? '<span class="sem">· semaine ' + esc(x.semaine) + '</span>' : '') + '</span><h3>' + esc(x.titre) + '</h3><span class="u">' + u + ' unité' + (u > 1 ? 's' : '') + '</span>' + (x.texte ? '<p>' + esc(x.texte) + '</p>' : '') + '</article>'; }).join("") +
         '</div>' +
-        '<div class="bilan rv"><div class="ch"><b data-compte="' + total + '">' + total + '</b><span>unité' + (total > 1 ? 's' : '') + ' ce mois-ci' + (F ? ', sur les ' + F.unites + ' de la formule ' + esc(F.nom) : '') + '</span></div>' +
+        '<div class="bilan rv"><div class="ch">' + (F ? '<b>' + esc(F.nom) + '</b><span>' + (total > F.unites ? 'ce mois dépasse un peu la formule : ' : 'ce mois tient dans la formule : ') + total + ' unités sur ' + F.unites + '</span>' : '<b data-compte="' + total + '">' + total + '</b><span>unité' + (total > 1 ? 's' : '') + ' ce mois-ci</span>') + '</div>' +
         (F ? '<div class="jauge" role="img" aria-label="' + total + ' unités sur ' + F.unites + '"><i data-ratio="' + Math.min(1, total / F.unites).toFixed(3) + '"></i></div>' : '') +
         '<p>' + esc((F && total > F.unites) ? "Ce mois dépasse le quota de " + (total - F.unites) + " unité" + (total - F.unites > 1 ? "s" : "") + " : elles sont proposées à " + (O.unite_sup || 55) + " € l’unité, ou reportées au mois suivant, toujours avec votre accord écrit." : (D.mois && D.mois.note) || "Les unités non utilisées se reportent sur le mois suivant. Rien n’est produit au-delà sans votre accord écrit.") + '</p></div>' +
         '</div></section>');
@@ -118,15 +129,15 @@
         '<div class="prix"><b>' + nb(R.prix_semaine) + '</b><sup>€</sup><span>par semaine, ' + (R.semaines_min || 2) + ' semaines minimum</span></div>' +
         '<ul>' + (R.points || []).map(function(p){ return '<li>' + coche() + esc(p) + '</li>'; }).join("") + '<li>' + coche() + (R.unites_semaine || 12) + ' unités par semaine</li></ul>' +
         (D.pourquoi ? '<p class="pq">' + esc(D.pourquoi) + '</p>' : '') +
-        '<div class="bts"><a class="bt" href="' + esc(rdv) + '" target="_blank" rel="noopener">Prendre rendez-vous' + ar() + '</a><a class="bt clair" href="' + FILL + '/relais/" target="_blank" rel="noopener">Relais en détail' + ar() + '</a></div></div>';
+        '<div class="bts" data-suite><a class="bt" href="' + esc(rdv) + '" target="_blank" rel="noopener">Prendre rendez-vous' + ar() + '</a><a class="bt clair" href="' + FILL + '/relais/" target="_blank" rel="noopener">Relais en détail' + ar() + '</a></div></div>';
       cote = '<div><div class="eng rv" style="--k:1"><div><b>' + nb(R.prix_mois || 2490) + ' €</b><span>par mois, au-delà d’un mois</span></div><div><b>10 jours</b><span>ouvrés pour démarrer</span></div></div>' +
         '<p class="note rv" style="--k:2">Si le poste reste ouvert ou n’est finalement pas pourvu, l’abonnement Régulier prend le relais à partir de ' + nb((O.formules[1] || REPLI.formules[1]).prix) + ' € par mois. ' + (coll ? "Facture mensuelle à terme échu, déposée sur Chorus Pro." : "Réglé à l’avance, chaque semaine ou chaque mois, par virement automatique (IBAN sur la facture) ou par carte.") + ' TVA non applicable, art. 293 B du CGI.</p></div>';
     } else {
       carte = '<div class="fo-c rv"><span class="rec">La formule qui vous correspond</span><p class="nom">' + esc(F.nom) + '</p><p class="court">' + esc(F.court || "") + '</p>' +
-        '<div class="prix"><b>' + nb(F.prix) + '</b><sup>€</sup><span>par mois</span></div>' +
+        '<div class="prix"><b>' + nb(F.prix) + '</b><sup>€</sup><span>par mois</span></div>' + (CONCRET[F.id] ? '<p class="cc">Par exemple ' + CONCRET[F.id] + ' par mois.</p>' : '') +
         '<ul><li>' + coche() + '<span><b>' + F.unites + ' unités</b> par mois</span></li>' + (F.points || []).map(function(p){ return '<li>' + coche() + esc(p) + '</li>'; }).join("") + '</ul>' +
         (D.pourquoi ? '<p class="pq">' + esc(D.pourquoi) + '</p>' : '') +
-        '<div class="bts"><a class="bt" href="' + esc(rdv) + '" target="_blank" rel="noopener">Prendre rendez-vous' + ar() + '</a><a class="bt clair" href="' + FILL + '/simulateur/?profil=' + profil + '" target="_blank" rel="noopener">Ajuster dans le simulateur' + ar() + '</a></div></div>';
+        '<div class="bts" data-suite><a class="bt" href="' + esc(rdv) + '" target="_blank" rel="noopener">Prendre rendez-vous' + ar() + '</a>' + (coll ? '' : '<a class="bt clair" href="' + FILL + '/espace/?formule=' + F.id + '&amp;type=entreprise#ouverture" target="_blank" rel="noopener">Ouvrir mon espace' + ar() + '</a>') + '<a class="lien-s" href="' + FILL + '/simulateur/?profil=' + profil + '" target="_blank" rel="noopener">Ajuster dans le simulateur</a></div></div>';
       cote = '<div><div class="eng rv" style="--k:1"><div><b>6 mois</b><span>Mise en place facturée une fois</span><em>' + nb(F.mise_en_place) + ' €</em></div><div><b>12 mois</b><span>Mise en place offerte</span><em>' + nb(F.mise_en_place) + ' € économisés</em></div></div>' +
         '<p class="note rv" style="--k:2">Ensuite, résiliable chaque mois avec un mois de préavis. Unité supplémentaire : ' + (O.unite_sup || 55) + ' €, jamais sans accord écrit. ' + (coll ? "Facture mensuelle à terme échu, déposée sur Chorus Pro." : "L’abonnement se règle chaque mois à l’avance, par virement automatique (virement permanent programmé depuis votre banque, IBAN sur la facture) ou par carte en ligne, avec le lien de paiement personnel indiqué sur chaque facture : l’abonnement démarre le jour du premier règlement, qui fixe sa date anniversaire ; les unités de chaque période sont créditées à cette date, une fois la mensualité réglée.") + ' TVA non applicable, art. 293 B du CGI.</p></div>';
     }
@@ -157,15 +168,6 @@
     h.push('<section class="fe encre" id="cadre"><div class="w"><h2 class="rv">' + (coll ? 'Les règles du secteur public<span class="it">sont <u>prises en compte</u>.</span>' : 'Un cadre clair<span class="it">dès le <u>premier mois</u>.</span>') + '</h2>' +
       '<div class="pts">' + pts.map(function(p, n){ return '<div class="pt rv" style="--k:' + n + '"><i></i><b>' + esc(p[0]) + '</b><span>' + esc(p[1]) + '</span></div>'; }).join("") + '</div></div></section>');
 
-    /* fonctionnement */
-    h.push('<section class="fe sable" id="fonctionnement"><div class="w"><h2 class="rv">Vous demandez,<span class="it">Fill s’occupe <u>du reste</u>.</span></h2>' +
-      '<div class="etapes">' + [
-        ["Vous demandez", "Quelques lignes et une photo, à une seule adresse. Pas de brief à rédiger.", "Confirmation sous 24 h ouvrées"],
-        ["Fill produit", "La même annonce, mise en forme pour chaque canal.", "Courant : 1 à 2 jours ouvrés"],
-        ["Vous validez", "Une épreuve à relire : rien ne part sans votre accord.", "Deux allers-retours compris"],
-        ["C’est publié", "Sur vos canaux, ou en fichiers prêts à imprimer.", "Les fichiers sources vous restent"]
-      ].map(function(e, n){ return '<div class="etp rv" style="--k:' + n + '"><b>' + e[0] + '</b><span>' + e[1] + '</span><em>' + e[2] + '</em></div>'; }).join("") + '</div></div></section>');
-
     /* questions */
     var faq = (D.faq || []).concat([
       {q:"Comment se passe le démarrage ?", r:"Un premier échange de 30 minutes, puis la mise en place : récupération des accès, gabarits à vos couleurs et calendrier du trimestre. Les premières publications partent dans les deux semaines."},
@@ -182,6 +184,12 @@
     h.push('<footer class="pied"><div class="w"><span>Fill · un service <a href="https://studioes.fr">Studio ES</a> · TVA non applicable, art. 293 B du CGI</span><span><a href="' + FILL + '">fill.studioes.fr</a> · <a href="' + FILL + '/conditions/">Conditions</a> · <a href="https://studioes.fr/conditions/">Mentions légales</a></span></div></footer>');
 
     app.innerHTML = h.join("");
+    /* un bon de commande existe pour ce dossier : il devient l'action principale, avec la même clé */
+    fetch("commande/data.json", {method:"HEAD", cache:"no-cache"}).then(function(r){
+      var z = app.querySelector("[data-suite]"); if(!r.ok || !z) return;
+      var rv = z.querySelector(".bt"); if(rv) rv.className = "bt clair";
+      z.insertAdjacentHTML("afterbegin", '<a class="bt" href="commande/' + (location.hash || "") + '">Signer le bon de commande' + ar() + '</a>');
+    }).catch(function(){});
     ancres(app);
     typo(app);
     animer();

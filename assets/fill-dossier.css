@@ -226,3 +226,8 @@ h1 .m{display:inline-block;opacity:0;transform:translateY(.4em);animation:roule 
 .aut-c .px span{display:block;font:500 13px/1.4 var(--f);color:var(--mu);margin-top:6px}
 #autres .bts{display:flex;flex-wrap:wrap;gap:10px}
 @media (max-width:760px){.aut{grid-template-columns:1fr}}
+/* simplification (nov. 2026) : ce qu’est Fill dès la couverture, l’équivalent concret du prix, un lien secondaire discret */
+.couv .quoi{max-width:34em;margin:14px 0 0;font-size:16px;line-height:1.55;color:var(--encre);font-weight:500}
+.fo-c .cc{margin:12px 0 16px;font-size:15px;line-height:1.45;color:var(--encre)}
+.lien-s{align-self:center;font-size:14.5px;color:var(--encre);text-decoration:underline;text-underline-offset:3px}
+.it-m .u{display:none}

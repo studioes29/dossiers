@@ -71,11 +71,17 @@
 
     /* couverture : le nom, l'accroche, puis les raccourcis vers chaque piste */
     var meta = [d.secteur, d.ville].filter(Boolean).join(", ");
+    /* sommaire de la couverture : les rubriques réellement présentes, dans l'ordre de lecture (les pistes ne sont détaillées qu'une fois, plus bas) */
+    var sommaire = [];
+    if((d.constats || []).length) sommaire.push(["constats", d.titreConstats || "Ce que nous avons relevé"]);
+    if(pis.length) sommaire.push(["pistes", d.titrePistes || (pis.length > 1 ? "Les pistes proposées" : "La piste proposée")]);
+    if(a) sommaire.push(["prix", "Votre projet chiffré"]);
+    sommaire.push(["contact", d.titreFin || "Prendre contact"]);
     var rac = pis.map(function(p, n){ return '<a class="rc" href="#piste-' + (n + 1) + '" style="--i:' + n + '"><span class="sw"><em>' + esc(p.palier || "Piste " + (n + 1)) + '</em><i>' + (n + 1) + '</i></span><span class="lb"><b>' + esc(p.titre) + '</b>' + AR + '</span></a>'; });
     o.push('<section class="cv2"><div class="w"><div class="hd2">' + (meta ? '<p class="meta ap" style="--k:0">' + esc(meta) + '</p>' : '') +
       '<h1 class="' + ((d.nom || "").length > 22 ? "tres" : (d.nom || "").length > 12 ? "long" : "") + '">' + lettres(d.nom || "") + '</h1>' +
       ((cl ? cl.accroche || "L'espace de votre projet avec Studio ES : où il en est, ce qui a été livré, et comment nous joindre." : d.accroche) ? '<p class="acc ap" style="--k:2">' + esc(cl ? cl.accroche || "L'espace de votre projet avec Studio ES : où il en est, ce qui a été livré, et comment nous joindre." : d.accroche) + '</p>' : '') + '</div>' +
-      (rac.length && !cl ? '<div class="rcs"><h2 class="rct ap" style="--k:3">Ce que nous vous proposons</h2><div class="rail" style="--n:' + rac.length + '">' + rac.join("") + '</div>' + (a ? '<div class="row ap" style="--k:4"><a class="btn" href="#prix">Composer votre offre ' + AR + '</a></div>' : '') + '</div>' : '') +
+      (rac.length && !cl ? '<div class="rcs"><h2 class="rct ap" style="--k:3">Dans ce dossier</h2><ul class="rac2 ap" style="--k:3">' + sommaire.map(function(x, n){ return '<li><a href="#' + x[0] + '"><b>' + (n + 1) + '</b>' + esc(x[1]) + '</a></li>'; }).join("") + '</ul>' + (a ? '<div class="row ap" style="--k:4"><a class="btn" href="#prix">Composer votre offre ' + AR + '</a></div>' : '') + '</div>' : '') +
       (d.date && !cl ? '<p class="date ap" style="--k:5">Dossier préparé le ' + esc(dateFr(d.date)) + '</p>' : '') + '</div></section>');
 
     /* page client privée : quand le projet est signé, le dossier devient l'espace du projet */
@@ -102,7 +108,7 @@
       if((d.pistes || []).length) (d.poles || []).forEach(function(p){ (p.items || []).forEach(function(x){ if(aussi.indexOf(x) < 0) aussi.push(x); }); });
       sec("pistes", d.titrePistes || "Les pistes", d.sousPistes || (d.titrePistes ? "" : "pour commencer."), d.textePistes || (pis.length > 1 ? "Chaque piste se lance seule, à votre rythme. On peut très bien s'arrêter à la première." : ""),
         '<ol class="rail pis" style="--n:' + pis.length + '">' + pis.map(function(p, n){ return '<li class="pi gd" id="piste-' + (n + 1) + '" style="--i:' + n + '"><span class="sw"><em>' + esc(p.palier || "") + '</em><i>' + (n + 1) + '</i></span><div class="lab"><h3>' + esc(p.titre) + '</h3><p>' + esc(p.texte) + '</p></div></li>'; }).join("") + '</ol>' +
-        (aussi.length ? '<div class="aussi rv"><p>Le studio peut aussi prendre en charge</p><ul>' + aussi.slice(0, 12).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>' : '')); }
+        (aussi.length ? '<details class="aussi rv"><summary>Le studio peut aussi prendre en charge (' + Math.min(12, aussi.length) + ')</summary><ul>' + aussi.slice(0, 12).map(function(x){ return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></details>' : '')); }
 
     if(ots.length){ sec("outils", d.titreOutils || "Des outils", d.titreOutils ? "" : "faits pour vos services.", d.texteOutils || "Quelques exemples à essayer : ils fonctionnent. Chaque outil se construit avec les agents qui l'utiliseront, sur téléphone comme sur ordinateur.",
         '<div class="otabs rv" role="tablist">' + ots.map(function(x, n){ return '<button type="button" role="tab" data-t="' + n + '" aria-selected="' + (n === 0) + '">' + esc(x.titre || OUTILS[x.type].titre) + '</button>'; }).join("") + '</div><div class="odemo rv" id="odemo"></div>');
@@ -137,7 +143,7 @@
       ["Un devis détaillé", "Chaque ligne chiffrée, ce qui est inclus écrit noir sur blanc."],
       pub ? ["Le démarrage à la date choisie", "Règlement sur facture après service fait, par mandat administratif."] : ["Le démarrage à la date choisie", "Un acompte de 30 % à la commande, le solde à la livraison."]];
     if(cl) etapesFin = [["Une question", "Par mail ou en réservant un créneau de 30 minutes."], ["Une modification", "Elle est notée, chiffrée si besoin, puis faite."], ["La suite", "Un nouveau projet repart de cette page."]];
-    sec("contact", cl ? "Une question ?" : d.titreFin || "Prendre contact", cl ? "nous restons joignables." : d.titreFin ? "" : "trente minutes suffisent.", d.texteFin || "",
+    sec("contact", cl ? "Une question ?" : d.titreFin || "Prendre contact", cl ? "nous restons joignables." : d.titreFin ? "" : "trente minutes suffisent.", d.texteFin || (cl ? "" : "Ewen Soupault, photographe et développeur, répond à chaque demande et suit le projet jusqu’à la livraison."),
       '<div class="ct2"><a class="ca rec rv" href="' + rdv + '" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24">' + IC.cal + '</svg></i><span><b>Choisir un créneau</b><span>30 minutes, au téléphone ou en visio</span></span>' + AR + '</a>' +
       '<a class="ca rv" style="--i:1" href="mailto:' + esc(mail) + '?subject=' + encodeURIComponent("Dossier " + (d.nom || "")) + '"><i><svg viewBox="0 0 24 24">' + IC.mail + '</svg></i><span><b>Écrire</b><span>' + esc(mail) + '</span></span>' + AR + '</a></div>' +
       '<ol class="etp rail" style="--n:3">' + etapesFin.map(function(x, n){ return '<li class="gd" style="--i:' + n + '"><i>' + (n + 1) + '</i><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></li>'; }).join("") + '</ol>' +
