@@ -1,3 +1,6 @@
+/* mesure d'audience sans cookie (GoatCounter, compte studioes), seulement sur dossiers.studioes.fr : l'adresse comptée ne contient jamais la clé (#k=…) */
+(function(){ if(location.hostname !== "dossiers.studioes.fr" || window.__gc) return; window.__gc = 1; var g = document.createElement("script"); g.async = true; g.src = "https://gc.zgo.at/count.js"; g.dataset.goatcounter = "https://studioes.goatcounter.com/count"; document.head.appendChild(g); })();
+function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatcounter.count({path: nom + location.pathname, title: nom, event: true}); } catch(e){} }
 (function(){
   var LOGO = '<svg viewBox="101 57 98 186" aria-hidden="true"><path fill="currentColor" d="M103.01,59.34h93.97s0,181.31,0,181.31h-93.97V59.34ZM195.66,60.67h-91.32v178.6s.17.18.18.18h91.14V60.67Z"/><polygon fill="currentColor" points="179.42 76.92 179.42 158.43 136.95 158.43 136.95 174.56 179.42 174.56 179.42 223.32 120.58 223.32 120.58 207.07 163.05 207.07 163.05 190.93 120.58 190.93 120.58 142.05 163.05 142.05 163.05 125.92 120.7 125.92 120.58 109.55 163.05 109.55 163.05 93.3 120.58 93.3 120.58 76.92 179.42 76.92"/></svg>';
   var EDGES = ['M0 60V30l60-8 50 14 70-20 80 16 60-10 90 18 70-22 80 12 60-6 90 20 70-18 80 10 60 8 70-16 80 14 50-8L1200 28V60Z','M0 60V46L1200 8V60Z','M0 60V10L1200 44V60Z'];

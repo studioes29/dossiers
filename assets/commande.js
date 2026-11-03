@@ -1,3 +1,6 @@
+/* mesure d'audience sans cookie (GoatCounter, compte studioes), seulement sur dossiers.studioes.fr : l'adresse comptée ne contient jamais la clé (#k=…) */
+(function(){ if(location.hostname !== "dossiers.studioes.fr" || window.__gc) return; window.__gc = 1; var g = document.createElement("script"); g.async = true; g.src = "https://gc.zgo.at/count.js"; g.dataset.goatcounter = "https://studioes.goatcounter.com/count"; document.head.appendChild(g); })();
+function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatcounter.count({path: nom + location.pathname, title: nom, event: true}); } catch(e){} }
 /* Bon de commande signé en ligne (Studio ES et Fill).
    Lit data.json dans le dossier de la page. La signature est un consentement en ligne horodaté
    (nom, fonction, case « Lu et approuvé »), transmis à Studio ES avec l'empreinte du texte signé ;
@@ -96,7 +99,7 @@
           _autoresponse:"Bonjour,\n\nNous avons bien reçu votre commande « " + (D.objet || D.titre || "") + " » (réf. " + (D.ref || "") + "), signée le " + dateFr(quand) + ". Votre exemplaire reste consultable ici : " + location.href + (fill ? "\n\nProchaine étape : ouvrez votre espace Fill pour inviter vos collègues et préparer vos premières demandes : " + lienEspace() : "") + "\n\nBien cordialement\nEwen Soupault, " + (fill ? "Fill" : "Studio ES"),
           source:"commande", marque:D.marque || "studio", reference:D.ref || "", fiche:D.fiche || "", structure:C.nom || "", nom:nom, fonction:fo, email:ml, signee_le:quand, cgv:D.cgv || "", cgv_version:D.cgvVersion || "", page:location.href, empreinte:hash, navigateur:navigator.userAgent};
         return fetch("https://nfnbseonwgmtouxsaajd.supabase.co/functions/v1/formulaire", {method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body:JSON.stringify(corps)}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(){ return hash; });
-      }).then(function(hash){ garder({date:quand, nom:nom, fonction:fo, email:ml, empreinte:hash}); rendre(); document.getElementById("sig").scrollIntoView({behavior:"smooth"}); }, function(){
+      }).then(function(hash){ evenement("commande-signee"); garder({date:quand, nom:nom, fonction:fo, email:ml, empreinte:hash}); rendre(); document.getElementById("sig").scrollIntoView({behavior:"smooth"}); }, function(){
         b.disabled = false; b.textContent = "Signer la commande"; err.textContent = "La signature n’est pas partie. Vérifiez votre connexion et réessayez, ou écrivez à contact@studioes.fr."; });
     });
   }

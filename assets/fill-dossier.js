@@ -1,3 +1,6 @@
+/* mesure d'audience sans cookie (GoatCounter, compte studioes), seulement sur dossiers.studioes.fr : l'adresse comptée ne contient jamais la clé (#k=…) */
+(function(){ if(location.hostname !== "dossiers.studioes.fr" || window.__gc) return; window.__gc = 1; var g = document.createElement("script"); g.async = true; g.src = "https://gc.zgo.at/count.js"; g.dataset.goatcounter = "https://studioes.goatcounter.com/count"; document.head.appendChild(g); })();
+function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatcounter.count({path: nom + location.pathname, title: nom, event: true}); } catch(e){} }
 /* Dossiers de prospection Fill.
    Lit ./data.json (préparé pour une structure) et les formules publiques de fill.studioes.fr (window.TANDEM),
    qui restent la seule source des prix et des unités. Aucun prix privé n'apparaît ici. */
@@ -189,6 +192,7 @@
       var z = app.querySelector("[data-suite]"); if(!r.ok || !z) return;
       var rv = z.querySelector(".bt"); if(rv) rv.className = "bt clair";
       z.insertAdjacentHTML("afterbegin", '<a class="bt" href="commande/' + (location.hash || "") + '">Signer le bon de commande' + ar() + '</a>');
+      var sb = z.querySelector('a[href^="commande/"]'); if(sb) sb.addEventListener("click", function(){ evenement("clic-signer"); });
     }).catch(function(){});
     ancres(app);
     typo(app);
