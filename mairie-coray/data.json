@@ -165,7 +165,7 @@
      {
       "l": "Un site sur mesure",
       "d": "6 à 12 pages, actualités et agenda modifiables par vos agents, formation comprise.",
-      "p": 4490,
+      "p": 1990,
       "titreDevis": "Site sur mesure",
       "lignes": [
        "Arborescence et contenus construits avec vous",
@@ -176,7 +176,7 @@
      {
       "l": "Un site de 3 à 5 pages",
       "d": "Mairie, démarches, vie locale, contact.",
-      "p": 1990,
+      "p": 990,
       "titreDevis": "Site Vitrine, 3 à 5 pages",
       "lignes": [
        "Pages dédiées et formulaire de contact",
@@ -284,25 +284,26 @@
       "pourquoi": "l'outil a besoin d'un hébergement et de corrections régulières pour continuer de fonctionner."
      },
      {
-      "l": "L'hébergement du site",
-      "d": "Sécurité, sauvegardes, 30 minutes de modifications par mois.",
-      "p": 35,
-      "titreDevis": "Hébergement et maintenance du site",
-      "lignes": [
-       "Sécurité et sauvegardes",
-       "30 minutes de modifications par mois"
-      ],
+      "l": "Suivi du site",
+      "p": 9,
       "mois": true,
-      "min": 12,
+      "suivi": true,
+      "titreDevis": "Suivi du site",
+      "d": "Hébergement, nom de domaine, sécurité et sauvegardes, sans durée minimale.",
+      "lignes": [
+       "Hébergement, nom de domaine, sécurité et sauvegardes",
+       "Sans durée minimale, résiliable avec un mois de préavis",
+       "Les actualités et mises à jour de contenus passent par Fill"
+      ],
       "obligatoire": true,
+      "pourquoi": "un site a besoin d'un hébergement, des mises à jour de sécurité et d'une sauvegarde pour rester en ligne.",
       "si": [
        1,
        [
         0,
         1
        ]
-      ],
-      "pourquoi": "un site a besoin d'un hébergement, des mises à jour de sécurité et d'une sauvegarde pour rester en ligne."
+      ]
      }
     ]
    }

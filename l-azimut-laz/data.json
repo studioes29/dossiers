@@ -85,25 +85,34 @@
      {
       "l": "Un site d'une page",
       "d": "Accueil, carte du moment, horaires, accès, réservation. Textes rédigés, référencement local, mise en ligne comprise.",
-      "p": 990,
+      "p": 490,
       "titreDevis": "Site Essentiel, une page",
       "lignes": [
        "Une page pensée d'abord pour le téléphone : accueil, carte du moment, horaires, accès, bouton de réservation",
        "Rédaction des textes à partir de notre échange, référencement local (Google, « restaurant Laz »)",
-       "Conception sur mesure, mise en ligne et réglage du nom de domaine (nom de domaine à votre nom, environ 15 € par an, non compris)",
+       "Conception sur mesure, mise en ligne et réglage du nom de domaine (nom de domaine à votre nom, compris dans le suivi)",
        "Deux allers-retours de corrections, puis une prise en main de 30 minutes"
+      ],
+      "etaler": [
+       6,
+       12
       ]
      },
      {
       "l": "Un site de 3 à 5 pages",
       "d": "La même base, avec des pages dédiées : carte, groupes et événements, galerie, contact.",
-      "p": 1990,
+      "p": 990,
       "titreDevis": "Site Vitrine, 3 à 5 pages",
       "lignes": [
        "Accueil et jusqu'à 4 pages dédiées (carte, groupes et événements, galerie, contact)",
        "Rédaction des textes, référencement local, conception sur mesure pensée pour le téléphone",
-       "Mise en ligne et réglage du nom de domaine (nom de domaine à votre nom, environ 15 € par an, non compris)",
+       "Mise en ligne et réglage du nom de domaine (nom de domaine à votre nom, compris dans le suivi)",
        "Deux allers-retours de corrections, puis une prise en main de 30 minutes"
+      ],
+      "etaler": [
+       6,
+       12,
+       24
       ]
      },
      {
@@ -166,25 +175,26 @@
       ]
      },
      {
-      "l": "Hébergement et maintenance du site",
-      "d": "Le site reste en ligne et à jour, et vos petites modifications sont faites.",
-      "p": 35,
+      "l": "Suivi du site",
+      "p": 9,
       "mois": true,
-      "min": 12,
+      "suivi": true,
+      "titreDevis": "Suivi du site",
+      "d": "Hébergement, nom de domaine, sécurité et sauvegardes, sans durée minimale.",
+      "lignes": [
+       "Hébergement, nom de domaine, sécurité et sauvegardes",
+       "Sans durée minimale, résiliable avec un mois de préavis",
+       "Les actualités et mises à jour de contenus passent par Fill"
+      ],
+      "obligatoire": true,
+      "pourquoi": "un site a besoin d'un hébergement, des mises à jour de sécurité et d'une sauvegarde pour rester en ligne.",
       "si": [
        1,
        [
         0,
         1
        ]
-      ],
-      "titreDevis": "Hébergement et maintenance du site",
-      "lignes": [
-       "Hébergement, sécurité et sauvegardes du site",
-       "Jusqu'à 30 minutes de modifications par mois (carte, horaires, fermetures)"
-      ],
-      "obligatoire": true,
-      "pourquoi": "un site a besoin d'un hébergement, des mises à jour de sécurité et d'une sauvegarde pour rester en ligne."
+      ]
      },
      {
       "l": "Une séance photo chaque mois",
