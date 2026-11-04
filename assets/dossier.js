@@ -132,7 +132,7 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
 
     /* questions fréquentes : délais, paiement, suivi */
     var FAQ = cl ? [] : [["Combien de temps cela prend-il ?", "Un reportage se cale dans les semaines qui viennent, et la sélection est livrée sous 5 jours. Un site d'une page est en ligne sous 10 jours après l'appel de cadrage ; pour un site plus complet, le délai est fixé dans le devis."],
-      pub ? ["Comment se passe le paiement ?", "Sur facture après service fait, par mandat administratif. Un devis détaillé est envoyé avant toute commande, avec chaque ligne chiffrée."] : ["Comment se passe le paiement ?", "Un acompte de 30 % à la commande, par carte ou par virement, le solde à la livraison. Les abonnements démarrent à la date choisie ensemble, sans mensualité payée d'avance."],
+      pub ? ["Comment se passe le paiement ?", "Sur facture après service fait, par mandat administratif. Un devis détaillé est envoyé avant toute commande, avec chaque ligne chiffrée."] : ["Comment se passe le paiement ?", "Un acompte de 30 % à la commande, par carte ou par virement, le solde à la livraison. Les suivis démarrent à la date choisie ensemble, sans mensualité payée d'avance. Un site réglé au mois démarre au premier paiement, par carte, puis se règle chaque mois automatiquement jusqu'au terme de l'engagement."],
       ["Et après la livraison ?", "Un site reste suivi au mois : hébergement, mises à jour, sauvegardes et petites modifications. Les photos sont livrées en haute définition avec les droits d'usage pour votre communication."],
       ["Faut-il s'engager sur tout ?", "Non. Chaque piste se lance seule. On peut commencer par la plus simple et décider de la suite une fois le résultat visible."],
       ["Où intervenez-vous ?", "Basé en Bretagne, déplacements possibles selon le projet. Les sites et les outils se font aussi à distance."]];
@@ -181,14 +181,17 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
     function nettoyer(){ etapes.forEach(function(e, n){ choix[n] = choix[n].filter(function(k){ return visible(n, k); });
       e.options.forEach(function(o, k){ if(o.obligatoire && visible(n, k) && choix[n].indexOf(k) < 0){ if(!e.multi) choix[n] = []; choix[n].push(k); } }); }); }
     function etapesVisibles(){ return etapes.map(function(e, n){ return n; }).filter(function(n){ return etapes[n].options.some(function(o, k){ return visible(n, k) && !o.aucun; }); }); }
-    function lignes(){ var r = []; etapes.forEach(function(e, n){ choix[n].forEach(function(k){ var o = e.options[k]; if(o.aucun) return; r.push({n:(o.titreDevis || o.l) + (o.an ? ", par an" : ""), l:o.lignes || (o.d ? [o.d] : []), p:o.p || 0, mois:!!o.mois, min:o.min, devis:!!o.devis}); }); }); return r; }
+    function lignes(){ var r = []; etapes.forEach(function(e, n){ choix[n].forEach(function(k){ var o = e.options[k]; if(o.aucun) return; r.push({n:(o.titreDevis || o.l) + (o.an ? ", par an" : ""), l:o.lignes || (o.d ? [o.d] : []), p:o.p || 0, mois:!!o.mois, abo:!!(o.mois && o.souscrire), min:o.min, devis:!!o.devis}); }); }); return r; }
     /* le même calcul que devis.js : la remise porte sur les prestations réglées une fois */
-    function totaux(){ var L = lignes(), a = 0, m = 0, dv = 0; L.forEach(function(x){ if(x.devis) dv++; else if(x.mois) m += x.p; else a += x.p; });
+    /* abo : lignes au mois réglées par carte dès la commande (site au mois, champ "souscrire"), eng : leur engagement le plus long */
+    function totaux(){ var L = lignes(), a = 0, m = 0, ab = 0, en = 0, dv = 0; L.forEach(function(x){ if(x.devis) dv++; else if(x.mois){ m += x.p; if(x.abo){ ab += x.p; en = Math.max(en, +x.min || 24); } } else a += x.p; });
       var r = !RM || !a ? 0 : Math.round((RM.taux ? a * RM.taux / 100 : Math.min(a, RM.montant)) * 100) / 100;
-      return {brut:a, remise:r, once:Math.round((a - r) * 100) / 100, mois:m, devis:dv, lignes:L}; }
+      return {brut:a, remise:r, once:Math.round((a - r) * 100) / 100, mois:m, abo:ab, eng:en, devis:dv, lignes:L}; }
+    function premier(T){ return Math.round((T.once * .3 + T.abo) * 100) / 100; }
+    function libPayer(T){ return T.abo ? (T.once ? "Payer l'acompte et le premier mois (" + eurc(premier(T)) + ")" : "Payer le premier mois (" + eurc(T.abo) + ")") : "Payer l'acompte de " + eurc(T.once * .3); }
     function prix(o){ return o.aucun ? "" : o.devis ? "sur devis" : eur(o.p) + (o.mois ? " / mois" : o.an ? " / an" : ""); }
     function code(){ return choix.map(function(c){ return c.length ? c.join("") : "x"; }).join("-"); }
-    function prive(T){ return !cf.public && T.once > 0; }
+    function prive(T){ return !cf.public && (T.once > 0 || T.abo > 0); }
 
     /* une barre de progression continue, construite une fois : elle avance sans se redessiner ni sauter */
     box.innerHTML = '<div class="prog"><span class="pt"></span><span class="pb"><i></i></span></div><div class="stage"></div>';
@@ -217,7 +220,7 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
       if(!T.lignes.length) h += '<li><span>Rien de sélectionné pour l\'instant</span><span></span></li>';
       h += '</ul><div class="total">';
       if(T.once){ h += (T.remise ? '<span><s>' + eurc(T.brut) + '</s> avant remise</span>' : '') + '<b>' + eurc(T.once) + '</b><span>' + (cf.public ? "hors abonnements, réglé sur facture après service fait (mandat administratif)" : "en une fois, dont un acompte de " + eurc(T.once * .3) + " à la commande") + '</span>'; }
-      if(T.mois) h += (T.once ? '<span class="plus">+ ' + eur(T.mois) + ' par mois' : '<b>' + eur(T.mois) + ' <small>/ mois</small></b><span>') + ', à partir d\'une date que l\'on fixe ensemble</span>';
+      if(T.mois) h += (T.once ? '<span class="plus">+ ' + eur(T.mois) + ' par mois' : '<b>' + eur(T.mois) + ' <small>/ mois</small></b><span>') + (T.abo && !cf.public ? (T.abo === T.mois ? ", premier mois réglé à la commande, puis chaque mois par carte pendant " + T.eng + " mois" : ", dont " + eur(T.abo) + " réglés par carte dès la commande (" + T.eng + " mois) ; le reste à partir d'une date que l'on fixe ensemble") : ', à partir d\'une date que l\'on fixe ensemble') + '</span>';
       if(T.devis) h += '<span>' + (T.devis > 1 ? "Certains éléments sont" : "Un élément est") + ' chiffré' + (T.devis > 1 ? "s" : "") + ' après notre échange.</span>';
       h += '<span>TVA non applicable, art. 293 B du CGI.</span></div><div class="nav2"><button type="button" class="btn line" data-a="refaire">Modifier</button>' + (T.lignes.length ? '<button type="button" class="btn" data-a="devis">Recevoir le devis</button>' : '') + '</div>';
       dejaN = -1; avance(1, "Votre offre"); stage.innerHTML = h; stage.classList.remove("neuf"); void stage.offsetWidth; stage.classList.add("neuf");
@@ -234,10 +237,11 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
       if(cf.public){
         h += '<p class="sm">Ce devis peut servir de base à votre bon de commande. Pour la suite, choisissez un créneau : nous calons ensemble le démarrage et les modalités.</p><div class="nav2"><span></span><a class="btn" href="' + esc(rdv()) + '" target="_blank" rel="noopener">Choisir un créneau</a></div>';
       } else if(prive(T)){
-        h += '<div class="engage"><label class="accord"><input type="checkbox" name="ok"><span>J\'ai lu le devis n° ' + num + ' et ses <a href="https://studioes.fr/conditions/" target="_blank" rel="noopener">conditions générales de vente</a>, et je l\'accepte. Le paiement de l\'acompte vaut commande ferme.</span></label>' +
+        h += '<div class="engage"><label class="accord"><input type="checkbox" name="ok"><span>J\'ai lu le devis n° ' + num + ' et ses <a href="https://studioes.fr/conditions/" target="_blank" rel="noopener">conditions générales de vente</a>, et je l\'accepte. ' + (T.abo ? 'Le premier paiement vaut commande ferme, avec un engagement de ' + T.eng + ' mois.' : 'Le paiement de l\'acompte vaut commande ferme.') + '</span></label>' +
           (part ? '<p class="sm">Vous disposez d\'un délai de rétractation de 14 jours à compter de l\'acceptation du devis : conditions sur <a href="https://studioes.fr/conditions/" target="_blank" rel="noopener">studioes.fr/conditions</a>, formulaire type de rétractation en annexe des conditions générales.</p><label class="accord"><input type="checkbox" name="anticipe"><span>' + esc(ANTICIPE) + '</span></label>' : '') +
-          '<div class="nav2"><button type="button" class="btn" data-a="payer" disabled>Payer l\'acompte de ' + eurc(T.once * .3) + '</button><button type="button" class="btn line" data-a="virement" disabled>Payer l\'acompte par virement</button></div>' +
-          '<p class="sm">Le devis accepté se télécharge d\'abord. Paiement par carte sécurisé par Stripe ; par virement, la facture d\'acompte vous est envoyée par e-mail.</p><p class="sm etat" aria-live="polite"></p></div>';
+          (part && T.abo ? '<p class="sm">Le paiement au mois est réservé aux professionnels et aux associations. Choisissez la version réglée en une fois, ou un créneau pour en parler.</p><p class="sm etat" aria-live="polite"></p></div>' :
+          '<div class="nav2"><button type="button" class="btn" data-a="payer" disabled>' + esc(libPayer(T)) + '</button>' + (T.abo ? '<span></span>' : '<button type="button" class="btn line" data-a="virement" disabled>Payer l\'acompte par virement</button>') + '</div>' +
+          '<p class="sm">Le devis accepté se télécharge d\'abord. ' + (T.abo ? 'Paiement par carte sécurisé par Stripe : les mensualités suivantes sont réglées automatiquement chaque mois, et s\'arrêtent seules au bout de ' + T.eng + ' mois. Un reçu vous est envoyé à chaque fois.' : 'Paiement par carte sécurisé par Stripe ; par virement, la facture d\'acompte vous est envoyée par e-mail.') + '</p><p class="sm etat" aria-live="polite"></p></div>');
       } else h += '<p class="sm">Pour la suite, choisissez un créneau : nous calons ensemble le démarrage.</p><div class="nav2"><span></span><a class="btn" href="' + esc(rdv()) + '" target="_blank" rel="noopener">Choisir un créneau</a></div>';
       h += '<p class="sm rgpd">' + RGPD + '<a href="https://studioes.fr/conditions/" target="_blank" rel="noopener">studioes.fr/conditions</a>.</p>';
       dejaN = -1; avance(1, "Votre devis"); stage.innerHTML = h; stage.classList.remove("neuf"); void stage.offsetWidth; stage.classList.add("neuf");
@@ -255,7 +259,8 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
         structure:client.struct || "", nom:client.rep, fonction:client.fonction || "", adresse:client.adr, ville:client.ville, mail:client.mail, siret:client.siret || "", references:client.opt_refs || "",
         lignes:T.lignes.map(function(x){ return x.n + (x.devis ? " (sur devis)" : " : " + x.p + (x.mois ? " €/mois" : " €")); }).join(" ; "),
         remise:T.remise ? T.remise + " € (" + RM.libelle + ")" : "", total:T.once + " €", mensuel:T.mois + " €/mois"};
-        if(paiement){ f.paiement = paiement; f.acompte = Math.round(T.once * 30) / 100 + " €"; }
+        if(T.abo) f.abonnement_carte = T.abo + " €/mois sur " + T.eng + " mois";
+        if(paiement){ f.paiement = paiement; f.acompte = Math.round(T.once * 30) / 100 + " €"; if(T.abo) f.premier_paiement = premier(T) + " €"; }
         if(part && paiement) f.demarrage_anticipe = anticipe ? "oui" : "non";
         fetch("https://nfnbseonwgmtouxsaajd.supabase.co/functions/v1/formulaire", {method:"POST", headers:{"Content-Type":"application/json", Accept:"application/json"}, body:JSON.stringify(f), keepalive:true}).catch(function(){}); }catch(e){} }
     function rdv(){ return (D.contact && /^https:\/\//.test(D.contact.rdv || "")) ? D.contact.rdv : "https://cal.com/studioes/30min"; }
@@ -275,15 +280,16 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
     function payer(vir){
       if(!lire()) return; var T = totaux(); if(!prive(T)) return;
       var an = box.querySelector('[name="anticipe"]'), anticipe = part ? !!(an && an.checked) : false, et = box.querySelector(".etat"), w = null;
-      if(part && !anticipe) return;
+      if(part && !anticipe) return; if(part && T.abo) return;
       box.querySelectorAll('[data-a="payer"],[data-a="virement"]').forEach(function(b){ b.disabled = true; });
       if(!vir){ try{ w = window.open("", "_blank"); if(w){ w.opener = null; w.document.write('<!doctype html><meta charset="utf-8"><title>Paiement</title><p style="font:16px/1.5 sans-serif;padding:32px">Préparation du paiement sécurisé…</p>'); } }catch(e){ w = null; } }
       et.textContent = vir ? "Envoi de votre demande…" : "Préparation du paiement…";
-      consigne(vir ? "devis accepté, acompte par virement" : "devis accepté, acompte en cours", vir ? "virement" : "carte", anticipe);
+      consigne(vir ? "devis accepté, acompte par virement" : T.abo ? "devis accepté, premier mois en cours" : "devis accepté, acompte en cours", vir ? "virement" : "carte", anticipe);
       function echec(m){ if(w && !w.closed) w.close(); et.textContent = m; boutons(); }
       charger(function(){
         if(!pdf(true, vir ? "virement" : "carte", anticipe)) return echec("Le devis accepté n'a pas pu être généré : le paiement n'est pas lancé. Rechargez la page, ou écrivez à contact@studioes.fr.");
         var corps = {action:vir ? "virement" : "creer", dossier:slugDossier(), devis:num, structure:client.struct || client.rep, nom:client.rep, email:client.mail, total:T.once, particulier:part, demarrage_anticipe:anticipe};
+        if(T.abo && !vir){ corps.mensuel = T.abo; corps.engagement = T.eng; }
         if(!vir) corps.retour = retourUrl();
         fetch(ACOMPTE, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(corps)})
           .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ if(!r.ok || j.erreur) throw {m:j.erreur || "Le paiement n'a pas pu être préparé."}; return j; }); })
@@ -419,6 +425,7 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
     var essais = 0;
     function attendre(){ bx.innerHTML = '<b>Paiement en cours de confirmation</b><p>Vous recevrez un e-mail dès qu\'il est confirmé.</p>'; }
     (function lire(){ fetch(ACOMPTE + "?session=" + encodeURIComponent(ses), {cache:"no-store"}).then(function(r){ return r.json(); }).then(function(j){
+      if(j && j.statut === "paye" && +j.mensuel > 0){ bx.innerHTML = '<b>Premier paiement reçu, commande ferme</b><p>' + esc(eurc(+j.montant)) + " reçus" + (j.devis ? " pour le devis n° " + esc(j.devis) : "") + '. Les mensualités suivantes, de ' + esc(eurc(+j.mensuel)) + ', sont réglées automatiquement chaque mois' + (j.engagement ? ' pendant ' + esc(String(j.engagement)) + ' mois' : '') + '.</p><a class="btn" href="https://cal.com/studioes/30min" target="_blank" rel="noopener">Choisir un créneau ' + AR + '</a>'; return; }
       if(j && j.statut === "paye"){ bx.innerHTML = '<b>Acompte reçu, commande ferme</b><p>' + (j.montant != null ? "Acompte de " + esc(eurc(+j.montant)) + " reçu" : "Acompte reçu") + (j.devis ? " pour le devis n° " + esc(j.devis) : "") + '. La facture d\'acompte vous parvient sous 24 h.</p><a class="btn" href="https://cal.com/studioes/30min" target="_blank" rel="noopener">Choisir un créneau ' + AR + '</a>'; return; }
       if(j && j.statut === "en_attente" && ++essais <= 5){ setTimeout(lire, 2000); return; }
       if(j && j.statut === "inconnu"){ bx.innerHTML = '<b>Paiement introuvable</b><p>Ce paiement n\'a pas été retrouvé. Écrivez à <a href="mailto:contact@studioes.fr">contact@studioes.fr</a>.</p>'; return; }
