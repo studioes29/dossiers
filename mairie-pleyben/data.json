@@ -225,8 +225,8 @@
      {
       "l": "Un outil simple",
       "d": "Un espace partagé : demandes, projets ou planning, avec tableaux et modèles.",
-      "p": 550,
-      "titreDevis": "Espace de travail sur mesure",
+      "p": 490,
+      "titreDevis": "Outil simple",
       "lignes": [
        "Bases et vues adaptées à votre service",
        "Modèles prêts à l'emploi",
@@ -236,8 +236,8 @@
      {
       "l": "Une application sur mesure",
       "d": "Plusieurs vues, accès sur téléphone, plusieurs comptes.",
-      "p": 2790,
-      "titreDevis": "Application web sur mesure",
+      "p": 990,
+      "titreDevis": "Application",
       "lignes": [
        "Conception avec les agents qui l'utiliseront",
        "Accès sur téléphone et ordinateur, plusieurs comptes",
@@ -247,8 +247,8 @@
      {
       "l": "Une application avec automatisations",
       "d": "Notifications, mails aux habitants, rappels automatiques.",
-      "p": 5490,
-      "titreDevis": "Application avec automatisations",
+      "p": 1990,
+      "titreDevis": "Plateforme",
       "lignes": [
        "Tout ce que comprend l'application sur mesure",
        "Notifications et mails automatiques",
@@ -268,26 +268,62 @@
     "aide": "Inclus d'office avec un site ou un outil. Rien n'est payé maintenant : le suivi démarre à la mise en service.",
     "options": [
      {
-      "l": "Le suivi de l'outil",
-      "d": "Corrections et petites évolutions, 45 minutes par mois.",
-      "p": 50,
-      "titreDevis": "Suivi et évolutions de l'outil",
-      "lignes": [
-       "Corrections et petites évolutions",
-       "45 minutes par mois"
-      ],
       "mois": true,
-      "min": 6,
       "obligatoire": true,
+      "pourquoi": "l'outil a besoin d'un hébergement et de corrections régulières pour continuer de fonctionner.",
+      "l": "Suivi de l'outil",
+      "titreDevis": "Suivi de l'outil",
+      "p": 9,
+      "d": "Hébergement, sauvegardes et mises à jour, sans durée minimale.",
+      "lignes": [
+       "Hébergement, sauvegardes et mises à jour",
+       "Sans durée minimale ; les évolutions se chiffrent à part"
+      ],
       "si": [
        2,
        [
-        1,
-        2,
+        1
+       ]
+      ]
+     },
+     {
+      "mois": true,
+      "obligatoire": true,
+      "pourquoi": "l'outil a besoin d'un hébergement et de corrections régulières pour continuer de fonctionner.",
+      "l": "Suivi de l'application",
+      "titreDevis": "Suivi de l'application",
+      "p": 19,
+      "d": "Hébergement, base de données, sauvegardes et mises à jour, sans durée minimale.",
+      "lignes": [
+       "Hébergement, base de données, sauvegardes et mises à jour",
+       "Sans durée minimale ; les évolutions se chiffrent à part"
+      ],
+      "si": [
+       2,
+       [
+        2
+       ]
+      ]
+     },
+     {
+      "mois": true,
+      "obligatoire": true,
+      "pourquoi": "l'outil a besoin d'un hébergement et de corrections régulières pour continuer de fonctionner.",
+      "l": "Suivi de la plateforme",
+      "titreDevis": "Suivi de la plateforme",
+      "p": 39,
+      "d": "Hébergement, base de données, sauvegardes et mises à jour, sans durée minimale.",
+      "lignes": [
+       "Hébergement, base de données, sauvegardes et mises à jour",
+       "Services tiers (intelligence artificielle, envois en nombre) au coût réel",
+       "Sans durée minimale ; les évolutions se chiffrent à part"
+      ],
+      "si": [
+       2,
+       [
         3
        ]
-      ],
-      "pourquoi": "l'outil a besoin d'un hébergement et de corrections régulières pour continuer de fonctionner."
+      ]
      },
      {
       "l": "Suivi du site",
