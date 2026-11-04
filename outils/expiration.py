@@ -10,7 +10,7 @@ import datetime, json, os, re, sys
 from zoneinfo import ZoneInfo
 
 RACINE = sys.argv[1] if len(sys.argv) > 1 else "."
-PROTEGES = ("assets", "app", "declic", "cgv", "outils", "pierceval-tattoo")
+PROTEGES = ("assets", "app", "declic", "cgv", "outils", "pierceval-tattoo", "commander")
 aujourdhui = datetime.datetime.now(ZoneInfo("Europe/Paris")).date()
 
 def lire(p):

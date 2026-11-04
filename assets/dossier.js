@@ -133,7 +133,7 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
     /* questions fréquentes : délais, paiement, suivi */
     var FAQ = cl ? [] : [["Combien de temps cela prend-il ?", "Un reportage se cale dans les semaines qui viennent, et la sélection est livrée sous 5 jours. Un site d'une page est en ligne sous 10 jours après l'appel de cadrage ; pour un site plus complet, le délai est fixé dans le devis."],
       pub ? ["Comment se passe le paiement ?", "Sur facture après service fait, par mandat administratif. Un devis détaillé est envoyé avant toute commande, avec chaque ligne chiffrée."] : ["Comment se passe le paiement ?", "Un acompte de 30 % à la commande, par carte ou par virement, le solde à la livraison. Les suivis démarrent à la date choisie ensemble, sans mensualité payée d'avance. Un site peut aussi se régler en 6, 12 ou 24 fois sans frais, par carte : la première mensualité à la commande, les suivantes prélevées chaque mois."],
-      ["Et après la livraison ?", "Un site reste suivi au mois : hébergement, mises à jour, sauvegardes et petites modifications. Les photos sont livrées en haute définition avec les droits d'usage pour votre communication."],
+      ["Et après la livraison ?", "Un site reste suivi au mois, 9 € : hébergement, nom de domaine, sécurité et sauvegardes, sans durée minimale. Pour le faire vivre (actualités, pages, visuels), Fill prend le relais. Les photos sont livrées en haute définition avec les droits d'usage pour votre communication."],
       ["Faut-il s'engager sur tout ?", "Non. Chaque piste se lance seule. On peut commencer par la plus simple et décider de la suite une fois le résultat visible."],
       ["Où intervenez-vous ?", "Basé en Bretagne, déplacements possibles selon le projet. Les sites et les outils se font aussi à distance."]];
     if(pub && !cl) FAQ.splice(3, 0, ["Et la communication courante ?", "Pour la communication courante (actualités, réseaux, newsletter, affiches, bulletin), Studio ES a conçu Fill : " + FILL + "/. Studio ES garde la photographie, les sites et les outils."]);
@@ -333,6 +333,11 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
     box.addEventListener("change", function(ev){ var t = ev.target;
       if(t.name === "ok" || t.name === "anticipe") boutons();
       else if(t.name === "part"){ garder(); part = t.checked; formulaire(); } });
+    /* choix préremplis depuis l'adresse (?p=cle1,cle2&nf=12, venus de l'estimation de studioes.fr) : on ouvre la première étape restée sans réponse, ou l'offre si tout est choisi */
+    try{ var qs = new URLSearchParams(location.search), cles = (qs.get("p") || "").split(",").filter(Boolean);
+      if(cles.length){ etapes.forEach(function(e, n){ e.options.forEach(function(o, k){ if(o.cle && cles.indexOf(o.cle) >= 0){ if(e.multi){ if(choix[n].indexOf(k) < 0) choix[n].push(k); } else choix[n] = [k]; } }); });
+        nf = +qs.get("nf") || 0; nettoyer(); var V0 = etapesVisibles(), r0 = V0.findIndex(function(n){ return !choix[n].length; });
+        i = r0 < 0 ? V0.length : r0; if(r0 < 0){ pas(); setTimeout(function(){ var c = document.getElementById("prix"); if(c) c.scrollIntoView({behavior:"smooth"}); }, 400); return; } } }catch(e){}
     pas();
   }
 

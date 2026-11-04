@@ -41,6 +41,10 @@ Enveloppe écrite dans `data.json` :
 
 `expire` reste en clair pour la suppression automatique. Les pages (`dossier.js`, `fill-dossier.js`, `commande.js`) lisent la clé après `#k=` au chargement, la gardent en mémoire et déchiffrent avec WebCrypto ; sans clé ou avec une mauvaise clé, elles affichent « Lien incomplet : utilisez le lien reçu par e-mail. ». Un `data.json` en clair continue de s'afficher. Les raccourcis internes (pistes, « Composer votre offre ») font défiler la page sans réécrire le `#`.
 
+## Commande en ligne (`commander/`)
+
+Page publique sans clé ni expiration : `commander/data.json` (sites Essentiel et Vitrine, concert, demi-journée photo, options, suivi). Les options portent un champ `cle` ; l'adresse `https://dossiers.studioes.fr/commander/?p=site-vitrine,site-photo&nf=12` préremplit les choix (et le nombre de mensualités) et ouvre directement l'offre si tout est choisi. L'estimation de studioes.fr y renvoie avec le bouton « Commander en ligne ». Protégée du nettoyage nocturne (`outils/expiration.py`).
+
 ## Pages hébergées ici (anciens sites Netlify)
 
 - `declic/` : le jeu Déclic (anciennement declic.studioes.fr sur Netlify). Une adresse `declic/#<id d'artifact>` ou `declic/?go#<id>` est renvoyée vers `raccourci.html`, le raccourci d'écran d'accueil vers un artifact claude.ai (ancien `declic/index.html`).
