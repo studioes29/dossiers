@@ -300,7 +300,7 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
       function echec(m){ if(w && !w.closed) w.close(); et.textContent = m; boutons(); }
       charger(function(){
         if(!pdf(true, vir ? "virement" : "carte", anticipe)) return echec("Le devis accepté n'a pas pu être généré : le paiement n'est pas lancé. Rechargez la page, ou écrivez à contact@studioes.fr.");
-        var corps = {action:vir ? "virement" : "creer", dossier:slugDossier(), devis:num, structure:client.struct || client.rep, nom:client.rep, email:client.mail, total:T.once, particulier:part, demarrage_anticipe:anticipe};
+        var corps = {action:vir ? "virement" : "creer", cles:choix.reduce(function(r, c, n){ c.forEach(function(k){ var o = etapes[n].options[k]; if(o.cle && !o.mois) r.push(o.cle); }); return r; }, []), dossier:slugDossier(), devis:num, structure:client.struct || client.rep, nom:client.rep, email:client.mail, total:T.once, particulier:part, demarrage_anticipe:anticipe};
         if(T.n && !vir){ corps.etale = T.etale; corps.echeances = T.n; corps.suivi = T.sv; }
         if(!vir) corps.retour = retourUrl();
         fetch(ACOMPTE, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(corps)})
