@@ -47,7 +47,7 @@ Page publique sans clé ni expiration : `commander/data.json` (sites Essentiel e
 
 ## Pages hébergées ici (anciens sites Netlify)
 
-- `declic/` : le jeu Déclic (anciennement declic.studioes.fr sur Netlify). Une adresse `declic/#<id d'artifact>` ou `declic/?go#<id>` est renvoyée vers `raccourci.html`, le raccourci d'écran d'accueil vers un artifact claude.ai (ancien `declic/index.html`).
+- `declic/` : redirection vers https://declic.studioes.fr/ (le jeu Déclic vit sur le dépôt studioes29/declic). Une adresse `declic/#<id d'artifact>` ou `declic/?go#<id>` est renvoyée vers `raccourci.html`, le raccourci d'écran d'accueil vers un artifact claude.ai (ancien `declic/index.html`).
 - `cocoon/` : proposition interactive Le Cocoon Studio (anciennement cocoon.studioes.fr sur Netlify). Page HTML seule, sans `data.json` : le script d'expiration ne la retire pas.
 
 ## Expiration
