@@ -239,6 +239,10 @@ strong{font-weight:600}
 .form input{font:inherit;font-size:16px;color:var(--fg);background:var(--card);border:1.5px solid transparent;border-radius:14px;padding:12px 14px;min-width:0}
 .form input:focus{outline:none;border-color:var(--hd)}
 .form input[aria-invalid="true"]{border-color:#F09A88}
+/* champs visibles : fond blanc et contour à 3,5:1 sur le papier (WCAG 1.4.11), au lieu d'un champ de la couleur du fond */
+.form input:not([type=checkbox]):not([type=radio]){background:#fff;border-color:rgba(20,20,20,.55)}
+.form input:not([type=checkbox]):not([type=radio]):focus{border-color:var(--hd)}
+.form input[aria-invalid="true"]{border-color:#C0392B}
 .err{color:#F09A88;font-size:14px;min-height:1em}
 .engage{display:grid;gap:14px;border-top:1.5px solid var(--hd);padding-top:20px;margin-top:6px}
 .accord{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;font-size:15px;line-height:1.45;cursor:pointer}
