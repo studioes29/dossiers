@@ -218,7 +218,7 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
     function pas(){
       nettoyer(); var V = etapesVisibles(); if(i >= V.length) return recap();
       var n = V[i], e = etapes[n];
-      avance((i + 1) / (V.length + 1), "Étape " + (i + 1) + " sur " + V.length);
+      avance((i + 1) / (V.length + 1), "Étape " + (i + 1) + (i === 0 && !choix[n].length ? "" : " sur " + V.length)); /* tant que rien n'est choisi, le nombre d'étapes n'est pas connu */
       if(n === dejaN){ /* même étape : on met seulement à jour les choix, rien ne bouge */
         stage.querySelectorAll(".opt").forEach(function(b){ b.setAttribute("aria-pressed", choix[n].indexOf(+b.dataset.k) >= 0); });
         var sv = stage.querySelector('[data-a="suiv"]'); if(sv) sv.disabled = !choix[n].length; return; }
