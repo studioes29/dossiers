@@ -620,6 +620,10 @@ body{background:var(--paper)}
 /* sélection dans le configurateur : fond encre, texte blanc, quel que soit le fond de la feuille */
 .cfg .opt[aria-pressed="true"],.fe.bl .cfg .opt[aria-pressed="true"]{background:var(--ink);color:#fff}
 .cfg .opt[aria-pressed="true"] small,.cfg .opt[aria-pressed="true"] .pq{color:rgba(255,255,255,.75)}
+/* ligne incluse d'office : carte claire, texte lisible (la règle ci-dessus la passait en noir sur noir) */
+.cfg .opt.oblig[aria-pressed="true"],.fe.bl .cfg .opt.oblig[aria-pressed="true"]{background:var(--paper2);color:var(--ink)}
+.cfg .opt.oblig[aria-pressed="true"] small,.fe.bl .cfg .opt.oblig[aria-pressed="true"] small{color:var(--mu)}
+.cfg .opt.oblig[aria-pressed="true"] .pq,.fe.bl .cfg .opt.oblig[aria-pressed="true"] .pq{color:var(--ink)}
 .cfg .opt.oblig[aria-pressed="true"]{background:var(--paper2);color:var(--ink)}
 .cfg .opt.oblig[aria-pressed="true"] small{color:var(--mu)}
 .cfg .opt.oblig[aria-pressed="true"] .pq{color:var(--ink)}
