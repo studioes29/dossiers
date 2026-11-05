@@ -1,210 +1,377 @@
 {
- "nom": "Commander en ligne",
- "accroche": "Un site ou un reportage photo, commandé directement : le devis se génère tout de suite, le paiement se fait par carte, en une fois ou, pour un site, en 6, 12 ou 24 fois sans frais.",
- "titreFin": "Un projet plus particulier ?",
- "texteFin": "Site sur mesure, application, mariage ou reportage de plusieurs jours : trente minutes au téléphone suffisent pour le chiffrer.",
- "contact": {
-  "rdv": "https://cal.com/studioes/30min",
-  "mail": "contact@studioes.fr"
- },
- "faq": [
-  {
-   "q": "Et si la date de mon reportage n'est pas disponible ?",
-   "r": "La date est confirmée sous 24 h après la commande. Si elle n'est pas disponible, l'acompte est remboursé en totalité."
+  "nom": "Commander en ligne",
+  "accroche": "Un site ou un reportage photo, commandé directement : le devis se génère tout de suite, le paiement se fait par carte, en une fois ou, pour un site, en 6, 12 ou 24 fois sans frais.",
+  "titreFin": "Un projet plus particulier ?",
+  "texteFin": "Site sur mesure, application, mariage ou reportage de plusieurs jours : trente minutes au téléphone suffisent pour le chiffrer.",
+  "contact": {
+    "rdv": "https://cal.com/studioes/30min",
+    "mail": "contact@studioes.fr"
   },
-  {
-   "q": "Que se passe-t-il après la commande ?",
-   "r": "Vous recevez la confirmation par e-mail, puis un appel de cadrage de 30 minutes est calé ensemble : contenus, photos, date de mise en ligne ou déroulé du reportage."
-  }
- ],
- "configurateur": {
-  "particulier": "choix",
-  "objet": "Commande en ligne Studio ES",
-  "intro": "Choisissez ce que vous souhaitez commander : le prix s'affiche au fur et à mesure, et le devis se génère tout de suite.",
-  "regles": [
-   "Reportage photo : date confirmée sous 24 h après la commande ; si elle n'est pas disponible, l'acompte est remboursé en totalité.",
-   "Site : textes rédigés à partir d'un appel de cadrage de 30 minutes, référencement local, mise en ligne et une heure de prise en main compris."
+  "faq": [
+    {
+      "q": "Et si la date de mon reportage n'est pas disponible ?",
+      "r": "La date est confirmée sous 24 h après la commande. Si elle n'est pas disponible, l'acompte est remboursé en totalité."
+    },
+    {
+      "q": "Que se passe-t-il après la commande ?",
+      "r": "Vous recevez la confirmation par e-mail, puis un appel de cadrage de 30 minutes est calé ensemble : contenus, photos, date de mise en ligne ou déroulé du reportage."
+    }
   ],
-  "etapes": [
-   {
-    "q": "Que souhaitez-vous commander ?",
-    "options": [
-     {
-      "cle": "site-essentiel",
-      "l": "Un site d'une page",
-      "d": "Qui vous êtes, ce que vous faites, comment vous joindre. Pensé pour le téléphone, livré en 10 jours.",
-      "p": 490,
-      "etaler": [
-       6,
-       12
-      ],
-      "titreDevis": "Site Essentiel, une page",
-      "lignes": [
-       "Une page pensée d'abord pour le téléphone : présentation, activité, horaires, accès, contact",
-       "Rédaction des textes à partir d'un appel de cadrage, référencement local",
-       "Conception sur mesure, mise en ligne et réglage du nom de domaine",
-       "Deux allers-retours de corrections, puis une heure de prise en main"
-      ]
-     },
-     {
-      "cle": "site-vitrine",
-      "l": "Un site de 3 à 5 pages",
-      "d": "Une page par service ou par activité, pour être trouvé sur chacun de vos métiers.",
-      "p": 990,
-      "etaler": [
-       6,
-       12,
-       24
-      ],
-      "titreDevis": "Site Vitrine, 3 à 5 pages",
-      "lignes": [
-       "Accueil et jusqu'à 4 pages dédiées (services, réalisations, à propos, contact)",
-       "Rédaction des textes à partir d'un appel de cadrage, référencement local soigné",
-       "Conception sur mesure pensée pour le téléphone, formulaire de contact",
-       "Mise en ligne et réglage du nom de domaine",
-       "Deux allers-retours de corrections, puis une heure de prise en main"
-      ]
-     },
-     {
-      "cle": "concert",
-      "l": "Le reportage d'un concert ou d'un spectacle",
-      "d": "1 h 30 à 2 h sur place, sur le vif. Sélection retouchée livrée sous 5 jours.",
-      "p": 250,
-      "titreDevis": "Reportage photo, concert ou spectacle",
-      "lignes": [
-       "1 h 30 à 2 h sur place, à la date convenue",
-       "Sur le vif, sans pose ni mise en scène",
-       "Sélection retouchée livrée en haute définition et au format web, sous 5 jours"
-      ]
-     },
-     {
-      "cle": "demi",
-      "l": "Une demi-journée de reportage",
-      "d": "Environ 4 h sur place : événement, lieu, équipe au travail.",
-      "p": 350,
-      "titreDevis": "Reportage photo, une demi-journée",
-      "lignes": [
-       "Environ 4 heures sur place, à la date convenue",
-       "Sur le vif, sans pose ni mise en scène",
-       "Sélection retouchée livrée en haute définition et au format web, sous 5 jours"
-      ]
-     }
+  "configurateur": {
+    "particulier": "choix",
+    "objet": "Commande en ligne Studio ES",
+    "intro": "Choisissez ce que vous souhaitez commander : le prix s'affiche au fur et à mesure, et le devis se génère tout de suite.",
+    "regles": [
+      "Reportage photo : date confirmée sous 24 h après la commande ; si elle n'est pas disponible, l'acompte est remboursé en totalité.",
+      "Site : textes rédigés à partir d'un appel de cadrage de 30 minutes, référencement local, mise en ligne et une heure de prise en main compris."
+    ],
+    "etapes": [
+      {
+        "q": "Que souhaitez-vous commander ?",
+        "options": [
+          {
+            "cle": "site-essentiel",
+            "l": "Un site d'une page",
+            "d": "Qui vous êtes, ce que vous faites, comment vous joindre. Pensé pour le téléphone, livré en 10 jours.",
+            "p": 490,
+            "etaler": [
+              6,
+              12
+            ],
+            "titreDevis": "Site Essentiel, une page",
+            "lignes": [
+              "Une page pensée d'abord pour le téléphone : présentation, activité, horaires, accès, contact",
+              "Rédaction des textes à partir d'un appel de cadrage, référencement local",
+              "Conception sur mesure, mise en ligne et réglage du nom de domaine",
+              "Deux allers-retours de corrections, puis une heure de prise en main"
+            ]
+          },
+          {
+            "cle": "site-vitrine",
+            "l": "Un site de 3 à 5 pages",
+            "d": "Une page par service ou par activité, pour être trouvé sur chacun de vos métiers.",
+            "p": 990,
+            "etaler": [
+              6,
+              12,
+              24
+            ],
+            "titreDevis": "Site Vitrine, 3 à 5 pages",
+            "lignes": [
+              "Accueil et jusqu'à 4 pages dédiées (services, réalisations, à propos, contact)",
+              "Rédaction des textes à partir d'un appel de cadrage, référencement local soigné",
+              "Conception sur mesure pensée pour le téléphone, formulaire de contact",
+              "Mise en ligne et réglage du nom de domaine",
+              "Deux allers-retours de corrections, puis une heure de prise en main"
+            ]
+          },
+          {
+            "cle": "concert",
+            "l": "Le reportage d'un concert ou d'un spectacle",
+            "d": "1 h 30 à 2 h sur place, sur le vif. Sélection retouchée livrée sous 5 jours.",
+            "p": 250,
+            "titreDevis": "Reportage photo, concert ou spectacle",
+            "lignes": [
+              "1 h 30 à 2 h sur place, à la date convenue",
+              "Sur le vif, sans pose ni mise en scène",
+              "Sélection retouchée livrée en haute définition et au format web, sous 5 jours"
+            ]
+          },
+          {
+            "cle": "demi",
+            "l": "Une demi-journée de reportage",
+            "d": "Environ 4 h sur place : événement, lieu, équipe au travail.",
+            "p": 350,
+            "titreDevis": "Reportage photo, une demi-journée",
+            "lignes": [
+              "Environ 4 heures sur place, à la date convenue",
+              "Sur le vif, sans pose ni mise en scène",
+              "Sélection retouchée livrée en haute définition et au format web, sous 5 jours"
+            ]
+          },
+          {
+            "cle": "journee",
+            "l": "Une journée de reportage ou un festival",
+            "d": "Environ 8 h sur place. Sélection retouchée livrée en haute définition.",
+            "p": 550,
+            "titreDevis": "Reportage photo, une journée",
+            "lignes": [
+              "Environ 8 heures sur place, à la date convenue",
+              "Sur le vif, sans pose ni mise en scène",
+              "Sélection retouchée livrée en haute définition et au format web"
+            ]
+          },
+          {
+            "cle": "mariage-ceremonie",
+            "l": "Un mariage, cérémonie",
+            "d": "Les moments clés, 4 à 6 h sur place.",
+            "p": 1290,
+            "titreDevis": "Mariage, cérémonie",
+            "lignes": [
+              "4 à 6 heures sur place : préparatifs de fin, cérémonie, vin d'honneur",
+              "Sur le vif, sans pose imposée",
+              "Galerie privée de la sélection retouchée"
+            ]
+          },
+          {
+            "cle": "mariage-journee",
+            "l": "Un mariage, la journée",
+            "d": "8 à 10 h sur place, des préparatifs à la soirée.",
+            "p": 1890,
+            "titreDevis": "Mariage, la journée",
+            "lignes": [
+              "8 à 10 heures sur place, des préparatifs au début de soirée",
+              "Sur le vif, sans pose imposée",
+              "Galerie privée de la sélection retouchée"
+            ]
+          },
+          {
+            "cle": "mariage-album",
+            "l": "Un mariage, la journée et l'album",
+            "d": "La journée, un album imprimé et une séance à deux.",
+            "p": 2590,
+            "titreDevis": "Mariage, la journée et l'album",
+            "lignes": [
+              "8 à 10 heures sur place, des préparatifs au début de soirée",
+              "Une séance à deux, avant ou après le mariage",
+              "Album imprimé et galerie privée de la sélection retouchée"
+            ]
+          },
+          {
+            "cle": "app-outil",
+            "l": "Un outil simple",
+            "d": "Une seule fonction, sans compte à créer.",
+            "p": 490,
+            "etaler": [
+              6,
+              12
+            ],
+            "titreDevis": "Application, formule Outil simple",
+            "lignes": [
+              "Une fonction, sur téléphone et ordinateur, à vos couleurs",
+              "Cadrage, conception, mise en ligne et une heure de prise en main"
+            ]
+          },
+          {
+            "cle": "app-application",
+            "l": "Une application",
+            "d": "Des comptes et des données gardées.",
+            "p": 990,
+            "etaler": [
+              6,
+              12,
+              24
+            ],
+            "titreDevis": "Application, formule Application",
+            "lignes": [
+              "Comptes et mots de passe, données sauvegardées",
+              "S'installe sur l'écran d'accueil du téléphone",
+              "Cadrage, conception, mise en ligne et une heure de prise en main"
+            ]
+          },
+          {
+            "cle": "annee-4",
+            "l": "Un suivi photo annuel, 4 demi-journées",
+            "d": "Un photographe attitré, 4 demi-journées dans l'année.",
+            "p": 1290,
+            "titreDevis": "Suivi photo annuel, 4 demi-journées",
+            "lignes": [
+              "4 demi-journées de reportage dans l'année, aux dates convenues",
+              "Sélection retouchée livrée après chaque reportage"
+            ]
+          },
+          {
+            "cle": "annee-8",
+            "l": "Un suivi photo annuel, 8 demi-journées",
+            "d": "Un photographe attitré, 8 demi-journées dans l'année.",
+            "p": 2490,
+            "titreDevis": "Suivi photo annuel, 8 demi-journées",
+            "lignes": [
+              "8 demi-journées de reportage dans l'année, aux dates convenues",
+              "Sélection retouchée livrée après chaque reportage"
+            ]
+          },
+          {
+            "cle": "annee-12",
+            "l": "Un suivi photo annuel, 12 demi-journées",
+            "d": "Un photographe attitré, 12 demi-journées dans l'année.",
+            "p": 3590,
+            "titreDevis": "Suivi photo annuel, 12 demi-journées",
+            "lignes": [
+              "12 demi-journées de reportage dans l'année, aux dates convenues",
+              "Sélection retouchée livrée après chaque reportage"
+            ]
+          }
+        ]
+      },
+      {
+        "q": "Avec de vraies photos ?",
+        "aide": "Une demi-journée sur place pour photographier votre lieu, votre équipe et vos gestes de métier.",
+        "options": [
+          {
+            "cle": "site-photo",
+            "l": "Oui, une demi-journée de reportage",
+            "p": 350,
+            "si": [
+              0,
+              [
+                0,
+                1
+              ]
+            ],
+            "titreDevis": "Reportage photo pour le site, une demi-journée",
+            "lignes": [
+              "Environ 4 heures sur place : lieu, équipe, gestes de métier",
+              "Sélection retouchée intégrée au site et livrée en haute définition"
+            ]
+          },
+          {
+            "l": "Non merci, j'ai mes photos",
+            "aucun": true,
+            "si": [
+              0,
+              [
+                0,
+                1
+              ]
+            ],
+            "lignes": []
+          }
+        ]
+      },
+      {
+        "q": "Des options pour le reportage ?",
+        "multi": true,
+        "options": [
+          {
+            "cle": "soir",
+            "l": "Une sélection livrée le soir même",
+            "d": "20 à 30 photos le soir de l'événement, pour vos réseaux.",
+            "p": 150,
+            "si": [
+              0,
+              [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            ],
+            "titreDevis": "Sélection livrée le soir même",
+            "lignes": [
+              "20 à 30 photos livrées le soir de l'événement"
+            ]
+          },
+          {
+            "cle": "heure",
+            "l": "Une heure de plus sur place",
+            "p": 80,
+            "si": [
+              0,
+              [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            ],
+            "titreDevis": "Heure supplémentaire",
+            "lignes": [
+              "Une heure de présence en plus, traitement compris"
+            ]
+          },
+          {
+            "l": "Rien d'autre",
+            "aucun": true,
+            "si": [
+              0,
+              [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            ],
+            "lignes": []
+          }
+        ]
+      },
+      {
+        "q": "Et chaque mois ?",
+        "aide": "Le suivi garde le site en ligne et à jour.",
+        "options": [
+          {
+            "l": "Suivi du site",
+            "p": 9,
+            "mois": true,
+            "suivi": true,
+            "obligatoire": true,
+            "titreDevis": "Suivi du site",
+            "d": "Hébergement, nom de domaine, sécurité et sauvegardes, sans durée minimale.",
+            "lignes": [
+              "Hébergement, nom de domaine, sécurité et sauvegardes",
+              "Sans durée minimale, résiliable avec un mois de préavis",
+              "Les actualités et mises à jour de contenus passent par Fill"
+            ],
+            "pourquoi": "un site a besoin d'un hébergement, des mises à jour de sécurité et d'une sauvegarde pour rester en ligne.",
+            "si": [
+              0,
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          {
+            "l": "Suivi de l'outil",
+            "p": 9,
+            "mois": true,
+            "suivi": true,
+            "obligatoire": true,
+            "titreDevis": "Suivi de l'outil",
+            "d": "Hébergement, sauvegardes et mises à jour, sans durée minimale.",
+            "lignes": [
+              "Hébergement, sauvegardes et mises à jour",
+              "Sans durée minimale, résiliable avec un mois de préavis",
+              "Les évolutions se chiffrent à part"
+            ],
+            "pourquoi": "un site a besoin d'un hébergement, des mises à jour de sécurité et d'une sauvegarde pour rester en ligne.",
+            "si": [
+              0,
+              [
+                8
+              ]
+            ]
+          },
+          {
+            "l": "Suivi de l'application",
+            "p": 19,
+            "mois": true,
+            "suivi": true,
+            "obligatoire": true,
+            "titreDevis": "Suivi de l'application",
+            "d": "Hébergement, sauvegardes et mises à jour, sans durée minimale.",
+            "lignes": [
+              "Hébergement, sauvegardes et mises à jour",
+              "Sans durée minimale, résiliable avec un mois de préavis",
+              "Les évolutions se chiffrent à part"
+            ],
+            "pourquoi": "un site a besoin d'un hébergement, des mises à jour de sécurité et d'une sauvegarde pour rester en ligne.",
+            "si": [
+              0,
+              [
+                9
+              ]
+            ]
+          }
+        ]
+      }
     ]
-   },
-   {
-    "q": "Avec de vraies photos ?",
-    "aide": "Une demi-journée sur place pour photographier votre lieu, votre équipe et vos gestes de métier.",
-    "options": [
-     {
-      "cle": "site-photo",
-      "l": "Oui, une demi-journée de reportage",
-      "p": 350,
-      "si": [
-       0,
-       [
-        0,
-        1
-       ]
-      ],
-      "titreDevis": "Reportage photo pour le site, une demi-journée",
-      "lignes": [
-       "Environ 4 heures sur place : lieu, équipe, gestes de métier",
-       "Sélection retouchée intégrée au site et livrée en haute définition"
-      ]
-     },
-     {
-      "l": "Non merci, j'ai mes photos",
-      "aucun": true,
-      "si": [
-       0,
-       [
-        0,
-        1
-       ]
-      ],
-      "lignes": []
-     }
-    ]
-   },
-   {
-    "q": "Des options pour le reportage ?",
-    "multi": true,
-    "options": [
-     {
-      "cle": "soir",
-      "l": "Une sélection livrée le soir même",
-      "d": "20 à 30 photos le soir de l'événement, pour vos réseaux.",
-      "p": 150,
-      "si": [
-       0,
-       [
-        2,
-        3
-       ]
-      ],
-      "titreDevis": "Sélection livrée le soir même",
-      "lignes": [
-       "20 à 30 photos livrées le soir de l'événement"
-      ]
-     },
-     {
-      "cle": "heure",
-      "l": "Une heure de plus sur place",
-      "p": 80,
-      "si": [
-       0,
-       [
-        2,
-        3
-       ]
-      ],
-      "titreDevis": "Heure supplémentaire",
-      "lignes": [
-       "Une heure de présence en plus, traitement compris"
-      ]
-     },
-     {
-      "l": "Rien d'autre",
-      "aucun": true,
-      "si": [
-       0,
-       [
-        2,
-        3
-       ]
-      ],
-      "lignes": []
-     }
-    ]
-   },
-   {
-    "q": "Et chaque mois ?",
-    "aide": "Le suivi garde le site en ligne et à jour.",
-    "options": [
-     {
-      "l": "Suivi du site",
-      "p": 9,
-      "mois": true,
-      "suivi": true,
-      "obligatoire": true,
-      "titreDevis": "Suivi du site",
-      "d": "Hébergement, nom de domaine, sécurité et sauvegardes, sans durée minimale.",
-      "lignes": [
-       "Hébergement, nom de domaine, sécurité et sauvegardes",
-       "Sans durée minimale, résiliable avec un mois de préavis",
-       "Les actualités et mises à jour de contenus passent par Fill"
-      ],
-      "pourquoi": "un site a besoin d'un hébergement, des mises à jour de sécurité et d'une sauvegarde pour rester en ligne.",
-      "si": [
-       0,
-       [
-        0,
-        1
-       ]
-      ]
-     }
-    ]
-   }
-  ]
- }
+  }
 }
