@@ -211,6 +211,8 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
     function opt(n, o, k){ var on = choix[n].indexOf(k) >= 0;
       return '<button type="button" class="opt' + (o.obligatoire ? " oblig" : "") + '" data-k="' + k + '" aria-pressed="' + on + '"' + (o.obligatoire ? ' aria-disabled="true"' : '') + '><span class="ck"></span><b>' + esc(o.l) + '</b><span class="px">' + esc(prix(o)) + '</span>' +
         ((o.d || o.min || o.obligatoire) ? '<small>' + esc(o.d || "") + (o.min ? " Engagement de " + o.min + " mois minimum." : "") + (o.obligatoire ? '<span class="pq">Inclus d\'office' + (o.pourquoi ? " : " + esc(o.pourquoi) : ".") + '</span><span class="vh"> Cette ligne ne peut pas être retirée.</span>' : '') + '</small>' : '') + '</button>'; }
+    /* après un changement d'étape, la question suivante revient à l'écran (sinon elle reste au-dessus, hors de vue au téléphone) */
+    function haut(){ var r = box.getBoundingClientRect(); if(r.top < 0 || r.top > innerHeight * 0.5) scrollTo({top: Math.max(0, r.top + scrollY - 84), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); }
     function pas(){
       nettoyer(); var V = etapesVisibles(); if(i >= V.length) return recap();
       var n = V[i], e = etapes[n];
@@ -323,8 +325,8 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
         else choix[n] = o.aucun ? [k].concat(c.filter(function(x){ return etapes[n].options[x].obligatoire; })) : [k]; return pas(); }
       if(b.dataset.nf != null){ nf = +b.dataset.nf; var enForm = !!box.querySelector("form"); if(enForm){ garder(); formulaire(); } else recap(); return; }
       var a = b.dataset.a;
-      if(a === "suiv"){ i++; pas(); } else if(a === "prec"){ i--; pas(); } else if(a === "refaire"){ i = 0; pas(); }
-      else if(a === "devis"){ formulaire(); charger(function(){}); }
+      if(a === "suiv"){ i++; pas(); haut(); } else if(a === "prec"){ i--; pas(); haut(); } else if(a === "refaire"){ i = 0; pas(); haut(); }
+      else if(a === "devis"){ formulaire(); charger(function(){}); haut(); }
       else if(a === "retour"){ garder(); i = etapesVisibles().length; recap(); }
       else if(a === "pdf"){ if(lire()){ charger(function(){ pdf(false); }); consigne("devis téléchargé"); } }
       else if(a === "payer") payer(false);
