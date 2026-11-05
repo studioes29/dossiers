@@ -173,6 +173,8 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
     return t > 0 ? {taux:Math.min(100, t), libelle:String(r.libelle || "Remise accordée")} : {montant:m, libelle:String(r.libelle || "Remise accordée")}; }
   function configurateur(cf, D){
     var box = document.getElementById("cfg"); if(!box) return;
+    /* page de commande publique (dossiers.studioes.fr/commander) : la structure du client est inconnue, rien n'est prérempli */
+    var publique = slugDossier() === "commander";
     var etapes = cf.etapes, choix = etapes.map(function(e){ return []; }), i = 0, client = {}, num = numero(), attente = null, envoyes = {}, nf = 0;
     var pm = cf.public ? false : (D.particulier != null ? D.particulier : cf.particulier), part = pm === true, RM = remiseDe(D.remise || cf.remise);
     function numero(){ var t = new Date(), a = "ABCDEFGHJKMNPQRSTUVWXYZ23456789", s = ""; for(var k = 0; k < 4; k++) s += a.charAt(Math.floor(Math.random() * a.length)); return String(t.getFullYear()).slice(2) + ("0" + (t.getMonth() + 1)).slice(-2) + ("0" + t.getDate()).slice(-2) + "-" + s; }
@@ -241,13 +243,13 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
       dejaN = -1; avance(1, "Votre offre"); stage.innerHTML = h; stage.classList.remove("neuf"); void stage.offsetWidth; stage.classList.add("neuf");
     }
     function champs(){ if(part) return [["rep","Nom et prénom", "", "name"],["adr","Adresse", "", "street-address"],["ville","Code postal et ville", "", "address-level2"],["mail","E-mail", "", "email"]];
-      return [["struct","Structure", D.nom, "organization"],["rep","Votre nom", "", "name"],["fonction","Votre fonction", cf.public ? "Maire, secrétaire de mairie…" : "Gérant, présidente…", "organization-title"],["adr","Adresse", "", "street-address"],["ville","Code postal et ville", "", "address-level2"],["mail","E-mail", "", "email"]].concat(cf.public ? [["siret","SIRET de la collectivité", "14 chiffres, pour la facture Chorus Pro", "off"],["opt_refs","Code service et n° d'engagement, si exigés", "Facultatif", "off"]] : []); }
+      return [["struct","Structure", publique ? "Entreprise, association, commune…" : D.nom, "organization"],["rep","Votre nom", "", "name"],["fonction","Votre fonction", cf.public ? "Maire, secrétaire de mairie…" : "Gérant, présidente…", "organization-title"],["adr","Adresse", "", "street-address"],["ville","Code postal et ville", "", "address-level2"],["mail","E-mail", "", "email"]].concat(cf.public ? [["siret","SIRET de la collectivité", "14 chiffres, pour la facture Chorus Pro", "off"],["opt_refs","Code service et n° d'engagement, si exigés", "Facultatif", "off"]] : []); }
     function formulaire(){
       var T = totaux(), h = '<h3>Votre devis</h3><p class="sm">Il se génère tout de suite, avec les conditions de vente. Rien n\'est engagé tant que vous ne l\'acceptez pas.</p>';
       if(pm === "choix") h += '<label class="accord"><input type="checkbox" name="part"' + (part ? " checked" : "") + '><span>Je suis un particulier</span></label>';
       h += '<form class="form" novalidate>';
       champs().forEach(function(f){
-        h += '<label><span>' + f[1] + '</span><input name="' + f[0] + '" autocomplete="' + f[3] + '"' + (f[0] === "mail" ? ' type="email" inputmode="email"' : '') + ' value="' + esc(client[f[0]] || (f[0] === "struct" ? D.nom : "")) + '" placeholder="' + esc(f[0] === "struct" ? "" : f[2]) + '"' + (f[0].indexOf("opt_") === 0 ? '' : ' required') + '></label>'; });
+        h += '<label><span>' + f[1] + '</span><input name="' + f[0] + '" autocomplete="' + f[3] + '"' + (f[0] === "mail" ? ' type="email" inputmode="email"' : '') + ' value="' + esc(client[f[0]] || (f[0] === "struct" && !publique ? D.nom : "")) + '" placeholder="' + esc(f[0] === "struct" ? "" : f[2]) + '"' + (f[0].indexOf("opt_") === 0 ? '' : ' required') + '></label>'; });
       h += '</form><p class="err" aria-live="polite"></p><div class="nav2"><button type="button" class="btn line" data-a="retour">Retour</button><button type="button" class="btn" data-a="pdf">Télécharger le devis</button></div>';
       if(cf.public){
         h += '<p class="sm">Ce devis peut servir de base à votre bon de commande. Pour la suite, choisissez un créneau : nous calons ensemble le démarrage et les modalités.</p><div class="nav2"><span></span><a class="btn" href="' + esc(rdv()) + '" target="_blank" rel="noopener">Choisir un créneau</a></div>';
