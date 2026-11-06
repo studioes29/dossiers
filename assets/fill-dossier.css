@@ -231,3 +231,11 @@ h1 .m{display:inline-block;opacity:0;transform:translateY(.4em);animation:roule 
 .fo-c .cc{margin:12px 0 16px;font-size:15px;line-height:1.45;color:var(--encre)}
 .lien-s{align-self:center;font-size:14.5px;color:var(--encre);text-decoration:underline;text-underline-offset:3px}
 .it-m .u{display:none}
+
+/* en bref, en tête du dossier */
+.couv .enbref{max-width:38em;margin:16px 0 0;display:grid;gap:8px}
+.couv .enbref>div{display:grid;grid-template-columns:11em minmax(0,1fr);gap:12px;align-items:baseline}
+.couv .enbref dt{font-size:13px;font-weight:700;letter-spacing:.02em;color:var(--encre);opacity:.7}
+.couv .enbref dd{margin:0;font-size:16px;line-height:1.5;color:var(--encre);font-weight:500}
+.couv .enbref a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+@media (max-width:600px){.couv .enbref>div{grid-template-columns:1fr;gap:2px}}

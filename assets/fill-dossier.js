@@ -70,6 +70,16 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
     var rdv = (D.contact && url(D.contact.rdv)) || RDV;
     var mail = (D.contact && mailOk(D.contact.mail)) ? D.contact.mail : "contact@studioes.fr";
     var k = 0, h = [];
+    /* en bref : trois lignes en tête (ce que nous avons vu, ce que Fill propose, pour avancer) ; D.resume [vu, propose] les remplace si le dossier les donne */
+    function prixFr(n){ return Number(n).toLocaleString("fr-FR").replace(/\u202f/g, "\u00a0") + "\u00a0€"; }
+    function resume(){
+      var R0 = Array.isArray(D.resume) ? D.resume : [], c0 = (D.constats || [])[0] || {};
+      var vu = R0[0] || (D.signal && D.signal.titre ? (D.signal.type === "recrutement" ? "Vous recrutez : " + D.signal.titre.replace(/\s*\(H\/F\)\s*$/i, "") : D.signal.titre) + (D.signal.texte ? ". " + D.signal.texte : "") : (c0.titre ? c0.titre + " : " + (c0.texte || "") : ""));
+      var pr = R0[1] || (fid === "relais" ? "Fill Relais, " + prixFr(R.prix_semaine) + " par semaine : la communication courante continue pendant l’absence, et la passation est prête à l’arrivée." : "Fill " + F.nom + ", " + prixFr(F.prix) + " par mois : la communication courante " + (coll ? "de la commune" : "de votre structure") + " (site, réseaux, newsletter, affiches), à prix fixe.");
+      var L = [["Ce que nous avons vu", vu], ["Ce que Fill propose", pr]].filter(function(x){ return x[1]; });
+      return '<dl class="enbref rv">' + L.map(function(x){ return '<div><dt>' + x[0] + '</dt><dd>' + esc(x[1]) + '</dd></div>'; }).join("") +
+        '<div><dt>Pour avancer</dt><dd><a href="' + esc(rdv) + '" target="_blank" rel="noopener">Un échange de 15 minutes</a>, au moment qui vous convient.</dd></div></dl>';
+    }
 
     /* en-tête */
     h.push('<header class="hd" id="hd"><div class="w"><a class="lg" href="' + FILL + '" aria-label="Fill">' + LOGO + '</a><a class="bt sm" href="' + esc(rdv) + '" target="_blank" rel="noopener">Rendez-vous' + ar() + '</a></div><div class="hd-prog" aria-hidden="true"><i></i></div></header>');
@@ -82,7 +92,7 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
       '<p class="pour"><i></i>Préparé pour ' + esc(D.nom) + '</p>' +
       '<h1>' + lettres(D.titre || "Votre communication,") + '<span class="it">' + (D.sousTitre ? esc(D.sousTitre) : 'sans perdre le <u>fil</u>.') + '</span></h1>' +
       '<p class="accroche rv">' + esc(D.accroche) + '</p>' +
-      '<p class="quoi rv">' + (fid === "relais" ? "Fill tient la communication courante pendant l’absence (site, réseaux, affiches, presse) et prépare la passation." : "Fill prend en charge la communication courante " + (coll ? "de la commune" : "de votre structure") + " (site, réseaux, newsletter, affiches) chaque mois, à prix fixe.") + '</p>' +
+      resume() +
       '<ul class="raccourcis rv" style="--k:1">' + rac.map(function(r, n){ return '<li><a href="#' + r[0] + '"><b>' + (n + 1) + '</b>' + esc(r[1]) + '</a></li>'; }).join("") + '</ul>' +
       '<p class="prepare rv" style="--k:2">Dossier préparé le ' + dateFr(D.date) + (D.ville ? ', pour ' + esc(D.ville) : '') + '.</p>' +
       '</div></section>');
