@@ -29,7 +29,7 @@ h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.045em;color
 
 /* deux fonds, et leurs couleurs */
 .s-ink{--bg:var(--ink);--fg:var(--white);--hd:#fff;--fg2:rgba(247,245,239,.74);--fg3:rgba(247,245,239,.5);--ln:rgba(225,219,196,.16);--acc:var(--ochre);--bb:var(--cream);--bf:var(--ink);--frame:rgba(225,219,196,.16)}
-.s-cream{--bg:var(--cream);--fg:#141414;--hd:#141414;--fg2:rgba(20,20,20,.72);--fg3:rgba(20,20,20,.58);--ln:rgba(20,20,20,.12);--acc:#3B47F2;--bb:#141414;--bf:#fff;--frame:rgba(20,20,20,.1)}
+.s-cream{--bg:var(--cream);--fg:#141414;--hd:#141414;--fg2:rgba(20,20,20,.72);--fg3:rgba(20,20,20,.58);--ln:rgba(20,20,20,.12);--acc:#141414;--bb:#141414;--bf:#fff;--frame:rgba(20,20,20,.1)}
 .sec{background:var(--bg);color:var(--fg);padding-block:var(--sp)}
 .wrap{max-width:var(--w);margin:0 auto;padding-inline:var(--g)}
 .t{font-size:clamp(46px,8.2vw,118px);line-height:.9}
@@ -215,7 +215,7 @@ body.m .if-d,body:not(.m) .if-m{display:none!important}
 
 /* ===== v2 (octobre 2026) : charte du site, tout en clair ; feuilles blanches et papier qui se chevauchent ===== */
 body{background:var(--cream);color:#141414}
-.s-ink{--bg:#fff;--fg:#141414;--hd:#141414;--fg2:rgba(20,20,20,.72);--fg3:rgba(20,20,20,.58);--ln:rgba(20,20,20,.1);--acc:#3B47F2;--bb:#141414;--bf:#fff;--frame:rgba(20,20,20,.1)}
+.s-ink{--bg:#fff;--fg:#141414;--hd:#141414;--fg2:rgba(20,20,20,.72);--fg3:rgba(20,20,20,.58);--ln:rgba(20,20,20,.1);--acc:#141414;--bb:#141414;--bf:#fff;--frame:rgba(20,20,20,.1)}
 .s-cream{--bg:#F0EEE9}
 main>.sec{position:relative;border-radius:40px 40px 0 0;margin-top:-40px;box-shadow:0 -1px 0 rgba(20,20,20,.05)}
 main>.sec:first-child{margin-top:0;border-radius:0}
@@ -224,4 +224,4 @@ main>.sec:first-child{margin-top:0;border-radius:0}
 .cover .date{color:rgba(20,20,20,.6)}
 .sig{color:#141414}.sig span{color:rgba(20,20,20,.6)}
 .roll{box-shadow:0 0 0 1px rgba(20,20,20,.08),0 40px 80px -30px rgba(20,20,20,.45)}
-::selection{background:#3B47F2;color:#fff}
+::selection{background:#141414;color:#fff}

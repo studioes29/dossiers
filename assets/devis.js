@@ -2,7 +2,7 @@
    puis une feuille blanche aux coins arrondis qui porte tous les chiffres, sur une seule page ; un seul total, dans l'échéancier.
    Conditions particulières et CGV sur les pages suivantes. Généré dans le navigateur (jsPDF). */
 (function(){
-  var INK = "#141414", PAPER = "#F0EEE9", PAPER2 = "#E6E2D9", MU = "#6A6A66", LN = "#E4E0D7", BLEU = "#3B47F2";
+  var INK = "#141414", PAPER = "#F0EEE9", PAPER2 = "#E6E2D9", MU = "#6A6A66", LN = "#E4E0D7";
   var EMETTEUR = ["Ewen Soupault, entrepreneur individuel (EI)", "Lieu-dit Kerdavid, 29390 Leuhan", "06 51 22 21 07 · contact@studioes.fr", "Siret 834 922 486 00016"];
   function fr(v){ v = Math.round(v * 100) / 100; var e = Math.floor(v), d = Math.round((v - e) * 100); if(d === 100){ e++; d = 0; } return String(e).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + (d ? "," + (d < 10 ? "0" : "") + d : ""); }
   function eur(v){ return fr(v) + " €"; }
