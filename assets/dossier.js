@@ -290,7 +290,7 @@ function evenement(nom){ try { if(window.goatcounter && goatcounter.count) goatc
     function charger(fn){ if(window.jspdf && window.studioDevis && window.DEVIS_FONTS){ fn(); return; } if(attente){ attente.push(fn); return; } attente = [fn];
       var s = ["https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js","https://studioes.fr/conditions/cgv.js","../assets/devis-fonts.js","../assets/devis.js"], k = 0;
       function fin(){ var a = attente; attente = null; a.forEach(function(f){ f(); }); }
-      (function un(){ if(k >= s.length) return fin(); var x = document.createElement("script"); x.src = s[k++]; x.onload = un; x.onerror = k === 2 ? un : fin; document.head.appendChild(x); })(); }
+      (function un(){ if(k >= s.length) return fin(); var x = document.createElement("script"); x.src = s[k++]; if(x.src.indexOf("/jspdf/") > 0){ x.integrity = "sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="; x.crossOrigin = "anonymous"; x.referrerPolicy = "no-referrer"; } x.onload = un; x.onerror = k === 2 ? un : fin; document.head.appendChild(x); })(); }
     function retourUrl(){ return location.href; }
     /* paiement : le devis accepté est généré et téléchargé d'abord, puis le serveur crée la session de paiement (carte) ou prévient Studio ES (virement) */
     function payer(vir){
