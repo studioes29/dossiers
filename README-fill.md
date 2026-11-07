@@ -1,7 +1,7 @@
 # Dossiers Fill
 
 Modèle : `_modele-fill/index.html` (à copier tel quel dans `<slug>/index.html`), puis `<slug>/data.json`.
-Rendu : `assets/fill-dossier.js` et `.css`. Prix et unités lus sur https://fill.studioes.fr/assets/offre.js ; le repli intégré porte les prix publics confirmés : Essentiel 490 € par mois (10 unités), Régulier 990 € (22), Soutenu 1 890 € (45), mise en place 490 ou 990 €, Relais 690 € par semaine ou 2 490 € par mois. Les prix s'affichent « € par mois », avec « TVA non applicable, art. 293 B du CGI ».
+Rendu : `assets/fill-dossier.js` et `.css`. Prix et unités lus sur https://fill.studioes.fr/assets/offre.js ; le repli intégré porte les prix publics confirmés : Essentiel 490 € par mois (10 unités), Régulier 990 € (22), Soutenu 1 890 € (45), aucune mise en place, Relais 690 € par semaine ou 2 490 € par mois. Les prix s'affichent « € par mois », avec « TVA non applicable, art. 293 B du CGI ».
 Exemples fictifs : `exemple-fill/` (abonnement, avec `commande/`), `exemple-fill-relais/` (commune qui recrute).
 
 ## Publication
